@@ -27,7 +27,7 @@ PROČ LIDÉ VOLÍ STARTOVACÍ BALÍČEK?
 
 
 </strong><span style="font-weight:normal;">Marko - Zagreb</span></p>
-        <p class="description">Mnoho zákazníků začíná se startovacím balíčkem, protože si chtějí nejdřív ověřit, jak NORIKS sedí a jak se nosí. Jedno tričko a jedny boxerky stačí k rozhodnutí bez velké investice.
+        <p class="description">Many customers start with the starter pack because they want to first verify how NORIKS fits and feels. One t-shirt and one boxer are enough to decide without a big investment.
 
 
 
@@ -36,12 +36,12 @@ PROČ LIDÉ VOLÍ STARTOVACÍ BALÍČEK?
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;" ><strong>"Po prvním nošení jsem si hned objednal další."
+    line-height: 1.2;" ><strong>"After the first wear, I immediately ordered more."
 
 
 
 </strong><span style="font-weight:normal;">Pavle - Split</span></p>
-        <p class="description">Více než 95 % zákazníků si po startovacím balíčku objedná znovu. Ne proto, že by to plánovali, ale protože už první den cítí rozdíl ve střihu, pohodlí a kvalitě.
+        <p class="description">More than 95% of customers reorder after the starter pack. Not because they planned to, but because they feel the difference in fit, comfort, and quality from day one.
 
 </p>
       </div>
@@ -109,7 +109,7 @@ PROČ LIDÉ VOLÍ STARTOVACÍ BALÍČEK?
 
 
 </strong></p>
-        <p class="description">Materiály jsou měkké, prodyšné a příjemné na pokožce, aniž by po praní ztrácely tvar. Už při prvním nošení je jasné, proč se tato kombinace rychle stává součástí každodenního šatníku.
+        <p class="description">The materials are soft, breathable, and pleasant on the skin without losing shape after washing. From the first wear, it is clear why this combination quickly becomes part of the everyday wardrobe.
 
 
 </p>
@@ -317,21 +317,21 @@ if (  has_term( array( 'tricka', 'orto-majice', 'mplouzoakia', 't-shirts', 'blou
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Navrženo pro skutečný život
 </strong></p>
-        <p class="description">Toto tričko je určené pro celodenní nošení - od rána do večera. Nevyžaduje žádné upravování ani přemýšlení, jednoduše dobře sedí v každé situaci.
+        <p class="description">This t-shirt is designed for all-day wear - from morning to evening. It requires no adjustments or thinking, it simply fits well in every situation.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Střih, který rozumí tělu
+        <p><strong>A cut that understands the body
 </strong></p>
-        <p class="description">Střih byl vyvíjen tak, aby kopíroval linii těla bez stahování a zvýraznil to správné. Výsledkem je upravený, sebevědomý vzhled bez pocitu nepohodlí.
+        <p class="description">The cut was developed to follow the body line without tightening and highlight the right areas. The result is a polished, confident look without any discomfort.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Rozdíl poznáš už při prvním obléknutí
 </strong></p>
-        <p class="description">Materiál je na pokožce měkký, lehký a prodyšný. Už po prvním nošení je jasné, proč se toto tričko rychle stane tím, po kterém saháš nejčastěji.
+        <p class="description">The material is soft, lightweight, and breathable on the skin. After the first wear, it is clear why this t-shirt quickly becomes the one you reach for most often.
 </p>
       </div>
     </div>
