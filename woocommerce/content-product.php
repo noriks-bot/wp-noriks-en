@@ -90,7 +90,7 @@ $topseler_text =  get_field("singlepp_bestseller_text", "options");
           
          
             if( has_term('black-friday', 'product_cat', $current_product_id ) ): 
-             $topseler_text =  "Zimska ponuda"; 
+             $topseler_text =  "Winter sale"; 
              
             else:
                  $topseler_text =  get_field("singlepp_priceper_before","options") . " " . $tmp_price . " ".  "€ po boksericama"; 

@@ -832,7 +832,7 @@ img.emoji {
   <div class="upsell-card">
       
       
-      <div class="gck-popular-badge">Posebna ponuda <img draggable="false" role="img" class="emoji" alt="🔥" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f525.svg"></div>
+      <div class="gck-popular-badge">Special offer <img draggable="false" role="img" class="emoji" alt="🔥" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f525.svg"></div>
 
     <div class="upsell-head">
       <input class="upsell-check" id="upsell-check" type="checkbox" <?php checked( $upsell_in_cart ); ?> />
@@ -1192,7 +1192,7 @@ img.emoji {
           if (!res.ok || data?.error) {
             checkbox.checked = false;
             syncAddedUI(false);
-            alert('Ne mogu dodati proizvod. Provjeri odabrane opcije (varijacije) i dostupnost.');
+            alert('Cannot add product. Check selected options (variations) and availability.');
             setBusy(false);
             return;
           }

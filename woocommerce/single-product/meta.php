@@ -79,7 +79,7 @@ global $product;
         
         
         <div class="feature">
-      <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon1-1.png" alt="Shirt Icon" class="feature__icon info-icon">
+      <img src="https://noriks.com/en/wp-content/uploads/2025/07/footer_icon1-1.png" alt="Shirt Icon" class="feature__icon info-icon">
           <p class="feature__text">Try for 30 days, risk-free</p>
         </div>
         
@@ -89,7 +89,7 @@ global $product;
         <div class="feature">
      
        
-        <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon3-1.png" alt="Shipping Icon" class="feature__icon info-icon">
+        <img src="https://noriks.com/en/wp-content/uploads/2025/07/footer_icon3-1.png" alt="Shipping Icon" class="feature__icon info-icon">
           <p class="feature__text">Free shipping on orders over $70</p>
         </div>
 
@@ -535,7 +535,7 @@ $is_mixed_bundle = has_term( array( 'black-friday', 'sady', 'orto-starter', 'ort
       </div>
     <div class="accordion-content">
   <p></p>
-  Πιστεύουμε τόσο πολύ ότι θα σας αρέσει το NORIKS, που έχετε <b data-stringify-type="bold">30 ημέρες</b> για επιστροφή ή δωρεάν ανταλλαγή.
+  We believe so much that you will love NORIKS that you have <b data-stringify-type="bold">30 days</b> for return or free exchange.
   Χωρίς γραφειοκρατία, χωρίς άγχος – το λύνουμε με λίγα κλικ.
   </p>
 
@@ -549,7 +549,7 @@ $is_mixed_bundle = has_term( array( 'black-friday', 'sady', 'orto-starter', 'ort
   </p>
 
   <p>
-    Απλώς στείλτε μας email ότι θέλετε ανταλλαγή και <b data-stringify-type="bold">τα κανονίζουμε αμέσως.</b>
+    Just email us that you want an exchange and <b data-stringify-type="bold">we arrange it immediately.</b>
   </p>
 </div>
 
