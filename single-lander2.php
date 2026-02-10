@@ -223,7 +223,7 @@ get_header();
                         ">
                         <p class="announcement-bar__message">
                           <span>
-                            <a style="font-size: 1.2rem; "href="https://noriks.com/hr/product-category/bokserice/" title="">NORIKS • Udobnost i zdravlje na prvom mjestu</a>
+                            <a style="font-size: 1.2rem; "href="https://noriks.com/en/product-category/boxers/" title="">NORIKS • Comfort and health come first</a>
                           </span>
                         </p>
                       </div>
@@ -253,7 +253,7 @@ get_header();
                         ">
                         <p class="announcement-bar__message">
                           <span>
-                            <a style="margin-top: 15px; padding-bottom: 5px;display: block; color: #121212; font-size:1.1rem;" href="https://noriks.com/hr/product-category/bokserice/" title="">Članak Men Cub › Muško zdravlje › Donje rublje</a>
+                            <a style="margin-top: 15px; padding-bottom: 5px;display: block; color: #121212; font-size:1.1rem;" href="https://noriks.com/en/product-category/boxers/" title="">Article Men Cub › Men's Health › Underwear</a>
                           </span>
                         </p>
                       </div>
@@ -300,7 +300,7 @@ get_header();
               <div class="rich-text__text rte">
                 <h1 style="margin-top: 20px; font-size: 2.2rem;
     line-height: 1.2;" >
-                  <strong>Tihi ubojica: Skrivena istina o tvojim gaćama i zašto modal bokserice NORIKS čine sve druge opcije nebitnima</strong>
+                  <strong>The Silent Killer: The Hidden Truth About Your Underwear and Why NORIKS Modal Boxers Make All Other Options Irrelevant</strong>
                 </h1>
               </div>
             </div>
@@ -337,7 +337,7 @@ get_header();
             <div class="icon-with-content__icons icon-with-content__icons--desktop-1-column icon-with-content__icons--mobile-1-column animate-item animate-item--child index-0">
               <div class="icons-with-text__icon-item icons-with-text__icon-item--next-to-text icons-with-text__icon-item--left">
                 <div class="icons-with-text__icon__icon icons-with-text__icon__icon--xl color-accent-1">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-880f0a01-7171-44b4-834b-385dce4e8368.png" role="presentation" height="auto" width="auto" loading="lazy">
+                  <img src="/en/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-880f0a01-7171-44b4-834b-385dce4e8368.png" role="presentation" height="auto" width="auto" loading="lazy">
                 </div>
                 <div class="icons-with-text__icon__text">
                   <h3 class="icons-with-text__icon__title h3">
@@ -393,7 +393,7 @@ get_header();
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 
                 <div  class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_Rmp8Af " style="">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-f477c7b9-95b0-4a1f-810c-6d4b997d367a.jpg" alt="" width="1500" height="1500" loading="lazy">
+                  <img src="/en/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-f477c7b9-95b0-4a1f-810c-6d4b997d367a.jpg" alt="" width="1500" height="1500" loading="lazy">
                 </div>
                 
                 
@@ -401,12 +401,12 @@ get_header();
               <div style="width: 50%;"  class="image-with-text__text-item grid__item">
                 <div class="image-with-text__content image-with-text__content--middle image-with-text__content--desktop-left image-with-text__content--mobile-left image-with-text__content--adapt content-container color-scheme-template--19454951555210__multirow_Rmp8Af color-custom gradient">
                   <p class="image-with-text__text image-with-text__text--caption caption-with-letter-spacing caption-with-letter-spacing--medium"> ČLANAK </p>
-                  <h2 class="image-with-text__heading h2 rte title-with-highlight" style="--hightlight-color:#2e2a39"> Tvoje donje rublje moglo bi ozbiljno utjecati na tvoje zdravlje upravo sada</h2>
+                  <h2 class="image-with-text__heading h2 rte title-with-highlight" style="--hightlight-color:#2e2a39"> Your underwear could be seriously affecting your health right now</h2>
                   <div class="image-with-text__text rte body">
-                    <p>Ako trenutno nosiš pamučne ili druge uobičajene bokserice, pažljivo pročitaj informacije na ovoj stranici.</p>
+                    <p>If you currently wear cotton or other regular boxers, carefully read the information on this page.</p>
                     <p>Ako još uvijek nosiš tradicionalni pamuk ili, još gore, sintetičko rublje od poliestera, riskiraš ozbiljne zdravstvene probleme.</p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Provjeri dostupnost </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Check availability </a>
                 </div>
               </div>
             </div>
@@ -420,7 +420,7 @@ get_header();
             <div class="image-with-text__grid grid grid--gapless grid--1-col grid--2-col-tablet image-with-text__grid--reverse">
               <div  style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_Rmp8Af color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/giphy.gif" alt=""width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/giphy.gif" alt=""width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -434,7 +434,7 @@ get_header();
                     </p>
                     <p>Tvoje preponsko područje je već toplo i vlažno. Tradicionalne tkanine zadržavaju toplinu i vlagu, stvarajući idealno okruženje za razvoj bakterija i gljivica. Ovo nakupljanje topline može smanjiti proizvodnju sperme i potaknuti prekomjerni rast mikroorganizama.</p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Provjeri dostupnost </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Check availability </a>
                 </div>
               </div>
             </div>
@@ -450,7 +450,7 @@ get_header();
             <div class="image-with-text__grid grid grid--gapless grid--1-col grid--2-col-tablet">
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_Rmp8Af color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-ca3ba9de-c742-4d6f-b147-48db13fb3a15.webp" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-ca3ba9de-c742-4d6f-b147-48db13fb3a15.webp" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -469,7 +469,7 @@ get_header();
                       <em>Bokserice NORIKS s ventilacijom i ultra mekim modal-om pomažu da koža ostane hladna, suha i zaštićena.</em>
                     </p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Provjeri dostupnost </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Check availability </a>
                 </div>
               </div>
             </div>
@@ -550,7 +550,7 @@ get_header();
   <summary>Prije i poslije: Što se mijenja s NORIKS-om?</summary>
   <div class="content">
     <p><strong>Prije:</strong> Crvena, iziritirana koža; uporni mirisi; ponavljajuće gljivične/bakterijske infekcije; bolni osipi.</p>
-    <p><strong>Poslije:</strong> Zdrava koža bez iritacija; prirodna otpornost na mirise; manji rizik od infekcija; iznimna udobnost i prozračnost.</p>
+    <p><strong>After:</strong> Healthy skin without irritation; natural odor resistance; lower risk of infections; exceptional comfort and breathability.</p>
   </div>
 </details>
 
@@ -561,7 +561,7 @@ get_header();
       <li><strong>Prirodna antimikrobna zaštita:</strong> bioagenti modala pomažu u borbi protiv bakterija i gljivica.</li>
       <li><strong>Izvrsna prozračnost:</strong> napredan protok zraka pomaže održavati kožu suhom i hladnom.</li>
       <li><strong>Iznimna mekoća:</strong> glađa i tanja vlakna smanjuju trenje.</li>
-      <li><strong>Regulacija temperature:</strong> podržava zdravo temperaturno okruženje.</li>
+      <li><strong>Temperature regulation:</strong> podržava zdravo temperaturno okruženje.</li>
     </ul>
   </div>
 </details>
@@ -597,7 +597,7 @@ get_header();
              
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/image (3).png" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/image (3).png" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -605,14 +605,14 @@ get_header();
               <div style="width: 50%;" class="image-with-text__text-item grid__item">
                 <div class="image-with-text__content image-with-text__content--middle image-with-text__content--desktop-left image-with-text__content--mobile-left image-with-text__content--adapt content-container color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient">
                   <p class="image-with-text__text image-with-text__text--caption caption-with-letter-spacing caption-with-letter-spacing--medium"> ČLANAK </p>
-                  <h2 class="image-with-text__heading h2 rte title-with-highlight" style="--hightlight-color:#121212"> Tvoje donje rublje moglo bi ozbiljno utjecati na tvoje zdravlje upravo sada </h2>
+                  <h2 class="image-with-text__heading h2 rte title-with-highlight" style="--hightlight-color:#121212"> Your underwear could be seriously affecting your health right now </h2>
                   <div class="image-with-text__text rte body">
-                    <p>Tradicionalne tkanine poput poliestera ili pamučnih mješavina mogu iritirati osjetljiva područja i stvoriti idealno okruženje za infekcije. Ne radi se samo o udobnosti — radi se o zaštiti tvog tijela od infekcija, oštećenja kože i dugoročnih zdravstvenih problema.</p>
+                    <p>Traditional fabrics like polyester or cotton blends can irritate sensitive areas and create the ideal environment for infections. It's not just about comfort — it's about protecting your body from infections, skin damage, and long-term health problems.</p>
                     <p>
-                      <strong>Zato NORIKS bokserice nisu samo luksuz, nego zdravstvena nužnost.</strong>
+                      <strong>That's why NORIKS boxers are not just luxury, but a health necessity.</strong>
                     </p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Provjeri dostupnost </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Check availability </a>
                 </div>
               </div>
             </div>
@@ -627,7 +627,7 @@ get_header();
               
               <div style="width: 50%;"  class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/giphy_1.gif" alt="" width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/giphy_1.gif" alt="" width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -638,9 +638,9 @@ get_header();
                   <h2 class="image-with-text__heading h2 rte title-with-highlight" style="--hightlight-color:#121212"> 1) Zadržavanje topline = Savršeno tlo za bakterije i gljivice </h2>
                   <div class="image-with-text__text rte body">
                     <p>Preponsko područje je već toplo i vlažno. Tradicionalni pamuk i poliester zadržavaju toplinu i vlagu — upravo ono što bakterije i gljivice trebaju za razmnožavanje.</p>
-                    <p>Nakupljanje topline može smanjiti stvaranje sperme i negativno utjecati na muško reproduktivno zdravlje.</p>
+                    <p>Heat buildup can reduce sperm production and negatively affect male reproductive health.</p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Kupi NORIKS </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Buy NORIKS </a>
                 </div>
               </div>
             </div>
@@ -653,7 +653,7 @@ get_header();
               
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-43566ca1-bee1-4dfc-bd6e-7637a46aa32d.webp" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/gempages_536398955643143058-43566ca1-bee1-4dfc-bd6e-7637a46aa32d.webp" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -674,7 +674,7 @@ get_header();
                       <strong>-Toplinski osip (miliaria):</strong> Začepljeni kanalići znojnih žlijezda stvaraju bolne, svrbeće izbočine koje se mogu inficirati ako se češu.
                     </p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Provjeri dostupnost </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Check availability </a>
                 </div>
               </div>
             </div>
@@ -687,7 +687,7 @@ get_header();
               
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 124.6875%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/noriks_boxers_gif_1.gif" alt="" width="1500" height="1870" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/noriks_boxers_gif_1.gif" alt="" width="1500" height="1870" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -704,7 +704,7 @@ get_header();
                       <strong>Ultra mekani NORIKS</strong> modal je glađi i tanji od pamuka, smanjuje trenje i štiti osjetljivu kožu.
                     </p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Naruči NORIKS </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Order NORIKS </a>
                 </div>
               </div>
             </div>
@@ -717,7 +717,7 @@ get_header();
               
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 100.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/noriks_boxers_gif_2.gif" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/noriks_boxers_gif_2.gif" alt=""  width="1500" height="1500" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -749,10 +749,10 @@ get_header();
                       </li>
                       <li>Manji rizik od infekcija <br>
                       </li>
-                      <li>Izvanredna udobnost i prozračnost</li>
+                      <li>Exceptional comfort and breathability</li>
                     </ul>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Naruči sada </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Order now </a>
                 </div>
               </div>
             </div>
@@ -764,7 +764,7 @@ get_header();
               
               <div style="width: 50%;" class="image-with-text__media-item image-with-text__media-item--medium image-with-text__media-item--middle image-with-text__media--mobile-full grid__item">
                 <div class="image-with-text__media image-with-text__media--adapt color-scheme-template--19454951555210__multirow_BXHadv color-custom gradient global-media-settings media" style="padding-bottom: 125.0%;">
-                  <img src="/hr/wp-content/themes/noriks/lander2/images/giphy_3.gif" alt=""  width="1500" height="1875" loading="lazy" sizes="(min-width: 1400px) 650px,
+                  <img src="/en/wp-content/themes/noriks/lander2/images/giphy_3.gif" alt=""  width="1500" height="1875" loading="lazy" sizes="(min-width: 1400px) 650px,
                   (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)">
                 </div>
               </div>
@@ -784,7 +784,7 @@ get_header();
                         <strong>Izvanredna mekoća </strong> smanjuje trenje i iritaciju. <br>
                       </li>
                       <li>
-                        <strong>Regulacija temperature </strong> podržava reproduktivno zdravlje. <br>
+                        <strong>Temperature regulation </strong> supports reproductive health. <br>
                       </li>
                     </ul>
                     <p>
@@ -792,7 +792,7 @@ get_header();
 Individualni rezultati mogu se razlikovati. </em>
                     </p>
                   </div>
-                  <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary"> Naruči NORIKS </a>
+                  <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary"> Order NORIKS </a>
                 </div>
               </div>
             </div>
@@ -831,14 +831,14 @@ Individualni rezultati mogu se razlikovati. </em>
         <div class="rich-text content-container color-custom color-scheme-template--19454951555210__rich_text_d3HeA8 gradient rich-text--full-width content-container--full-width section-template--19454951555210__rich_text_d3HeA8-padding">
           <div class="rich-text__wrapper rich-text__wrapper--center page-width">
             <div class="rich-text__blocks center animate-item">
-              <h2 style="margin-top: 25px; font-size: 2.2rem; line-height:1.1;" class="rich-text__heading rte h1 title-with-highlight" style="--hightlight-color:#6d388b"> Pridruži se tisućama koji su već prešli • 70% popusta na prvu narudžbu </h2>
+              <h2 style="margin-top: 25px; font-size: 2.2rem; line-height:1.1;" class="rich-text__heading rte h1 title-with-highlight" style="--hightlight-color:#6d388b"> Join thousands who have already switched • 70% off your first order </h2>
               <div class="rich-text__text rte">
                 <h2 class="second-h2" style=" font-size: 1.7rem; line-height:1.1;" >
                   <strong>6-mjesečno jamstvo protiv rupa • 30-dnevno probno razdoblje bez rizika</strong>
                 </h2>
               </div>
               <div style="margin-top: 15px;" class="rich-text__buttons">
-                <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary">Naruči sada i zaštiti svoje zdravlje</a>
+                <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary">Order now and protect your health</a>
               </div>
               <div class="rich-text__text rte">
                 <p>Više od 2.225.000 muškaraca već je prešlo na NORIKS. Ne čekaj da se pojave osipi, infekcije ili neugodni mirisi.</p>
@@ -886,7 +886,7 @@ Individualni rezultati mogu se razlikovati. </em>
                     <div class="splide__slide__container">
                       <div class="image-slide animate-item animate-item--child" style="--index: 0;">
                         <div class="image-slide__image media media--transparent ratio" style="--ratio-percent: 177.77777777777777%">
-                          <img src="/hr/wp-content/themes/noriks/lander2/images/gif_levo.gif" alt=""  height="768.0" loading="lazy" sizes="(min-width: 1400px)
+                          <img src="/en/wp-content/themes/noriks/lander2/images/gif_levo.gif" alt=""  height="768.0" loading="lazy" sizes="(min-width: 1400px)
                             433px, (min-width: 768px)
                               calc(100vw / 3)
                             ,  calc(100vw / 2) 
@@ -899,7 +899,7 @@ Individualni rezultati mogu se razlikovati. </em>
                     <div class="splide__slide__container">
                       <div class="image-slide animate-item animate-item--child" style="--index: 1;">
                         <div class="image-slide__image media media--transparent ratio" style="--ratio-percent: 177.77777777777777%">
-                          <img src="/hr/wp-content/themes/noriks/lander2/images/gif_na_sredini.gif" alt="" height="768.0" loading="lazy" sizes="(min-width: 1400px)
+                          <img src="/en/wp-content/themes/noriks/lander2/images/gif_na_sredini.gif" alt="" height="768.0" loading="lazy" sizes="(min-width: 1400px)
                             433px, (min-width: 768px)
                               calc(100vw / 3)
                             ,  calc(100vw / 2) 
@@ -912,7 +912,7 @@ Individualni rezultati mogu se razlikovati. </em>
                     <div class="splide__slide__container">
                       <div class="image-slide animate-item animate-item--child" style="--index: 2;">
                         <div class="image-slide__image media media--transparent ratio" style="--ratio-percent: 176.74418604651163%">
-                          <img src="/hr/wp-content/themes/noriks/lander2/images/gif_desno.gif" alt=""  height="760.0" loading="lazy" sizes="(min-width: 1400px)
+                          <img src="/en/wp-content/themes/noriks/lander2/images/gif_desno.gif" alt=""  height="760.0" loading="lazy" sizes="(min-width: 1400px)
                             433px, (min-width: 768px)
                               calc(100vw / 3)
                             ,  calc(100vw / 2) 
@@ -964,11 +964,11 @@ Individualni rezultati mogu se razlikovati. </em>
           <div class="rich-text__wrapper rich-text__wrapper--center page-width">
             <div class="rich-text__blocks center animate-item">
               <div class="rich-text__text rte">
-                <p>Ako želiš pročitati više recenzija i naručiti svoje bokserice, <strong>posjeti njihovu web stranicu</strong>.
+                <p>If you want to read more reviews and order your boxers, <strong>visit their website</strong>.
                 </p>
               </div>
               <div class="rich-text__buttons">
-                <a href="https://noriks.com/hr/product-category/bokserice/" class="button button--primary">Provjeri dostupnost >></a>
+                <a href="https://noriks.com/en/product-category/boxers/" class="button button--primary">Check availability >></a>
               </div>
               <div class="rich-text__text rte">
                 <h6>
@@ -1060,7 +1060,7 @@ Individualni rezultati mogu se razlikovati. </em>
                         ">
                         <p class="announcement-bar__message">
                           <span>
-                            <a style="font-size: 1.2rem;" href="https://noriks.com/hr/product-category/bokserice/" title="">70% popusta danas → 30-dnevno probno razdoblje bez rizika</a>
+                            <a style="font-size: 1.2rem;" href="https://noriks.com/en/product-category/boxers/" title="">70% off today → 30-day risk-free trial period</a>
                           </span>
                         </p>
                       </div>
