@@ -1,0 +1,16 @@
+# Ignore everything in root
+/*
+
+# But keep .gitignore itself
+!.gitignore
+!.cpanel.yml
+
+# But keep wp-content
+!/wp-content/
+
+# Inside wp-content, ignore uploads (images/media)
+/wp-content/uploads/
+
+# Keep themes and plugins (tracked)
+!/wp-content/themes/
+!/wp-content/plugins/
