@@ -1,3 +1,12 @@
+.single .price {
+
+font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+    color: #971b1b;
+    letter-spacing: -0.5px !important;
+
+}
+
 
 /**************    sticky add to card  ********** **************/   
 
@@ -21,6 +30,12 @@
 
 .xoo-wsc-basket  {
     z-index: 9999999 !important;
+
+}
+
+
+.woocommerce-message  {
+    display: none !important;
 
 }
 
@@ -189,6 +204,7 @@ body.single-product {
     .summary {
         width: 100% !important;
         margin-bottom: -2px !important;
+        overflow-x: hidden !important;
     }
     
     .woocommerce-product-gallery {
@@ -197,14 +213,18 @@ body.single-product {
     
     
     .variation-buttons {
-       display: flex;
-        flex-wrap: nowrap;
-        gap: 7px;
-        justify-content: space-between;
-        overflow-x: auto;
+       display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 7px !important;
+        justify-content: space-between !important;
+        overflow-x: hidden !important;
+        overflow: hidden !important;
     }
     .variation-button{
-        padding: 12px 12px;
+        padding: 10px 10px !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+        box-sizing: border-box !important;
     }
     
     .product_title {
@@ -242,7 +262,7 @@ body.single-product {
 
 .why-section {
     background-color: #f4f4f4;
-    padding: 80px 20px;
+    padding: 40px 20px;
 
 }
 
@@ -1313,4 +1333,41 @@ body.single-product {
 
 
 
+
+            .price ins {
+                   
+                   font-size: 25px !important;
+                   font-weight: bold;
+               
+               }
+               
+                 .price del {
+                   
+                   font-size: 25px !important;
+               
+               }
+               
+               .price-badge {
+                   
+                   font-size: 17px !important;
+                   margin-top: -7px !important;
+               }
+               
+
+ @media (max-width: 991px) {
+               
+               
+    
+               
+               #title-buy-now  {
+                       font-size: 35px !important;
+                       letter-spacing: 0.1px !important;
+               
+               }
+               
+               
+               
+             
+               
+           }
 

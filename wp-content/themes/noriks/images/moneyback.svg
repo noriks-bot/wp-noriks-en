@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <circle cx="40" cy="40" r="38" fill="#f5c518" stroke="#c9a00c" stroke-width="3"/>
+  <circle cx="40" cy="40" r="32" fill="#fff" stroke="#c9a00c" stroke-width="1"/>
+  <text x="40" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="bold" fill="#333">100%</text>
+  <text x="40" y="40" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#333">MONEY</text>
+  <text x="40" y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#333">BACK</text>
+  <text x="40" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-size="6" fill="#666">GUARANTEE</text>
+  <path d="M25,18 L32,22 L28,28 Z" fill="#c9a00c" opacity="0.3"/>
+  <path d="M55,18 L48,22 L52,28 Z" fill="#c9a00c" opacity="0.3"/>
+</svg>
