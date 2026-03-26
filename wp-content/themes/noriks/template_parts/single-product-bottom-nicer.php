@@ -56,7 +56,7 @@ WHY PEOPLE CHOOSE STARTER PAKET?
 
 
 </strong><span style="font-weight:normal;">Ante - Pula</span></p>
-        <p class="description">Majica i boxers su soft, lagane i ugodne na koži. Starter pack je najčešći razlog zašto NORIKS brzo postane dio svakodnevne garderobe.
+        <p class="description">The t-shirt and boxers are soft, lightweight, and comfortable on the skin. The starter pack is the most common reason NORIKS quickly becomes part of your everyday wardrobe.
 
 
 
@@ -92,7 +92,7 @@ KOMBINACIJA KOJA SE NOSI SVAKI DAN
 
 
 </strong></p>
-        <p class="description">Majica i boxers napravljene su za nošenje od jutra do večeri, bez prilagođavanja i nelagode. Sve stoji na mjestu, ne steže i omogućuje slobodno kretanje tijekom cijelog days.
+        <p class="description">The t-shirt and boxers are made for wearing from morning to evening, without adjustments or discomfort. Everything stays in place, no tightness, and allows free movement throughout the entire day.
 
 
 </p>
@@ -103,18 +103,18 @@ KOMBINACIJA KOJA SE NOSI SVAKI DAN
 
 
 </strong></p>
-        <p class="description">Kroj t-shirts naglašava gornji dio tijela, dok boxers pružaju dovoljno prostora i stabilnost bez podizanja. Rezultat je siguran, opušten osjećaj i uredan the look u svakoj situaciji.
+        <p class="description">The t-shirt cut accentuates the upper body, while boxers provide enough room and stability without riding up. The result is a confident, relaxed feel and a clean look in any situation.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Quality koju osjetiš odmah
+        <p><strong>Quality you feel right away
 
 
 </strong></p>
-        <p class="description">Materijali su mekani, prozračni i ugodni na koži, bez gubitka oblika nakon pranja. Već pri prvom nošenju jasno je zašto ova kombinacija brzo postaje dio svakodnevne garderobe.
+        <p class="description">The materials are soft, breathable, and comfortable on the skin, without losing shape after washing. From the first wear, it is clear why this combination quickly becomes part of your everyday wardrobe.
 
 
 </p>
@@ -143,27 +143,27 @@ KOMBINACIJA KOJA SE NOSI SVAKI DAN
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-NAJLAKŠI I NAJSIGURNIJI POČETAK
+THE EASIEST AND SAFEST START
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Najmanji mogući rizik
+        <p><strong>Minimal risk
 
 
 </strong></p>
-        <p class="description">Zato što ti omogućuje da upoznaš kvalitetu bez velikog ulaganja.
-Umjesto da kupuješ više komada unaprijed, uzmeš jednu majicu i jedne boxers — taman dovoljno da vidiš kako stoje, kako se nose i kako se osjeća materijal.
+        <p class="description">Because it lets you experience the quality without a big investment.
+Instead of buying multiple pieces upfront, you get one t-shirt and one pair of boxers — just enough to see how they fit, how they wear, and how the material feels.
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Osmišljeno za prvi korak
+        <p><strong>Designed for the first step
 
 
 </strong></p>
-        <p class="description">Starter pack je osmišljen kao prvo iskustvo, ne kao zaliha.
-Dostupan je samo jednom po kupcu i po posebnoj cijeni, kako bi odluka bila jednostavna i bez razmišljanja.
+        <p class="description">The starter pack is designed as a first experience, not as stock.
+Available only once per customer at a special price, so the decision is simple and effortless.
 
 
 </p>
@@ -174,8 +174,8 @@ Dostupan je samo jednom po kupcu i po posebnoj cijeni, kako bi odluka bila jedno
 
 
 </strong></p>
-        <p class="description">Većina muškaraca nakon toga nastavi s NORIKS-om jer shvati difference u fit, comfort i quality.
-Ali prvi korak je ovaj — najmanji rizik, najčišći dojam. 
+        <p class="description">Most men continue with NORIKS after that because they realise the difference in fit, comfort and quality.
+But this is the first step — minimal risk, purest impression. 
 
 </p>
       </div>
@@ -321,27 +321,27 @@ if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id(
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-        ZAŠTO ĆE TI OVA MAJICA POSTATI STANDARD?
+        WHY WILL THIS T-SHIRT BECOME YOUR STANDARD?
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Dizajnirana za stvarni život
+        <p><strong>Designed for real life
 </strong></p>
-        <p class="description">Ova t-shirt napravljena je za cjelodnevno nošenje, od jutra do večeri. Ne traži prilagođavanje ni razmišljanje — jednostavno stoji dobro u svakoj situaciji.
+        <p class="description">This t-shirt is made for all-day wear, from morning to evening. No adjustments or overthinking — it simply looks great in every situation.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Kroj koji razumije tijelo
 </strong></p>
-        <p class="description">Kroj je razvijan da prati liniju tijela bez stezanja i naglašava ono što treba. Rezultat je uredan, samopouzdan the look bez osjećaja nelagode.
+        <p class="description">The cut is developed to follow the body line without tightness and accentuates what matters. The result is a clean, confident look without discomfort.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Osjeti difference already pri prvom nošenju
+        <p><strong>Feel the difference from the first wear
 </strong></p>
-        <p class="description">Materijal je mekan, lagan i prozračan na koži. Nakon prvog nošenja jasno je zašto ova t-shirt brzo postaje ona koju najčešće biraš.
+        <p class="description">The material is soft, lightweight and breathable on the skin. After the first wear, it is clear why this t-shirt quickly becomes your go-to choice.
 </p>
       </div>
     </div>
@@ -409,13 +409,13 @@ endif;
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-        Fleksibilan rez za snažnije noge
+        Flexible cut for stronger legs
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Cjelodnevna udobnost
 </strong></p>
-        <p class="description">Posebno dizajnirano za muškarce s debljim bedrima. Elastični i rastezljivi materijal pruža maksimalnu udobnost bez zatezanja ili neugodnog pojasa. Donje rublje ostaje na mjestu i ne podiže se, pa se možete slobodno kretati all dan.</p>
+        <p class="description">Specially designed for men with thicker thighs. Elastic and stretchy material provides maximum comfort without tightness or an uncomfortable waistband. The underwear stays in place and does not ride up, so you can move freely all day.</p>
       </div>
 
     
@@ -445,13 +445,13 @@ endif;
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-       Manje trošenja i oštećenja
+       Less wear and tear
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Super izdržljivo 💪
+        <p><strong>Super durable 💪
 </strong></p>
-        <p class="description">Zaboravite na stalnu kupovinu poderanog donjeg rublja. NORIKS šortsevi su napravljeni od jačeg of the material – traju duže i štede vam put u trgovinu.
+        <p class="description">Forget about constantly buying torn underwear. NORIKS boxers are made from stronger material – they last longer and save you a trip to the store.
 </p>
       </div>
 
@@ -498,7 +498,7 @@ endif;
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Dečki, dopustite svom međunožju da slobodno diše!
+        <p><strong>Guys, let your crotch breathe freely!
 </strong></p>
         <p class="description">NORIKS donje rublje pruža podršku tijekom cijelog days, a da pritom ne gubi oblik. Nebeski mekan Modal materijal rasteže se i savršeno pristaje na pravim mjestima. Prostor za vaše “gadžete” je prostraniji i fleksibilniji, pa se ne osjećate skučenima.</p>
       </div>
@@ -1482,7 +1482,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
               <div class="avatar">👤</div>
             <?php endif; ?>
             <div class="name"><?php echo esc_html($name); ?></div>
-            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
           </div>
           <div class="content"><?php echo esc_html($text); ?></div>
         </article>
@@ -1519,7 +1519,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
               <div class="avatar">👤</div>
             <?php endif; ?>
             <div class="name"><?php echo esc_html($name); ?></div>
-            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
           </div>
           <?php if (!empty($review['headline'])) : ?>
             <div class="headline"><?php echo esc_html($review['headline']); ?></div>
@@ -1614,7 +1614,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
           <div class="identity">
             ${avatarHtml(avatarUrl)}
             <div class="name">${esc(name)}</div>
-            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
           </div>
           ${headline ? `<div class="headline">${esc(headline)}</div>` : ''}
           <div class="content">${esc(text)}</div>
