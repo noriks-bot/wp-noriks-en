@@ -577,7 +577,7 @@ add_action('woocommerce_review_order_before_submit', function(){
         </button>
         <div id="noriks-coupon-expanded" style="display:none;gap:8px;align-items:center;">
             <input type="text" id="noriks_coupon_code" placeholder="Kupon kod" style="flex:1;padding:10px 14px;border:1px solid #ccc;border-radius:6px;font-size:14px;" />
-            <button type="button" style="padding:10px 20px;background:#000;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;" onclick="noriksApplyCoupon()">Primijeni</button>
+            <button type="button" style="padding:10px 20px;background:#000;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;" onclick="noriksApplyCoupon()">Apply</button>
             <button type="button" style="padding:8px 10px;background:none;border:1px solid #ddd;border-radius:6px;font-size:14px;color:#999;cursor:pointer;line-height:1;" onclick="this.parentElement.style.display='none';document.getElementById('noriks-coupon-btn').style.display='inline-flex';">✕</button>
         </div>
         <div id="noriks-coupon-msg" style="display:none;margin-top:8px;padding:6px 10px;border-radius:4px;font-size:12px;"></div>
@@ -607,10 +607,10 @@ add_action('woocommerce_review_order_before_submit', function(){
                 document.getElementById('noriks_coupon_code').value='';
                 if(window.jQuery)jQuery('body').trigger('update_checkout');
             }
-            btn.textContent='Primijeni';btn.disabled=false;
+            btn.textContent='Apply';btn.disabled=false;
         }).catch(function(){
             msg.style.display='block';msg.style.background='#fde8e8';msg.style.color='#c00';
-            msg.textContent='Greška. Pokušajte ponovo.';btn.textContent='Primijeni';btn.disabled=false;
+            msg.textContent='Error. Please try again.';btn.textContent='Apply';btn.disabled=false;
         });
     }
     </script>
@@ -651,10 +651,10 @@ add_filter('woocommerce_checkout_posted_data', function($data){
 });
 
 /**
- * Validate billing_address_2 (kućni broj) is required
+ * Validate billing_address_2 (house number) is required
  */
 add_action('woocommerce_checkout_process', function(){
     if ( empty( $_POST['billing_address_2'] ) ) {
-        wc_add_notice( 'Molimo unesite kućni broj.', 'error' );
+        wc_add_notice( 'Please unesite house number.', 'error' );
     }
 });

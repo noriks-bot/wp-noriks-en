@@ -6,7 +6,7 @@
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
+ * maintain compatibility. We try to to this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
@@ -24,19 +24,104 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 ?>
 
+<style>
+
+      .features2 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+      }
+
+      .features__row {
+        display: flex;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .feature {
+        flex: 1 1 0;
+        text-align: center;
+      }
+
+      .feature__icon {
+ 
+        margin: 0 auto 0px;
+        display: block;
+        margin-bottom: 0 !important;
+      }
+
+      .feature__text {
+        margin: 0;
+        line-height: 1.1;
+    font-size: 14px;
+    margin: 0;
+        font-family: 'Barlow', sans-serif;
+      }
+
+      /* Responsive: stack nicely on small screens */
+      @media (max-width: 640px) {
+        .features__row {
+     
+        }
+      }
+    </style>
+
+
+ <section class=" features2" aria-label="Prednosti">
+      <div class="features__row">
+        <!-- 1) Truck -->
+        
+        
+          <div class="feature">
+          
+  <img src="<?php echo get_template_directory_uri(); ?>/img/cod_icon_.png" alt="Customer Support Icon" class="feature__icon info-icon">
+          <p class="feature__text">Cash on delivery</p>
+        </div>
+        
+        
+        <div class="feature">
+      <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon1-1.png" alt="Shirt Icon" class="feature__icon info-icon">
+          <p class="feature__text">Try for 30 days, risk-free</p>
+        </div>
+        
+        
+
+        <!-- 2) Smiley -->
+        <div class="feature">
+     
+       
+        <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon3-1.png" alt="Shipping Icon" class="feature__icon info-icon">
+          <p class="feature__text">Free shipping on orders over £70</p>
+        </div>
+
+    
+    
+      </div>
+    </section>
+
+
+
 
 <!-- date and countdown section -->
 
 <div class="shipping-box">
   <h2 id="shipping-window" class="shipping-title"></h2>
   <p class="shipping-sub">
-  Order in the following <span id="midnight-countdown" class="countdown"></span>
+    Order within the next <span id="midnight-countdown" class="countdown"></span>
   </p>
 </div>
 
 <style>
   .shipping-box { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:#222; margin-top: 13px;
-    margin-bottom: 13px; }
+    margin-bottom: 13px; 
+      
+    background: #f4f4f4;
+    padding: 8px 6px 8px 12px;
+    border-radius: 5px;
+          text-align: center;
+      
+      
+      
+  }
   .shipping-title { font-family: 'Roboto', sans-serif;
     font-size: 14px !important;
     font-weight: 700 !important;
@@ -48,7 +133,7 @@ global $product;
 
 <script>
   (function () {
-    const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const weekdays = ['Sunday','poSundayk','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
     // Helper to add business days (skip Saturday/Sunday)
     function addBusinessDays(date, days) {
@@ -74,7 +159,7 @@ global $product;
     }
 
     const windowEl = document.getElementById('shipping-window');
-    windowEl.textContent = `Shipping from ${weekdays[first.getDay()]}  ${formatDayMonth(first)} to ${weekdays[second.getDay()]}, ${formatDayMonth(second)}`;
+    windowEl.textContent = `Delivery from ${weekdays[first.getDay()]}  ${formatDayMonth(first)} to ${weekdays[second.getDay()]}, ${formatDayMonth(second)}`;
 
     // Countdown to midnight
     const cdEl = document.getElementById('midnight-countdown');
@@ -109,8 +194,21 @@ global $product;
 
 
 
+<?php 
+
+$is_singles_boxers = has_term( 'singles-boxers', 'product_cat', $current_product_id );
+
+$is_boxers = has_term( array( 'boxers','orto-boxers', 'boxers-sastavi-paket' ), 'product_cat', $current_product_id ) && ! has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	' ), 'product_cat', $current_product_id );
+
+$is_carape = has_term( array( 'carape', 'zimske-carape' ), 'product_cat', $current_product_id );
+
+$is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	', 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id );
+
+?>
 
 
+
+<?php if( !$is_boxers && !$is_carape ): ?>
 
 
 <!-- my thre icons content -->
@@ -174,6 +272,8 @@ global $product;
        letter-spacing: -0.5px !important;
     }
   </style>
+  
+ <?php endif; ?>
 
 
 <!--
@@ -319,56 +419,140 @@ global $product;
 
  <div class="accordion">
 
+
+    <!-- 1 - detajli -->
     <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><?php echo get_field("singlepp_acc_h_1","options"); ?></h3>
         <div class="toggle">+</div>
       </div>
       <div class="accordion-content">
+          
+         <?php if( !$is_boxers &&  !$is_carape &&   !$is_mixed_bundle ): ?>
+         
+         
+         
         <?php echo get_field("singlepp_acc_t_1","options"); ?>
+        
+        
+        <?php elseif(  has_term( array( 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id )  ): ?>
+        
+        
+        
+                Our premium t-shirts are made from a premium blend of 60% ring-spun cotton and 40% polyester, ensuring an extremely soft wrinkle-resistant fabric.  <br><br>NORIKS boxers are made from a premium blend of 95% modal and 5% elastane, ensuring an extremely soft and stretchy fabric that adapts perfectly to the body. The elastic waistband is designed for optimal fit, providing comfort without constriction   <br>
+        
+        <?php else: ?>
+        
+        
+        
+            <?php echo get_field("__overwrite_sekcije_bellow_1"); ?>
+            
+            
+        <?php endif; ?>
+        
+        
+        
       </div>
     </div>
     
+    
+    
      
-     
+     <!-- 2 - slika tablica velicina -->
      <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
-          
-          
-      <h3><?php echo get_field("singlepp_acc_h_5","options"); ?></h3>
+        <h3>Size chart</h3>
         <div class="toggle">+</div>
       </div>
-      
-      
       <div class="accordion-content">
-        <img src="<?php echo get_field("singlepp_acc_t_size_chart_img","options"); ?>">
+          
+           <?php if( $is_boxers ): ?>
+       
+        
+          <img src="/hr/wp-content/uploads/2025/12/boxers_size.jpg">
+          
+          
+          
+        
+        <?php elseif(  $is_carape ): ?>
+        
+        
+                  <img src="/hr/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg">
+                  
+    <?php elseif(  $is_mixed_bundle ): ?>
+    
+     <img src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png">
+<img src="/hr/wp-content/uploads/2025/12/boxers_size.jpg">
+        
+          <?php else: ?>
+      
+      
+       <img src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png">
+        
+            
+        <?php endif; ?>
       </div>
     </div>
 
+
+    <!-- 3 - savjeti za pranje-->
     <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><?php echo get_field("singlepp_acc_h_2","options"); ?></h3>
         <div class="toggle">+</div>
       </div>
       <div class="accordion-content">
+             <?php if( !$is_boxers &&  !$is_carape &&   !$is_mixed_bundle ): ?>
         <?php echo get_field("singlepp_acc_t_2","options"); ?>
+        
+         
+        <?php elseif(  has_term( array( 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id )  ): ?>
+        
+        
+        
+                         Wash colours with colours.  Gentle wash cycle with cold water.  Dry flat or tumble dry on low heat.  Do not bleach              
+        
+        
+          <?php else: ?>
+            <?php echo get_field("__overwrite_sekcije_bellow_3"); ?>
+        <?php endif; ?>
       </div>
     </div>
 
+
+
+    <!-- 4 returni in menjave -->
     <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><?php echo get_field("singlepp_acc_h_3","options"); ?></h3>
         <div class="toggle">+</div>
       </div>
-      
-      
       <div class="accordion-content">
-           <?php echo get_field("singlepp_acc_t_5","options"); ?>
-      
+       <p></p>
+       We believe so much that you will love NORIKS that you have <b data-stringify-type="bold">30 days</b> for return or free exchange.
+No paperwork, no stress – resolved in a few clicks. </p>
+
+<p>
+    
+
+
+
+  <a href="mailto:info@noriks.com" style="display: flex; align-items: center; text-decoration: none; color: #333;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" style="margin-right: 6px;" viewBox="0 0 16 16">
+      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v.217L8 8.083 0 4.217V4zm0 1.383v6.234l5.803-3.122L0 5.383zM6.761 8.83 0 12.383V12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.383l-6.761-3.553L8 9.917l-1.239-.653zM16 5.383l-5.803 3.112L16 11.617V5.383z"/>
+    </svg>
+    info@noriks.com
+  </a>
+</p>
+<p>Just email us that you want an exchange and <b data-stringify-type="bold">we will sort it out immediately.</b></p>
+       
        
       </div>
     </div>
 
+
+
+    <!-- 5 - infomraicje o dostavi -->
     <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><?php echo get_field("singlepp_acc_h_4","options"); ?></h3>
@@ -378,6 +562,9 @@ global $product;
         <?php echo get_field("singlepp_acc_t_4","options"); ?>
       </div>
     </div>
+    
+    
+    <!-- konec 5 acrodinov -->
 
   </div>
 

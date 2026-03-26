@@ -19,19 +19,656 @@ defined( 'ABSPATH' ) || exit;
 
 get_header( 'shop' );
 
-/**
- * Hook: woocommerce_before_main_content.
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- * @hooked WC_Structured_Data::generate_website_data() - 30
- */
 do_action( 'woocommerce_before_main_content' );
+
+
+
+
+
+
+
+
+
+
 
 ?>
 
+<?php
+function is_active_menu_item( $path ) {
+    $current_url = home_url( add_query_arg( [], $GLOBALS['wp']->request ) );
+
+    return strpos( trailingslashit( $current_url ), trailingslashit( home_url( $path ) ) ) !== false;
+}
+?>
+
+<!-- SECOND LEVEL MENU -->
+<section>
+<nav class="category-menu">
+  <ul>
+    <li class="<?php echo is_shop() ? 'active' : ''; ?>">
+      <a href="/en/shop">Svi produkti</a>
+    </li>
+
+    <li class="<?php echo is_active_menu_item('/product-category/t-shirts') ? 'active' : ''; ?>">
+      <a href="/en/product-category/t-shirts/">T-shirts</a>
+    </li>
+
+    <li class="<?php echo is_active_menu_item('/product-category/boxers') ? 'active' : ''; ?>">
+      <a href="/en/product-category/boxers/">Boxers</a>
+    </li>
+
+    <li class="<?php echo is_active_menu_item('/product-category/sets') ? 'active' : ''; ?>">
+      <a href="/en/product-category/sets/">Sets</a>
+    </li>
+
+    <li class="<?php echo is_active_menu_item('/product-category/carape') ? 'active' : ''; ?>">
+      <a href="/en/product-category/carape/">Socks</a>
+    </li>
+  </ul>
+</nav>
+</section>
 
 <style>
+
+/* make sure nothing clips it */
+
+
+.category-menu {
+  overflow-x: auto;
+  z-index: 9999;
+}
+
+/* the fixed state */
+.category-menu.is-fixed{
+  display: block;
+
+  position: fixed;
+  top: 0;          /* change if you have a fixed header */
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 99999;
+}
+
+/* spacer prevents layout jump */
+.category-menu-spacer{
+  height: 0;
+}
+
+
+    .category-menu {
+  background-color: #f3f3f3;
+  overflow-x: auto;
+}
+
+.category-menu ul {
+  display: flex;
+  gap: 18px;
+  padding: 8px 16px 5px 16px;
+  margin: 0;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.category-menu li {
+  position: relative;
+}
+
+.category-menu a {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #333;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.category-menu li.active a {
+  color: #000;
+}
+
+.category-menu li.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+
+/* DESKTOP ONLY */
+
+@media (min-width: 1024px) {
+
+
+ }
+
+
+@media (min-width: 1024px) {
+    
+    
+    
+  .category-menu {
+    overflow-x: hidden; /* no scroll */
+     display: none;
+
+  }
+
+  .category-menu ul {
+    justify-content: center; /* center items */
+  }
+}
+
+</style>
+
+<script>
+(function () {
+  function setupCategoryMenu() {
+    const menu = document.querySelector(".category-menu");
+    if (!menu) return;
+
+    // avoid re-binding listeners repeatedly
+    if (menu.__catMenuBound) {
+      // if already bound, just recompute the trigger point
+      if (typeof menu.__catMenuRecalc === "function") menu.__catMenuRecalc();
+      return;
+    }
+
+    let spacer = document.querySelector(".category-menu-spacer");
+    if (!spacer) {
+      spacer = document.createElement("div");
+      spacer.className = "category-menu-spacer";
+      menu.parentNode.insertBefore(spacer, menu);
+    }
+
+    const getMenuHeight = () => menu.offsetHeight;
+    let startTop = 0;
+
+    function recalc() {
+      // temporarily show for correct measurement
+      const prevDisplay = menu.style.display;
+      menu.style.display = "block";
+
+      menu.classList.remove("is-fixed");
+      spacer.style.height = "0px";
+
+      startTop = menu.getBoundingClientRect().top + window.scrollY;
+
+      // restore
+      menu.style.display = prevDisplay || "";
+      onScroll();
+    }
+
+    function onScroll() {
+      if (window.scrollY >= startTop) {
+        menu.classList.add("is-fixed");
+        spacer.style.height = getMenuHeight() + "px";
+      } else {
+        menu.classList.remove("is-fixed");
+        spacer.style.height = "0px";
+      }
+    }
+
+    // bind once
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", recalc, { passive: true });
+
+    // mark + expose recalc for ajax refresh
+    menu.__catMenuBound = true;
+    menu.__catMenuRecalc = recalc;
+
+    recalc();
+  }
+
+  // initial
+  window.addEventListener("load", setupCategoryMenu);
+
+  // re-run after ANY jQuery ajax (most Woo filters use this)
+  if (window.jQuery) {
+    jQuery(document).ajaxComplete(function () {
+      setupCategoryMenu();
+    });
+  }
+
+  // optional: support FacetWP (harmless if not installed)
+  document.addEventListener("facetwp-loaded", setupCategoryMenu);
+
+})();
+</script>
+
+<!-- SECOND LEVEL MENU -->
+
+<!-- BANNER DESKTOP + MOBILE -->
+<section class="one-banner-shop" style="position: relative; margin: 0 auto; padding: 0;">
+
+  <img
+    src="<?php echo get_template_directory_uri(); ?>/img/noriks-shop.png"
+    style="display:block; width:100%; min-height:105px; border-radius:0;"
+    alt=""
+  >
+
+  <?php
+  // Default title for shop
+  $banner_title = 'NORIKS';
+
+  // Product category archive
+  if ( is_product_category() ) {
+      $term = get_queried_object();
+
+      if ( $term && ! is_wp_error( $term ) ) {
+
+          // Walk up to the top parent
+          while ( $term->parent !== 0 ) {
+              $term = get_term( $term->parent, 'product_cat' );
+          }
+
+          $banner_title = $term->name;
+      }
+  }
+  ?>
+
+  <h1
+    class="h1"
+    style="
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -50%);
+      font-size:2.5rem;
+      font-weight:800;
+      width:100%;
+      font-family:'Barlow', sans-serif;
+      letter-spacing:0.5px;
+      color:white;
+      text-align:center;
+      text-transform: uppercase;
+    "
+  >
+    <?php echo esc_html( $banner_title ); ?>
+  </h1>
+
+</section>
+
+
+
+
+
+   <style>
+@media (max-width: 991px) {
+.h1   {
+    font-size: 1.5rem !important;
+    
+}
+}
+
+</style>
+    
+    
+    
+
+<!-- BANER DESKTOP + MOBILE -->
+
+<?php
+function is_product_category_or_child( $parent_slug ) {
+    if ( ! is_product_category() ) {
+        return false;
+    }
+
+    $current_term = get_queried_object();
+
+    if ( ! $current_term || empty( $current_term->term_id ) ) {
+        return false;
+    }
+
+    // If it's the parent itself
+    if ( $current_term->slug === $parent_slug ) {
+        return true;
+    }
+
+    // Get parent term by slug
+    $parent_term = get_term_by( 'slug', $parent_slug, 'product_cat' );
+
+    if ( ! $parent_term ) {
+        return false;
+    }
+
+    // Get all ancestors of current category
+    $ancestors = get_ancestors( $current_term->term_id, 'product_cat' );
+
+    return in_array( $parent_term->term_id, $ancestors );
+}
+?>
+
+
+<!-- FILTRI --><?php
+$shop_filter_fields = get_field("shop_filter_fields", "option");
+?>
+
+<section class="shop-filter-buttons">
+    <div>
+        <div>
+
+          <?php
+// SHOP PAGE (/shop)
+if ( is_shop() ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2"]');
+
+// CATEGORY: /boxers + ALL CHILD CATEGORIES
+} elseif ( is_product_category_or_child('boxers') ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2-2"]');
+
+// CATEGORY GROUP
+} elseif (
+    is_product_category_or_child('bestsellers') ||
+    is_product_category_or_child('veliki-paketi') ||
+    is_product_category_or_child('starter-paketi')
+) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-3"]');
+
+// CATEGORY: /t-shirts + children
+} elseif ( is_product_category_or_child('t-shirts') ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2"]');
+
+// CATEGORY: /sets + children
+} elseif ( is_product_category_or_child('sets') ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset"]');
+
+// CATEGORY: /carape + children
+} elseif ( is_product_category_or_child('carape') ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2"]');
+
+// FALLBACK for any other product category
+} elseif ( is_product_category() ) {
+
+    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2"]');
+}
+?>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- yith filter styling --> 
+<style>
+
+
+.storefront-sorting  {
+    display: none !important;
+}
+
+    /* 991 */
+
+
+
+.filter-title {
+    display: none;
+    
+}
+
+    
+    .yith-wcan-reset-filters  {
+ background: #971c1a;
+        border: 1px solid #971c1a;
+        padding: 3px 10px 3px 10px;
+        margin-left: 5px;
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+    
+    
+    
+.yith-wcan-filters .yith-wcan-filter .yith-wcan-dropdown {
+    border: 1px solid #D7D7D7;
+    border-radius: 0px;
+    padding: 3px 10px 3px 10px;
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+}
+
+
+    .filter-item  {
+        
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+         border-radius: 0px !important;
+         padding: 2px 12px 2px 11px !important;
+         border-color: black;
+        
+    }
+    
+    .yith-wcan-filters  {
+        
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        
+    }
+
+    .shop-filter-buttons {
+                position: relative;
+                margin: 0 auto;
+                padding: 32px 15px 30px 15px !important;
+                max-width: 1800px;
+              
+     
+    }
+    
+       .yith-wcan-filter   {
+        margin-bottom: 0 !important;
+        
+    }
+    
+    .yith-wcan-filters {
+        margin-bottom: 0 !important;
+        
+    }
+    
+    .filters-container form {
+        margin-bottom: 0 !important;
+        
+    }
+    
+  
+    
+    .filters-container .filter-tax {
+            width: auto%;
+            display: inline-block;
+    
+    }
+    .filters-container .filter-orderby {
+            width: 240px;
+            display: inline-block;
+            float: right;
+    
+    }
+
+
+
+
+
+@media (max-width: 992px) {
+    
+    .shop-filter-buttons {
+         padding: 15px 15px 43px 15px !important;
+    }
+    
+    .filters-container .filter-tax {
+            width: 100% !important;
+            display: block !important;
+    
+    }
+    .filters-container .filter-orderby {
+            width: 49% !important;
+            display: block !important;
+            float: right;
+    
+    }
+    
+    .filter-item  {
+        
+   
+         padding: 2px 2px 2px 2px !important;
+ 
+    }
+    
+    .yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label {
+    
+        margin-bottom: 8px !important;
+        margin-top:3px !important;
+        
+    }
+    
+
+ .filter-tax   .filter-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0px;
+}
+
+
+.term-sets  .filter-tax .filter-items {
+   display: grid;
+  grid-template-columns: repeat(3, 1fr);
+ gap: 0px;
+}
+
+.post-type-archive  .filter-tax .filter-items {
+   display: grid;
+  grid-template-columns: repeat(3, 1fr);
+ gap: 0px;
+}
+
+.yith-wcan-reset-filters  {
+        margin-left: -1px !important;
+}
+
+.filters-container .filter-tax {
+        margin-bottom: 5px !important;
+}
+
+
+}
+
+
+
+@media (max-width: 410px) {
+ .filters-container .filter-orderby {
+            width: 60% !important;
+            display: block !important;
+            float: right;
+    
+    }
+    
+}
+
+
+.dropdown-wrapper {
+    padding: 5px !important;
+}
+
+
+.dropdown-wrapper  ul {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.shop-filter-buttons .filter-orderby  .active {
+        background: transparent !important;
+        font-weight: bold !important;
+        color: black !important;
+
+}
+
+.shop-filter-buttons .active  a {
+   
+   
+        color: black !important;
+
+}
+
+
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item > a:hover, .yith-wcan-filters .yith-wcan-filter .filter-items .filter-item > label > a:hover{
+   
+   
+        color: black !important;
+
+}
+
+</style>
+<!-- yith filter styling --> 
+
+
+<!-- FILTRI -->
+
+
+
+
+
+
+
+
+
+
+<style>
+@media (min-width: 992px) {
+.filter-title   {
+    display:none;
+    
+}
+}
+
+
+@media (max-width: 991px) {
+.yith-wcan-filters-opener  {
+        
+        margin: 12px auto;
+    display: block;
+        border-radius: 0 !important;
+  width: calc(100% - 30px);
+        margin-left: 15px;
+        margin-right: 15px;
+}
+
+
+
+
+
+}
+
+.shop-filter-buttons {
+   
+}
+
+
+
+/* DESKTOP ONLY */
+@media (min-width: 1024px) {
+
+.shop-filter-buttons .shop-filter-container  {
+   margin-top: 20px  !important;
+   margin-bottom: 20px !important;
+}
+}
+    
+</style>
+
+
+<style>
+
+
+
 
 .product_type_simple {
    display:none;
@@ -46,7 +683,7 @@ do_action( 'woocommerce_before_main_content' );
  .shop-filter-container {
       max-width: 60%;
     margin: 0 auto;
-    padding: 20px 10px;
+    padding: 7px 5px 8px 5px;
     float: left;
    
     }
@@ -57,10 +694,11 @@ do_action( 'woocommerce_before_main_content' );
     justify-content: center;
     font-size: 14px;
     text-decoration: none;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    padding: 1em 1.3em;
+    border: 1px solid black;
+    border-radius: 0px;
+    padding: 4px 9px;
     color: black;
+    background: white;
     margin: 0.25em;
     transition: background 0.3s, color 0.3s;   
     font-family: 'Inter', sans-serif;
@@ -102,7 +740,7 @@ do_action( 'woocommerce_before_main_content' );
     }
     
     .post-type-archive-product  .products {
-      max-width: 1440px;
+      max-width: 1800px;
       margin: 0 auto;
       padding: 0px 20px;
     }
@@ -125,9 +763,9 @@ do_action( 'woocommerce_before_main_content' );
         font-family: 'Roboto', sans-serif;
         text-align: left;
 
-        font-weight: 600 !important;
+        font-weight: normal !important;
     margin-bottom: 0px !important;
-    margin-top: -6px !important;
+    margin-top: 0px !important;
     
     text-align: center;
     }
@@ -182,15 +820,28 @@ do_action( 'woocommerce_before_main_content' );
 
 .shop-filter-buttons .active {
         background:  #f5a623;
+        color: black;
 
       }
+      
+
+.filter-tax .active    a  {
+        
+        color: black !important;
+        font-weight: bold !important;
+
+      }
+      
 
 
 @media (min-width: 767px) {
     
-    .one-banner-shop-mobile {
-        display:none;
+    .one-banner-shop {
+      
+      
     }
+   
+   
 }
 
 
@@ -203,11 +854,11 @@ do_action( 'woocommerce_before_main_content' );
     }
     
     .one-banner-shop {
-        display:none;
+       
     }
 
     .storefront-sorting {
-        display:none;
+       
     }
 
     .shop-filter-container {
@@ -227,105 +878,13 @@ do_action( 'woocommerce_before_main_content' );
     
 }
     
-
-
-
-
-
 </style>
 
 
 
-<section style=" max-width: 1440px;
-    margin: 0 auto; margin-top: 20px;padding: 20px;" class="one-banner-shop">
-    
-    <img style=" display: block; margin: 0 auto; width: 100%;" src="<?php echo get_field("banner-desktop", "options");?> ">
-     
-     <!--<img style=" display: block; margin: 0 auto; width: 100%;" src="<?php echo get_field("banner-mobile", "options");?> ">-->
-    
-    
-    </section>
 
+<!-- Slick carousel init removed -->
 
-<section style=" max-width: 1440px;
-    margin: 0 auto; margin-top: 20px;padding: 0px 20px;" class="one-banner-shop-mobile">
-    
-    
-     
-     <img style=" display: block; margin: 0 auto; width: 100%;" src="<?php echo get_field("banner-mobile", "options");?> ">
-    
-    
-    </section>
-
-
-
-<script>
-  function initMobileSlider() {
-    const isMobile = window.innerWidth < 768; // Change breakpoint as needed
-    const $slider = jQuery('.your-slider');
-
-    if (isMobile && !$slider.hasClass('slick-initialized')) {
-      $slider.slick({
-               dots: false,
-               arrows: false,
-              infinite: false,
-              speed: 300,
-              slidesToShow: 1,
-              centerMode: false,
-              variableWidth: true
-      });
-    } else if (!isMobile && $slider.hasClass('slick-initialized')) {
-      $slider.slick('unslick');
-    }
-  }
-
-  jQuery(document).ready(function () {
-    initMobileSlider();
-    jQuery(window).on('resize', initMobileSlider);
-  });
-</script>
-
-
-
-<style>
-.shop-filter-buttons {
-    margin-left: 10px !important;
-}
-    
-</style>
-
-<?php 
-$shop_filter_fields = get_field("shop_filter_fields", "option");
-$current_url = $_SERVER['REQUEST_URI'];
-
-//var_dump($header_nav);
-?>
-
-<section  class="shop-filter-buttons">
-    
-    <div class="container" style=" max-width: 1440px;
-    margin: 0 auto; width: 100%; display: block;">
-    
-    <div class="shop-filter-container your-slider">
-            <?php if ($shop_filter_fields): ?>
-                <?php foreach ($shop_filter_fields as $item): ?>
-                
-                <?php
-                    // Check if the current URL contains the item's link
-                    $is_active = strpos($current_url, $item['link']) !== false ? 'active' : '';
-                ?>
-                    
-                  <a href="<?php echo $item['link']; ?>" class="button-link <?php echo $is_active; ?>"><?php echo $item['text']; ?></a>
-              <?php endforeach; ?>
-            <?php endif; ?>
-    </div>
-    
-</div>
-
-
-
-    
-</section>
 
 
 

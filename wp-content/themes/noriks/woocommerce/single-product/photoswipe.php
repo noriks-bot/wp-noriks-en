@@ -125,7 +125,49 @@ if ( ! defined( 'ABSPATH' ) ) {
    
    
    
-   
+   .pswp__bg {
+   background: #000000d9 !important;
+}
+
+
+
+.pswp__button2.pswp__button--close {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+        text-transform: uppercase;
+    letter-spacing: 1.3px;
+    color: black;
+}
+
+.pswp__button2.pswp__button--close .close-x  {
+    margin-top: 7px;
+}
+
+.pswp__button2.pswp__button--close .close-x svg {
+    width: 23px;
+    height: 23px;
+    stroke: currentColor;
+}
+
+
+.pswp__button2.pswp__button--close svg,
+.pswp__button2.pswp__button--close .close-x {
+    pointer-events: none !important;
+}
+
+
+.close-x {
+    pointer-events: none !important;
+}
+
+.pswp__button2.pswp__button--close {
+    pointer-events: auto !important;
+    cursor: pointer;
+}
     
 </style>
 
@@ -143,7 +185,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<button class="pswp__button pswp__button--zoom" aria-label="<?php esc_attr_e( 'Zoom in/out', 'woocommerce' ); ?>"></button>
 				<button class="pswp__button pswp__button--fs" aria-label="<?php esc_attr_e( 'Toggle fullscreen', 'woocommerce' ); ?>"></button>
 				<button class="pswp__button pswp__button--share" aria-label="<?php esc_attr_e( 'Share', 'woocommerce' ); ?>"></button>
-				<button class="pswp__button pswp__button--close" aria-label="<?php esc_attr_e( 'Close (Esc)', 'woocommerce' ); ?>"></button>
+				<button class="pswp__button2 pswp__button--close" aria-label="<?php esc_attr_e( 'Close (Esc)', 'woocommerce' ); ?>">Zatvori  <span class="close-x">
+    <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+</span></button>
 				<div class="pswp__preloader">
 					<div class="pswp__preloader__icn">
 						<div class="pswp__preloader__cut">

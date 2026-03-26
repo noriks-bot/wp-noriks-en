@@ -22,22 +22,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
  <style>
     .rating {
-      display: flex;
-      align-items: center;
+   
       font-family: 'Roboto', sans-serif;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
     }
 
     .stars {
       color: #fbbc04;
       font-size: 17px;
       margin-right: 12px;
+      display:inline-block !important;
     }
 
     .reviews {
      font-size: 15px;
     color: #202124;
     font-weight: 500;
+     display:inline;
     }
     .reviews a:hover {
         text-decoration: underline;
@@ -45,16 +46,16 @@ if ( ! defined( 'ABSPATH' ) ) {
   </style>
 
 
-<!--
+
 <div class="rating">
     <div class="stars">
       ★★★★★
     </div>
     <div class="reviews">
-      <a style="color:black;" href="#reviews-section"><?php echo get_field('singlepp_reviews_text_1', 'option'); ?> <?php echo get_field('singlepp_reviews_text_2', 'option'); ?></a>
+      <a style="color:black;" href="#reviews-section">Izvrsno 4.8 | <?php echo get_field('singlepp_reviews_text_1', 'option'); ?> <?php echo get_field('singlepp_reviews_text_2', 'option'); ?></a>
     </div>
   </div>
- -->
+ 
 
 
 

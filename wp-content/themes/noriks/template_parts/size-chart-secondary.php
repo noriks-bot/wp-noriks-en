@@ -16,7 +16,7 @@
 
 /* --- Modal base --- */
 /* Height is AUTO on ALL screens now (desktop same as mobile). */
-#custom-size-chart-modal {
+#custom-size-chart-modal-secondary {
   display: none;              /* hidden by default; shown via .show */
   position: fixed;
   top: 50%; left: 50%;
@@ -51,7 +51,8 @@
 }
 
 /* When opened */
-#custom-size-chart-modal.show { display: block; }
+
+#custom-size-chart-modal-secondary.show { display: block; }
 
 /* --- Mobile tweaks (kept minimal) --- */
 @media (max-width: 768px) {
@@ -72,35 +73,15 @@
 }
 </style>
 
-
-<?php if ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>  
-
-<style>
-
-@media (min-width: 769px) {
-  .size-chart-left  img { 
-      max-width: 50% !important; 
-      margin: 0 auto !important;
-      
-  }
-
-}
-</style>
-
-
-<?php endif; ?>
-
 <!-- Modal HTML -->
-<div id="custom-size-chart-modal" aria-modal="true" role="dialog">
-  <span id="close-size-chart-x" style="position: absolute;
+<div id="custom-size-chart-modal-secondary" aria-modal="true" role="dialog">
+  <span id="close-size-chart-x-secondary" style="position: absolute;
     top: 5px; right: 5px; font-size: 24px; font-weight: bold; cursor: pointer;
     background: black; border-radius: 1px; width: 40px; height: 40px; text-align: center; color: white;">&times;</span>
 
-  <div  style="<?php if ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>  display: block; <?php endif; ?>"
-        class="size-chart-left">
+  <div class="size-chart-left">
       
-      <?php if ( has_term( array( 'bokserice', 'orto-bokserice' , 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() )   && 
-       !has_term( 'black-friday', 'product_cat', get_the_ID() )   ): ?>
+     
       
     <img
     
@@ -110,51 +91,9 @@
       alt="Size Guide">
       
       
+      
        
-      <?php elseif ( has_term( array( 'carape', 'zimske-carape	' ), 'product_cat', get_the_ID() ) ): ?>
-      
-      
-       <img
-    
-    style="margin-top: 70px;margin-bottom: 70px;"
-    
-      src="/hr/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg"
-      alt="Size Guide">
-      
-      
-      <?php elseif ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>
-      
-      
-      
-     <img
-    
-    style="margin-top: 35px;margin-bottom: 0px;"
-    
-      src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png"
-      alt="Size Guide">
-      
-      
-       <img
-    
-    style="margin-top: 0px;margin-bottom: 0px;"
-    
-      src="/hr/wp-content/uploads/2025/12/boxers_size.jpg"
-      alt="Size Guide">
-     
-      
-      
-      <?php else: ?>
-      
-      
-       <img
-    
-    style="margin-top: 70px;margin-bottom: 70px;"
-    
-      src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png"
-      alt="Size Guide">
-      
-      <?php endif; ?>
-      
+       
       
       
   </div>
@@ -162,24 +101,27 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.getElementById("custom-size-chart-modal");
-  const openBtn = document.getElementById("open-size-chart");
-  const closeX = document.getElementById("close-size-chart-x");
+  const modal2 = document.getElementById("custom-size-chart-modal-secondary");
+  const openBtn2 = document.getElementById("open-size-chart-secondary");
+  const closeX = document.getElementById("close-size-chart-x-secondary");
 
   // Open using a class so CSS controls display across breakpoints
-  openBtn?.addEventListener("click", function (e) {
+  openBtn2?.addEventListener("click", function (e) {
     e.preventDefault();
-    modal.classList.add("show");
+    modal2.classList.add("show");
+    
+    console.log("cliclk");
+    
   });
 
   // Close
   closeX?.addEventListener("click", function () {
-    modal.classList.remove("show");
+    modal2.classList.remove("show");
   });
 
   // Optional: close on ESC
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") modal.classList.remove("show");
+    if (e.key === "Escape") modal2.classList.remove("show");
   });
 });
 </script>

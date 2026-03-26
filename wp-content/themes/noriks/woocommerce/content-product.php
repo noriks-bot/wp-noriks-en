@@ -43,6 +43,8 @@ if (empty($shirt_count) || $shirt_count == 0) {
 $tmp_price = 0;
 
 
+
+
 if ($product->is_type('variable')) {
     $tmp_price = $product->get_variation_sale_price('min', true);
 } else {
@@ -50,9 +52,10 @@ if ($product->is_type('variable')) {
 }
 
 $tmp_price = $tmp_price / $shirt_count;
+//$tmp_price = round($tmp_price * 100) / 100; // result: 9.99
+$tmp_price = floor(($tmp_price + 0.00001) * 100) / 100;
 
 
-$tmp_price = ceil($tmp_price * 100) / 100; // result: 18.99
 
 
 
@@ -76,7 +79,33 @@ $topseler_text =  get_field("singlepp_bestseller_text", "options");
  if( $shirt_count != 1): 
 
      if($alt_output == false): 
-      $topseler_text =  get_field("singlepp_priceper_before","options") . " " . $tmp_price . " ".  get_field("singlepp_priceper_after","options"); 
+         
+         
+         $is_boxers = has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id );
+
+         
+         if( $is_boxers ): 
+         
+            
+          
+         
+            if( has_term('black-friday', 'product_cat', $current_product_id ) ): 
+             $topseler_text =  "Zimska ponuda"; 
+             
+            else:
+                 $topseler_text =  get_field("singlepp_priceper_before","options") . " " . $tmp_price . " ".  "€ po boksericama"; 
+            endif;
+         
+         
+         else: 
+             
+              $topseler_text =  get_field("singlepp_priceper_before","options") . " " . $tmp_price . " ".  get_field("singlepp_priceper_after","options"); 
+             
+         endif;
+      
+      
+      // here check bokserice
+      
     else:
     
      endif;
@@ -84,11 +113,13 @@ $topseler_text =  get_field("singlepp_bestseller_text", "options");
  endif; 
  
 
+ 
+
 
 ?>
     
-     <?php if( $shirt_count != 1):  ?>
-      <div class="top-liked"><?php echo $topseler_text; ?></div>
+     <?php if( $shirt_count != 1   ):  ?>
+     <!-- <div class="top-liked">  <?php echo $topseler_text; ?></div>-->
       <?php endif; ?>
       
       
@@ -204,9 +235,10 @@ $topseler_text =  get_field("singlepp_bestseller_text", "options");
   </div>
   -->
   
+    <!--
     <h3 style="font-size: 15px;
     margin-bottom: 7px;
-    font-weight: 500;">NORIKS</h3>
+    font-weight: 500;">NORIKS</h3>-->
 
 	 
 	 <?php
@@ -231,23 +263,18 @@ if (empty($shirt_count) || $shirt_count == 0) {
 $tmp_price = 0;
 
 
+
+
 if ($product->is_type('variable')) {
     $tmp_price = $product->get_variation_sale_price('min', true);
 } else {
     $tmp_price = $product->get_sale_price();
 }
 
-//$tmp_price = $tmp_price / $shirt_count;
+$tmp_price = $tmp_price / $shirt_count;
+//$tmp_price = round($tmp_price * 100) / 100; // result: 9.99
+$tmp_price = floor(($tmp_price + 0.00001) * 100) / 100;
 
-
-
-//$tmp_price = round($tmp_price * 100) / 100; // result: 18.99
-
-
-
-
-//$tmp_price = floor($tmp_price) - 0.01;
-//$tmp_price = round($tmp_price, 2); // ensure 2 decimals
 
 
 
@@ -275,7 +302,12 @@ if( get_field('multipack_option_1', get_the_ID())  == true  ) {
     font-size: 14px;" class="price-badge">
 
     <?php if($alt_output == false): ?>
+    
+    
        <?php echo get_field("singlepp_priceper_before","options"); ?> <?php echo ($tmp_price); ?><?php echo get_field("singlepp_priceper_after","options"); ?> 
+       
+       
+       
     <?php else: ?>
      <?php echo $alt_output_text; ?>
     <?php endif; ?>

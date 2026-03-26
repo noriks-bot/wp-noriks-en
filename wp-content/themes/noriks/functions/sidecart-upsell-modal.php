@@ -75,7 +75,7 @@ function noriks_ajax_add_to_cart() {
     } else {
         // Get WC notices for error message
         $notices = wc_get_notices('error');
-        $msg = !empty($notices) ? strip_tags($notices[0]['notice'] ?? $notices[0]) : 'Greška pri dodavanju';
+        $msg = !empty($notices) ? strip_tags($notices[0]['notice'] ?? $notices[0]) : 'Error adding product';
         wc_clear_notices();
         wp_send_json_error(['message' => $msg]);
     }
@@ -579,7 +579,7 @@ function noriks_upsell_modal_markup() {
                     }, 800);
                 } else if (res.success === false) {
                     $btn.removeClass('adding').text('ADD TO CART');
-                    var msg = (res.data && res.data.message) ? res.data.message : 'Greška pri dodavanju';
+                    var msg = (res.data && res.data.message) ? res.data.message : 'Error adding product';
                     $('#noriks-modal-error').text(msg).show();
                 } else {
                     // Fallback: no fragments but no error either — refresh
@@ -589,7 +589,7 @@ function noriks_upsell_modal_markup() {
                 }
             }).fail(function(xhr) {
                 $btn.removeClass('adding').text('ADD TO CART');
-                $('#noriks-modal-error').text('Greška pri dodavanju').show();
+                $('#noriks-modal-error').text('Error adding product').show();
             });
         });
 

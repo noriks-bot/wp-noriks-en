@@ -56,15 +56,24 @@ global $product;
     justify-content: center;
         margin-left: 0;
     }
+    
+    .tile.active {
+        box-shadow: none !important;
+        border-color: black  !important;
+        border: 1px solid black !important;
+    
+    }
   </style>
 
 
 
-<div style="display:block; margin-bottom: -10px;">
+<div class="whole-price-block" style="display:block; margin-bottom: -10px;">
 <p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?>
 
 
 <?php
+
+$current_product_id = get_the_id();
 
 $shirt_count = get_field('number_of_shirts_in_this_product', $product->get_id());
 $alt_output = false;
@@ -75,8 +84,9 @@ if (empty($shirt_count) || $shirt_count == 0) {
     $shirt_count = 1;
 }
 
-
 $tmp_price = 0;
+
+
 
 
 if ($product->is_type('variable')) {
@@ -86,7 +96,12 @@ if ($product->is_type('variable')) {
 }
 
 $tmp_price = $tmp_price / $shirt_count;
-$tmp_price = ceil($tmp_price * 100) / 100; // result: 18.99
+//$tmp_price = round($tmp_price * 100) / 100; // result: 9.99
+$tmp_price = floor(($tmp_price + 0.00001) * 100) / 100;
+
+
+
+
 
 //$tmp_price = floor($tmp_price) - 0.01;
 //$tmp_price = round($tmp_price, 2); // ensure 2 decimals
@@ -108,18 +123,21 @@ if( get_field('multipack_option_1', get_the_ID())  == true  ) {
 
 
 
+
 ?>
 
-<?php if( $shirt_count != 1): ?>
+
+<?php if(  get_field("single_pp_offer_name" ) != "" && get_field("single_pp_offer_name" ) != null  ): ?>
  <div class="price-badge">
-    <!--<div class="icon">%</div>-->
-    <?php if($alt_output == false): ?>
-       <?php echo get_field("singlepp_priceper_before","options"); ?> <?php echo ($tmp_price); ?> <?php echo get_field("singlepp_priceper_after","options"); ?> 
-    <?php else: ?>
-     <?php echo $alt_output_text; ?>
-    <?php endif; ?>
+   
+   
+       <?php  echo get_field("single_pp_offer_name" ); ?> 
+     
   </div>
- <?php endif; ?>  
+<?php endif; ?>
+ 
+ 
+
   
 </p>
 </div>
@@ -127,32 +145,80 @@ if( get_field('multipack_option_1', get_the_ID())  == true  ) {
 
 <!--druge barve -->
 
-<?php if ($shirt_count == 1 && mb_stripos($product->get_name(), 'Čarape') === false): ?>
+
+
+<?php if ($shirt_count == 1 && mb_stripos($product->get_name(), 'Socks') === false): ?>
 
         
     <section class="color-selections">
         
         
         <section class="option-group">
-  <h2 class="option-title">Barva</h2>
+ <!-- <h2 class="option-title">Color</h2>-->
 
   <?php
-// Query all products from category "sluh-singles"
-$args = array(
-    'post_type'      => 'product',
-    'posts_per_page' => -1, // all products
-    'tax_query'      => array(
-        array(
-            'taxonomy' => 'product_cat',
-            'field'    => 'slug',
-            'terms'    => 'singles', // your category slug
-        ),
-    ),
-     'orderby' => 'date',  // order by publish date (default for products)
-    'order'   => 'ASC',  // reverse order (latest first)
-);
+  
+// Check if current product is in category "singles-boxers"
+$is_singles_boxers = has_term( '1-komad-boxers', 'product_cat', $current_product_id );
 
-$loop = new WP_Query($args);
+$is_singles_t-shirts = has_term( '1-komad-t-shirts', 'product_cat', $current_product_id );
+
+
+
+if ( $is_singles_boxers ) {
+    
+    
+?>
+
+<h2 class="option-title">Color</h2>
+
+
+<?php
+    // Query products from category "singles-boxers"
+    $args = array(
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => 'singles-boxers',
+            ),
+        ),
+        'orderby' => 'date',
+        'order'   => 'ASC',
+    );
+
+} elseif ( $is_singles_t-shirts ) {
+    
+    
+    ?>
+
+<h2 class="option-title">Color</h2>
+
+
+<?php
+
+    // Default → Query products from category "singles"
+    $args = array(
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => 'singles',
+            ),
+        ),
+        'orderby' => 'date',
+        'order'   => 'ASC',
+    );
+}
+
+$loop = new WP_Query( $args );
+
+
+
 if ($loop->have_posts()) : ?>
   <div class="swatch-grid">
     <?php while ($loop->have_posts()) : $loop->the_post(); ?>
@@ -239,10 +305,8 @@ wp_reset_postdata();
 }
 
 .tile.active {
-  border-color: #2563eb;
-  box-shadow:
-    0 6px 16px rgba(0,0,0,0.12),
-    0 0 0 3px rgba(37, 99, 235, 0.3); /* blue glow */
+
+
   pointer-events: none; /* optional: prevent clicking current item */
 }
 
@@ -314,6 +378,45 @@ wp_reset_postdata();
   }
   
   
+  if($prod_id == 2440)  {   // 2+1 ( 3 slots )
+    echo do_shortcode('[inline_bundle_builder products="250,471,483,504,497,1395, 490" slots="3" gratis_slots="3"]');
+    $inline_pack = true;
+  }
+  
+  if($prod_id == 2456)  {   // 2+2 ( 3 slots )
+    echo do_shortcode('[inline_bundle_builder products="250,471,483,504,497,1395, 490" slots="4" gratis_slots="3,4"]');
+    $inline_pack = true;
+  }
+  
+   if($prod_id == 2466)  {   // 1+1 ( 2 slots )
+    echo do_shortcode('[inline_bundle_builder products="250,471,483,504,497,1395, 490" slots="2" gratis_slots="2"]');
+    $inline_pack = true;
+  }
+  
+  // boxers
+  
+  
+  
+   if($prod_id == 2921)  {   // 3 +1
+    echo do_shortcode('[inline_bundle_builder products="2781,2793,2801,2809,2829" slots="4"]');
+    $inline_pack = true;
+  }
+  
+   if($prod_id == 2929)  {   // 5+3
+    echo do_shortcode('[inline_bundle_builder products="2781,2793,2801,2809,2829" slots="8"]');
+    $inline_pack = true;
+  }
+  
+   if($prod_id == 2937)  {   // 7+5 
+    echo do_shortcode('[inline_bundle_builder products="2781,2793,2801,2809,2829" slots="12"]');
+    $inline_pack = true;
+  }
+  
+   if($prod_id == 2944)  {   // 8+7
+    echo do_shortcode('[inline_bundle_builder products="2781,2793,2801,2809,2829" slots="15"]');
+    $inline_pack = true;
+  }
+  
   
 
  ?>
@@ -331,7 +434,7 @@ wp_reset_postdata();
 				//	var_dump($attribute_name);
 						
 						
-						     $size_chart_text = get_field("singlepp_size_chart_text","options");
+						    
 						    
 						    
                             echo ' <a href="#" id="open-size-chart" style="margin-left: 10px;
@@ -350,7 +453,7 @@ wp_reset_postdata();
     vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
         <path d="M11.4124 2.58464L2.08525 11.9118C1.86558 12.1315 1.86558 12.4876 2.08525 12.7073L5.78977 16.4118C6.00944 16.6315 6.3656 16.6315 6.58527 16.4118L15.9124 7.08466C16.1321 6.86499 16.1321 6.50883 15.9124 6.28916L12.2079 2.58464C11.9883 2.36497 11.6321 2.36497 11.4124 2.58464Z" stroke="#111213" stroke-width="0.84375"></path>
         <path d="M9.28125 4.71875L11.5312 6.96875M6.75 7.25L9 9.5M4.21875 9.78125L6.46875 12.0312" stroke="#111213" stroke-width="0.84375"></path>
-      </svg>' . $size_chart_text . '</a>';
+      </svg>Tablica size</a>';
                     
 	
 						

@@ -42,20 +42,18 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 <?php if ( $email_improvements_enabled ) : ?>
 
 
-	<p style="color:black;">Tvoja narudžba je uspješno zaprimljena – hvala ti što si odabrao NORIKS!
-	<br/>
-	Sad pripremamo tvoju majicu i uskoro kreće na put.
+	<p style="color:black;">Your order has been successfully received – thank you for choosing NORIKS!
+	<br/>	<br/>
+	We are now preparing your NORIKS product and it will be on its way soon.
     <br/><br/>
-    Ovo nije još jedana običan majica.<br/>
-    NORIKS je krojen tako da te ne zateže, ne visi, i ne traži da uvlačiš trbuh.<br/><br/>
-    Samo udobnost i dobar osjećaj – cijeli dan.<br/><br/>
+    Just comfort and a great feeling – all day long.<br/><br/>
     
-    Javit ćemo ti čim tvoj paket krene prema tebi.<br/>
-    Ako ti bilo što zatreba – tu smo. 🙂<br/><br/>
+    We will notify you as soon as your package is on its way.<br/>
+    If you need anything – we are here. 🙂<br/><br/>
     
     
-    <strong>Ako ste se zabunili oko veličine, količine ili boje u narudžbi – bez brige!</strong><br/>
-    Odgovorite direktno na ovaj e-mail i javite nam što treba promijeniti prije slanja paketa. Rado ćemo sve brzo srediti.<br/><br/>
+    <strong>If you made a mistake with the size, quantity or colour in your order – no worries!</strong><br/>
+    Reply directly to this email and let us know what needs to be changed before shipping. We will be happy to sort it out quickly.<br/><br/>
     
     NORIKS tim
     </p>
@@ -66,23 +64,23 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 <?php else : ?>
 	<?php /* translators: %s: Order number */ ?>
 	
-			<p style="color:black;">Tvoja narudžba je uspješno zaprimljena – hvala ti što si odabrao NORIKS!
-	<br/>
-	Sad pripremamo tvoju majicu i uskoro kreće na put.
+		
+	<p style="color:black;">Your order has been successfully received – thank you for choosing NORIKS!
+	<br/>	<br/>
+We are now preparing your NORIKS product and it will be on its way soon.
     <br/><br/>
-    Ovo nije još jedana običan majica.<br/>
-    NORIKS je krojen tako da te ne zateže, ne visi, i ne traži da uvlačiš trbuh.<br/><br/>
-    Samo udobnost i dobar osjećaj – cijeli dan.<br/><br/>
+    Just comfort and a great feeling – all day long.<br/><br/>
     
-    Javit ćemo ti čim tvoj paket krene prema tebi.<br/>
-    Ako ti bilo što zatreba – tu smo. 🙂<br/><br/>
+    We will notify you as soon as your package is on its way.<br/>
+    If you need anything – we are here. 🙂<br/><br/>
     
     
-    <strong>Ako ste se zabunili oko veličine, količine ili boje u narudžbi – bez brige!</strong><br/>
-    Odgovorite direktno na ovaj e-mail i javite nam što treba promijeniti prije slanja paketa. Rado ćemo sve brzo srediti.<br/><br/>
+    <strong>If you made a mistake with the size, quantity or colour in your order – no worries!</strong><br/>
+    Reply directly to this email and let us know what needs to be changed before shipping. We will be happy to sort it out quickly.<br/><br/>
     
     NORIKS tim
     </p>
+
 
 	
 <?php endif; ?>

@@ -203,7 +203,7 @@ body.woocommerce-checkout #payment .wc_payment_method > label img {
   width: auto !important;
   margin-left: 8px !important;
 }
-/* Fee badges — "Besplatno" for card & PayPal, price for COD */
+/* Fee badges — "Free" for card & PayPal, price for COD */
 body.woocommerce-checkout #payment .wc_payment_method > label::after {
   content: 'Free' !important;
   display: inline-block !important;
@@ -405,5 +405,5 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
   font-weight: 500 !important;
 }
 
-/* More space between total and Naruči button */
+/* More space between total and Place order button */
 .noriks-order-summary .vigo-checkout-total__sum { margin-bottom: 10px !important; }

@@ -15,7 +15,7 @@ if ( WC()->cart->is_empty() ) return;
 <div class="before_form container container--xs">
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout"
-      action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Plaćanje">
+      action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Payment">
 
   <div class="col2-set" id="customer_details">
     <div class="col-1 clearfix">
@@ -98,7 +98,7 @@ if ( WC()->cart->is_empty() ) return;
 
 <!-- Terms -->
 <div class="agreed_terms_txt">
-  <span class="policy-agreement-obligation">By clicking the button <strong>Naruči</strong> I agree to the order with the obligation to pay.</span><br>
+  <span class="policy-agreement-obligation">By clicking the button <strong>Place order</strong> I agree to the order with the obligation to pay.</span><br>
   <div class="terms-checkbox-and-links">
     <label class="checkbox">
       <input type="checkbox" class="input-checkbox" name="agree_to_checkout_terms" id="agree_to_terms_checkbox" value="1">
@@ -114,7 +114,7 @@ if ( WC()->cart->is_empty() ) return;
 <script>
 jQuery(function($){
   /* Delivery dates — same logic as product page (meta.php) */
-  var days=['nedjelja','ponedjeljak','utorak','srijeda','četvrtak','petak','subota'];
+  var days=['Sunday','poSundayk','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   function addBiz(d,n){var r=new Date(d);while(n>0){r.setDate(r.getDate()+1);if(r.getDay()!==0&&r.getDay()!==6)n--;}return r;}
   var now=new Date(),from=addBiz(now,2),to=addBiz(now,3);
   $('#js-delivery-dates').text(days[from.getDay()]+', '+from.getDate()+'.'+(from.getMonth()+1)+'. - '+days[to.getDay()]+', '+to.getDate()+'.'+(to.getMonth()+1)+'.');

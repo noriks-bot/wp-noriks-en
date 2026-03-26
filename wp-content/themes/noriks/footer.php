@@ -23,12 +23,14 @@
     <h3><?php echo get_field("footer_top_heading_1", "option"); ?></h3>
     <p><?php echo get_field("footer_top_text_1", "option"); ?></p>
   </div>
-  <div class="info-item">
+  <div style="" class="info-item">
     <img src="<?php echo get_field("footer_top_icon_2","option"); ?>" alt="Customer Support Icon" class="info-icon">
     <h3><?php echo get_field("footer_top_heading_2", "option"); ?></h3>
     <p><?php echo get_field("footer_top_text_2", "option"); ?></p>
+    
+    
   </div>
-  <div class="info-item">
+  <div style="" class="info-item">
     <img src="<?php echo get_field("footer_top_icon_3","option"); ?>" alt="Shipping Icon" class="info-icon">
     <h3><?php echo get_field("footer_top_heading_3", "option"); ?></h3>
     <p><?php echo get_field("footer_top_text_3", "option"); ?></p>
@@ -37,69 +39,7 @@
 </section>
 	
 	
-<style>
-
-.info-items-container {
- max-width: 1440px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
- display: flex;
-  justify-content: space-between;
-  background-color: #f4f4f4;
-  padding: 40px 20px;
-}
-    
-    .info-banner {
-
-  background-color: #f4f4f4;
-}
-
-.info-item {
-  flex: 1;
-  text-align: center;
-  padding: 0 20px;
-  border-right: 1px solid #ddd;
-  margin-bottom: 10px;
-}
-
-.info-item:last-child {
-  border-right: none;
-}
-
-.info-icon {
-  width: 50px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-}
-
-.info-item h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #222223;
-  margin-bottom: 10px;
-}
-
-.info-item p {
-  font-size: 1rem;
-  color: #333;
-  margin: 0;
-}
-
-
-@media (max-width: 768px) {
-    
-    .info-items-container {
- flex-direction: column;
-    align-items: center; /* optional: centers items horizontally */
-}
-    
-    .info-item {
-
-  border-right: none;
-}
-}
-</style>
+<!-- Info banner styles moved to css/footer.css -->
 
 
 
@@ -128,7 +68,7 @@
 			?>
 	    
 	    
-  <div class="footer-top">
+  <div style="display:none;" class="footer-top">
     <h2 style="display: inline; color: white; "class="footer-slogan"><?php echo get_field("footer_midle_socialtext", "option"); ?></h2>
    
    
@@ -164,48 +104,19 @@
     
     
     <!-- Column 1: Newsletter (larger) -->
-    <div class="footer-col newsletter-col">
-      <div class="newsletter">
+    <!-- Column 2: More Info -->
+    <div class="footer-col">
+      <div class="link-section">
+
+        <a style="margin-top:-10px;" href="<?php echo home_url(); ?>">
+        <span style="color: white; font-family: 'Roboto', sans-serif; font-size: 33px; font-weight: bold; letter-spacing: 1.75px;">NORIKS</span>
        
-       
-      
-<form id="subscribe-form">
-  <h3><?php echo get_field("footer_midle_col1_header", "option"); ?></h3>
-  <p><?php echo get_field("footer_midle_col1_t1", "option"); ?></p>
-  <input type="email" id="subscriber-email" required placeholder="<?php echo get_field("footer_midle_col1_t2", "option"); ?>">
-  <button type="submit" class="subscribe-button">
-    <?php echo get_field("footer_midle_col1_t3", "option"); ?>
-  </button>
-  <p id="subscribe-message" style="display:none; color: green; margin-top: 10px;">Uspješno ste se pretplatili.</p>
-</form>
-
-<script>
-  document.getElementById("subscribe-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent page reload
-
-    const emailInput = document.getElementById("subscriber-email");
-    const message = document.getElementById("subscribe-message");
-
-    if (emailInput.checkValidity()) {
-      // Show the success message
-      message.style.display = "block";
-
-      // Optional: Clear the input
-      emailInput.value = "";
-    } else {
-      emailInput.reportValidity(); // Show browser validation message
-    }
-  });
-</script>
-                
-        <!-- SqualoMail.com Subscription Form -->
-        <!--
-        <div id="sqm_form_15"></div>
-        <script type="application/javascript" src="https://6096.squalomail.net/forms/15/subscribe.js?v=1" async></script>
-       -->
-       
+      </a>
+        
+              <p class="footer-brand-dec" style="padding-right: 100px; font-size:12px;" >NORIKS was created to solve a simple but often neglected problem: men deserve clothing that truly fits.
+Born from frustration with short, tight, and poorly tailored basics, NORIKS designs timeless pieces for a stronger build — longer, more comfortable, and thoughtfully crafted where it matters most. 
+</p>
       </div>
-   
     </div>
     
     
@@ -270,7 +181,7 @@
     
   </div>
 
-  <div class="footer-bottom">
+  <div style="display:none;" class="footer-bottom">
     <p style="display: inline;
     text-align: left; color: white;
     float: left;">Copyright © 2025 NORIKS BRAND</p>
@@ -286,320 +197,7 @@
   </div>
 </footer>
 
-<style>
-
-.social-icons svg {
-   width: 20px;
-   height: 20px;
-   color: white;
-}
-
-.footer {
-  background-color: black;
-  color: white;
-  padding: 40px 20px;
-  font-family: 'Inter', sans-serif;
-}
-
-.footer-top {
-  text-align: center;
-  margin-bottom: 30px;
-  border-bottom: 1px solid white;
-  padding-bottom: 33px;
-}
-
-.footer-slogan {
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 10px;
-      margin-right: 6px;
-   color: white !important;
-}
-
-.social-icons img {
-width: 22px;
-    height: 22px;
-    margin: 0 2px;
-    vertical-align: sub;
-    display: inline-block;
-}
-
-.footer-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-.newsletter {
-  flex: 1;
-padding-right: 100px;
-  margin-bottom: 40px;
-  color: white !important;
-}
-
-.newsletter h3 {
-  font-size: 20px;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 10px;
-   color: white !important;
-}
-
-.newsletter p {
-  font-size: 15px;
-  margin-bottom: 20px; color: white !important;
-}
-
-.newsletter input {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 6px;
-  background: #27405F;
-  color: white;
-}
-
-.newsletter input::placeholder {
-  color: #b5c7da;
-}
-
-.subscribe-button {
-  width: 100%;
-  background: #496d8f !important;
-  border: none;
-  color: white;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.subscribe-button img {
-  width: 18px;
-  margin-right: 8px;
-}
-
-.footer-links {
-  display: flex;
-  flex: 2;
-  flex-wrap: wrap;
-  gap: 50px;
-}
-
-.link-section {
-  min-width: 150px;
-}
-
-.link-section h4 {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 12px;
-  color: white;
-  
-}
-
-.link-section a {
-  display: block;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
-  margin-bottom: 8px;
-   color: white !important;
-}
-
-.link-section a:hover {
-  text-decoration: underline;
-}
-
-.link-section p {
-  font-size: 14px;
-  margin-bottom: 10px;
-  line-height: 1.4;
-   color: white !important;
-}
-
-.footer-bottom {
- border-top: 1px solid white;
-    margin-top: -10px;
-    padding-top: 40px;
-    padding-left: 30px;
-    padding-right: 80px;
-    text-align: center;
-    padding-bottom: 20px !important;
-}
-
-.footer-bottom p {
-  font-size: 13px;
-   color: white !important;
-}
-
-.payment-icons img {
-  height: 28px;
-  margin: 0 5px;
-  vertical-align: middle;
-}
-
-.inline-list  {
-list-style: none;
-list-style-type: none;
-margin: 0;
-}
-
-.inline-list li {
- display: inline;
-}
-.footer-container {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 25px 0px  15px 0px;
-}
-
-.footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: space-between;
-}
-
-.footer-col {
-  flex: 1 1 220px; /* Default column */
-  min-width: 220px;
-}
-
-.newsletter-col {
-  flex: 2 1 450px; /* Newsletter is bigger */
-}
-
-.newsletter h3 {
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 15px;
-}
-
-.newsletter p {
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-
-.newsletter input {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 0px;
-  background: #27405F;
-  color: white;
-}
-
-.newsletter input::placeholder {
-  color: #b5c7da;
-}
-
-.subscribe-button {
-  width: 100%;
-  background: #496d8f !important;
-  border: none;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
-  border-radius: 0px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.subscribe-button img {
-  width: 18px;
-  margin-right: 8px;
-}
-
-.link-section h4 {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 15px;
-}
-
-.link-section a, 
-.link-section p {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: white;
-  text-decoration: none;
-}
-
-.link-section a:hover {
-  text-decoration: underline;
-}
-
-/* Mobile responsive */
-
-@media (max-width: 768px) {
-  .footer-row {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .footer-col, 
-  .newsletter-col {
-    width: 100%;
-    text-align: left;
-      flex: 2;
-  }
-  
-  .newsletter{
-       padding-right: 0;
-       margin-bottom: 0;
-  }
-  
-  .social-icons {
-      display: block !important;
-    margin-top: 20px !important;
-  }
-  
-  .footer-container {
-           padding: 0 0px 15px 0px;
-    }
-    
-    .newsletter-col {
-        flex: 2;
-    }
-    
-    .footer-bottom {
-    margin-top: 15px;
-    }
-    
-    .payment-icons {
-        display: none !important;
-    }
-  
-    .footer-col {
-       text-align:left;
-    }
-        .footer-col {
-       text-align:left;
-    }
-        .footer-col {
-       text-align:left;
-    }
-    
-    .footer-bottom {
- 
-    padding-left: 7px;
-    }
-  
-}
-
-</style>
+<!-- Footer styles moved to css/footer.css -->
 
 
 
