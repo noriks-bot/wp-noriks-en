@@ -1,6 +1,6 @@
 
 <section class="new-video-rewies">
-  <h2 class="new-video-rewies__title">See how others love their NORIKS boxers</h2>
+  <h2 class="new-video-rewies__title">See why others love their NORIKS Boxers</h2>
 
   <div class="new-video-rewies__slider">
 
