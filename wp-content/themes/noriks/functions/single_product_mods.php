@@ -2,9 +2,11 @@
 
 
 // Append plain-text price to the single Add to Cart button (works for simple + variable).
+
 add_filter( 'woocommerce_product_single_add_to_cart_text', 'my_add_price_to_button_text', 99, 2 );
 
 function my_add_price_to_button_text( $text, $prod = null ) {
+
     // Fallback to global $product if the filter didn't pass it
     if ( ! $prod || ! is_a( $prod, 'WC_Product' ) ) {
         global $product;
@@ -15,6 +17,11 @@ function my_add_price_to_button_text( $text, $prod = null ) {
         }
     }
 
+    // If product is in category "orto", return default text (unchanged)
+    if ( has_term( 'orto', 'product_cat', $prod->get_id() ) ) {
+        return $text;
+    }
+
     $price_text = '';
 
     if ( $prod->is_type( 'simple' ) ) {
@@ -23,18 +30,13 @@ function my_add_price_to_button_text( $text, $prod = null ) {
         if ( $display_price !== '' && $display_price !== null ) {
             $price_text = wp_strip_all_tags( wc_price( $display_price ) );
         }
+
     } elseif ( $prod->is_type( 'variable' ) ) {
         // Show the MIN variation price (clean text)
         $min_var_price = $prod->get_variation_price( 'min', true );
         $display_min   = wc_get_price_to_display( $prod, array( 'price' => $min_var_price ) );
         $price_text    = wp_strip_all_tags( wc_price( $display_min ) );
 
-        // If you prefer a range, replace the 3 lines above with:
-        // $min_var_price = $prod->get_variation_price( 'min', true );
-        // $max_var_price = $prod->get_variation_price( 'max', true );
-        // $price_text = wp_strip_all_tags( wc_price( wc_get_price_to_display( $prod, array( 'price' => $min_var_price ) ) ) )
-        //             . ' - ' .
-        //             wp_strip_all_tags( wc_price( wc_get_price_to_display( $prod, array( 'price' => $max_var_price ) ) ) );
     } else {
         // Leave other product types unchanged
         return $text;
@@ -53,10 +55,27 @@ function my_add_price_to_button_text( $text, $prod = null ) {
 
 
 
+// Change only the sticky bar button (text + href) on single product pages.
+add_action( 'wp_footer', function () {
+	if ( ! is_product() ) return; ?>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+	  var btn = document.querySelector('.storefront-sticky-add-to-cart__content-button');
+	  if (!btn) return;
+	  btn.textContent = 'Back to selection';
+	  btn.setAttribute('href', '#title-buy-now'); // put your desired URL here
+	});
+	</script>
+<?php
+} );
+
+
+
 
 
 add_action( 'woocommerce_before_variations_form', function() {
     get_template_part( 'template_parts/size-chart-modal' );
+    get_template_part( 'template_parts/size-chart-secondary' );
 });
 
 

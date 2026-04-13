@@ -88,7 +88,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
     
     
     <!-- !!!!!!     COUNTDOWN    TIMER   !!! --!>
-                <!-- CART – RESERVATION NOTICE -->
+                <!-- KOŠARICA – OBAVIJEST O REZERVACIJI -->
                 <div class="wc-reserve-note" id="wc-reserve-note" role="status" aria-live="polite">
                   <span class="wc-reserve-note__icon" aria-hidden="true">
                     <!-- ikona "i" -->
@@ -100,7 +100,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                   </span>
                   <span class="wc-reserve-note__text">
                     Please hurry! Someone just ordered one of the products in your cart. 
-                    Reservation valid for only <strong id="wc-reserve-timer">10:00</strong> minutes.
+                    Rezervacija vrijedi još samo <strong id="wc-reserve-timer">10:00</strong> minuta.
                   </span>
                 </div>
                 
@@ -137,11 +137,11 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                 </style>
                 
                 <script>
-                /* Countdown 10 minutes */
+                /* Countdown 10 minuta */
                 (function () {
                   var DISPLAY_ID = 'wc-reserve-timer';
                   var STORAGE_KEY = 'wcReserveStart';
-                  var LIMIT_MS = 10 * 60 * 1000; // 10 minutes
+                  var LIMIT_MS = 10 * 60 * 1000; // 10 minuta
                   var display = document.getElementById(DISPLAY_ID);
                   if (!display) return;
                 
@@ -373,7 +373,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
  */
 
 
-$TRIGGER_CATEGORY_SLUGS = array( 'boxers', 'boxers', 'singles-boxers', 'orto-boxers', 't-shirts-i-boxers-paketi', 'black-friday' );
+$TRIGGER_CATEGORY_SLUGS = array( 'bokserice', 'boxers', 'singles-boxers', 'orto-bokserice', 'majice-i-bokserice-paketi', 'black-friday' );
 
 $UPSELL_ID_CAT  = 4154;  // ID1 (when category match)
 $UPSELL_ID_ELSE = 4162;  // ID2 (when NO category match) <-- change 999 to your real product id
@@ -479,7 +479,7 @@ $img_id     = $display_obj->get_image_id();
 $upsell_img = $img_id ? wp_get_attachment_image_url( $img_id, 'woocommerce_thumbnail' ) : wc_placeholder_img_src('woocommerce_thumbnail');
 
 $desc = wp_strip_all_tags( $display_obj->get_short_description() );
-if ( ! $desc ) $desc = 'A great addition to your order.';
+if ( ! $desc ) $desc = 'Odličen dodatek k tvoji narudžbi.';
 
 $price_pill = wp_strip_all_tags( wc_price( $display_obj->get_price() ) );
 
@@ -875,7 +875,7 @@ img.emoji {
 
         <div class="upsell-actions">
           <button type="button" class="upsell-add-btn" id="upsell-add-btn">
-            <span id="upsell-btn-text"><?php echo $upsell_in_cart ? 'DODANO' : 'Add u cart'; ?></span>
+            <span id="upsell-btn-text"><?php echo $upsell_in_cart ? 'ADDED' : 'Add to cart'; ?></span>
           </button>
 
           <button type="button" class="upsell-remove-btn" id="upsell-remove-btn" <?php echo $upsell_in_cart ? '' : 'style="display:none"'; ?>>
@@ -888,7 +888,7 @@ img.emoji {
 
     <div class="upsell-loader" aria-hidden="true">
       <div class="upsell-loader__dots"><span></span><span></span><span></span></div>
-      <div class="upsell-loader__text">Processing…</div>
+      <div class="upsell-loader__text">Obrađujem…</div>
     </div>
   </div>
 
@@ -958,7 +958,7 @@ img.emoji {
       if (removeBtn) removeBtn.style.display = isAdded ? 'inline-flex' : 'none';
 
       setOptionsDisabled(isAdded);
-      if (btnText) btnText.textContent = isAdded ? 'DODANO' : 'Add u cart';
+      if (btnText) btnText.textContent = isAdded ? 'ADDED' : 'Add to cart';
     }
 
     function clearAttrHiddenInputs(){
@@ -1155,7 +1155,7 @@ img.emoji {
 
           if (type === 'variable') {
             if (!hasAllRequiredSelections()) {
-              alert('Select all options (e.g. size) before adding.');
+              alert('Odaberi sve opcije (npr. veličinu) prije dodavanja.');
               checkbox.checked = false;
               syncAddedUI(false);
               setBusy(false);
@@ -1192,7 +1192,7 @@ img.emoji {
           if (!res.ok || data?.error) {
             checkbox.checked = false;
             syncAddedUI(false);
-            alert('Ne mogu dodati product. Provjeri odabrane opcije (varijacije) i dostupnost.');
+            alert('Ne mogu dodati proizvod. Provjeri odabrane opcije (varijacije) i dostupnost.');
             setBusy(false);
             return;
           }
@@ -1256,7 +1256,7 @@ img.emoji {
 
       } catch(e){
         console.error(e);
-        alert('Something went wrong. Check DevTools → Network.');
+        alert('Nešto je pošlo po zlu. Pogledaj DevTools → Network.');
         checkbox.checked = !checkbox.checked;
         syncAddedUI();
         setBusy(false);

@@ -88,7 +88,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
     
     
     <!-- !!!!!!     COUNTDOWN    TIMER   !!! --!>
-                <!-- CART – RESERVATION NOTICE -->
+                <!-- KOŠARICA – OBAVIJEST O REZERVACIJI -->
                 <div class="wc-reserve-note" id="wc-reserve-note" role="status" aria-live="polite">
                   <span class="wc-reserve-note__icon" aria-hidden="true">
                     <!-- ikona "i" -->
@@ -100,7 +100,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                   </span>
                   <span class="wc-reserve-note__text">
                     Please hurry! Someone just ordered one of the products in your cart. 
-                    Reservation valid for only <strong id="wc-reserve-timer">10:00</strong> minutes.
+                    Rezervacija vrijedi još samo <strong id="wc-reserve-timer">10:00</strong> minuta.
                   </span>
                 </div>
                 
@@ -137,11 +137,11 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                 </style>
                 
                 <script>
-                /* Countdown 10 minutes */
+                /* Countdown 10 minuta */
                 (function () {
                   var DISPLAY_ID = 'wc-reserve-timer';
                   var STORAGE_KEY = 'wcReserveStart';
-                  var LIMIT_MS = 10 * 60 * 1000; // 10 minutes
+                  var LIMIT_MS = 10 * 60 * 1000; // 10 minuta
                   var display = document.getElementById(DISPLAY_ID);
                   if (!display) return;
                 

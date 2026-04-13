@@ -49,7 +49,7 @@ get_header(); ?>
     <!--<p class="hero__eyebrow">NOVO: NORIKS </p>-->
     <h1 class="hero__title">The t-shirt that solves all problems.</h1>
 
-    <a class="hero__btn" href="/en/shop">KUPUJTE SADA</a>
+    <a class="hero__btn" href="/en/shop">SHOP NOW</a>
   </div>
 </section>
 
@@ -171,10 +171,10 @@ get_header(); ?>
   
   <section class="collections">
   <div class="collections__header">
-    <h2 class="collections__title">Kupujte po kolekciji</h2>
+    <h2 class="collections__title">Shop by Collection</h2>
 
     <a class="collections__cta" href="/en/shop">
-      Svi produkti <span aria-hidden="true">›</span>
+      All Products <span aria-hidden="true">›</span>
     </a>
   </div>
 
@@ -183,7 +183,7 @@ get_header(); ?>
     <a class="collection-card" href="/en/product-category/t-shirts/">
       <div class="collection-card__media">
         <img
-          src="<?php echo get_template_directory_uri(); ?>/img/noriks-t-shirts.jpeg"
+          src="<?php echo get_template_directory_uri(); ?>/img/noriks-majice.jpeg"
           alt="Crew neck t-shirt"
         />
       </div>
@@ -191,10 +191,10 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">T-shirts</h3>
+            <h3 class="collection-card__name">T-Shirts</h3>
           </div>
           <p class="collection-card__desc">
-           Udobnost cijeli dan. Bez stezanja.
+           All-day comfort. No tightness.
           </p>
         </div>
 
@@ -203,7 +203,7 @@ get_header(); ?>
     </a>
 
     <!-- Card 2 -->
-    <a class="collection-card" href="/en/product-category/boxers/">
+    <a class="collection-card" href="/en/product-category/bokserice/">
       <div class="collection-card__media">
         <img
           src="<?php echo get_template_directory_uri(); ?>/img/noriks-boksarice.jpeg"
@@ -214,10 +214,10 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">Boxers</h3>
+            <h3 class="collection-card__name">Bokserice</h3>
           </div>
           <p class="collection-card__desc">
-          Soft. Breathable. Reliable.
+          Mekane. Prozračne. Pouzdane.
 
           </p>
         </div>
@@ -227,10 +227,10 @@ get_header(); ?>
     </a>
 
     <!-- Card 3 -->
-    <a class="collection-card" href="/en/product-category/sets/">
+    <a class="collection-card" href="/en/product-category/kompleti/">
       <div class="collection-card__media">
         <img
-          src="<?php echo get_template_directory_uri(); ?>/img/noriks-sets.jpeg"
+          src="<?php echo get_template_directory_uri(); ?>/img/noriks-kompleti.jpeg"
           alt="Long sleeve shirt"
         />
       </div>
@@ -238,7 +238,7 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">Sets</h3>
+            <h3 class="collection-card__name">Kompleti</h3>
        
           </div>
           <p class="collection-card__desc">
@@ -669,7 +669,7 @@ a:hover {
                   if ( $alt_output == false ):
 
                     $current_product_id = $product->get_id();
-                    $is_boxers = has_term( array('boxers','boxers-sastavi-paket'), 'product_cat', $current_product_id );
+                    $is_boxers = has_term( array('bokserice','bokserice-sastavi-paket'), 'product_cat', $current_product_id );
 
                     if ( $is_boxers ):
                       if ( has_term('black-friday', 'product_cat', $current_product_id ) ):

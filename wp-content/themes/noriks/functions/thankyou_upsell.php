@@ -53,15 +53,29 @@ function noriks_set_cod_primary_hold( $order_id ) {
 
     $order->update_status( 'primary-hold', 'Upsell window: 5 min hold for post-purchase offers.' );
 
-    // Schedule auto-transition to processing after 5 minutes
+    // Schedule auto-transition to processing after 5 minutes.
+    // Use Action Scheduler when available because it is more reliable than plain WP-Cron.
     if ( ! wp_next_scheduled( 'noriks_primary_hold_to_processing', array( $order_id ) ) ) {
         wp_schedule_single_event( time() + 300, 'noriks_primary_hold_to_processing', array( $order_id ) );
+    }
+
+    if ( function_exists( 'as_next_scheduled_action' ) && function_exists( 'as_schedule_single_action' ) ) {
+        if ( ! as_next_scheduled_action( 'noriks_primary_hold_to_processing', array( 'order_id' => $order_id ), 'noriks-primary-hold' ) ) {
+            as_schedule_single_action( time() + 300, 'noriks_primary_hold_to_processing', array( 'order_id' => $order_id ), 'noriks-primary-hold' );
+        }
     }
 }
 
 // Auto-transition: primary-hold → processing after 5 min
 add_action( 'noriks_primary_hold_to_processing', 'noriks_transition_to_processing' );
 function noriks_transition_to_processing( $order_id ) {
+    if ( is_array( $order_id ) ) {
+        $order_id = isset( $order_id['order_id'] ) ? absint( $order_id['order_id'] ) : 0;
+    }
+
+    $order_id = absint( $order_id );
+    if ( ! $order_id ) return;
+
     $order = wc_get_order( $order_id );
     if ( ! $order ) return;
 
@@ -72,13 +86,46 @@ function noriks_transition_to_processing( $order_id ) {
 }
 
 
-// ─── FAILSAFE: sweep stuck primary-hold orders on every page load ────────
-// wp_cron depends on page visits — this catches any orders that slipped through
+// ─── FAILSAFE: scheduled background sweep for stuck primary-hold orders ───
 
-add_action( 'init', 'noriks_failsafe_primary_hold_sweep' );
+add_filter( 'cron_schedules', 'noriks_add_five_minute_cron_schedule' );
+function noriks_add_five_minute_cron_schedule( $schedules ) {
+    if ( ! isset( $schedules['noriks_every_five_minutes'] ) ) {
+        $schedules['noriks_every_five_minutes'] = array(
+            'interval' => 300,
+            'display'  => __( 'Every 5 Minutes', 'textdomain' ),
+        );
+    }
+
+    return $schedules;
+}
+
+add_action( 'init', 'noriks_schedule_primary_hold_failsafe_cron' );
+function noriks_schedule_primary_hold_failsafe_cron() {
+    if ( wp_next_scheduled( 'noriks_primary_hold_failsafe_cron' ) ) {
+        // Keep Action Scheduler fallback in place even if WP-Cron is already scheduled.
+        if ( function_exists( 'as_next_scheduled_action' ) && ! as_next_scheduled_action( 'noriks_primary_hold_failsafe_cron', array(), 'noriks-primary-hold' ) ) {
+            as_schedule_recurring_action( time() + 300, 300, 'noriks_primary_hold_failsafe_cron', array(), 'noriks-primary-hold' );
+        }
+        return;
+    }
+
+    wp_schedule_event( time() + 300, 'noriks_every_five_minutes', 'noriks_primary_hold_failsafe_cron' );
+
+    if ( function_exists( 'as_next_scheduled_action' ) && function_exists( 'as_schedule_recurring_action' ) ) {
+        if ( ! as_next_scheduled_action( 'noriks_primary_hold_failsafe_cron', array(), 'noriks-primary-hold' ) ) {
+            as_schedule_recurring_action( time() + 300, 300, 'noriks_primary_hold_failsafe_cron', array(), 'noriks-primary-hold' );
+        }
+    }
+}
+
+add_action( 'noriks_primary_hold_failsafe_cron', 'noriks_failsafe_primary_hold_sweep' );
 function noriks_failsafe_primary_hold_sweep() {
-    // Only run once per minute (transient lock)
-    if ( get_transient( 'noriks_ph_sweep_lock' ) ) return;
+    // Only run once per minute in case multiple cron runners overlap.
+    if ( get_transient( 'noriks_ph_sweep_lock' ) ) {
+        return;
+    }
+
     set_transient( 'noriks_ph_sweep_lock', 1, 60 );
 
     $orders = wc_get_orders( array(
@@ -93,15 +140,9 @@ function noriks_failsafe_primary_hold_sweep() {
 }
 
 
-// ─── FAILSAFE 2: WooCommerce order list hook (catches admin visits) ──────
+// ─── FAILSAFE 2: if an overdue primary-hold order is manually saved, resolve it ───
 
-add_action( 'woocommerce_order_list_table_prepare_items_query_args', 'noriks_failsafe_on_admin_orders' );
 add_action( 'woocommerce_before_order_object_save', 'noriks_failsafe_on_order_save' );
-
-function noriks_failsafe_on_admin_orders( $args ) {
-    noriks_failsafe_primary_hold_sweep();
-    return $args;
-}
 
 function noriks_failsafe_on_order_save( $order ) {
     // When any order is saved, also check for stuck primary-holds
@@ -205,12 +246,12 @@ function noriks_remove_upsell() {
 
     // Only allow removing upsell items
     if ( $item->get_meta( '_noriks_upsell' ) !== 'thank you upsell' ) {
-        wp_send_json_error( 'Only upsell products can be removed' );
+        wp_send_json_error( 'Only upsell items can be removed' );
     }
 
     // Only allow while in primary-hold
     if ( $order->get_status() !== 'primary-hold' ) {
-        wp_send_json_error( 'Vrijeme za izmjene je isteklo' );
+        wp_send_json_error( 'The time for changes has expired' );
     }
 
     $product_name = $item->get_name();
@@ -218,9 +259,9 @@ function noriks_remove_upsell() {
     $order->calculate_totals();
     $order->save();
 
-    $order->add_order_note( sprintf( 'Upsell uklojen: %s', $product_name ) );
+    $order->add_order_note( sprintf( 'Upsell removed: %s', \$product_name ) );
 
-    wp_send_json_success( array( 'message' => 'Uklonjeno' ) );
+    wp_send_json_success( array( 'message' => 'Removed' ) );
 }
 
 
@@ -244,16 +285,16 @@ function noriks_handle_add_upsell() {
 
     // Only allow upsell on COD orders in primary-hold
     if ( $order->get_payment_method() !== 'cod' ) {
-        wp_send_json_error( 'Upsell available only for cash on delivery' );
+        wp_send_json_error( 'Upsell only available for cash on delivery' );
     }
     if ( $order->get_status() !== 'primary-hold' ) {
-        wp_send_json_error( 'Time for adding has expired' );
+        wp_send_json_error( 'The time for adding has expired' );
     }
 
     // Time limit: 5 min from order creation (safety check)
     $created = $order->get_date_created();
     if ( $created && ( time() - $created->getTimestamp() ) > 330 ) { // 5.5 min grace
-        wp_send_json_error( 'Time for adding has expired' );
+        wp_send_json_error( 'The time for adding has expired' );
     }
 
     // Get the actual product (variation or simple)
@@ -304,7 +345,7 @@ function noriks_handle_add_upsell() {
         'total'    => $upsell_price * $quantity,
     ));
 
-    if ( ! $item_id ) wp_send_json_error( 'Error adding product' );
+    if ( ! $item_id ) wp_send_json_error( 'Error adding item' );
 
     // Mark as upsell
     $item = $order->get_item( $item_id );
@@ -317,7 +358,7 @@ function noriks_handle_add_upsell() {
 
     $order->add_order_note(
         sprintf(
-            'Thank you upsell: %s dodano s 50%% popustom — akcijska cijena: %s, upsell cijena: %s',
+            'Thank you upsell: %s added with 50%% discount — sale price: %s, upsell price: %s',
             $product->get_name(),
             wc_price( $active_price ),
             wc_price( $upsell_price )

@@ -19,17 +19,17 @@ if (  has_term( array( 'starter-paketi','orto-starter' ), 'product_cat', get_the
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-WHY PEOPLE CHOOSE STARTER PAKET?
+WHY PEOPLE CHOOSE THE STARTER PACK?
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;"  ><strong>“Uzeo sam jer nisam bio siguran will li mi odgovarati.” 
+    line-height: 1.2;"  ><strong>“Uzeo sam jer nisam bio siguran hoće li mi odgovarati.” 
 
 
 
 </strong><span style="font-weight:normal;">Marko - Zagreb</span></p>
-        <p class="description">Many customers start with the starter pack because they want to see how NORIKS fits and feels first. One t-shirt and one pair of boxers is enough to decide without a big investment.
+        <p class="description">Many customers start with the starter pack because they want to first see how NORIKS fits and feels. One t-shirt and one pair of boxers is enough to make the decision without a big investment.
 
 
 
@@ -38,12 +38,12 @@ WHY PEOPLE CHOOSE STARTER PAKET?
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;" ><strong>“Nakon prvog nošenja sam odmah reorderso more.” 
+    line-height: 1.2;" ><strong>“Nakon prvog nošenja sam odmah naručio još.” 
 
 
 
 </strong><span style="font-weight:normal;">Pavle - Split</span></p>
-        <p class="description">Over 95% of customers reorder after the starter pack. Not because they planned to, but because from day one they feel the difference in fit, comfort, and quality.
+        <p class="description">More than 95% of customers reorder after the starter pack. Not because they planned to, but because on the very first day they feel the difference in fit, comfort, and quality.
 
 
 </p>
@@ -56,7 +56,7 @@ WHY PEOPLE CHOOSE STARTER PAKET?
 
 
 </strong><span style="font-weight:normal;">Ante - Pula</span></p>
-        <p class="description">The t-shirt and boxers are soft, lightweight, and comfortable on the skin. The starter pack is the most common reason NORIKS quickly becomes part of your everyday wardrobe.
+        <p class="description">The t-shirt and boxers are soft, lightweight, and comfortable on the skin. The starter pack is the most common reason why NORIKS quickly becomes part of everyday wardrobe.
 
 
 
@@ -83,38 +83,38 @@ WHY PEOPLE CHOOSE STARTER PAKET?
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-KOMBINACIJA KOJA SE NOSI SVAKI DAN
+THE COMBINATION WORN EVERY DAY
 
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Dizajnirano za cjelodnevnu udobnost
+        <p><strong>Designed for all-day comfort
 
 
 </strong></p>
-        <p class="description">The t-shirt and boxers are made for wearing from morning to evening, without adjustments or discomfort. Everything stays in place, no tightness, and allows free movement throughout the entire day.
+        <p class="description">The t-shirt and boxers are made to be worn from morning to evening, without adjustment or discomfort. Everything stays in place, doesn't constrict, and allows free movement throughout the day.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Kroj koji radi s tijelom
+        <p><strong>A cut that works with the body
 
 
 </strong></p>
-        <p class="description">The t-shirt cut accentuates the upper body, while boxers provide enough room and stability without riding up. The result is a confident, relaxed feel and a clean look in any situation.
+        <p class="description">The t-shirt cut emphasizes the upper body, while the boxers provide ample room and stability without riding up. The result is a confident, relaxed feel and a neat look in any situation.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Quality you feel right away
+        <p><strong>Quality you feel immediately
 
 
 </strong></p>
-        <p class="description">The materials are soft, breathable, and comfortable on the skin, without losing shape after washing. From the first wear, it is clear why this combination quickly becomes part of your everyday wardrobe.
+        <p class="description">The materials are soft, breathable, and comfortable on the skin, without losing shape after washing. From the very first wear, it's clear why this combination quickly becomes part of everyday wardrobe.
 
 
 </p>
@@ -147,12 +147,12 @@ THE EASIEST AND SAFEST START
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Minimal risk
+        <p><strong>Minimum possible risk
 
 
 </strong></p>
-        <p class="description">Because it lets you experience the quality without a big investment.
-Instead of buying multiple pieces upfront, you get one t-shirt and one pair of boxers — just enough to see how they fit, how they wear, and how the material feels.
+        <p class="description">Because it lets you discover the quality without a large investment.
+Instead of buying multiple items upfront, you take one t-shirt and one pair of boxers — just enough to see how they fit, how they wear, and how the material feels.
 
 </p>
       </div>
@@ -162,20 +162,20 @@ Instead of buying multiple pieces upfront, you get one t-shirt and one pair of b
 
 
 </strong></p>
-        <p class="description">The starter pack is designed as a first experience, not as stock.
-Available only once per customer at a special price, so the decision is simple and effortless.
+        <p class="description">The starter pack is designed as a first experience, not a supply.
+It's available only once per customer at a special price, so the decision is simple and straightforward.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Iskustvo koje se ponavlja
+        <p><strong>An experience that repeats
 
 
 </strong></p>
-        <p class="description">Most men continue with NORIKS after that because they realise the difference in fit, comfort and quality.
-But this is the first step — minimal risk, purest impression. 
+        <p class="description">Most men continue with NORIKS after that because they understand the difference in fit, comfort, and quality.
+But the first step is this — minimum risk, clearest impression. 
 
 </p>
       </div>
@@ -195,7 +195,7 @@ But this is the first step — minimal risk, purest impression.
 
 
 <?php 
-if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id() )  ||  has_term( 'black-friday', 'product_cat', get_the_id() )) : 
+if (  has_term( array( 'majice', 'orto-majice' ), 'product_cat', get_the_id() )  ||  has_term( 'black-friday', 'product_cat', get_the_id() )) : 
 ?>
 
 
@@ -211,7 +211,7 @@ if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id(
         <video 
           autoplay muted loop playsinline 
           class="why-video">
-          <source src="https://noriks.com/hr/wp-content/uploads/2025/09/noriks_gif_hr_2-1.mp4" type="video/mp4">
+          <source src="https://noriks.com/en/wp-content/uploads/2025/09/noriks_gif_hr_2-1.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -314,7 +314,7 @@ if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id(
       <div class="video-wrapper">
           <img style="width: 100%;       
     aspect-ratio: 1/1; 
-    object-fit: cover;  " src="<?php echo get_template_directory_uri(); ?>/img/t-shirts-3 (1).jpeg">
+    object-fit: cover;  " src="<?php echo get_template_directory_uri(); ?>/img/majice-3 (1).jpeg">
       </div>
     </div>
 
@@ -327,21 +327,21 @@ if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id(
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Designed for real life
 </strong></p>
-        <p class="description">This t-shirt is made for all-day wear, from morning to evening. No adjustments or overthinking — it simply looks great in every situation.
+        <p class="description">This t-shirt is made for all-day wear, from morning to evening. It requires no adjustment or thought — it simply looks good in any situation.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Kroj koji razumije tijelo
+        <p><strong>A cut that understands the body
 </strong></p>
-        <p class="description">The cut is developed to follow the body line without tightness and accentuates what matters. The result is a clean, confident look without discomfort.
+        <p class="description">The cut is developed to follow the body's lines without constriction and accentuates where it should. The result is a neat, confident look without any discomfort.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Feel the difference from the first wear
+        <p><strong>Feel the difference from the very first wear
 </strong></p>
-        <p class="description">The material is soft, lightweight and breathable on the skin. After the first wear, it is clear why this t-shirt quickly becomes your go-to choice.
+        <p class="description">The material is soft, lightweight, and breathable on the skin. After the first wear, it's clear why this t-shirt quickly becomes the one you reach for most often.
 </p>
       </div>
     </div>
@@ -362,7 +362,7 @@ if (  has_term( array( 't-shirts', 'orto-t-shirts' ), 'product_cat', get_the_id(
 
 <!-- here we include new file BOXERIRICE-->
 
-<?php if ( has_term( array( 'boxers', 'boxers-sastavi-paket',  'orto-boxers' ), 'product_cat', get_the_ID() )  && !has_term( 'black-friday', 'product_cat', get_the_ID() ) ): ?>
+<?php if ( has_term( array( 'bokserice', 'bokserice-sastavi-paket',  'orto-bokserice' ), 'product_cat', get_the_ID() )  && !has_term( 'black-friday', 'product_cat', get_the_ID() ) ): ?>
 
 
 
@@ -403,7 +403,7 @@ endif;
 
     <!-- Left Video -->
     <div class="why-col">
-       <img src="/hr/wp-content/uploads/2025/12/recreate_without_photo_equipment_98300wkq98yf4jbkroa5.jpg">
+       <img src="/en/wp-content/uploads/2025/12/recreate_without_photo_equipment_98300wkq98yf4jbkroa5.jpg">
     </div>
 
     <!-- Right Content -->
@@ -413,9 +413,9 @@ endif;
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Cjelodnevna udobnost
+        <p><strong>All-day comfort
 </strong></p>
-        <p class="description">Specially designed for men with thicker thighs. Elastic and stretchy material provides maximum comfort without tightness or an uncomfortable waistband. The underwear stays in place and does not ride up, so you can move freely all day.</p>
+        <p class="description">Specially designed for men with thicker thighs. Elastic and stretchy material provides maximum comfort without tightening or an uncomfortable waistband. The underwear stays in place and doesn't ride up, so you can move freely all day.</p>
       </div>
 
     
@@ -439,13 +439,13 @@ endif;
 
     <!-- Left Video -->
     <div class="why-col">
-       <img src="/hr/wp-content/uploads/2025/12/recreate_this_picture_to_look_more_real_same_text_on_it_zidddz68sbcgp6wmizbl.jpg">
+       <img src="/en/wp-content/uploads/2025/12/recreate_this_picture_to_look_more_real_same_text_on_it_zidddz68sbcgp6wmizbl.jpg">
     </div>
 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-       Less wear and tear
+       Less wear and damage
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
@@ -460,9 +460,9 @@ endif;
         
         <p class="description">
         
-        ✅ Manje poderanja  <br/>
-        ✅ Manje znojenja  <br/>
-        ✅ Udobnost tijekom cijelog days <br/>
+        ✅ Less tearing  <br/>
+        ✅ Less sweating  <br/>
+        ✅ All-day comfort <br/>
                 
         </p>
       </div>
@@ -488,19 +488,19 @@ endif;
     <div class="why-col">
        <img style="width: 100%;       
     aspect-ratio: 1/1; 
-    object-fit: cover;  " src="/hr/wp-content/uploads/2025/12/create_same_style_studio_photo_with_younger_guy_30_years_normal_look_and_croatian_can_look_midldle__e99c86vy07c57mjd38f6.jpg">
+    object-fit: cover;  " src="/en/wp-content/uploads/2025/12/create_same_style_studio_photo_with_younger_guy_30_years_normal_look_and_croatian_can_look_midldle__e99c86vy07c57mjd38f6.jpg">
     </div>
 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-       Dovoljno prostora za sve
+       Enough room for everything
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Guys, let your crotch breathe freely!
+        <p><strong>Guys, let your crotch breathe!
 </strong></p>
-        <p class="description">NORIKS donje rublje pruža podršku tijekom cijelog days, a da pritom ne gubi oblik. Nebeski mekan Modal materijal rasteže se i savršeno pristaje na pravim mjestima. Prostor za vaše “gadžete” je prostraniji i fleksibilniji, pa se ne osjećate skučenima.</p>
+        <p class="description">NORIKS donje rublje pruža podršku tijekom cijelog dana, a da pritom ne gubi oblik. Nebeski mekan Modal materijal rasteže se i savršeno pristaje na pravim mjestima. Prostor za vaše “gadžete” je prostraniji i fleksibilniji, pa se ne osjećate skučenima.</p>
       </div>
 
    
@@ -559,15 +559,15 @@ endif;
 
 $products = array();
 
-// If current product is in category 'boxers' → load all products from that category
-if ( has_term( array( 'boxers', 'orto-boxers', 'boxers-sastavi-paket' ), 'product_cat', get_the_ID() ) ) {
+// If current product is in category 'bokserice' → load all products from that category
+if ( has_term( array( 'bokserice', 'orto-bokserice', 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() ) ) {
 
-    // Get all products from category 'boxers'
+    // Get all products from category 'bokserice'
     $wc_products = wc_get_products( array(
         'limit'    => 8,
         'orderby'  => 'menu_order',
         'order'    => 'ASC',
-        'category' => array( 'boxers' )
+        'category' => array( 'bokserice' )
     ) );
 
     if ( ! empty( $wc_products ) ) {
@@ -777,7 +777,7 @@ a:hover {
 
 <section style="display:block; max-width:1440px; margin:0 auto; padding-bottom:30px;" class="most-popular">
   <div class="container" style="padding-left:10px; padding-right:10px;">
-    <h2 class="section-title" style="margin-bottom:20px;">Gotove kombinacije – jednostavno i brzo</h2>
+    <h2 class="section-title" style="margin-bottom:20px;">Ready-made combinations – simple and fast</h2>
 
     <div class="products-grid slider-mobile">
       <?php foreach ($products as $index => $product): ?>
@@ -859,10 +859,10 @@ a:hover {
 
                 if ($shirt_count != 1):
                   if ($alt_output == false):
-                    $is_boxers = has_term( array( 'boxers', 'orto-boxers' , 'boxers-sastavi-paket' ), 'product_cat', $current_product_id );
+                    $is_boxers = has_term( array( 'bokserice', 'orto-bokserice' , 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id );
 
                     if ($is_boxers):
-                      $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . "€ po boxers";
+                      $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . "€ po boksericama";
                     else:
                       $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . get_field("singlepp_priceper_after","options");
                     endif;
@@ -982,13 +982,13 @@ a:hover {
       <!--<h4 style="" class="highlight"><?php echo get_field("singlepp_content_standard_reviews_t1","options"); ?></h4>-->
       <h1 style="color:black;     margin-bottom: 4px;">
           
-          <?php if ( !has_term( array( 'boxers', 'boxers-sastavi-paket' ), 'product_cat', get_the_ID() ) ): ?>
+          <?php if ( !has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() ) ): ?>
           
           <?php echo get_field("singlepp_content_standard_reviews_t2","options"); ?>
           
           <?php else: ?>
           
-          You're not alone u search za perfect boxers.
+          You're not alone in the search for the perfect boxers.
           
           <?php endif; ?>
           
@@ -1061,15 +1061,15 @@ a:hover {
   $reviews_language = get_field("webshop_language", "options");
   if (!$reviews_language) { $reviews_language = "EN"; }
 
-  // Detect if current product belongs to boxers group
+  // Detect if current product belongs to bokserice group
   $current_product_id = (function_exists('is_product') && is_product()) ? get_queried_object_id() : get_the_id();
-  $is_boxers_page  = has_term( array( 'boxers','orto-boxers', 'boxers-sastavi-paket' ), 'product_cat', $current_product_id );
+  $is_bokserice_page  = has_term( array( 'bokserice','orto-bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id );
 
   // Include review pools
-  if ( ! $is_boxers_page )  {
+  if ( ! $is_bokserice_page )  {
     include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'.php';
   } else {
-    include get_stylesheet_directory() . '/auto_reviews/HR_boxers.php';
+    include get_stylesheet_directory() . '/auto_reviews/HR_bokserice.php';
   }
 
   include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'-2.php';
@@ -1130,12 +1130,12 @@ a:hover {
           $product_id = get_queried_object_id();
       }
 
-      $is_boxers = false;
+      $is_bokserice = false;
       if ( $product_id ) {
-          $is_boxers = has_term( array( 'boxers','orto-boxers', 'boxers-sastavi-paket' ), 'product_cat', $product_id );
+          $is_bokserice = has_term( array( 'bokserice','orto-bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $product_id );
       }
 
-      $cache_key = $transient_key . ( $is_boxers ? '_boxers' : '_all' );
+      $cache_key = $transient_key . ( $is_bokserice ? '_bokserice' : '_all' );
 
       if ( function_exists( 'get_transient' ) ) {
           $cached = get_transient( $cache_key );
@@ -1152,14 +1152,14 @@ a:hover {
           'order'   => 'DESC',
       ];
 
-      if ( $is_boxers ) {
-          $args['category'] = [ 'boxers' ];
+      if ( $is_bokserice ) {
+          $args['category'] = [ 'bokserice' ];
       } else {
           $args['tax_query'] = [
               [
                   'taxonomy' => 'product_cat',
                   'field'    => 'slug',
-                  'terms'    => [ 'boxers' ],
+                  'terms'    => [ 'bokserice' ],
                   'operator' => 'NOT IN',
               ],
           ];
@@ -1191,11 +1191,11 @@ a:hover {
   /**
    * Load avatar images from theme folder and return URLs.
    * Expected folders:
-   *  - /auto_reviews/boxers-slike/
-   *  - /auto_reviews/t-shirts-slike/
+   *  - /auto_reviews/bokserice-slike/
+   *  - /auto_reviews/majice-slike/
    */
-  function get_review_avatar_pool(string $type = 't-shirts'): array {
-    $type = ($type === 'boxers') ? 'boxers' : 't-shirts';
+  function get_review_avatar_pool(string $type = 'majice'): array {
+    $type = ($type === 'bokserice') ? 'bokserice' : 'majice';
 
     $dir_path = trailingslashit(get_stylesheet_directory()) . 'auto_reviews/' . $type . '-slike/';
     $dir_url  = trailingslashit(get_stylesheet_directory_uri()) . 'auto_reviews/' . $type . '-slike/';
@@ -1396,7 +1396,7 @@ function assign_unique_avatars_first_n(array $reviews, array $avatar_pool, strin
   $daily_seed = $today_obj->format('Y-m-d');
 
   // Avatar pools based on page category
-  $avatar_type = $is_boxers_page ? 'boxers' : 't-shirts';
+  $avatar_type = $is_bokserice_page ? 'bokserice' : 'majice';
   $avatar_pool = get_review_avatar_pool($avatar_type);
 
   $product_pool = get_wc_product_pool();
@@ -1446,11 +1446,11 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
     <div class="reviews-tabs" style="display:flex;gap:18px;border-bottom:1px solid #cbc8c8;margin-bottom:18px;">
       <button type="button" class="reviews-tab is-active" data-tab="product"
         style="appearance:none;background:#00000008;border:1px solid #cbc8c8;border-bottom:0;padding:8px 14px;border-radius:0;font-weight:700;">
-        <?php echo esc_html__('Recenzije producta', 'your-textdomain'); ?> (692)
+        <?php echo esc_html__('Product Reviews', 'your-textdomain'); ?> (692)
       </button>
       <button type="button" class="reviews-tab" data-tab="shipping"
         style="appearance:none;background:transparent;border:1px solid transparent;border-bottom:0;padding:8px 14px;border-radius:0;font-weight:700;">
-        <?php echo esc_html__('Recenzije dostave', 'your-textdomain'); ?> (389)
+        <?php echo esc_html__('Shipping Reviews', 'your-textdomain'); ?> (389)
       </button>
     </div>
 
@@ -1459,7 +1459,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
       <?php if (!empty($initial_product)) : foreach ($initial_product as $review) :
         $name  = $review['name'] ?? 'Anonymní';
         $text  = $review['text'] ?? '';
-        $title = !empty($review['product_title']) ? $review['product_title'] : 'Jedna Siva Majica';
+        $title = !empty($review['product_title']) ? $review['product_title'] : 'One Gray T-Shirt';
         $url   = !empty($review['product_url'])   ? $review['product_url']   : '#';
         $stars = '★★★★★';
         $date_display = $review['assigned_date'] ?? '';
@@ -1494,7 +1494,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
       <?php if (!empty($initial_ship)) : foreach ($initial_ship as $review) :
         $name  = $review['name'] ?? 'Anonymní';
         $text  = $review['text'] ?? '';
-        $title = !empty($review['product_title']) ? $review['product_title'] : 'Jedna Siva Majica';
+        $title = !empty($review['product_title']) ? $review['product_title'] : 'One Gray T-Shirt';
         $url   = !empty($review['product_url'])   ? $review['product_url']   : '#';
         $stars = '★★★★★';
         $date_display = $review['assigned_date'] ?? '';
@@ -1598,7 +1598,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
         article.className = 'review-card is-new';
 
         const url       = review.product_url   || '#';
-        const title     = review.product_title || 'Jedna Siva Majica';
+        const title     = review.product_title || 'One Gray T-Shirt';
         const name      = review.name          || 'Anonymní';
         const text      = review.text          || '';
         const headline  = review.headline      || '';

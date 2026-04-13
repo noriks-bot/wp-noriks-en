@@ -46,23 +46,23 @@ function is_active_menu_item( $path ) {
 <nav class="category-menu">
   <ul>
     <li class="<?php echo is_shop() ? 'active' : ''; ?>">
-      <a href="/en/shop">Svi produkti</a>
+      <a href="/en/shop">All Products</a>
     </li>
 
     <li class="<?php echo is_active_menu_item('/product-category/t-shirts') ? 'active' : ''; ?>">
-      <a href="/en/product-category/t-shirts/">T-shirts</a>
+      <a href="/en/product-category/t-shirts/">T-Shirts</a>
     </li>
 
     <li class="<?php echo is_active_menu_item('/product-category/boxers') ? 'active' : ''; ?>">
       <a href="/en/product-category/boxers/">Boxers</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/sets') ? 'active' : ''; ?>">
-      <a href="/en/product-category/sets/">Sets</a>
+    <li class="<?php echo is_active_menu_item('/product-category/bundles') ? 'active' : ''; ?>">
+      <a href="/en/product-category/bundles/">Bundles</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/carape') ? 'active' : ''; ?>">
-      <a href="/en/product-category/carape/">Socks</a>
+    <li class="<?php echo is_active_menu_item('/product-category/socks') ? 'active' : ''; ?>">
+      <a href="/en/product-category/socks/">Socks</a>
     </li>
   </ul>
 </nav>
@@ -358,8 +358,8 @@ if ( is_shop() ) {
 
     echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2"]');
 
-// CATEGORY: /boxers + ALL CHILD CATEGORIES
-} elseif ( is_product_category_or_child('boxers') ) {
+// CATEGORY: /bokserice + ALL CHILD CATEGORIES
+} elseif ( is_product_category_or_child('bokserice') ) {
 
     echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2-2"]');
 
@@ -372,13 +372,13 @@ if ( is_shop() ) {
 
     echo do_shortcode('[yith_wcan_filters slug="default-preset-2-3"]');
 
-// CATEGORY: /t-shirts + children
-} elseif ( is_product_category_or_child('t-shirts') ) {
+// CATEGORY: /majice + children
+} elseif ( is_product_category_or_child('majice') ) {
 
     echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2"]');
 
-// CATEGORY: /sets + children
-} elseif ( is_product_category_or_child('sets') ) {
+// CATEGORY: /kompleti + children
+} elseif ( is_product_category_or_child('kompleti') ) {
 
     echo do_shortcode('[yith_wcan_filters slug="default-preset"]');
 
@@ -538,7 +538,7 @@ if ( is_shop() ) {
 }
 
 
-.term-sets  .filter-tax .filter-items {
+.term-kompleti  .filter-tax .filter-items {
    display: grid;
   grid-template-columns: repeat(3, 1fr);
  gap: 0px;

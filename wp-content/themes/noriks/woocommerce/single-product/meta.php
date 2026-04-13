@@ -6,7 +6,7 @@
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to to this as little as possible, but it does
+ * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
@@ -74,12 +74,12 @@ global $product;
           <div class="feature">
           
   <img src="<?php echo get_template_directory_uri(); ?>/img/cod_icon_.png" alt="Customer Support Icon" class="feature__icon info-icon">
-          <p class="feature__text">Cash on delivery</p>
+          <p class="feature__text">Cash on delivery available</p>
         </div>
         
         
         <div class="feature">
-      <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon1-1.png" alt="Shirt Icon" class="feature__icon info-icon">
+      <img src="https://noriks.com/en/wp-content/uploads/2025/07/footer_icon1-1.png" alt="Shirt Icon" class="feature__icon info-icon">
           <p class="feature__text">Try for 30 days, risk-free</p>
         </div>
         
@@ -89,8 +89,8 @@ global $product;
         <div class="feature">
      
        
-        <img src="https://noriks.com/hr/wp-content/uploads/2025/07/footer_icon3-1.png" alt="Shipping Icon" class="feature__icon info-icon">
-          <p class="feature__text">Free shipping on orders over £70</p>
+        <img src="https://noriks.com/en/wp-content/uploads/2025/07/footer_icon3-1.png" alt="Shipping Icon" class="feature__icon info-icon">
+          <p class="feature__text">Free shipping on orders over €70</p>
         </div>
 
     
@@ -133,7 +133,7 @@ global $product;
 
 <script>
   (function () {
-    const weekdays = ['Sunday','poSundayk','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
     // Helper to add business days (skip Saturday/Sunday)
     function addBusinessDays(date, days) {
@@ -198,11 +198,11 @@ global $product;
 
 $is_singles_boxers = has_term( 'singles-boxers', 'product_cat', $current_product_id );
 
-$is_boxers = has_term( array( 'boxers','orto-boxers', 'boxers-sastavi-paket' ), 'product_cat', $current_product_id ) && ! has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	' ), 'product_cat', $current_product_id );
+$is_boxers = has_term( array( 'bokserice','orto-bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id ) && ! has_term( array( 'black-friday', 'majice-i-bokserice-paketi	' ), 'product_cat', $current_product_id );
 
 $is_carape = has_term( array( 'carape', 'zimske-carape' ), 'product_cat', $current_product_id );
 
-$is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	', 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id );
+$is_mixed_bundle = has_term( array( 'black-friday', 'majice-i-bokserice-paketi	', 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', $current_product_id );
 
 ?>
 
@@ -435,11 +435,11 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
         <?php echo get_field("singlepp_acc_t_1","options"); ?>
         
         
-        <?php elseif(  has_term( array( 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id )  ): ?>
+        <?php elseif(  has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', $current_product_id )  ): ?>
         
         
         
-                Our premium t-shirts are made from a premium blend of 60% ring-spun cotton and 40% polyester, ensuring an extremely soft wrinkle-resistant fabric.  <br><br>NORIKS boxers are made from a premium blend of 95% modal and 5% elastane, ensuring an extremely soft and stretchy fabric that adapts perfectly to the body. The elastic waistband is designed for optimal fit, providing comfort without constriction   <br>
+                Our premium t-shirts are made from a superior blend of 60% ring-spun cotton and 40% polyester, ensuring an exceptionally soft, wrinkle-resistant fabric. <br><br>NORIKS boxers are made from a premium blend of 95% modal and 5% elastane, ensuring an exceptionally soft and elastic fabric that perfectly adapts to the body. The elastic waistband is designed for optimal fit, providing comfort without constriction and a perfect look under clothing. <br>
         
         <?php else: ?>
         
@@ -461,7 +461,7 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
      <!-- 2 - slika tablica velicina -->
      <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
-        <h3>Size chart</h3>
+        <h3>Size Chart</h3>
         <div class="toggle">+</div>
       </div>
       <div class="accordion-content">
@@ -469,7 +469,7 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
            <?php if( $is_boxers ): ?>
        
         
-          <img src="/hr/wp-content/uploads/2025/12/boxers_size.jpg">
+          <img src="/en/wp-content/uploads/2025/12/boxers_size.jpg">
           
           
           
@@ -477,17 +477,17 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
         <?php elseif(  $is_carape ): ?>
         
         
-                  <img src="/hr/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg">
+                  <img src="/en/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg">
                   
     <?php elseif(  $is_mixed_bundle ): ?>
     
-     <img src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png">
-<img src="/hr/wp-content/uploads/2025/12/boxers_size.jpg">
+     <img src="https://noriks.com/en/wp-content/uploads/2026/04/hr_majice.jpeg">
+<img src="/en/wp-content/uploads/2025/12/boxers_size.jpg">
         
           <?php else: ?>
       
       
-       <img src="https://noriks.com/hr/wp-content/uploads/2025/08/Izdelek-brez-naslova-8-1-e1755177806475.png">
+       <img src="https://noriks.com/en/wp-content/uploads/2026/04/hr_majice.jpeg">
         
             
         <?php endif; ?>
@@ -506,11 +506,11 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
         <?php echo get_field("singlepp_acc_t_2","options"); ?>
         
          
-        <?php elseif(  has_term( array( 'orto-starter', 'orto-t-shirt-bokserica' ), 'product_cat', $current_product_id )  ): ?>
+        <?php elseif(  has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', $current_product_id )  ): ?>
         
         
         
-                         Wash colours with colours.  Gentle wash cycle with cold water.  Dry flat or tumble dry on low heat.  Do not bleach              
+                         Wash colors with colors. Gentle wash cycle in cold water. Dry flat or in a dryer on low heat. Do not bleach.              
         
         
           <?php else: ?>
@@ -521,7 +521,7 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
 
 
 
-    <!-- 4 returni in menjave -->
+    <!-- 4 povrati in menjave -->
     <div class="accordion-item">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><?php echo get_field("singlepp_acc_h_3","options"); ?></h3>
@@ -529,8 +529,8 @@ $is_mixed_bundle = has_term( array( 'black-friday', 't-shirts-i-boxers-paketi	',
       </div>
       <div class="accordion-content">
        <p></p>
-       We believe so much that you will love NORIKS that you have <b data-stringify-type="bold">30 days</b> for return or free exchange.
-No paperwork, no stress – resolved in a few clicks. </p>
+       We're so confident you'll love NORIKS that you have <b>30 days</b> for a return or free exchange.
+No paperwork, no stress – we'll sort it out in a few clicks. </p>
 
 <p>
     
@@ -544,7 +544,7 @@ No paperwork, no stress – resolved in a few clicks. </p>
     info@noriks.com
   </a>
 </p>
-<p>Just email us that you want an exchange and <b data-stringify-type="bold">we will sort it out immediately.</b></p>
+<p>Just send us an email that you want an exchange and <b>we'll sort everything out right away.</b></p>
        
        
       </div>

@@ -203,7 +203,7 @@ body.woocommerce-checkout #payment .wc_payment_method > label img {
   width: auto !important;
   margin-left: 8px !important;
 }
-/* Fee badges — "Free" for card & PayPal, price for COD */
+/* Fee badges — "Besplatno" for card & PayPal, price for COD */
 body.woocommerce-checkout #payment .wc_payment_method > label::after {
   content: 'Free' !important;
   display: inline-block !important;
@@ -252,7 +252,7 @@ body.woocommerce-checkout #payment .payment_box fieldset {
   position: relative !important;
 }
 #billing_phone_field::after {
-  content: 'Example: 07123456789' !important;
+  content: 'Example: 0912345678' !important;
   position: absolute !important;
   left: 0 !important;
   bottom: -20px !important;
@@ -261,7 +261,7 @@ body.woocommerce-checkout #payment .payment_box fieldset {
   line-height: 1.4 !important;
 }
 #billing_phone_field::before {
-  content: 'To assist with delivery' !important;
+  content: 'For delivery assistance' !important;
   position: absolute !important;
   right: 0 !important;
   bottom: -20px !important;
@@ -405,5 +405,5 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
   font-weight: 500 !important;
 }
 
-/* More space between total and Place order button */
+/* More space between total and Naruči button */
 .noriks-order-summary .vigo-checkout-total__sum { margin-bottom: 10px !important; }

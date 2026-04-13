@@ -46,14 +46,14 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 	<br/>	<br/>
 	We are now preparing your NORIKS product and it will be on its way soon.
     <br/><br/>
-    Just comfort and a great feeling – all day long.<br/><br/>
+    Pure comfort and a great feeling – all day long.<br/><br/>
     
     We will notify you as soon as your package is on its way.<br/>
-    If you need anything – we are here. 🙂<br/><br/>
+    If you need anything – we're here. 🙂<br/><br/>
     
     
-    <strong>If you made a mistake with the size, quantity or colour in your order – no worries!</strong><br/>
-    Reply directly to this email and let us know what needs to be changed before shipping. We will be happy to sort it out quickly.<br/><br/>
+    <strong>If you made a mistake with size, quantity, or color in your order – no worries!</strong><br/>
+    Reply directly to this email and let us know what needs to be changed before the package is sent. We'll be happy to sort it out quickly.<br/><br/>
     
     NORIKS tim
     </p>
@@ -69,14 +69,14 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 	<br/>	<br/>
 We are now preparing your NORIKS product and it will be on its way soon.
     <br/><br/>
-    Just comfort and a great feeling – all day long.<br/><br/>
+    Pure comfort and a great feeling – all day long.<br/><br/>
     
     We will notify you as soon as your package is on its way.<br/>
-    If you need anything – we are here. 🙂<br/><br/>
+    If you need anything – we're here. 🙂<br/><br/>
     
     
-    <strong>If you made a mistake with the size, quantity or colour in your order – no worries!</strong><br/>
-    Reply directly to this email and let us know what needs to be changed before shipping. We will be happy to sort it out quickly.<br/><br/>
+    <strong>If you made a mistake with size, quantity, or color in your order – no worries!</strong><br/>
+    Reply directly to this email and let us know what needs to be changed before the package is sent. We'll be happy to sort it out quickly.<br/><br/>
     
     NORIKS tim
     </p>

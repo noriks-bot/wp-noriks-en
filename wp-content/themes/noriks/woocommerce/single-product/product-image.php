@@ -112,7 +112,7 @@ $wrapper_classes   = apply_filters(
         <!--
 	    <div class="my-buttons-wrapper">
 	          <span class="my-counter">1 / 1</span>
-	        <button type="button" class="my-btn prev" aria-label="Previous image"><</button>
+	        <button type="button" class="my-btn prev" aria-label="Prethodna slika"><</button>
 	      
 	        <button type="button" class="my-btn next" aria-label="Next image">></button>
 	    </div>

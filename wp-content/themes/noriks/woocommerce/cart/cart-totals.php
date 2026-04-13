@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<h2 style="      font-size: 19px;
     line-height: 1.214;
-    font-weight: bold;  font-family: 'Inter', sans-serif;">Pregled orders</h2>
+    font-weight: bold;  font-family: 'Inter', sans-serif;">Order Summary</h2>
     
     <div style="width: 100%; background: black; color:black; height: 1px;"class="line-separator"></div>
 
@@ -113,7 +113,7 @@ defined( 'ABSPATH' ) || exit;
 	<div class="wc-proceed-to-checkout">
 		<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
 		
-		<a href="/en/shop/" class="checkout-button button continue-shopping-button">
+		<a href="/hr/shop/" class="checkout-button button continue-shopping-button">
 	Nastavi kupovino</a>
 		
 	</div>

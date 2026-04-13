@@ -316,7 +316,7 @@ add_action( 'wp_footer', function() {
     jQuery(function($){
       var messages = {
         required: '\u2715 Required field',
-        billing_address_2: '\u2715 If you don\'t have a house number, enter BB',
+        billing_address_2: '\u2715 If you have no house number, enter NN',
       };
       var submitted = false; /* only validate after first submit attempt */
       /* Set submitted=true when WC native button is clicked */
@@ -327,7 +327,7 @@ add_action( 'wp_footer', function() {
         $('form.checkout').css({'opacity':'0.4','pointer-events':'none','transition':'opacity 0.3s'});
       });
       $(document.body).on('checkout_error', function(){
-        $('#place_order').css('opacity','1').text('Place order');
+        $('#place_order').css('opacity','1').text('Order Now');
         $('form.checkout').css({'opacity':'1','pointer-events':''});
       });
 
@@ -372,13 +372,13 @@ add_action( 'wp_footer', function() {
 
         /* Email format */
         if (isEmail && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-          showError($row, '\u2715 Enter a valid email address');
+          showError($row, '\u2715 Please enter a valid email address');
           return false;
         }
 
         /* Phone format (at least 6 digits) */
         if (isPhone && val && val.replace(/\D/g,'').length < 6) {
-          showError($row, '\u2715 Enter a valid phone number');
+          showError($row, '\u2715 Please enter a valid phone number');
           return false;
         }
 
@@ -453,31 +453,30 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     // phone/email priorities already set above (10/20)
 
     // Labels, placeholders, required
-    $fields['billing']['billing_first_name']['label'] = 'First name';
-    $fields['billing']['billing_first_name']['placeholder'] = 'First name';
-    $fields['billing']['billing_last_name']['label'] = 'Last name';
-    $fields['billing']['billing_last_name']['placeholder'] = 'Last name';
+    $fields['billing']['billing_first_name']['label'] = 'First Name';
+    $fields['billing']['billing_first_name']['placeholder'] = 'First Name';
+    $fields['billing']['billing_last_name']['label'] = 'Last Name';
+    $fields['billing']['billing_last_name']['placeholder'] = 'Last Name';
     $fields['billing']['billing_address_1']['label'] = 'Street';
     $fields['billing']['billing_address_1']['placeholder'] = 'Street';
-    $fields['billing']['billing_address_2']['label'] = 'House number';
-    $fields['billing']['billing_address_2']['placeholder'] = 'House number';
+    $fields['billing']['billing_address_2']['label'] = 'House Number';
+    $fields['billing']['billing_address_2']['placeholder'] = 'House Number';
     $fields['billing']['billing_address_2']['required'] = true;
-    $fields['billing']['billing_postcode']['label'] = 'Postcode';
-    $fields['billing']['billing_postcode']['placeholder'] = 'Postcode';
+    $fields['billing']['billing_postcode']['label'] = 'Postal Code';
+    $fields['billing']['billing_postcode']['placeholder'] = 'Postal Code';
     $fields['billing']['billing_city']['label'] = 'City';
-    $fields['billing']['billing_city']['placeholder'] = 'Select city';
+    $fields['billing']['billing_city']['placeholder'] = 'Select City';
     $fields['billing']['billing_phone']['label'] = 'Phone';
-    $fields['billing']['billing_phone']['placeholder'] = 'Mobile phone number';
+    $fields['billing']['billing_phone']['placeholder'] = 'Mobile Phone Number';
     $fields['billing']['billing_phone']['required'] = true;
     /* Description injected via JS to survive update_checkout AJAX re-renders */
     // $fields['billing']['billing_phone']['description'] = '...';
-    $fields['billing']['billing_email']['label'] = 'Email address';
-    $fields['billing']['billing_email']['placeholder'] = 'Email address';
+    $fields['billing']['billing_email']['label'] = 'Email Address';
+    $fields['billing']['billing_email']['placeholder'] = 'Email Address';
     /* Description injected via JS to survive update_checkout AJAX re-renders */
-    // $fields['billing']['billing_email']['description'] = 'For order confirmation and shipment tracking';
+    // $fields['billing']['billing_email']['description'] = 'Za potvrdu narudžbe i praćenje pošiljke';
     $fields['billing']['billing_email']['required'] = true;
-    $fields['billing']['billing_country']['default'] = 'GB';
-    $fields['billing']['billing_state']['required'] = false;
+    $fields['billing']['billing_country']['default'] = 'HR';
     unset( $fields['billing']['billing_company'] );
 
     // Vigoshop CSS classes
@@ -503,7 +502,7 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
  */
 add_filter( 'woocommerce_form_field_text', function( $field, $key ) {
     if ( $key === 'billing_last_name' ) {
-        $field .= '<div class="form-row form-row-wide col-xs-12">Enter the address where you will be <b>between 8:00 and 16:00</b>.</div>';
+        $field .= '<div class="form-row form-row-wide col-xs-12">Enter the address where you will be <b>between 8:00 AM and 4:00 PM</b>.</div>';
     }
     return $field;
 }, 10, 2 );
@@ -514,11 +513,11 @@ add_filter( 'woocommerce_form_field_text', function( $field, $key ) {
  * Billing title
  */
 add_action( 'woocommerce_before_checkout_billing_form', function() {
-    echo '<h3 class="checkout-billing-title">Payment & Delivery</h3>';
+    echo '<h3 class="checkout-billing-title">Plaćanje i Dostava</h3>';
 });
 
-add_filter( 'default_checkout_billing_country', function() { return 'GB'; });
-add_filter( 'woocommerce_order_button_text', function() { return 'Place order'; });
+add_filter( 'default_checkout_billing_country', function() { return 'HR'; });
+add_filter( 'woocommerce_order_button_text', function() { return 'Order Now'; });
 
 /**
  * Payment gateway order: COD → Stripe → PayPal
@@ -541,7 +540,7 @@ add_action( 'woocommerce_cart_calculate_fees', function( $cart ) {
 
     $chosen_gateway = WC()->session->get( 'chosen_payment_method' );
     if ( $chosen_gateway === 'cod' ) {
-        $cart->add_fee( 'Cash on delivery', 1.99, false );
+        $cart->add_fee( 'Cash on Delivery', 1.99, false );
     }
 });
 
@@ -573,10 +572,10 @@ add_action('woocommerce_review_order_before_submit', function(){
     ?>
     <div class="noriks-coupon-wrap" style="margin:12px 0 16px;">
         <button type="button" id="noriks-coupon-btn" style="display:inline-flex;align-items:center;gap:5px;padding:10px 12px;background:#fff;border:1px solid #ddd;border-radius:4px;font-size:13px;color:#333;cursor:pointer;font-weight:500;line-height:1;" onclick="this.style.display='none';document.getElementById('noriks-coupon-expanded').style.display='flex';">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'%3E%3C/path%3E%3Cline x1='7' y1='7' x2='7.01' y2='7'%3E%3C/line%3E%3C/svg%3E" style="width:14px;height:14px;vertical-align:middle;" /><span style="vertical-align:middle;">Unesi kupon kod</span>
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'%3E%3C/path%3E%3Cline x1='7' y1='7' x2='7.01' y2='7'%3E%3C/line%3E%3C/svg%3E" style="width:14px;height:14px;vertical-align:middle;" /><span style="vertical-align:middle;">Enter coupon code</span>
         </button>
         <div id="noriks-coupon-expanded" style="display:none;gap:8px;align-items:center;">
-            <input type="text" id="noriks_coupon_code" placeholder="Kupon kod" style="flex:1;padding:10px 14px;border:1px solid #ccc;border-radius:6px;font-size:14px;" />
+            <input type="text" id="noriks_coupon_code" placeholder="Coupon code" style="flex:1;padding:10px 14px;border:1px solid #ccc;border-radius:6px;font-size:14px;" />
             <button type="button" style="padding:10px 20px;background:#000;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;" onclick="noriksApplyCoupon()">Apply</button>
             <button type="button" style="padding:8px 10px;background:none;border:1px solid #ddd;border-radius:6px;font-size:14px;color:#999;cursor:pointer;line-height:1;" onclick="this.parentElement.style.display='none';document.getElementById('noriks-coupon-btn').style.display='inline-flex';">✕</button>
         </div>
@@ -592,18 +591,14 @@ add_action('woocommerce_review_order_before_submit', function(){
             method:'POST',
             body:new URLSearchParams({coupon_code:code,security:'<?php echo wp_create_nonce("apply-coupon"); ?>'}),
             headers:{'Content-Type':'application/x-www-form-urlencoded'}
-        }).then(function(r){
-            var ok=r.ok;return r.text().then(function(html){return{ok:ok,html:html};});
-        }).then(function(res){
+        }).then(function(r){return r.text();}).then(function(html){
             msg.style.display='block';
-            var isError=!res.ok||res.html.indexOf('error')!==-1||res.html.indexOf('ne postoji')!==-1||res.html.indexOf('nije valjan')!==-1||res.html.indexOf('removed')!==-1;
-            if(isError){
+            if(html.indexOf('error')!==-1){
                 msg.style.background='#fde8e8';msg.style.color='#c00';
-                var txt=res.html.replace(/<[^>]*>/g,'').trim();
-                msg.innerHTML='❌ '+(txt||'Kupon kod nije valjan.');
+                msg.innerHTML=html.replace(/<[^>]*>/g,'')||'Invalid coupon code.';
             }else{
                 msg.style.background='#e8fde8';msg.style.color='#080';
-                msg.innerHTML='✅ Kupon primijenjen!';
+                msg.innerHTML='✅ Coupon applied!';
                 document.getElementById('noriks_coupon_code').value='';
                 if(window.jQuery)jQuery('body').trigger('update_checkout');
             }
@@ -616,7 +611,7 @@ add_action('woocommerce_review_order_before_submit', function(){
     </script>
     <?php
     endif;
-    echo '<h3 class="place-order-title" style="display:block;margin:15px 0 10px;">Order summary</h3>';
+    echo '<h3 class="place-order-title" style="display:block;margin:15px 0 10px;">Sažetak narudžbe</h3>';
     echo '<div class="vigo-checkout-total order-total shop_table" style="margin-bottom:20px;">';
     woocommerce_order_review();
     echo '</div>';
@@ -651,10 +646,10 @@ add_filter('woocommerce_checkout_posted_data', function($data){
 });
 
 /**
- * Validate billing_address_2 (house number) is required
+ * Validate billing_address_2 (kućni broj) is required
  */
 add_action('woocommerce_checkout_process', function(){
     if ( empty( $_POST['billing_address_2'] ) ) {
-        wc_add_notice( 'Please unesite house number.', 'error' );
+        wc_add_notice( 'Please enter your house number.', 'error' );
     }
 });

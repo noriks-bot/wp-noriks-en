@@ -46,18 +46,18 @@
 	<div class="top-header">
   <div class="marquee">
     <div class="marquee-content">
-      <span><a href="/en/shop">Free delivery za orders iznad 70 €</a></span>
-      <span><a href="/en/shop">30 days bez rizika – probaj bez brige</a></span>
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
       <!--<span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
 
       <!-- DUPLICATED for seamless infinite loop -->
-      <span><a href="/en/shop">Free delivery za orders iznad 70 €</a></span>
-      <span><a href="/en/shop">30 days bez rizika – probaj bez brige</a></span>
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
      <!-- <span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
       
        <!-- DUPLICATED for seamless infinite loop -->
-      <span><a href="/en/shop">Free delivery za orders iznad 70 €</a></span>
-      <span><a href="/en/shop">30 days bez rizika – probaj bez brige</a></span>
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
      <!-- <span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
     </div>
   </div>
@@ -136,7 +136,7 @@
                     <!--
                     <div class="dropdown-menu">
                         <a href="/en/shop">Sastavi svoj paket</a>
-                        <a href="/en/product-category/bundles/">Ready packs</a>
+                        <a href="/hr/product-category/bundles/">Gotovi paketi</a>
                     </div>
                     -->
                 </div>
@@ -149,8 +149,8 @@
                     </a>
                     <!--
                     <div class="dropdown-menu">
-                        <a href="/en/product-category/boxers-sastavi-paket/">Sastavi svoj paket</a>
-                        <a href="/en/product-category/boxers/">Ready packs</a>
+                        <a href="/hr/product-category/bokserice-sastavi-paket/">Sastavi svoj paket</a>
+                        <a href="/hr/product-category/bokserice/">Gotovi paketi</a>
                     </div>
                     -->
                 </div>

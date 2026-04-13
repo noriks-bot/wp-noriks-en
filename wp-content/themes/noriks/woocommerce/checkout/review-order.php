@@ -31,8 +31,8 @@ defined( 'ABSPATH' ) || exit;
 
       <!-- Shipping -->
       <div class="c--darkgray review-section-container review-addons shipping_order_review">
-        <div class="review-addons-title"><div>Standard delivery</div></div>
-        <div class="review-addons-price review-sale-price" id="noriks-shipping-price"><span style="display:inline-block;padding:3px 10px;border-radius:5px;background:#9ce79c;color:#228b22;font-size:14px;font-weight:500;">Free</span></div>
+        <div class="review-addons-title"><div>Standard Shipping</div></div>
+        <div class="review-addons-price review-sale-price" id="noriks-shipping-price"><span style="display:inline-block;padding:3px 10px;border-radius:5px;background:#9ce79c;color:#228b22;font-size:14px;font-weight:500;">Besplatno</span></div>
       </div>
 
       <!-- Coupon discounts -->
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
         $currency = get_woocommerce_currency_symbol();
       ?>
       <div class="c--darkgray review-section-container review-addons">
-        <div class="review-addons-title"><div>Coupon: <?php echo esc_html( strtoupper($code) ); ?></div></div>
+        <div class="review-addons-title"><div>Kupon: <?php echo esc_html( strtoupper($code) ); ?></div></div>
         <div class="review-addons-price review-sale-price" style="display:flex;align-items:center;gap:6px;">
           <span>-<?php echo esc_html( number_format($discount_amount, 2, ',', '.') . ' ' . $currency ); ?></span>
           <a href="#" class="woocommerce-remove-coupon" data-coupon="<?php echo esc_attr( $code ); ?>" style="color:#999;text-decoration:none;font-size:13px;padding-left:4px;" onclick="event.preventDefault();jQuery.post('<?php echo esc_url(wc_get_checkout_url()); ?>?wc-ajax=remove_coupon',{coupon:this.dataset.coupon,security:'<?php echo wp_create_nonce("remove-coupon"); ?>'},function(){jQuery('body').trigger('update_checkout');});">✕</a>
@@ -60,7 +60,7 @@ defined( 'ABSPATH' ) || exit;
   </div>
   <div class="vigo-checkout-total__sum flex flex--middle border_price">
     <div class="flex__item f--l">
-      Total: <span class="f--bold price_total_wrapper"><?php wc_cart_totals_order_total_html(); ?></span>
+      Ukupni iznos: <span class="f--bold price_total_wrapper"><?php wc_cart_totals_order_total_html(); ?></span>
     </div>
   </div>
 </div>

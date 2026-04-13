@@ -454,7 +454,7 @@ border: 1px solid #ccc;
     
 
     
-    30 days warranty on size exchange
+    30-day size exchange guarantee
 
          
    
@@ -510,7 +510,7 @@ border: 1px solid #ccc;
     
 
     
-     30 days warranty on size exchange
+     30-day size exchange guarantee
 
          
    

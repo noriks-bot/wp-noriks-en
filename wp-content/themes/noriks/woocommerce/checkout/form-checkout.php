@@ -15,7 +15,7 @@ if ( WC()->cart->is_empty() ) return;
 <div class="before_form container container--xs">
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout"
-      action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Payment">
+      action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Checkout">
 
   <div class="col2-set" id="customer_details">
     <div class="col-1 clearfix">
@@ -32,7 +32,7 @@ if ( WC()->cart->is_empty() ) return;
 
         <!-- SHIPPING -->
         <div id="custom_shipping">
-          <h3>Delivery</h3>
+          <h3>Shipping</h3>
           <ul class="shipping_method_custom">
             <li class="standard-shipping shipping-tab">
               <input name="shipping_method[0]" data-index="0" id="shipping_method_0_standard_custom"
@@ -47,7 +47,7 @@ if ( WC()->cart->is_empty() ) return;
                     <span class="shipping_method_delivery_price tag tag--red">
                       <span class="woocommerce-Price-amount amount"><bdi>2,99<span class="woocommerce-Price-currencySymbol">&euro;</span></bdi></span>
                     </span>
-                    <span class="delivery_img"><img decoding="async" class="royal_mail standard" src="https://images.vigo-shop.com/general/curriers/home_small_paket24@2x.png"/></span>
+                    <span class="delivery_img"><img decoding="async" class="standard-shipping standard" src="https://images.vigo-shop.com/general/curriers/home_small_paket24@2x.png"/></span>
                   </div>
                 </div>
               </label>
@@ -55,7 +55,7 @@ if ( WC()->cart->is_empty() ) return;
           </ul>
           <div class="delivery-from-eu-warehouse">
             <img decoding="async" class="delivery-from-eu-warehouse__icon" src="https://images.vigo-shop.com/general/flags/eu-warehouse.svg">
-            <span class="delivery-from-eu-warehouse__text">EU warehouse</span>
+            <span class="delivery-from-eu-warehouse__text">EU Warehouse</span>
           </div>
         </div>
 
@@ -68,11 +68,11 @@ if ( WC()->cart->is_empty() ) return;
         <!-- VAT -->
         <div id="hs-vat-tax-checkout-prompt">
           <span class="tax-and-vat-checkout-claims">No additional customs charges</span>
-          <span class="tax-and-vat-checkout-claims">VAT included in the price</span>
+          <span class="tax-and-vat-checkout-claims">VAT included in price</span>
         </div>
 
         <!-- PAYMENT + ORDER SUMMARY + BUTTON — via WC hooks -->
-        <h3 class="payment-title">Payment method</h3>
+        <h3 class="payment-title">Payment Method</h3>
         <?php woocommerce_checkout_payment(); ?>
 
         <?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
@@ -89,21 +89,21 @@ if ( WC()->cart->is_empty() ) return;
 <!-- Warranty -->
 <div class="checkout-warranty flex flex--center flex--middle">
   <div class="flex__item--autosize checkout-warranty__icon">
-    <img decoding="async" src="https://images.vigo-shop.com/general/guarantee_money_back/satisfaction_icon_en.png">
+    <img decoding="async" src="https://images.vigo-shop.com/general/guarantee_money_back/satisfaction_icon_hr.png">
   </div>
   <div class="flex__item--autosize f--m checkout-warranty__text">
-    <strong>Shop worry-free </strong><br>Money back within 90 days
+    <strong>Shop with confidence </strong><br>Money back guarantee within 90 days
   </div>
 </div>
 
 <!-- Terms -->
 <div class="agreed_terms_txt">
-  <span class="policy-agreement-obligation">By clicking the button <strong>Place order</strong> I agree to the order with the obligation to pay.</span><br>
+  <span class="policy-agreement-obligation">By clicking <strong>Order Now</strong> I agree to the order with payment obligation.</span><br>
   <div class="terms-checkbox-and-links">
     <label class="checkbox">
       <input type="checkbox" class="input-checkbox" name="agree_to_checkout_terms" id="agree_to_terms_checkbox" value="1">
     </label>
-    I have read and accept <a href="#" id="terms_conditions_link">the General Terms and Conditions</a> i <a href="#" id="withdrawal_policy_link">the right of withdrawal</a>.
+    I have read and accept the <a href="#" id="terms_conditions_link">General Terms of Sale</a> and <a href="#" id="withdrawal_policy_link">right of withdrawal</a>.
   </div>
 </div>
 
@@ -114,7 +114,7 @@ if ( WC()->cart->is_empty() ) return;
 <script>
 jQuery(function($){
   /* Delivery dates — same logic as product page (meta.php) */
-  var days=['Sunday','poSundayk','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   function addBiz(d,n){var r=new Date(d);while(n>0){r.setDate(r.getDate()+1);if(r.getDay()!==0&&r.getDay()!==6)n--;}return r;}
   var now=new Date(),from=addBiz(now,2),to=addBiz(now,3);
   $('#js-delivery-dates').text(days[from.getDay()]+', '+from.getDate()+'.'+(from.getMonth()+1)+'. - '+days[to.getDay()]+', '+to.getDate()+'.'+(to.getMonth()+1)+'.');
