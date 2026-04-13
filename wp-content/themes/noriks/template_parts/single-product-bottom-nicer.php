@@ -1069,7 +1069,7 @@ a:hover {
   if ( ! $is_bokserice_page )  {
     include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'.php';
   } else {
-    include get_stylesheet_directory() . '/auto_reviews/HR_bokserice.php';
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_bokserice.php';
   }
 
   include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'-2.php';
@@ -1195,7 +1195,7 @@ a:hover {
    *  - /auto_reviews/majice-slike/
    */
   function get_review_avatar_pool(string $type = 'majice'): array {
-    $type = ($type === 'bokserice') ? 'bokserice' : 'majice';
+    $type = ($type === 'boxers' || $type === 'bokserice') ? 'bokserice' : 'majice';
 
     $dir_path = trailingslashit(get_stylesheet_directory()) . 'auto_reviews/' . $type . '-slike/';
     $dir_url  = trailingslashit(get_stylesheet_directory_uri()) . 'auto_reviews/' . $type . '-slike/';

@@ -159,9 +159,9 @@ if( get_field('multipack_option_1', get_the_ID())  == true  ) {
   <?php
   
 // Check if current product is in category "singles-boxers"
-$is_singles_boxers = has_term( '1-komad-bokserice', 'product_cat', $current_product_id );
+$is_singles_boxers = has_term( 'boxers', 'product_cat', $current_product_id );
 
-$is_singles_majice = has_term( '1-komad-majice', 'product_cat', $current_product_id );
+$is_singles_majice = has_term( 't-shirts', 'product_cat', $current_product_id );
 
 
 
@@ -182,7 +182,7 @@ if ( $is_singles_boxers ) {
             array(
                 'taxonomy' => 'product_cat',
                 'field'    => 'slug',
-                'terms'    => 'singles-boxers',
+                'terms'    => 'boxers',
             ),
         ),
         'orderby' => 'date',
@@ -207,7 +207,7 @@ if ( $is_singles_boxers ) {
             array(
                 'taxonomy' => 'product_cat',
                 'field'    => 'slug',
-                'terms'    => 'singles',
+                'terms'    => 't-shirts',
             ),
         ),
         'orderby' => 'date',

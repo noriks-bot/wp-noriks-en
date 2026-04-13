@@ -66,7 +66,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 						
 						
 						<?php
-							if (  $attribute_name == 'Veličina bokseric'  )     {
+							if (  $attribute_name == 'Boxers Size'  )     {
 						    
 						    
 						    
