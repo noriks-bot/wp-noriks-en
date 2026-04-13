@@ -18,7 +18,7 @@ use WooCommerce\PayPalCommerce\Button\Assets\SmartButtonInterface;
  */
 class CartScriptParamsEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint\EndpointInterface
 {
-    const ENDPOINT = 'ppc-cart-script-params';
+    public const ENDPOINT = 'ppc-cart-script-params';
     /**
      * The SmartButton.
      *
@@ -53,25 +53,22 @@ class CartScriptParamsEndpoint implements \WooCommerce\PayPalCommerce\Button\End
     }
     /**
      * Handles the request.
-     *
-     * @return bool
      */
-    public function handle_request(): bool
+    public function handle_request(): void
     {
         try {
             if (!$this->smart_button instanceof SmartButton) {
                 wp_send_json_error();
-                return \false;
             }
             if (is_callable('wc_maybe_define_constant')) {
+                // @phpstan-ignore function.alreadyNarrowedType
                 wc_maybe_define_constant('WOOCOMMERCE_CART', \true);
             }
-            $include_shipping = (bool) wc_clean(wp_unslash($_GET['shipping'] ?? ''));
             // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $include_shipping = (bool) wc_clean(wp_unslash($_GET['shipping'] ?? ''));
             $script_data = $this->smart_button->script_data();
             if (!$script_data) {
                 wp_send_json_error();
-                return \false;
             }
             $total = (float) WC()->cart->get_total('numeric');
             // Shop settings.
@@ -83,11 +80,9 @@ class CartScriptParamsEndpoint implements \WooCommerce\PayPalCommerce\Button\End
                 $response = $this->append_shipping_data($response, $currency_code);
             }
             wp_send_json_success($response);
-            return \true;
         } catch (Throwable $error) {
             $this->logger->error("CartScriptParamsEndpoint execution failed. {$error->getMessage()} {$error->getFile()}:{$error->getLine()}");
             wp_send_json_error();
-            return \false;
         }
     }
     /**
@@ -114,7 +109,7 @@ class CartScriptParamsEndpoint implements \WooCommerce\PayPalCommerce\Button\End
              *
              * @var \WC_Shipping_Rate $rate
              */
-            $shipping_packages[] = array('id' => $rate->get_id(), 'label' => $rate->get_label(), 'cost' => (float) $rate_cost, 'cost_str' => (new Money((float) $rate_cost, $currency_code))->value_str(), 'description' => html_entity_decode(wp_strip_all_tags(wc_price((float) $rate->get_cost(), array('currency' => get_woocommerce_currency())))));
+            $shipping_packages[] = array('id' => $rate->get_id(), 'label' => $rate->get_label(), 'cost' => (float) $rate_cost, 'cost_str' => (new Money((float) $rate_cost, $currency_code))->value_str(), 'description' => html_entity_decode(wp_strip_all_tags(wc_price((float) $rate->get_cost(), array('currency' => get_woocommerce_currency()))), \ENT_QUOTES, 'UTF-8'));
         }
         $response['chosen_shipping_methods'] = WC()->session->get('chosen_shipping_methods');
         $response['shipping_packages'] = $shipping_packages;

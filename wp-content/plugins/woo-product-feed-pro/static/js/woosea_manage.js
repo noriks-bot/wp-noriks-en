@@ -1,5 +1,7 @@
 jQuery(function ($) {
   //jQuery(document).ready(function($) {
+  const { __ } = window.wp.i18n;
+  
   var project_hash = null;
   var project_status = null;
   var isRefreshRunning = false;
@@ -63,11 +65,17 @@ jQuery(function ($) {
     });
 
   // Check if user would like to use mother image for variations
-  $('.adt-pfp-general-setting').on('change', function () {
+  $('.adt-pfp-general-setting').on('change', function (e) {
     // Get name of setting.
     var nonce = $('#_wpnonce').val();
     var setting = $(this).attr('name');
     var $row = $(this).closest('tr');
+    var confirmation = $(this).data('confirmation');
+
+    // Disable the button.
+    var $button = $(this);
+    $button.prop('disabled', true);
+    $button.addClass('loading');
 
     // Get type of setting
     var type = $(this).attr('type') || 'text';
@@ -82,23 +90,47 @@ jQuery(function ($) {
         break;
     }
 
+    if (confirmation && type === 'checkbox' && value === true) {
+      var popup_dialog = confirm(confirmation);
+      if (popup_dialog == false) {
+        $(this).prop('checked', false);
+        e.preventDefault();
+        return;
+      }
+    }
+
     if ($row.hasClass('group') && type === 'checkbox') {
       var group = $row.data('group');
       adt_show_or_hide_addtitional_setting_row(group, value);
     }
 
     // Send AJAX request to update the setting.
-    jQuery.ajax({
-      method: 'POST',
-      url: ajaxurl,
-      data: {
-        action: 'adt_pfp_update_settings',
-        security: nonce,
-        setting: setting,
-        type: type,
-        value: value,
-      },
-    });
+    jQuery
+      .ajax({
+        method: 'POST',
+        url: ajaxurl,
+        data: {
+          action: 'adt_pfp_update_settings',
+          security: nonce,
+          setting: setting,
+          type: type,
+          value: value,
+        },
+      })
+      .done(function (response) {
+        if (response.success) {
+          toastr.success(response.data.message);
+        } else {
+          toastr.error(response.data.message);
+        }
+      })
+      .fail(function (response) {
+        toastr.error(response.data.message);
+      })
+      .always(function () {
+        $button.prop('disabled', false);
+        $button.removeClass('loading');
+      });
   });
 
   /**
@@ -124,9 +156,9 @@ jQuery(function ($) {
     e.preventDefault();
 
     var $col = $(this).closest('td');
-    var $input = $col.find('input[type="text"]');
+    var $input = $col.find('input[type="text"], textarea');
     var $error = $col.find('.error-message');
-    var id = $col.find('input[type="text"]').attr('id');
+    var id = $input.attr('id');
     var setting = $input.attr('name');
     var value = $input.val();
     var nonce = $('#_wpnonce').val();
@@ -144,7 +176,7 @@ jQuery(function ($) {
         error_message = 'Only numbers, comma (,) and hyphen (-) are allowed. Please enter a valid format.';
         break;
       default:
-        regex = /^[0-9A-Za-z]*$/;
+        regex = /^[0-9A-Za-z\s]*$/;
         error_message = 'Only numbers and letters are allowed. Please enter a valid format.';
         break;
     }
@@ -159,18 +191,42 @@ jQuery(function ($) {
     $error.text('');
     $error.hide();
 
+    // Disable the button
+    var $button = $(this);
+    $button.prop('disabled', true);
+    $button.addClass('loading');
+
+    // Set text to "Saving..." to the value attribute
+    var originalText = $button.val();
+    $button.val('Saving...');
+
     // Now we need to save the conversion ID so we can use it in the dynamic remarketing JS
-    jQuery.ajax({
-      method: 'POST',
-      url: ajaxurl,
-      data: {
-        action: 'adt_pfp_update_settings',
-        security: nonce,
-        setting: setting,
-        type: 'text',
-        value: value,
-      },
-    });
+    jQuery
+      .ajax({
+        method: 'POST',
+        url: ajaxurl,
+        data: {
+          action: 'adt_pfp_update_settings',
+          security: nonce,
+          setting: setting,
+          type: 'text',
+          value: value,
+        },
+      })
+      .done(function (response) {
+        if (response.success) {
+          toastr.success(response.data.message);
+        } else {
+          toastr.error(response.data.message);
+        }
+      })
+      .fail(function (response) {
+        toastr.error(response.data.message);
+      })
+      .always(function () {
+        $button.prop('disabled', false);
+        $button.val(originalText);
+      });
   });
 
   $('.actions').on('click', 'span', function () {
@@ -193,7 +249,7 @@ jQuery(function ($) {
     }
 
     if (action == 'copy') {
-      var popup_dialog = confirm('Are you sure you want to copy this feed?');
+      var popup_dialog = confirm(__('Are you sure you want to copy this feed?', 'woo-product-feed-pro'));
       if (popup_dialog == true) {
         jQuery
           .ajax({
@@ -217,7 +273,7 @@ jQuery(function ($) {
     }
 
     if (action == 'trash') {
-      var popup_dialog = confirm('Are you sure you want to delete this feed?');
+      var popup_dialog = confirm(__('Are you sure you want to delete this feed?', 'woo-product-feed-pro'));
       if (popup_dialog == true) {
         jQuery.ajax({
           method: 'POST',
@@ -241,7 +297,7 @@ jQuery(function ($) {
     }
 
     if (action == 'cancel') {
-      var popup_dialog = confirm('Are you sure you want to cancel processing the feed?');
+      var popup_dialog = confirm(__('Are you sure you want to cancel processing the feed?', 'woo-product-feed-pro'));
       if (popup_dialog == true) {
         // Stop the recurring process
         isRefreshRunning = false;
@@ -284,7 +340,7 @@ jQuery(function ($) {
     }
 
     if (action == 'refresh') {
-      var popup_dialog = confirm('Are you sure you want to refresh the product feed?');
+      var popup_dialog = confirm(__('Are you sure you want to refresh the product feed?', 'woo-product-feed-pro'));
       if (popup_dialog == true) {
         $row.addClass('processing');
         $feedStatus.addClass('woo-product-feed-pro-blink_me');
@@ -327,7 +383,7 @@ jQuery(function ($) {
 
   $('#adt_migrate_to_custom_post_type').on('click', function () {
     var nonce = $('#_wpnonce').val();
-    var popup_dialog = confirm('Are you sure you want to migrate your products to a custom post type?');
+    var popup_dialog = confirm(__('Are you sure you want to migrate your products to a custom post type?', 'woo-product-feed-pro'));
     var $button = $(this);
 
     if (popup_dialog == true) {
@@ -348,9 +404,9 @@ jQuery(function ($) {
           $button.prop('disabled', false);
 
           if (response.success) {
-            alert(response.data.message);
+            toastr.success(response.data.message);
           } else {
-            alert('Migration failed');
+            toastr.error('Migration failed');
           }
         })
         .fail(function (data) {
@@ -362,7 +418,7 @@ jQuery(function ($) {
 
   $('#adt_clear_custom_attributes_product_meta_keys').on('click', function () {
     var nonce = $('#_wpnonce').val();
-    var popup_dialog = confirm('Are you sure you want to delete the custom attributes product meta keys cache?');
+    var popup_dialog = confirm(__('Are you sure you want to delete the custom attributes product meta keys cache?', 'woo-product-feed-pro'));
     var $button = $(this);
 
     if (popup_dialog == true) {
@@ -383,9 +439,9 @@ jQuery(function ($) {
           $button.prop('disabled', false);
 
           if (response.success) {
-            alert(response.data.message);
+            toastr.success(response.data.message);
           } else {
-            alert(response.data.message);
+            toastr.error(response.data.message);
           }
         })
         .fail(function (data) {
@@ -397,7 +453,7 @@ jQuery(function ($) {
 
   $('#adt_update_file_url_to_lower_case').on('click', function () {
     var nonce = $('#_wpnonce').val();
-    var popup_dialog = confirm('Are you sure you want to convert all feed file URLs to lowercase?');
+    var popup_dialog = confirm(__('Are you sure you want to convert all feed file URLs to lowercase?', 'woo-product-feed-pro'));
     var $button = $(this);
 
     if (popup_dialog == true) {
@@ -418,9 +474,9 @@ jQuery(function ($) {
           $button.prop('disabled', false);
 
           if (response.success) {
-            alert(response.data.message);
+            toastr.success(response.data.message);
           } else {
-            alert(response.data.message);
+            toastr.error(response.data.message);
           }
         })
         .fail(function (data) {
@@ -430,19 +486,101 @@ jQuery(function ($) {
     }
   });
 
-  $('#adt_pfp_anonymous_data').on('change', function () {
+  $('#adt_use_legacy_filters_and_rules').on('change', function (e) {
     var nonce = $('#_wpnonce').val();
     var value = $(this).is(':checked');
 
-    jQuery.ajax({
-      method: 'POST',
-      url: ajaxurl,
-      data: {
-        action: 'adt_pfp_anonymous_data',
-        security: nonce,
-        value: value,
-      },
-    });
+    if (value === true) {
+      var popup_dialog = confirm(__('Are you sure you want to use legacy filters and rules?', 'woo-product-feed-pro'));
+      if (popup_dialog == false) {
+        $(this).prop('checked', false);
+        e.preventDefault();
+        return;
+      }
+    }
+
+    jQuery
+      .ajax({
+        method: 'POST',
+        url: ajaxurl,
+        data: {
+          action: 'adt_use_legacy_filters_and_rules',
+          security: nonce,
+          value: value,
+        },
+      })
+      .done(function (response) {
+        if (response.success) {
+          toastr.success(response.data.message);
+        } else {
+          toastr.error(response.data.message);
+        }
+      })
+      .fail(function (data) {
+        toastr.error('An error occurred while using the legacy filters and rules. Please try again.');
+      });
+  });
+
+  $('#adt_fix_duplicate_feed').on('click', function () {
+    var nonce = $('#_wpnonce').val();
+    var popup_dialog = confirm(__('Are you sure you want to fix the duplicated feed?', 'woo-product-feed-pro'));
+
+    if (popup_dialog == true) {
+      jQuery
+        .ajax({
+          method: 'POST',
+          url: ajaxurl,
+          data: {
+            action: 'adt_fix_duplicate_feed',
+            security: nonce,
+          },
+        })
+        .done(function (response) {
+          if (response.success) {
+            toastr.success(response.data.message);
+          } else {
+            toastr.error(response.data.message);
+          }
+        })
+        .fail(function (data) {
+          toastr.error('An error occurred while fixing the duplicated feed. Please try again.');
+        });
+    }
+  });
+
+  $('#adt_pfp_anonymous_data').on('change', function (e) {
+    var nonce = $('#_wpnonce').val();
+    var value = $(this).is(':checked');
+
+    if (value === true) {
+      var popup_dialog = confirm(__('Are you sure you want to allow usage tracking?', 'woo-product-feed-pro'));
+      if (popup_dialog === false) {
+        $(this).prop('checked', false);
+        e.preventDefault();
+        return;
+      }
+    }
+
+    jQuery
+      .ajax({
+        method: 'POST',
+        url: ajaxurl,
+        data: {
+          action: 'adt_pfp_anonymous_data',
+          security: nonce,
+          value: value,
+        },
+      })
+      .done(function (response) {
+        if (response.success) {
+          toastr.success(response.data.message);
+        } else {
+          toastr.error(response.data.message);
+        }
+      })
+      .fail(function () {
+        toastr.error('An error occurred while saving the anonymous data. Please try again.');
+      });
   });
 
   function woosea_generate_product_feed(feed_id, offset, batch_size) {
@@ -561,4 +699,55 @@ jQuery(function ($) {
 
   // Select2
   $(document.body).trigger('init_woosea_select2');
+
+  // Handle download button clicks for CSV, TSV, TXT, and JSONL files
+  $(document).on('click', '.adt-manage-feeds-table-row-url-link-button[download]', function (e) {
+    e.preventDefault();
+
+    var $link = $(this);
+    var fileUrl = $link.attr('href');
+    var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+
+    // Show loading state
+    var $icon = $link.find('.adt-manage-feeds-table-row-url-button-icon');
+    var originalIconClass = $icon.attr('class');
+    $icon.attr(
+      'class',
+      'adt-manage-feeds-table-row-url-button-icon adt-tw-icon-[lucide--loader-circle] adt-tw-animate-spin'
+    );
+
+    // Fetch the file and trigger download
+    fetch(fileUrl)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(function (blob) {
+        // Create a temporary URL for the blob
+        var blobUrl = window.URL.createObjectURL(blob);
+
+        // Create a temporary link and trigger download
+        var tempLink = document.createElement('a');
+        tempLink.href = blobUrl;
+        tempLink.download = fileName;
+        document.body.appendChild(tempLink);
+        tempLink.click();
+
+        // Clean up
+        document.body.removeChild(tempLink);
+        window.URL.revokeObjectURL(blobUrl);
+
+        // Restore icon
+        $icon.attr('class', originalIconClass);
+      })
+      .catch(function (error) {
+        console.error('Download failed:', error);
+        // Restore icon
+        $icon.attr('class', originalIconClass);
+        // Fallback: try opening in new tab
+        window.open(fileUrl, '_blank');
+      });
+  });
 });

@@ -17,17 +17,19 @@ use WooCommerce\PayPalCommerce\Applepay\Assets\PropertiesDictionary;
 use WooCommerce\PayPalCommerce\Button\Assets\ButtonInterface;
 use WooCommerce\PayPalCommerce\Button\Assets\SmartButtonInterface;
 use WooCommerce\PayPalCommerce\Applepay\Helper\AvailabilityNotice;
+use WooCommerce\PayPalCommerce\Button\Helper\Context;
+use WooCommerce\PayPalCommerce\Settings\Data\Definition\FeaturesDefinition;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\Environment;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
-use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExtendingModule;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
-use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
+use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
+use WooCommerce\PayPalCommerce\Settings\DTO\LocationStylingDTO;
 /**
  * Class ApplepayModule
  */
-class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
+class ApplepayModule implements ServiceModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
     /**
@@ -40,21 +42,14 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
     /**
      * {@inheritDoc}
      */
-    public function extensions(): array
-    {
-        return require __DIR__ . '/../extensions.php';
-    }
-    /**
-     * {@inheritDoc}
-     */
     public function run(ContainerInterface $c): bool
     {
         $module = $this;
         // Clears product status when appropriate.
-        add_action('woocommerce_paypal_payments_clear_apm_product_status', function (Settings $settings = null) use ($c): void {
+        add_action('woocommerce_paypal_payments_clear_apm_product_status', static function () use ($c): void {
             $apm_status = $c->get('applepay.apple-product-status');
             assert($apm_status instanceof AppleProductStatus);
-            $apm_status->clear($settings);
+            $apm_status->clear();
         });
         add_action('init', static function () use ($c, $module) {
             // Check if the module is applicable, correct country, currency, ... etc.
@@ -65,7 +60,6 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             $apple_payment_method = $c->get('applepay.button');
             // add onboarding and referrals hooks.
             assert($apple_payment_method instanceof ApplepayButton);
-            $apple_payment_method->initialize();
             // Show notice if there are product availability issues.
             $availability_notice = $c->get('applepay.availability_notice');
             assert($availability_notice instanceof AvailabilityNotice);
@@ -79,14 +73,12 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             if (!$c->get('applepay.available') && $c->get('applepay.is_referral')) {
                 return;
             }
-            if ($apple_payment_method->is_enabled()) {
-                $module->load_assets($c, $apple_payment_method);
-                $module->handle_validation_file($c, $apple_payment_method);
-                $module->render_buttons($c, $apple_payment_method);
-                $apple_payment_method->bootstrap_ajax_request();
-            }
             $module->load_admin_assets($c, $apple_payment_method);
             $module->load_block_editor_assets($c, $apple_payment_method);
+            $module->load_assets($c, $apple_payment_method);
+            $module->handle_validation_file($c, $apple_payment_method);
+            $module->render_buttons($c, $apple_payment_method);
+            $apple_payment_method->bootstrap_ajax_request();
         }, 1);
         add_filter(
             'nonce_user_logged_out',
@@ -99,7 +91,7 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
              *
              * @psalm-suppress MissingClosureParamType
              */
-            function ($uid, $action) {
+            static function ($uid, $action) {
                 if ($action === PropertiesDictionary::NONCE_ACTION) {
                     return 0;
                 }
@@ -115,20 +107,51 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
              *
              * @psalm-suppress MissingClosureParamType
              */
-            static function ($methods) use ($c): array {
+            static function ($methods) use ($c) {
                 if (!is_array($methods)) {
                     return $methods;
                 }
-                $settings = $c->get('wcgateway.settings');
-                assert($settings instanceof Settings);
-                if ($settings->has('applepay_button_enabled') && $settings->get('applepay_button_enabled')) {
-                    $applepay_gateway = $c->get('applepay.wc-gateway');
-                    assert($applepay_gateway instanceof WC_Payment_Gateway);
-                    $methods[] = $applepay_gateway;
+                $settings = $c->get('settings.settings-provider');
+                assert($settings instanceof SettingsProvider);
+                if (!$settings->applepay_enabled()) {
+                    return $methods;
                 }
+                $context = $c->get('button.helper.context');
+                assert($context instanceof Context);
+                $page_methods = $settings->button_styling($context->context())->methods;
+                if (!in_array(\WooCommerce\PayPalCommerce\Applepay\ApplePayGateway::ID, $page_methods, \true)) {
+                    return $methods;
+                }
+                $applepay_gateway = $c->get('applepay.wc-gateway');
+                assert($applepay_gateway instanceof WC_Payment_Gateway);
+                $methods[] = $applepay_gateway;
                 return $methods;
             }
         );
+        /**
+         * Filters the available payment gateways to remove the Apple Pay gateway
+         * when the button is disabled for the current location (e.g., classic checkout) in the styling settings.
+         * This is necessary because WooCommerce automatically includes the gateway when it is enabled,
+         * even if the button is hidden via settings.
+         */
+        add_filter('woocommerce_available_payment_gateways', static function ($methods) use ($c) {
+            if (!is_array($methods)) {
+                return $methods;
+            }
+            $context = $c->get('button.helper.context');
+            assert($context instanceof Context);
+            $current_context = $context->context();
+            if ($current_context !== 'checkout') {
+                return $methods;
+            }
+            $settings = $c->get('settings.settings-provider');
+            assert($settings instanceof SettingsProvider);
+            $page_methods = $settings->button_styling($current_context)->methods;
+            if (!in_array(\WooCommerce\PayPalCommerce\Applepay\ApplePayGateway::ID, $page_methods, \true)) {
+                unset($methods[\WooCommerce\PayPalCommerce\Applepay\ApplePayGateway::ID]);
+            }
+            return $methods;
+        });
         add_action('woocommerce_review_order_after_submit', function () {
             // Wrapper ID: #ppc-button-ppcp-applepay.
             echo '<div id="ppc-button-' . esc_attr(\WooCommerce\PayPalCommerce\Applepay\ApplePayGateway::ID) . '"></div>';
@@ -148,7 +171,7 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             $product_status = $c->get('applepay.apple-product-status');
             assert($product_status instanceof AppleProductStatus);
             $apple_pay_enabled = $product_status->is_active();
-            $features['apple_pay'] = array('enabled' => $apple_pay_enabled);
+            $features[FeaturesDefinition::FEATURE_APPLE_PAY] = array('enabled' => $apple_pay_enabled);
             return $features;
         });
         add_filter('ppcp_create_order_request_body_data', static function (array $data, string $payment_method, array $request) use ($c): array {
@@ -160,6 +183,14 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             $data['payment_source'] = array('apple_pay' => array('experience_context' => $experience_context_builder->with_endpoint_return_urls()->build()->to_array()));
             return $data;
         }, 10, 3);
+        add_filter('woocommerce_paypal_payments_applepay_button_styles', static function (LocationStylingDTO $styles): LocationStylingDTO {
+            $styles->color = PropertiesDictionary::map_color($styles->color);
+            $styles->label = PropertiesDictionary::map_type($styles->label);
+            return $styles;
+        }, 9999);
+        add_filter('woocommerce_paypal_payments_applepay_button_language', static function (string $language): string {
+            return PropertiesDictionary::map_language($language);
+        }, 9999);
         return \true;
     }
     /**
@@ -177,8 +208,8 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             $validation_string = $this->validation_string($is_sandbox);
             nocache_headers();
             header('Content-Type: text/plain', \true, 200);
-            echo $validation_string;
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $validation_string;
             exit;
         }
     }
@@ -191,10 +222,10 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
      */
     public function load_assets(ContainerInterface $c, ApplePayButton $button): void
     {
-        if (!$button->is_enabled()) {
-            return;
-        }
         add_action('wp_enqueue_scripts', function () use ($c, $button) {
+            if (!$button->is_enabled()) {
+                return;
+            }
             $smart_button = $c->get('button.smart-button');
             assert($smart_button instanceof SmartButtonInterface);
             if ($smart_button->should_load_ppcp_script()) {
@@ -210,7 +241,10 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
                 $button->enqueue_styles();
             }
         });
-        add_action('enqueue_block_editor_assets', function () use ($c, $button) {
+        add_action('enqueue_block_editor_assets', function () use ($button) {
+            if (!$button->is_enabled()) {
+                return;
+            }
             $button->enqueue_admin_styles();
         });
         add_action('woocommerce_blocks_payment_method_type_registration', function (PaymentMethodRegistry $payment_method_registry) use ($c): void {
@@ -228,7 +262,7 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
     {
         // Enqueue backend scripts.
         add_action('admin_enqueue_scripts', static function () use ($c, $button) {
-            if (!is_admin() || !$c->get('wcgateway.is-ppcp-settings-payment-methods-page')) {
+            if (!is_admin() || !$c->get('wcgateway.is-plugin-settings-page')) {
                 return;
             }
             /**
@@ -240,7 +274,7 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
             $button->enqueue_admin_styles();
         });
         // Adds ApplePay component to the backend button preview settings.
-        add_action('woocommerce_paypal_payments_admin_gateway_settings', function (array $settings) use ($c): array {
+        add_action('woocommerce_paypal_payments_admin_gateway_settings', function (array $settings): array {
             if (is_array($settings['components'])) {
                 $settings['components'][] = 'applepay';
             }
@@ -257,7 +291,7 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
     public function load_block_editor_assets(ContainerInterface $c, ApplePayButton $button): void
     {
         // Enqueue backend scripts.
-        add_action('enqueue_block_editor_assets', static function () use ($c, $button) {
+        add_action('enqueue_block_editor_assets', static function () use ($button) {
             /**
              * Should add this to the ButtonInterface.
              *
@@ -275,14 +309,14 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
      */
     public function render_buttons(ContainerInterface $c, ApplePayButton $button): void
     {
-        if (!$button->is_enabled()) {
-            return;
-        }
         add_action('wp', static function () use ($c) {
             if (is_admin()) {
                 return;
             }
             $button = $c->get('applepay.button');
+            if (!$button->is_enabled()) {
+                return;
+            }
             /**
              * The Button.
              *
@@ -300,12 +334,9 @@ class ApplepayModule implements ServiceModule, ExtendingModule, ExecutableModule
      */
     public function handle_validation_file(ContainerInterface $c, ApplePayButton $button): void
     {
-        if (!$button->is_enabled()) {
-            return;
-        }
         $env = $c->get('settings.environment');
         assert($env instanceof Environment);
-        $is_sandbox = $env->current_environment_is(Environment::SANDBOX);
+        $is_sandbox = $env->is_sandbox();
         $this->load_domain_association_file($is_sandbox);
     }
     /**

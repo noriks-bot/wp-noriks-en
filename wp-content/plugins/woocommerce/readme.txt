@@ -1,10 +1,10 @@
 === WooCommerce ===
 Contributors: automattic, woocommerce, mikejolley, jameskoster, claudiosanches, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski, wpmuguru, royho, barryhughes-1, claudiulodro, tiagonoronha, ryelle, levinmedia, aljullu, nerrad, joshuawold, assassinateur, haszari, mppfeiffer, nielslange, opr18, ralucastn, tjcafferkey, danielwrobert, patriciahillebrandt, albarin, dinhtungdu, imanish003, karolmanijak, sunyatasattva, alexandrelara, gigitux, danieldudzic, samueljseay, alexflorisca, opr18, tarunvijwani, pauloarromba, saadtarhi, bor0, kloon, coreymckrill, jorgeatorres, leifsinger, neosinner
 Tags: online store, ecommerce, shop, shopping cart, sell online
-Requires at least: 6.7
-Tested up to: 6.8
+Requires at least: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 10.1.4
+Stable tag: 10.6.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -144,7 +144,7 @@ Check out [Frequently Asked Questions](https://woocommerce.com/document/frequent
 
 * PHP 7.4 or greater is required (PHP 8.0 or greater is recommended)
 * MySQL 5.5.5 or greater, OR MariaDB version 10.1 or greater, is required
-* WordPress 6.7 or greater
+* WordPress 6.8 or greater
 * (Recommended) WordPress [memory limit](https://woocommerce.com/document/increasing-the-wordpress-memory-limit/) of 256 MB or greater.
 * (Recommended) [HTTPS](https://woocommerce.com/document/ssl-and-https/) support.
 
@@ -170,20 +170,17 @@ WooCommerce comes with some sample data you can use to see how products look; im
 
 == Changelog ==
 
-= 10.1.4 2026-02-24 =
-
-* Security - Fixed path validation in Store API batch endpoint
-
-= 10.1.3 2025-12-18 =
-
-* Security - Fixed an authorization bypass vulnerability in the Store API order endpoint
-
-= 10.1.2 2025-08-27 =
+= 10.6.2 2026-03-31 =
 
 **WooCommerce**
 
-* Fix - Prevent woocommerce_cancel_unpaid_orders being queued as unique so it recurs after the stock hold limit [#60626](https://github.com/woocommerce/woocommerce/pull/60626)
-* Fix - Revert to using usermeta to store persistent carts [#60605](https://github.com/woocommerce/woocommerce/pull/60605)
+* Fix - Fix a small punctuation issue at the LYS page. [#63873](https://github.com/woocommerce/woocommerce/pull/63873)
+* Fix - Fix extra padding on analytics tables, dashboard charts, leaderboards, and store alerts on WordPress 7.0 by setting Card/CardBody size to "none". [#63827](https://github.com/woocommerce/woocommerce/pull/63827)
+* Fix - Fix order meta box action buttons stacking poorly on smaller viewports (~1200px) with WordPress 7.0. [#63836](https://github.com/woocommerce/woocommerce/pull/63836)
+* Fix - Fix styling issues with WP 7.0 [#63825](https://github.com/woocommerce/woocommerce/pull/63825)
+* Fix - Fix variable products not working when name is different than the slug [#63771](https://github.com/woocommerce/woocommerce/pull/63771)
+* Fix - Prevent Activity panel abbreviated notification SlotFill from triggering repeated re-renders by creating the slot at module scope. [#63829](https://github.com/woocommerce/woocommerce/pull/63829)
+* Tweak - Remove unused code from the Product Collection cart-contents handler. [#63927](https://github.com/woocommerce/woocommerce/pull/63927)
 
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce/trunk/changelog.txt).

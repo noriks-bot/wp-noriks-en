@@ -23,13 +23,13 @@ trait TrackingAvailabilityTrait
      */
     protected function is_tracking_enabled(Bearer $bearer): bool
     {
+        // phpcs:ignore WordPress.Security.NonceVerification
         $post_id = (int) wc_clean(wp_unslash($_GET['id'] ?? $_GET['post'] ?? ''));
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (!$post_id) {
             return \false;
         }
         $order = wc_get_order($post_id);
-        if (!is_a($order, WC_Order::class)) {
+        if (!$order instanceof WC_Order) {
             return \false;
         }
         $captured = $order->get_meta(AuthorizedPaymentsProcessor::CAPTURED_META_KEY);

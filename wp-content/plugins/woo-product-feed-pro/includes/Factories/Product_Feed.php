@@ -69,6 +69,14 @@ class Product_Feed {
     protected $context = 'view';
 
     /**
+     * Flag to track if shutdown handler is registered.
+     *
+     * @since 13.4.6
+     * @var bool
+     */
+    private static $shutdown_handler_registered = false;
+
+    /**
      * Stores product data.
      *
      * @var array
@@ -92,21 +100,25 @@ class Product_Feed {
         'include_product_variations'             => false,
         'only_include_default_product_variation' => false,
         'only_include_lowest_product_variation'  => false,
+        'include_all_shipping_countries'         => false,
         'utm_enabled'                            => true,
         'utm_source'                             => '',
         'utm_medium'                             => '',
         'utm_campaign'                           => '',
         'utm_term'                               => '',
         'utm_content'                            => '',
-        'utm_total_product_orders_lookback'      => 0,
+        'utm_total_product_orders_lookback'      => '',
         'attributes'                             => array(),
         'mappings'                               => array(),
         'rules'                                  => array(),
         'filters'                                => array(),
+        'feed_filters'                           => array(),
+        'feed_rules'                             => array(),
         'history_products'                       => array(),
         'ship_suffix'                            => false,
         'last_updated'                           => '',
         'legacy_project_hash'                    => '', // Backward compatibility.
+        'data_version'                           => array(),
     );
 
     /**
@@ -317,6 +329,7 @@ class Product_Feed {
             case 'filters':
             case 'rules':
                 $value = $this->_filter_feed_filters_mapping_meta_value( $value );
+                break;
         }
         return $value;
     }
@@ -478,6 +491,27 @@ class Product_Feed {
     }
 
     /**
+     * Get the base file format, stripping any .gz suffix.
+     *
+     * For compressed formats like 'jsonl.gz' or 'csv.gz', returns the underlying
+     * format ('jsonl' or 'csv') used for directory naming and temp-file extensions.
+     * Declared static so it can be reused across classes without duplicating
+     * the stripping logic (e.g. Product_Feed::get_base_file_format( $feed->file_format )).
+     *
+     * @since 13.5.2
+     * @access public
+     *
+     * @param string $format The file format string to evaluate.
+     * @return string
+     */
+    public static function get_base_file_format( $format ) {
+        if ( substr( $format, -3 ) === '.gz' ) {
+            return substr( $format, 0, -3 );
+        }
+        return $format;
+    }
+
+    /**
      * Get product feed file format.
      *
      * @since 13.3.5
@@ -486,8 +520,10 @@ class Product_Feed {
      * @return string
      */
     public function get_file_url() {
-        $upload_dir = wp_upload_dir();
-        return $upload_dir['baseurl'] . '/' . self::UPLOAD_SUB_DIR . '/' . $this->file_format . '/' . $this->file_name . '.' . $this->file_format;
+        $upload_dir  = wp_upload_dir();
+        $base_url    = set_url_scheme( $upload_dir['baseurl'], is_ssl() ? 'https' : 'http' );
+        $base_format = self::get_base_file_format( $this->file_format );
+        return $base_url . '/' . self::UPLOAD_SUB_DIR . '/' . $base_format . '/' . $this->file_name . '.' . $this->file_format;
     }
 
     /**
@@ -499,9 +535,9 @@ class Product_Feed {
      * @return string
      */
     public function get_file_path() {
-        $upload_dir = wp_upload_dir();
-        $asd        = $upload_dir['basedir'] . '/' . self::UPLOAD_SUB_DIR . '/' . $this->file_format . '/' . $this->file_name . '.' . $this->file_format;
-        return $asd;
+        $upload_dir  = wp_upload_dir();
+        $base_format = self::get_base_file_format( $this->file_format );
+        return $upload_dir['basedir'] . '/' . self::UPLOAD_SUB_DIR . '/' . $base_format . '/' . $this->file_name . '.' . $this->file_format;
     }
 
     /**
@@ -616,9 +652,31 @@ class Product_Feed {
      * @since 13.4.1
      * @access public
      *
-     * @param string $context The context of the generation. 'ajax' or 'cron'.
+     * @param string $context The context of the generation. 'schedule' or 'manual'.
      */
-    public function generate( $context = '' ) {
+    public function generate( $context = 'schedule' ) {
+        // Log when feed generation starts.
+        $logging = get_option( 'adt_enable_logging', 'no' );
+        if ( 'yes' === $logging ) {
+            $start_info  = array(
+                'feed_id'        => $this->id,
+                'feed_title'     => $this->title,
+                'execution_date' => current_time( 'Y-m-d H:i:s' ),
+                'context'        => $context,
+                'channel'        => $this->channel,
+                'file_format'    => $this->file_format,
+                'action'         => 'Feed generation started',
+            );
+            $log_message = 'Product Feed Generation Started: ' . print_r( $start_info, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+            $logger = new \WC_Logger();
+            $logger->add( 'Product Feed Pro by AdTribes.io', $log_message, 'info' );
+
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( $log_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            }
+        }
+
         // Get the total number of products.
         $published_products = Product_Feed_Helper::get_feed_total_published_products( $this );
         $batch_size         = Product_Feed_Helper::get_batch_size( $this, $published_products );
@@ -630,21 +688,10 @@ class Product_Feed {
         $this->products_count           = intval( $published_products );
         $this->total_products_processed = 0;
         $this->batch_size               = $batch_size;
-        $this->executed_from            = 'ajax' === $context ? 'ajax' : 'cron';
+        $this->executed_from            = $context;
         $this->save();
 
-        if ( 'ajax' === $context && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-            wp_send_json_success(
-                array(
-                    'feed_id'       => $this->id,
-                    'offset'        => 0,
-                    'batch_size'    => $batch_size,
-                    'executed_from' => $this->executed_from,
-                )
-            );
-        } else {
-            return Cron::schedule_next_batch( $this->id, 0, $batch_size );
-        }
+        return Cron::schedule_next_batch( $this->id, 0, $batch_size );
     }
 
     /**
@@ -658,12 +705,38 @@ class Product_Feed {
      * @param string $context The context of the generation. 'ajax' or 'cron'.
      */
     public function run_batch_event( $offset = 0, $batch_size = 0, $context = '' ) {
+        // Register shutdown handler only once per request to avoid duplicate registrations.
+        if ( ! self::$shutdown_handler_registered ) {
+            register_shutdown_function( array( $this, 'handle_fatal_error' ), $context );
+            self::$shutdown_handler_registered = true;
+        }
+
         try {
+            // Log memory usage at the start of batch processing.
+            $this->log_memory_usage( 'Batch start', $offset, $batch_size );
+
+            // Check memory availability (logs warning if low, but doesn't prevent execution).
+            $this->check_memory_availability();
+
+            /**
+             * Before product feed batch processing action.
+             *
+             * @since 13.5.1
+             *
+             * @param int    $feed_id    Feed ID.
+             * @param int    $offset     Batch offset.
+             * @param int    $batch_size Batch size.
+             */
+            do_action( 'adt_before_product_feed_batch_processing', $this->id, $offset, $batch_size );
+
             // Create the product class instance.
             $get_product_class = new \WooSEA_Get_Products();
 
             // This is where errors might occur.
             $get_product_class->woosea_get_products( $this, $offset, $batch_size );
+
+            // Log memory usage after processing.
+            $this->log_memory_usage( 'Batch end', $offset, $batch_size );
 
             // Update the total number of products processed.
             $this->total_products_processed = min( $this->total_products_processed + $batch_size, $this->products_count );
@@ -692,6 +765,31 @@ class Product_Feed {
             $this->save();
 
             if ( 'ready' === $this->status ) {
+                // Log when feed generation ends.
+                $logging = get_option( 'adt_enable_logging', 'no' );
+                if ( 'yes' === $logging ) {
+                    $end_info    = array(
+                        'feed_id'         => $this->id,
+                        'feed_title'      => $this->title,
+                        'execution_date'  => current_time( 'Y-m-d H:i:s' ),
+                        'context'         => $context,
+                        'products_count'  => $this->products_count,
+                        'processed_count' => $this->products_count, // All products processed when status is ready.
+                        'channel'         => $this->channel,
+                        'file_format'     => $this->file_format,
+                        'file_url'        => $this->file_url,
+                        'action'          => 'Feed generation completed',
+                    );
+                    $log_message = 'Product Feed Generation Completed: ' . print_r( $end_info, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+                    $logger = new \WC_Logger();
+                    $logger->add( 'Product Feed Pro by AdTribes.io', $log_message, 'info' );
+
+                    if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                        error_log( $log_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                    }
+                }
+
                 $this->move_feed_file_to_final();
 
                 // Check the amount of products in the feed and update the history count.
@@ -732,7 +830,7 @@ class Product_Feed {
         } catch ( \Throwable $e ) {
 
             // Log the error for debugging.
-            $logging = get_option( 'add_woosea_logging', 'no' );
+            $logging = get_option( 'adt_enable_logging', 'no' );
             if ( 'yes' === $logging ) {
                 // Build comprehensive error information.
                 $error_info  = array(
@@ -785,6 +883,258 @@ class Product_Feed {
         }
     }
 
+    /**
+     * Handle fatal errors during batch processing.
+     *
+     * @since 13.5.1
+     * @access public
+     *
+     * @param string $context The context of the generation. 'ajax' or 'cron'.
+     */
+    public function handle_fatal_error( $context = '' ) {
+        $error = error_get_last();
+
+        // Check if this is a fatal error.
+        if ( null === $error || ! in_array( $error['type'], array( E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR ), true ) ) {
+            return;
+        }
+
+        // Log the fatal error.
+        $logging = get_option( 'adt_enable_logging', 'no' );
+        if ( 'yes' === $logging ) {
+            $error_info  = array(
+                'feed_id'         => $this->id,
+                'feed_title'      => $this->title,
+                'execution_date'  => gmdate( 'Y-m-d H:i:s' ),
+                'context'         => $context,
+                'error_type'      => $this->get_error_type_name( $error['type'] ),
+                'error_message'   => isset( $error['message'] ) ? sanitize_text_field( $error['message'] ) : '',
+                'error_file'      => isset( $error['file'] ) ? esc_html( $error['file'] ) : '',
+                'error_line'      => isset( $error['line'] ) ? absint( $error['line'] ) : 0,
+                'memory_usage'    => size_format( memory_get_usage( true ) ),
+                'memory_limit'    => ini_get( 'memory_limit' ),
+                'products_count'  => $this->products_count,
+                'processed_count' => $this->total_products_processed,
+                'channel'         => $this->channel,
+                'file_format'     => $this->file_format,
+            );
+            $log_message = 'Product Feed Fatal Error: ' . print_r( $error_info, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+            // Use error_log directly as WC_Logger might fail in shutdown handler.
+            error_log( $log_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+        }
+
+        // Set status to error (use direct database update to avoid memory issues).
+        global $wpdb;
+        $wpdb->update(
+            $wpdb->postmeta,
+            array( 'meta_value' => 'error' ),
+            array(
+                'post_id'  => $this->id,
+                'meta_key' => self::META_PREFIX . 'status',
+            ),
+            array( '%s' ),
+            array( '%d', '%s' )
+        );
+
+        // Reset counters.
+        $wpdb->update(
+            $wpdb->postmeta,
+            array( 'meta_value' => '0' ),
+            array(
+                'post_id'  => $this->id,
+                'meta_key' => self::META_PREFIX . 'total_products_processed',
+            ),
+            array( '%s' ),
+            array( '%d', '%s' )
+        );
+        $wpdb->update(
+            $wpdb->postmeta,
+            array( 'meta_value' => '0' ),
+            array(
+                'post_id'  => $this->id,
+                'meta_key' => self::META_PREFIX . 'batch_size',
+            ),
+            array( '%s' ),
+            array( '%d', '%s' )
+        );
+        $wpdb->update(
+            $wpdb->postmeta,
+            array( 'meta_value' => '' ),
+            array(
+                'post_id'  => $this->id,
+                'meta_key' => self::META_PREFIX . 'executed_from',
+            ),
+            array( '%s' ),
+            array( '%d', '%s' )
+        );
+    }
+
+    /**
+     * Get error type name from error code.
+     *
+     * @since 13.5.1
+     * @access private
+     *
+     * @param int $type Error type code.
+     * @return string
+     */
+    private function get_error_type_name( $type ) {
+        $error_types = array(
+            E_ERROR             => 'E_ERROR',
+            E_WARNING           => 'E_WARNING',
+            E_PARSE             => 'E_PARSE',
+            E_NOTICE            => 'E_NOTICE',
+            E_CORE_ERROR        => 'E_CORE_ERROR',
+            E_CORE_WARNING      => 'E_CORE_WARNING',
+            E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
+            E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
+            E_USER_ERROR        => 'E_USER_ERROR',
+            E_USER_WARNING      => 'E_USER_WARNING',
+            E_USER_NOTICE       => 'E_USER_NOTICE',
+            E_STRICT            => 'E_STRICT',
+            E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+            E_DEPRECATED        => 'E_DEPRECATED',
+            E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
+        );
+
+        return isset( $error_types[ $type ] ) ? $error_types[ $type ] : 'UNKNOWN';
+    }
+
+    /**
+     * Log memory availability warnings for batch processing (non-blocking).
+     *
+     * Checks available memory and logs a warning if below threshold when logging is enabled.
+     * Does not prevent feed generation from proceeding.
+     *
+     * @since 13.5.1
+     * @access private
+     */
+    private function check_memory_availability() {
+        $memory_limit = ini_get( 'memory_limit' );
+
+        // If memory limit is -1, it's unlimited.
+        if ( '-1' === $memory_limit ) {
+            return;
+        }
+
+        // Convert memory limit to bytes.
+        $memory_limit_bytes = $this->convert_to_bytes( $memory_limit );
+        $memory_used        = memory_get_usage( true );
+        $memory_available   = $memory_limit_bytes - $memory_used;
+
+        // Log memory status for debugging purposes only - don't throw exceptions.
+        $logging = get_option( 'adt_enable_logging', 'no' );
+        if ( 'yes' === $logging ) {
+            $threshold = 128 * 1024 * 1024; // 128MB in bytes.
+
+            /**
+             * Filter the memory threshold for warnings.
+             *
+             * @since 13.5.1
+             *
+             * @param int $threshold Memory threshold in bytes (default: 128MB).
+             * @param int $feed_id Feed ID.
+             */
+            $threshold = apply_filters( 'adt_product_feed_memory_warning_threshold', $threshold, $this->id );
+
+            if ( $memory_available < $threshold ) {
+                $logger = wc_get_logger();
+                $logger->warning(
+                    'Low memory detected before batch processing',
+                    array(
+                        'source'           => 'woo-product-feed-pro',
+                        'feed_id'          => $this->id,
+                        'memory_available' => size_format( $memory_available ),
+                        'memory_limit'     => size_format( $memory_limit_bytes ),
+                        'memory_used'      => size_format( $memory_used ),
+                        'threshold'        => size_format( $threshold ),
+                    )
+                );
+            }
+        }
+
+        // Don't throw exceptions - let the shutdown handler catch actual memory exhaustion.
+    }
+
+    /**
+     * Convert PHP memory limit notation to bytes.
+     *
+     * @since 13.5.1
+     * @access private
+     *
+     * @param string $value Memory limit string (e.g., '512M', '2G').
+     * @return int Memory in bytes.
+     */
+    private function convert_to_bytes( $value ) {
+        $value = trim( $value );
+
+        // Handle empty values.
+        if ( empty( $value ) ) {
+            return 0;
+        }
+
+        // Handle numeric-only values (assume bytes).
+        if ( is_numeric( $value ) ) {
+            return (int) $value;
+        }
+
+        // Extract the last character and convert to lowercase.
+        $last  = strtolower( substr( $value, -1 ) );
+        $value = (int) $value;
+
+        switch ( $last ) {
+            case 'g':
+                $value *= 1024;
+                // Fall through.
+            case 'm':
+                $value *= 1024;
+                // Fall through.
+            case 'k':
+                $value *= 1024;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Log memory usage during batch processing.
+     *
+     * @since 13.5.1
+     * @access private
+     *
+     * @param string $label      Label for the log entry.
+     * @param int    $offset     Current offset.
+     * @param int    $batch_size Batch size.
+     */
+    private function log_memory_usage( $label, $offset, $batch_size ) {
+        $logging = get_option( 'adt_enable_logging', 'no' );
+        if ( 'yes' !== $logging ) {
+            return;
+        }
+
+        $memory_info = array(
+            'feed_id'        => $this->id,
+            'label'          => $label,
+            'offset'         => $offset,
+            'batch_size'     => $batch_size,
+            'memory_current' => size_format( memory_get_usage() ),
+            'memory_real'    => size_format( memory_get_usage( true ) ),
+            'memory_peak'    => size_format( memory_get_peak_usage( true ) ),
+            'memory_limit'   => ini_get( 'memory_limit' ),
+        );
+
+        $log_message = 'Product Feed Memory Usage: ' . print_r( $memory_info, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+        if ( function_exists( 'wc_get_logger' ) ) {
+            $logger = wc_get_logger();
+            $logger->debug( $log_message, array( 'source' => 'woo-product-feed-pro' ) );
+        }
+
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( $log_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+        }
+    }
 
     /**
      * Move the feed file to the final file.
@@ -793,15 +1143,138 @@ class Product_Feed {
      * @access public
      */
     public function move_feed_file_to_final() {
-        $upload_dir = wp_upload_dir();
-        $base       = $upload_dir['basedir'];
-        $path       = $base . '/woo-product-feed-pro/' . $this->file_format;
-        $tmp_file   = $path . '/' . sanitize_file_name( $this->file_name ) . '_tmp.' . $this->file_format;
-        $new_file   = $path . '/' . sanitize_file_name( $this->file_name ) . '.' . $this->file_format;
+        $upload_dir  = wp_upload_dir();
+        $base        = $upload_dir['basedir'];
+        $base_format = self::get_base_file_format( $this->file_format );
+        $is_gz       = self::get_base_file_format( $this->file_format ) !== $this->file_format;
+
+        // For gz formats the tmp file uses the base format (e.g. _tmp.jsonl for jsonl.gz).
+        $path     = $base . '/woo-product-feed-pro/' . $base_format;
+        $tmp_file = $path . '/' . sanitize_file_name( $this->file_name ) . '_tmp.' . $base_format;
+        $new_file = $path . '/' . sanitize_file_name( $this->file_name ) . '.' . $this->file_format;
+
+        // Check if temporary file exists before attempting to copy.
+        if ( ! file_exists( $tmp_file ) ) {
+            if ( function_exists( 'wc_get_logger' ) ) {
+                $logger = wc_get_logger();
+                $logger->warning(
+                    'Temporary feed file does not exist',
+                    array(
+                        'source'      => 'woo-product-feed-pro',
+                        'feed_id'     => $this->id,
+                        'feed_title'  => $this->title,
+                        'tmp_file'    => $tmp_file,
+                        'file_format' => $this->file_format,
+                    )
+                );
+            }
+            return;
+        }
+
+        if ( $is_gz ) {
+            // Compress the plain tmp file into a gzip-compressed final file.
+            $gz_handle    = gzopen( $new_file, 'wb9' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+            $plain_handle = fopen( $tmp_file, 'rb' );   // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+
+            if ( false === $gz_handle || false === $plain_handle ) {
+                if ( $gz_handle ) {
+                    gzclose( $gz_handle );
+                }
+                if ( $plain_handle ) {
+                    fclose( $plain_handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+                }
+                if ( function_exists( 'wc_get_logger' ) ) {
+                    $logger = wc_get_logger();
+                    $logger->error(
+                        'Failed to open files for gzip compression',
+                        array(
+                            'source'      => 'woo-product-feed-pro',
+                            'feed_id'     => $this->id,
+                            'feed_title'  => $this->title,
+                            'tmp_file'    => $tmp_file,
+                            'new_file'    => $new_file,
+                            'file_format' => $this->file_format,
+                        )
+                    );
+                }
+                return;
+            }
+
+            $write_error = false;
+            while ( ! feof( $plain_handle ) ) {
+                $data = fread( $plain_handle, 65536 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+                if ( false === $data ) {
+                    $write_error = true;
+                    break;
+                }
+                $bytes_written = gzwrite( $gz_handle, $data );
+                if ( false === $bytes_written || ( 0 === $bytes_written && strlen( $data ) > 0 ) ) {
+                    $write_error = true;
+                    break;
+                }
+            }
+
+            fclose( $plain_handle );  // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+            gzclose( $gz_handle );
+
+            if ( $write_error ) {
+                wp_delete_file( $new_file );
+                if ( function_exists( 'wc_get_logger' ) ) {
+                    $logger = wc_get_logger();
+                    $logger->error(
+                        'Gzip compression failed during feed file write',
+                        array(
+                            'source'      => 'woo-product-feed-pro',
+                            'feed_id'     => $this->id,
+                            'feed_title'  => $this->title,
+                            'tmp_file'    => $tmp_file,
+                            'new_file'    => $new_file,
+                            'file_format' => $this->file_format,
+                        )
+                    );
+                }
+                return;
+            }
+
+            wp_delete_file( $tmp_file );
+            return;
+        }
+
+        // Format XML file with proper indentation before moving (for large feeds).
+        if ( 'xml' === $this->file_format ) {
+            $get_products = new \WooSEA_Get_Products();
+            if ( ! $get_products->woosea_format_xml_file( $tmp_file ) ) {
+                // Log warning but continue - unformatted XML is still valid.
+                if ( function_exists( 'wc_get_logger' ) ) {
+                    $logger = wc_get_logger();
+                    $logger->warning(
+                        'XML formatting failed, proceeding with unformatted file',
+                        array(
+                            'source'   => 'woo-product-feed-pro',
+                            'feed_id'  => $this->id,
+                            'tmp_file' => $tmp_file,
+                        )
+                    );
+                }
+            }
+        }
 
         // Move the temporary file to the final file.
         if ( copy( $tmp_file, $new_file ) ) {
             wp_delete_file( $tmp_file );
+        } elseif ( function_exists( 'wc_get_logger' ) ) {
+            $logger = wc_get_logger();
+            $logger->error(
+                'Failed to copy temporary feed file to final location',
+                array(
+                    'source'      => 'woo-product-feed-pro',
+                    'feed_id'     => $this->id,
+                    'feed_title'  => $this->title,
+                    'tmp_file'    => $tmp_file,
+                    'new_file'    => $new_file,
+                    'file_format' => $this->file_format,
+                )
+            );
         }
     }
 
@@ -848,7 +1321,8 @@ class Product_Feed {
             $timestamp,
             $interval_in_seconds,
             ADT_PFP_AS_GENERATE_PRODUCT_FEED,
-            array( 'feed_id' => $this->id )
+            array( 'feed_id' => $this->id ),
+            ADT_PFP_AS_GENERATE_PRODUCT_FEED_GROUP
         );
     }
 
@@ -860,6 +1334,19 @@ class Product_Feed {
      */
     public function unregister_action() {
         as_unschedule_action( ADT_PFP_AS_GENERATE_PRODUCT_FEED, array( 'feed_id' => $this->id ) );
+    }
+
+    /**
+     * Set the data version for the product feed.
+     *
+     * @since 13.4.6
+     * @access public
+     *
+     * @param string $key The key of the data version.
+     * @param string $data_version The data version.
+     */
+    public function set_data_version( $key, $data_version ) {
+        $this->data['data_version'][ $key ] = $data_version;
     }
 
     /***************************************************************************
@@ -877,41 +1364,42 @@ class Product_Feed {
      * @access public
      */
     public function save_legacy_options() {
-        $cron_projects = get_option( 'cron_projects', array() );
+        $cron_projects = get_option( 'adt_cron_projects', array() );
         $feed_data     = array();
         $data          = array();
 
-        $data['projectname']                   = $this->title;
-        $data['active']                        = 'publish' === $this->post_status ? 'true' : 'false';
-        $data['running']                       = $this->data['status'] ?? '';
-        $data['countries']                     = Product_Feed_Helper::get_legacy_country_from_code( $this->country );
-        $data['channel_hash']                  = $this->data['channel_hash'] ?? '';
-        $data['filename']                      = $this->data['file_name'] ?? '';
-        $data['fileformat']                    = $this->data['file_format'] ?? '';
-        $data['delimiter']                     = $this->data['delimiter'] ?? '';
-        $data['cron']                          = $this->data['refresh_interval'] ?? '';
-        $data['product_variations']            = $this->data['include_product_variations'] ? 'on' : '';
-        $data['default_variations']            = $this->data['only_include_default_product_variation'] ? 'on' : '';
-        $data['lowest_price_variations']       = $this->data['only_include_lowest_product_variation'] ? 'on' : '';
-        $data['preview_feed']                  = $this->data['create_preview'] ? 'on' : '';
-        $data['products_changed']              = $this->data['refresh_only_when_product_changed'] ? 'on' : '';
-        $data['attributes']                    = $this->data['attributes'] ?? array();
-        $data['mappings']                      = $this->data['mappings'] ?? array();
-        $data['rules']                         = $this->data['filters'] ?? array();
-        $data['rules2']                        = $this->data['rules'] ?? array();
-        $data['nr_products']                   = $this->data['products_count'] ?? 0;
-        $data['nr_products_processed']         = $this->data['total_products_processed'] ?? 0;
-        $data['utm_on']                        = $this->data['utm_enabled'] ? 'on' : '';
-        $data['utm_source']                    = $this->data['utm_source'] ?? '';
-        $data['utm_medium']                    = $this->data['utm_medium'] ?? '';
-        $data['utm_campaign']                  = $this->data['utm_campaign'] ?? '';
-        $data['utm_term']                      = $this->data['utm_term'] ?? '';
-        $data['utm_content']                   = $this->data['utm_content'] ?? '';
-        $data['total_product_orders_lookback'] = $this->data['utm_total_product_orders_lookback'] ?? '';
-        $data['project_hash']                  = $this->data['legacy_project_hash'] ?? '';
-        $data['history_products']              = $this->data['history_products'] ?? array();
-        $data['last_updated']                  = $this->data['last_updated'] ?? '';
-        $data['external_file']                 = $this->get_file_url();
+        $data['projectname']                    = $this->title;
+        $data['active']                         = 'publish' === $this->post_status ? 'true' : 'false';
+        $data['running']                        = $this->data['status'] ?? '';
+        $data['countries']                      = Product_Feed_Helper::get_legacy_country_from_code( $this->country );
+        $data['channel_hash']                   = $this->data['channel_hash'] ?? '';
+        $data['filename']                       = $this->data['file_name'] ?? '';
+        $data['fileformat']                     = $this->data['file_format'] ?? '';
+        $data['delimiter']                      = $this->data['delimiter'] ?? '';
+        $data['cron']                           = $this->data['refresh_interval'] ?? '';
+        $data['product_variations']             = $this->data['include_product_variations'] ? 'on' : '';
+        $data['default_variations']             = $this->data['only_include_default_product_variation'] ? 'on' : '';
+        $data['lowest_price_variations']        = $this->data['only_include_lowest_product_variation'] ? 'on' : '';
+        $data['include_all_shipping_countries'] = $this->data['include_all_shipping_countries'] ? 'on' : '';
+        $data['preview_feed']                   = $this->data['create_preview'] ? 'on' : '';
+        $data['products_changed']               = $this->data['refresh_only_when_product_changed'] ? 'on' : '';
+        $data['attributes']                     = $this->data['attributes'] ?? array();
+        $data['mappings']                       = $this->data['mappings'] ?? array();
+        $data['rules']                          = $this->data['filters'] ?? array();
+        $data['rules2']                         = $this->data['rules'] ?? array();
+        $data['nr_products']                    = $this->data['products_count'] ?? 0;
+        $data['nr_products_processed']          = $this->data['total_products_processed'] ?? 0;
+        $data['utm_on']                         = $this->data['utm_enabled'] ? 'on' : '';
+        $data['utm_source']                     = $this->data['utm_source'] ?? '';
+        $data['utm_medium']                     = $this->data['utm_medium'] ?? '';
+        $data['utm_campaign']                   = $this->data['utm_campaign'] ?? '';
+        $data['utm_term']                       = $this->data['utm_term'] ?? '';
+        $data['utm_content']                    = $this->data['utm_content'] ?? '';
+        $data['total_product_orders_lookback']  = $this->data['utm_total_product_orders_lookback'] ?? '';
+        $data['project_hash']                   = $this->data['legacy_project_hash'] ?? '';
+        $data['history_products']               = $this->data['history_products'] ?? array();
+        $data['last_updated']                   = $this->data['last_updated'] ?? '';
+        $data['external_file']                  = $this->get_file_url();
 
         // Get the channel data from the legacy channel hash.
         if ( $data['channel_hash'] ) {
@@ -956,7 +1444,7 @@ class Product_Feed {
             );
         }
 
-        update_option( 'cron_projects', $cron_projects, false );
+        update_option( 'adt_cron_projects', $cron_projects, false );
     }
 
     /**
@@ -979,7 +1467,7 @@ class Product_Feed {
      * @access public
      */
     public function delete_legacy_options() {
-        $feed_data = get_option( 'cron_projects', array() );
+        $feed_data = get_option( 'adt_cron_projects', array() );
 
         if ( ! empty( $feed_data ) ) {
             $feed_data = array_filter(
@@ -989,7 +1477,7 @@ class Product_Feed {
                 }
             );
 
-            update_option( 'cron_projects', $feed_data );
+            update_option( 'adt_cron_projects', $feed_data );
         }
 
         // Delete the 'batch_project_' option.

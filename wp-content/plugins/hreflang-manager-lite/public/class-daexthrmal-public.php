@@ -40,6 +40,10 @@ class Daexthrmal_Public {
 
 		// Enqueue styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
+		// Load public js.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
 	}
 
 	/**
@@ -74,19 +78,66 @@ class Daexthrmal_Public {
 	 */
 	public function generate_log() {
 
-		// Don't show the log if the current user has no edit_posts capabilities or if the log in not enabled.
-		if ( ! current_user_can( 'manage_options' ) || ( 1 !== intval( get_option( 'daexthrmal_show_log' ), 10 ) ) ) {
-			return; }
+		/**
+		 * Don't show the tag inspector if:
+		 *
+		 * - The current user has no edit_others_posts capabilities
+		 * - The Tag Inspector is not enabled.
+		 */
+		if ( ! current_user_can( 'edit_others_posts' ) ||
+		     ( 1 !== intval( get_option( 'daexthrmal_show_log' ), 10 ) ) ||
+		     ! $this->shared->has_valid_hreflang_tags()
+		) {
+			return;
+		}
 
 		// Echo the log UI element that includes the connections.
 
 		?>
 
-		<div id="daexthrmal-log-container">
-			<p id="daexthrmal-log-heading" ><?php esc_html_e( 'The following lines have been added in the HEAD section of this page', 'hreflang-manager-lite' ); ?>:</p>
-			<?php
-			$this->shared->echo_hreflang_output( 'log_ui_element' );
-			?>
+		<div id="daexthrmal-tag-inspector__wrapper" class="daexthrmal-tag-inspector__wrapper">
+			<div class="daexthrmal-tag-inspector__header">
+				<div class="daexthrmal-tag-inspector__header-wrapper">
+					<div class="daexthrmal-tag-inspector__header-wrapper-left">
+						<?php $this->shared->echo_icon_svg( 'drag-handle' ); ?>
+						<div class="daexthrmal-tag-inspector__title"><?php esc_html_e('Tag Inspector', 'hreflang-manager-lite'); ?></div>
+					</div>
+					<div class="daexthrmal-tag-inspector__header-wrapper-right">
+						<div id="daexthrmal-tag-inspector__header-wrapper-right-expand" class="daexthrmal-tag-inspector__header-wrapper-right-expand daexthrmal-tag-inspector__header-wrapper-right-expand-hidden">
+							<?php $this->shared->echo_icon_svg( 'chevron-down' ); ?>
+						</div>
+						<div id="daexthrmal-tag-inspector__header-wrapper-right-collapse" class="daexthrmal-tag-inspector__header-wrapper-right-collapse">
+							<?php $this->shared->echo_icon_svg( 'chevron-up' ); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="daexthrmal-tag-inspector__content" class="daexthrmal-tag-inspector__content">
+				<div id="daexthrmal-tag-inspector__table-view">
+					<table>
+						<thead>
+						<tr>
+							<th><?php esc_html_e( 'Language/Locale', 'hreflang-manager-lite' ); ?></th>
+							<th><?php esc_html_e( 'URL', 'hreflang-manager-lite' ); ?></th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php
+						$this->shared->echo_table_view();
+						?>
+						</tbody>
+					</table>
+				</div>
+				<div id="daexthrmal-tag-inspector__tag-view">
+					<pre id="tag-view-pre"><?php $this->shared->echo_hreflang_output( 'tag_inspector' ); ?></pre>
+				</div>
+			</div>
+			<div id="daexthrmal-tag-inspector__footer" class="daexthrmal-tag-inspector__footer">
+				<div class="daexthrmal-tag-inspector__controls">
+					<button id="daexthrmal-tag-inspector__table-view-btn" class="daexthrmal-tag-inspector__table-view-btn daexthrmal-tag-inspector__table-view-btn-active"><?php esc_html_e('Table View', 'hreflang-manager-lite'); ?></button>
+					<button id="daexthrmal-tag-inspector__tag-view-btn" class="daexthrmal-tag-inspector__tag-view-btn"><?php esc_html_e('Tag View', 'hreflang-manager-lite'); ?></button>
+				</div>
+			</div>
 		</div>
 
 		<?php
@@ -99,9 +150,35 @@ class Daexthrmal_Public {
 	 */
 	public function enqueue_styles() {
 
-		// Enqueue the style used to show the log if the current user has the edit_posts capability and if the log is enabled.
-		if ( current_user_can( 'manage_options' ) && 1 === ( intval( get_option( 'daexthrmal_show_log' ), 10 ) ) ) {
-			wp_enqueue_style( $this->shared->get( 'slug' ) . '-general', $this->shared->get( 'url' ) . 'public/assets/css/general.css', array(), $this->shared->get( 'ver' ) );
+		// Enqueue the style used to show the log if the current user has the edit_others_posts capability and if the log is enabled.
+		if ( current_user_can( 'edit_others_posts' ) && 1 === ( intval( get_option( 'daexthrmal_show_log' ), 10 ) ) ) {
+
+			wp_enqueue_style(
+				$this->shared->get( 'slug' ) . '-tag-inspector',
+				$this->shared->get( 'url' ) . 'public/assets/css/tag-inspector.css',
+				array(),
+				$this->shared->get( 'ver' )
+			);
+
 		}
 	}
+
+	/**
+	 * Enqueue scripts.
+	 */
+	public function enqueue_scripts() {
+
+		// Enqueue the script used to handle the tag inspector if the current user has the edit_others_posts capability and if the tag inspector is enabled.
+		if ( current_user_can( 'edit_others_posts' ) && 1 === ( intval( get_option( 'daexthrmal_show_log' ), 10 ) ) ) {
+			wp_enqueue_script(
+				$this->shared->get( 'slug' ) . '-tag-inspector',
+				$this->shared->get( 'url' ) . 'public/assets/js/tag-inspector.js',
+				array(),
+				$this->shared->get( 'ver' ),
+				true
+			);
+		}
+
+	}
+
 }

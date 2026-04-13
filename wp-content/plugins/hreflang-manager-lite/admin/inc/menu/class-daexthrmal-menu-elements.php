@@ -965,7 +965,7 @@ class Daexthrmal_Menu_Elements {
 						<div class="daexthrmal-pro-features__description">
 							<?php
 							esc_html_e(
-								'Sync the hreflang data between different websites, bulk import hreflang data from a spreadsheet, configure up to 100 alternate pages per URL, optionally add hreflang directly in the post editor, and more!',
+								'Sync hreflang data across multiple websites, bulk import entries from spreadsheets, unlock advanced tools like the Locale Selector and Hreflang Checker, implement hreflang in XML sitemaps, and more!',
 								'hreflang-manager-lite'
 							);
 							?>
@@ -998,9 +998,9 @@ class Daexthrmal_Menu_Elements {
 								'name_part_2' => 'Sync',
 							),
 							array(
-								'icon'        => 'file-code-02',
-								'name_part_1' => 'Debug',
-								'name_part_2' => 'Mode',
+								'icon'        => 'file-check-02',
+								'name_part_1' => 'Hreflang',
+								'name_part_2' => 'Checker',
 							),
 							array(
 								'icon'        => 'upload-04',
@@ -1008,14 +1008,14 @@ class Daexthrmal_Menu_Elements {
 								'name_part_2' => 'Data',
 							),
 							array(
+								'icon'        => 'translate-01',
+								'name_part_1' => 'Locale',
+								'name_part_2' => 'Selector',
+							),
+							array(
 								'icon'        => 'dataflow-02',
 								'name_part_1' => 'Multisite',
 								'name_part_2' => 'Support',
-							),
-							array(
-								'icon'        => 'zap-fast',
-								'name_part_1' => 'Fast',
-								'name_part_2' => 'Implementation',
 							),
 							array(
 								'icon'        => 'server-05',
@@ -1054,7 +1054,7 @@ class Daexthrmal_Menu_Elements {
 						<div class="daexthrmal-pro-features__footer-wrapper-left">
 							<?php esc_html_e( 'Built for WordPress creators by the DAEXT team', 'hreflang-manager-lite' ); ?>
 						</div>
-						<a class="daexthrmal-pro-features__footer-wrapper-right" href="https://daext.com/products/" target="_blank">
+						<a class="daexthrmal-pro-features__footer-wrapper-right" href="https://daext.com/plugins/" target="_blank">
 							<div class="daexthrmal-pro-features__footer-wrapper-right-text">
 								<?php esc_html_e( 'More Tools from DAEXT', 'hreflang-manager-lite' ); ?>
 							</div>
@@ -1485,6 +1485,9 @@ class Daexthrmal_Menu_Elements {
 		// Display the Header Bar.
 		$this->header_bar();
 
+		// Allow the PluginNoticesManager class to add a notice below the header bar when needed.
+		do_action( 'daextpnm_after_header_bar' );
+
 		// Display the main content of the menu.
 		if ( 'crud' === $this->context ) {
 
@@ -1498,8 +1501,6 @@ class Daexthrmal_Menu_Elements {
 
 		}
 
-		// Display the Pro features section.
-		$this->display_pro_features();
 	}
 
 	/**

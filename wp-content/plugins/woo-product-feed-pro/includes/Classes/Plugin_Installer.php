@@ -62,6 +62,11 @@ class Plugin_Installer extends Abstract_Class {
             'token_value' => 'pfp',
             'basename'    => 'woocommerce-store-toolkit/store-toolkit.php',
         ),
+        'saveto-wishlist-lite-for-woocommerce'  => array(
+            'token'       => 'stwl_installed_by',
+            'token_value' => 'pfp',
+            'basename'    => 'saveto-wishlist-lite-for-woocommerce/saveto-wishlist-lite-for-woocommerce.php',
+        ),
     );
 
     /**
@@ -73,8 +78,8 @@ class Plugin_Installer extends Abstract_Class {
      * @param string $hook The current admin page.
      */
     public function enqueue_plugin_installer_scripts( $hook ) {
-        if ( 'product-feed-pro_page_pfp-about-page' === $hook ) {
-            wp_enqueue_script( 'pfp-about-page-js', ADT_PFP_JS_URL . 'pfp-plugin-installer.js', array( 'jquery' ), ADT_PFP_OPTION_INSTALLED_VERSION, true );
+        if ( 'product-feed_page_pfp-about-page' === $hook ) {
+            wp_enqueue_script( 'pfp-about-page-js', ADT_PFP_JS_URL . 'pfp-plugin-installer.js', array( 'jquery' ), WOOCOMMERCESEA_PLUGIN_VERSION, true );
         }
     }
 

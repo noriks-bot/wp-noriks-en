@@ -87,7 +87,12 @@ class Router
         add_filter('advanced_woo_discount_rules_get_order_discount_details', array(self::$manage_discount, 'getDiscountDetailsFromOrder'), 10, 2);
         add_filter('advanced_woo_discount_rules_get_order_saved_amount', array(self::$manage_discount, 'getSavedAmountFromOrder'), 10, 2);
 
-        //Showing you saved text
+
+		//backend order coupon validation
+	    add_filter('woocommerce_checkout_create_order_coupon_item',  array(self::$manage_discount, 'addCouponMeta'), 10, 4);
+	    add_filter('woocommerce_coupon_is_valid_for_product',  array(self::$manage_discount, 'validateCoupon'), 10, 4);
+
+	    //Showing you saved text
         $display_saving_text = $manage_discount_class::$config->getConfig('display_saving_text', 'disabled');
         add_action('woocommerce_checkout_create_order_line_item', array(self::$manage_discount, 'onCreateWoocommerceOrderLineItem'), 10, 4);
         if ($display_saving_text != "disabled") {
@@ -192,6 +197,7 @@ class Router
             }
             //After place order button clicked
             add_action('woocommerce_checkout_update_order_meta', array(self::$manage_discount, 'orderItemsSaved'), 10, 2);
+            add_action('woocommerce_store_api_checkout_update_order_meta', array(self::$manage_discount, 'blockCheckoutOrderItemsSaved'), 10, 1);
             //Showing the bulk table
             $show_bulk_table = $manage_discount_class::$config->getConfig('show_bulk_table', 0);
             $position_to_show_bulk_table = $manage_discount_class::$config->getConfig('position_to_show_bulk_table', 'woocommerce_before_add_to_cart_form');

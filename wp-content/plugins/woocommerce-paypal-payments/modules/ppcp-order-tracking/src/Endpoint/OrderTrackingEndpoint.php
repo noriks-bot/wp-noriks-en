@@ -13,6 +13,7 @@ use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
 use stdClass;
 use WC_Order;
 use WooCommerce\PayPalCommerce\ApiClient\Authentication\Bearer;
+use WooCommerce\PayPalCommerce\ApiClient\Endpoint\OrderEndpoint;
 use WooCommerce\PayPalCommerce\ApiClient\Endpoint\RequestTrait;
 use WooCommerce\PayPalCommerce\ApiClient\Exception\PayPalApiException;
 use WooCommerce\PayPalCommerce\ApiClient\Exception\RuntimeException;
@@ -22,7 +23,6 @@ use WooCommerce\PayPalCommerce\OrderTracking\Shipment\ShipmentFactoryInterface;
 use WooCommerce\PayPalCommerce\OrderTracking\Shipment\ShipmentInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Processor\TransactionIdHandlingTrait;
-use function WooCommerce\PayPalCommerce\Api\ppcp_get_paypal_order;
 /**
  * The OrderTrackingEndpoint.
  *
@@ -32,14 +32,15 @@ use function WooCommerce\PayPalCommerce\Api\ppcp_get_paypal_order;
  *     status: SupportedStatuses,
  *     tracking_number: string,
  *     carrier: string,
- *     items?: list<int>,
+ *     items?: array,
  *     carrier_name_other?: string,
  * }
  * Class OrderTrackingEndpoint
  */
 class OrderTrackingEndpoint
 {
-    use RequestTrait, TransactionIdHandlingTrait;
+    use RequestTrait;
+    use TransactionIdHandlingTrait;
     const ENDPOINT = 'ppc-tracking-info';
     /**
      * The RequestData.
@@ -83,9 +84,8 @@ class OrderTrackingEndpoint
      * @var bool
      */
     protected $should_use_new_api;
+    protected OrderEndpoint $order_endpoint;
     /**
-     * PartnersEndpoint constructor.
-     *
      * @param string                   $host The host.
      * @param Bearer                   $bearer The bearer.
      * @param LoggerInterface          $logger The logger.
@@ -93,8 +93,9 @@ class OrderTrackingEndpoint
      * @param ShipmentFactoryInterface $shipment_factory The ShipmentFactory.
      * @param string[]                 $allowed_statuses Allowed shipping statuses.
      * @param bool                     $should_use_new_api Whether new API should be used.
+     * @param OrderEndpoint            $order_endpoint The OrderEndpoint.
      */
-    public function __construct(string $host, Bearer $bearer, LoggerInterface $logger, RequestData $request_data, ShipmentFactoryInterface $shipment_factory, array $allowed_statuses, bool $should_use_new_api)
+    public function __construct(string $host, Bearer $bearer, LoggerInterface $logger, RequestData $request_data, ShipmentFactoryInterface $shipment_factory, array $allowed_statuses, bool $should_use_new_api, OrderEndpoint $order_endpoint)
     {
         $this->host = $host;
         $this->bearer = $bearer;
@@ -103,6 +104,7 @@ class OrderTrackingEndpoint
         $this->shipment_factory = $shipment_factory;
         $this->allowed_statuses = $allowed_statuses;
         $this->should_use_new_api = $should_use_new_api;
+        $this->order_endpoint = $order_endpoint;
     }
     /**
      * Handles the request.
@@ -111,7 +113,6 @@ class OrderTrackingEndpoint
     {
         if (!current_user_can('manage_woocommerce')) {
             wp_send_json_error('Not admin.', 403);
-            return;
         }
         try {
             $data = $this->request_data->read_request($this->nonce());
@@ -215,7 +216,7 @@ class OrderTrackingEndpoint
             return null;
         }
         $host = trailingslashit($this->host);
-        $paypal_order = ppcp_get_paypal_order($wc_order);
+        $paypal_order = $this->order_endpoint->order($wc_order);
         $capture_id = $this->get_paypal_order_transaction_id($paypal_order) ?? '';
         $tracker_id = $this->find_tracker_id($capture_id, $tracking_number);
         $url = "{$host}v1/shipping/trackers/{$tracker_id}";
@@ -251,7 +252,7 @@ class OrderTrackingEndpoint
             return array();
         }
         $host = trailingslashit($this->host);
-        $paypal_order = ppcp_get_paypal_order($wc_order);
+        $paypal_order = $this->order_endpoint->order($wc_order);
         $capture_id = $this->get_paypal_order_transaction_id($paypal_order);
         $url = "{$host}v1/shipping/trackers?transaction_id={$capture_id}";
         $args = array('method' => 'GET', 'headers' => $this->request_headers());
@@ -299,7 +300,7 @@ class OrderTrackingEndpoint
     {
         $carrier = $data['carrier'] ?? '';
         $tracking_info = array('capture_id' => $data['capture_id'] ?? '', 'status' => $data['status'] ?? '', 'tracking_number' => $data['tracking_number'] ?? '', 'carrier' => $carrier, 'carrier_name_other' => $data['carrier_name_other'] ?? '');
-        if (!empty($data['items'])) {
+        if (!empty($data['items']) && is_numeric(reset($data['items']))) {
             $tracking_info['items'] = array_map('intval', $data['items']);
         }
         return $this->shipment_factory->create_shipment($wc_order_id, $tracking_info['capture_id'], $tracking_info['tracking_number'], $tracking_info['status'], $tracking_info['carrier'], $tracking_info['carrier_name_other'], $tracking_info['items'] ?? array());

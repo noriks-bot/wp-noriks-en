@@ -158,6 +158,7 @@ class CheckoutOrderApproved implements \WooCommerce\PayPalCommerce\Webhooks\Hand
                  * Wrong type-hint.
                  *
                  * @psalm-suppress InvalidScalarArgument
+                 * @phpstan-ignore argument.type
                  */
                 $session->delete_session($customer_id);
                 $session->forget_session();
@@ -172,19 +173,16 @@ class CheckoutOrderApproved implements \WooCommerce\PayPalCommerce\Webhooks\Hand
             if (PayUponInvoiceGateway::ID === $wc_order->get_payment_method() || OXXOGateway::ID === $wc_order->get_payment_method()) {
                 continue;
             }
-            if (!in_array($wc_order->get_status(), array('pending', 'on-hold'), \true)) {
-                continue;
-            }
             try {
                 /**
                  * This filter controls if the method 'process()' from OrderProcessor will be called.
                  * So you can implement your own for example on subscriptions
                  *
                  * - true bool controls execution of 'OrderProcessor::process()'
-                 * - $this \WC_Payment_Gateway
+                 * - null because it's mostly for PayPalGateway instance to handle
                  * - $wc_order \WC_Order
                  */
-                $process = apply_filters('woocommerce_paypal_payments_before_order_process', \true, $this, $wc_order);
+                $process = apply_filters('woocommerce_paypal_payments_before_order_process', \true, null, $wc_order);
                 if ($process) {
                     $this->order_processor->process($wc_order);
                 }

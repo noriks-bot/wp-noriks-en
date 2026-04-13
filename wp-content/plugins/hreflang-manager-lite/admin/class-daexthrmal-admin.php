@@ -67,6 +67,12 @@ class Daexthrmal_Admin {
 		// Add the admin menu.
 		add_action( 'admin_menu', array( $this, 'me_add_admin_menu' ) );
 
+		// Add the meta box.
+		add_action( 'add_meta_boxes', array( $this, 'create_meta_box' ) );
+
+		// Save the meta box.
+		add_action( 'save_post', array( $this, 'save_meta_box' ) );
+
 		// This hook is triggered during the creation of a new blog.
 		add_action( 'wpmu_new_blog', array( $this, 'new_blog_create_options_and_tables' ), 10, 6 );
 
@@ -132,32 +138,42 @@ class Daexthrmal_Admin {
 					'more_items' => array(
 						array(
 							'link_text' => __( 'Bulk Import', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 						array(
-							'link_text' => __( 'Sync', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_text' => __( 'Network Sync', 'hreflang-manager-lite' ),
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 						array(
-							'link_text' => __( 'Editor Integration', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_text' => __( 'XML Sitemap', 'hreflang-manager-lite' ),
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 						array(
 							'link_text' => __( 'Import & Export', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
+							'pro_badge' => true,
+						),
+						array(
+							'link_text' => __( 'Locale Selector', 'hreflang-manager-lite' ),
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
+							'pro_badge' => true,
+						),
+						array(
+							'link_text' => __( 'Hreflang Checker', 'hreflang-manager-lite' ),
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 						array(
 							'link_text' => __( 'Maintenance Tasks', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 						array(
 							'link_text' => __( 'Configure Capabilities', 'hreflang-manager-lite' ),
-							'link_url'  => 'https://daext.com/hreflang-manager/',
+							'link_url'  => 'https://daext.com/hreflang-manager/#features',
 							'pro_badge' => true,
 						),
 					),
@@ -220,6 +236,12 @@ class Daexthrmal_Admin {
 
 			wp_enqueue_style( $this->shared->get( 'slug' ) . '-framework-menu', $this->shared->get( 'url' ) . 'admin/assets/css/framework-menu/main.css', array( 'wp-components' ), $this->shared->get( 'ver' ) );
 
+		}
+
+		$meta_box_post_types_a = $this->shared->get_post_types_with_ui();
+
+		if ( in_array( $screen->id, $meta_box_post_types_a, true ) ) {
+			wp_enqueue_style( $this->shared->get( 'slug' ) . '-meta-box', $this->shared->get( 'url' ) . 'admin/assets/css/meta-box.css', array(), $this->shared->get( 'ver' ) );
 		}
 	}
 
@@ -285,6 +307,7 @@ class Daexthrmal_Admin {
 			wp_enqueue_script( $this->shared->get( 'slug' ) . '-menu', $this->shared->get( 'url' ) . 'admin/assets/js/framework-menu/menu.js', array( 'jquery' ), $this->shared->get( 'ver' ), true );
 
 		}
+
 	}
 
 	/**
@@ -546,6 +569,10 @@ class Daexthrmal_Admin {
 		foreach ( $shared->get( 'options' ) as $key => $value ) {
 			delete_option( $key );
 		}
+
+		// Delete the option used by the DAEXT_Notices_Manager class to persist the notices state.
+		delete_option( $shared->get( 'slug' ) . '_notices_state' );
+
 	}
 
 	/**
@@ -559,6 +586,493 @@ class Daexthrmal_Admin {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$wpdb->query( "DROP TABLE {$wpdb->prefix}daexthrmal_connection" );
+	}
+
+	// meta box -----------------------------------------------------------------.
+
+	/**
+	 * The add_meta_boxes hook callback.
+	 *
+	 * @return void
+	 */
+	public function create_meta_box() {
+
+		// Verify the capability.
+		if ( current_user_can( 'edit_others_posts' ) ) {
+
+			$post_types_a = $this->shared->get_post_types_with_ui();
+
+			foreach ( $post_types_a as $key => $post_type ) {
+				$post_type = trim( $post_type );
+				add_meta_box(
+					'daexthrmal-meta',
+					'Hreflang Manager',
+					array( $this, 'meta_box_callback' ),
+					$post_type,
+					'normal',
+					'high',
+					// Ref: https://make.wordpress.org/core/2018/11/07/meta-box-compatibility-flags/ .
+					array(
+
+						/*
+						 * It's not confirmed that this meta box works in the block editor.
+						 */
+						'__block_editor_compatible_meta_box' => false,
+
+						/*
+						 * This meta box should only be loaded in the classic editor interface, and the block editor
+						 * should not display it.
+						 */
+						'__back_compat_meta_box' => true,
+
+					)
+				);
+			}
+		}
+	}
+
+	/**
+	 * Display the Hreflang Manager meta box content.
+	 *
+	 * @return void
+	 */
+	public function meta_box_callback() {
+
+		?>
+
+			<?php
+
+			/**
+			 * Look for a connection that has as a url_to_connect value the permalink value of this post
+			 *
+			 *  If there is already a connection:
+			 *  - show the form with the field already filled with the value from the database
+			 *  If there is no connection:
+			 *  - show the form with empty fields
+			 */
+
+			// Get the number of connections that should be displayed in the menu.
+			$connections_in_menu = 10;
+
+			$permalink = $this->shared->get_permalink( get_the_ID(), true );
+
+			// Look for $permalink in the url_to_connect field of the daexthrmal_connection database table.
+			global $wpdb;
+
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$permalink_connections = $wpdb->get_row(
+				$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s", $permalink )
+			);
+
+			if ( null === $permalink_connections ) {
+
+				// Default empty form.
+				for ( $i = 1; $i <= $connections_in_menu; $i++ ) {
+
+					?>
+
+					<div class="daexthrmal-metabox-single-connection">
+
+					<!-- url -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="url<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'URL', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<input autocomplete="off" type="text" id="url<?php echo esc_attr( $i ); ?>" maxlength="2083" name="url<?php echo esc_attr( $i ); ?>" class="regular-text daexthrmal-url"/>
+						</div>
+					</div>
+
+					<!-- Language -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="language<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Language', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="language<?php echo esc_attr( $i ); ?>" class="daexthrmal-language" name="language<?php echo esc_attr( $i ); ?>">
+								<?php
+
+								$array_language = get_option( 'daexthrmal_language' );
+								foreach ( $array_language as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( get_option( 'daexthrmal_default_language_' . $i ), $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					<!-- Script -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="script<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Script', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="script<?php echo esc_attr( $i ); ?>" class="daexthrmal-script" name="script<?php echo esc_attr( $i ); ?>">
+								<option value=""><?php esc_html_e( 'Not Assigned', 'hreflang-manager-lite' ); ?></option>
+								<?php
+
+								$array_language = get_option( 'daexthrmal_script' );
+								foreach ( $array_language as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( get_option( 'daexthrmal_default_script_' . $i ), $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					<!-- Locale -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="locale<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Locale', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="locale<?php echo esc_attr( $i ); ?>" class="daexthrmal-locale" name="locale<?php echo esc_attr( $i ); ?>">
+								<option value=""><?php esc_html_e( 'Not Assigned', 'hreflang-manager-lite' ); ?></option>
+								<?php
+
+								$array_locale = get_option( 'daexthrmal_locale' );
+								foreach ( $array_locale as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( get_option( 'daexthrmal_default_locale_' . $i ), $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					</div>
+
+					<?php
+
+				}
+			} else {
+				
+				// Form with data retrieved form the database.
+				for ( $i = 1; $i <= $connections_in_menu; $i++ ) {
+
+					?>
+
+					<div class="daexthrmal-metabox-single-connection">
+
+					<!-- url -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="url<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'URL', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<input autocomplete="off" type="text" value="<?php echo esc_attr( stripslashes( $permalink_connections->{'url' .$i} ) ); ?>" id="url<?php echo esc_attr( $i ); ?>" maxlength="2083" name="url<?php echo esc_attr( $i ); ?>" class="regular-text daexthrmal-url"/>
+						</div>
+					</div>
+
+					<!-- Language <?php echo intval( $i, 10 ); ?> -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="language<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Language', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="language<?php echo esc_attr( $i ); ?>" class="daexthrmal-language" name="language<?php echo esc_attr( $i ); ?>">
+								<?php
+
+								$array_language = get_option( 'daexthrmal_language' );
+								foreach ( $array_language as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( $permalink_connections->{'language' . $i}, $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					<!-- Script <?php echo intval( $i, 10 ); ?> -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="script<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Script', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="script<?php echo esc_attr( $i ); ?>" class="daexthrmal-script" name="script<?php echo esc_attr( $i ); ?>">
+								<option value=""><?php esc_html_e( 'Not Assigned', 'hreflang-manager-lite' ); ?></option>
+								<?php
+
+								$array_script = get_option( 'daexthrmal_script' );
+								foreach ( $array_script as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( $permalink_connections->{'script' . $i}, $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					<!-- Locale <?php echo intval( $i, 10 ); ?> -->
+					<div class="daexthrmal-field">
+						<div class="daexthrmal-label">
+							<label for="locale<?php echo esc_attr( $i ); ?>"><?php esc_html_e( 'Locale', 'hreflang-manager-lite' ); ?> <?php echo esc_html( $i ); ?></label>
+						</div>
+						<div class="daexthrmal-input">
+							<select id="locale<?php echo esc_attr( $i ); ?>" class="daexthrmal-locale" name="locale<?php echo esc_attr( $i ); ?>">
+								<option value=""><?php esc_html_e( 'Not Assigned', 'hreflang-manager-lite' ); ?></option>
+								<?php
+
+								$array_locale = get_option( 'daexthrmal_locale' );
+								foreach ( $array_locale as $key => $value ) {
+									echo '<option value="' . esc_attr( $value ) . '" ' . selected( $permalink_connections->{'locale' . $i}, $value, false ) . '>' . esc_html( $value ) . ' - ' . esc_html( $key ) . '</option>';
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+
+					</div>
+
+					<?php
+
+				}
+			}
+
+		?>
+
+		<?php
+
+		// Store the original permalink to detect changes when the form is saved.
+		echo '<input type="hidden" name="daexthrmal_original_permalink" value="' . esc_attr( $permalink ) . '" />';
+
+		// Use nonce for verification.
+		wp_nonce_field( plugin_basename( __FILE__ ), 'daexthrmal_nonce' );
+	}
+
+	/**
+	 * Save the meta box data.
+	 *
+	 * @return void
+	 */
+	public function save_meta_box() {
+
+		// Verify the capability.
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			return;
+		}
+
+		// Security verification.
+
+		// Verify if this is an auto save routine. If our form has not been submitted, we don't want to do anything.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		/**
+		 * Verify this came from our screen and with proper authorization, because save_post can be triggered at other
+		 * times.
+		 */
+		if ( isset( $_POST['daexthrmal_nonce'] ) ) {
+			$nonce = sanitize_text_field( wp_unslash( $_POST['daexthrmal_nonce'] ) );
+			if ( ! wp_verify_nonce( $nonce, plugin_basename( __FILE__ ) ) ) {
+				return;
+			}
+		} else {
+			return;
+		}
+
+		/* - end security verification - */
+
+		// Init vars.
+		$url      = array();
+		$language = array();
+		$script   = array();
+		$locale   = array();
+
+		// Initialize the variables that include the URLs, the languages and the locale.
+		for ( $i = 1;$i <= 10;$i++ ) {
+
+			if ( isset( $_POST[ 'url' . $i ] ) && strlen( trim( esc_url_raw( wp_unslash( $_POST[ 'url' . $i ] ) ) ) ) > 0 ) {
+				$url[ $i ]        = esc_url_raw( wp_unslash( $_POST[ 'url' . $i ] ) );
+				$at_least_one_url = true;
+			} else {
+				$url[ $i ] = '';
+			}
+
+			if ( isset( $_POST[ 'language' . $i ] ) && strlen( trim( sanitize_text_field( wp_unslash( $_POST[ 'language' . $i ] ) ) ) ) > 0 ) {
+				$language[ $i ] = sanitize_text_field( wp_unslash( $_POST[ 'language' . $i ] ) );
+			} else {
+				$language[ $i ] = get_option( $this->shared->get( 'slug' ) . '_default_language_' . $i );
+			}
+
+			if ( isset( $_POST[ 'script' . $i ] ) ) {
+				$script[ $i ] = sanitize_text_field( wp_unslash( $_POST[ 'script' . $i ] ) );
+			} else {
+				$script[ $i ] = get_option( $this->shared->get( 'slug' ) . '_default_script_' . $i );
+			}
+
+			if ( isset( $_POST[ 'locale' . $i ] ) ) {
+				$locale[ $i ] = sanitize_text_field( wp_unslash( $_POST[ 'locale' . $i ] ) );
+			} else {
+				$locale[ $i ] = get_option( $this->shared->get( 'slug' ) . '_default_locale_' . $i );
+			}
+		}
+
+		/*
+		 * save the fields in the daexthrmal_connection database table:
+		 *
+		 * - if a row with the daexthrmal_connection equal to the current permalink already exists update the row
+		 *
+		 * - if a row with the daexthrmal_connection equal to the current permalink doesn't exists create a new row
+		 */
+		$permalink = $this->shared->get_permalink( get_the_ID(), true );
+
+		// Retrieve the original permalink from the hidden form field.
+		$original_permalink = isset( $_POST['daexthrmal_original_permalink'] ) ? esc_url_raw( wp_unslash( $_POST['daexthrmal_original_permalink'] ) ) : '';
+
+		// Update url_to_connect when a permalink change is detected.
+		global $wpdb;
+		if ( ! empty( $original_permalink ) && ! empty( $permalink ) && $original_permalink !== $permalink ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE {$wpdb->prefix}daexthrmal_connection SET "
+					. 'url_to_connect = %s WHERE url_to_connect = %s ',
+					$permalink,
+					$original_permalink
+				)
+			);
+		}
+
+		// Look for $permalink in the url_to_connect field of the daexthrmal_connection database table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$permalink_connections = $wpdb->get_row(
+			$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s", $permalink )
+		);
+
+		if ( null !== $permalink_connections ) {
+
+			// Update an existing connection.
+
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$query_result = $wpdb->query(
+				$wpdb->prepare(
+					"UPDATE {$wpdb->prefix}daexthrmal_connection SET "
+					. 'url1 = %s, language1 = %s, script1 = %s, locale1 = %s,'
+					. 'url2 = %s, language2 = %s, script2 = %s, locale2 = %s ,'
+					. 'url3 = %s, language3 = %s, script3 = %s, locale3 = %s ,'
+					. 'url4 = %s, language4 = %s, script4 = %s, locale4 = %s ,'
+					. 'url5 = %s, language5 = %s, script5 = %s, locale5 = %s ,'
+					. 'url6 = %s, language6 = %s, script6 = %s, locale6 = %s ,'
+					. 'url7 = %s, language7 = %s, script7 = %s, locale7 = %s ,'
+					. 'url8 = %s, language8 = %s, script8 = %s, locale8 = %s ,'
+					. 'url9 = %s, language9 = %s, script9 = %s, locale9 = %s ,'
+					. 'url10 = %s, language10 = %s, script10 = %s, locale10 = %s WHERE url_to_connect = %s ',
+					$url[1],
+					$language[1],
+					$script[1],
+					$locale[1],
+					$url[2],
+					$language[2],
+					$script[2],
+					$locale[2],
+					$url[3],
+					$language[3],
+					$script[3],
+					$locale[3],
+					$url[4],
+					$language[4],
+					$script[4],
+					$locale[4],
+					$url[5],
+					$language[5],
+					$script[5],
+					$locale[5],
+					$url[6],
+					$language[6],
+					$script[6],
+					$locale[6],
+					$url[7],
+					$language[7],
+					$script[7],
+					$locale[7],
+					$url[8],
+					$language[8],
+					$script[8],
+					$locale[8],
+					$url[9],
+					$language[9],
+					$script[9],
+					$locale[9],
+					$url[10],
+					$language[10],
+					$script[10],
+					$locale[10],
+					$permalink
+				)
+			);
+
+		} else {
+
+			// Return ( do not create a new connection ) if there are not a single url defined.
+			if ( ! isset( $at_least_one_url ) ) {
+				return;}
+
+			// Add a new connection into the database.
+
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$query_result = $wpdb->query(
+				$wpdb->prepare(
+					"INSERT INTO {$wpdb->prefix}daexthrmal_connection SET url_to_connect = %s ,"
+					. 'url1 = %s, language1 = %s, script1 = %s, locale1 = %s,'
+					. 'url2 = %s, language2 = %s, script2 = %s, locale2 = %s ,'
+					. 'url3 = %s, language3 = %s, script3 = %s, locale3 = %s ,'
+					. 'url4 = %s, language4 = %s, script4 = %s, locale4 = %s ,'
+					. 'url5 = %s, language5 = %s, script5 = %s, locale5 = %s ,'
+					. 'url6 = %s, language6 = %s, script6 = %s, locale6 = %s ,'
+					. 'url7 = %s, language7 = %s, script7 = %s, locale7 = %s ,'
+					. 'url8 = %s, language8 = %s, script8 = %s, locale8 = %s ,'
+					. 'url9 = %s, language9 = %s, script9 = %s, locale9 = %s ,'
+					. 'url10 = %s, language10 = %s, script10 = %s, locale10 = %s',
+					$permalink,
+					$url[1],
+					$language[1],
+					$script[1],
+					$locale[1],
+					$url[2],
+					$language[2],
+					$script[2],
+					$locale[2],
+					$url[3],
+					$language[3],
+					$script[3],
+					$locale[3],
+					$url[4],
+					$language[4],
+					$script[4],
+					$locale[4],
+					$url[5],
+					$language[5],
+					$script[5],
+					$locale[5],
+					$url[6],
+					$language[6],
+					$script[6],
+					$locale[6],
+					$url[7],
+					$language[7],
+					$script[7],
+					$locale[7],
+					$url[8],
+					$language[8],
+					$script[8],
+					$locale[8],
+					$url[9],
+					$language[9],
+					$script[9],
+					$locale[9],
+					$url[10],
+					$language[10],
+					$script[10],
+					$locale[10]
+				)
+			);
+
+		}
 	}
 
 	/**
@@ -621,10 +1135,10 @@ class Daexthrmal_Admin {
 
 		add_submenu_page(
 			$this->shared->get( 'slug' ) . '_connections',
-			esc_html__( 'Help & Support', 'hreflang-manager-lite' ),
-			esc_html__( 'Help & Support', 'hreflang-manager-lite' ) . '<i class="dashicons dashicons-external" style="font-size:12px;vertical-align:-2px;height:10px;"></i>',
+			esc_html__( 'Documentation', 'hreflang-manager-lite' ),
+			esc_html__( 'Documentation', 'hreflang-manager-lite' ) . '<i class="dashicons dashicons-external" style="font-size:12px;vertical-align:-2px;height:10px;"></i>',
 			'manage_options',
-			'https://daext.com/doc/hreflang-manager/',
+			'https://daext.com/kb/hreflang-manager/',
 		);
 	}
 

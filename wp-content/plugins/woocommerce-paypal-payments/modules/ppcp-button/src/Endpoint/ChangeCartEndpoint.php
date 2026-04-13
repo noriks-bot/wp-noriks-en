@@ -53,25 +53,23 @@ class ChangeCartEndpoint extends \WooCommerce\PayPalCommerce\Button\Endpoint\Abs
     /**
      * Handles the request data.
      *
-     * @return bool
      * @throws Exception On error.
      */
-    protected function handle_data(): bool
+    protected function handle_data(): void
     {
         $data = $this->request_data->read_request($this->nonce());
         $this->cart_products->set_cart($this->cart);
         $products = $this->products_from_request();
         if (!$products) {
-            return \false;
+            return;
         }
         if (!($data['keepShipping'] ?? \false)) {
             $this->shipping->reset_shipping();
         }
         if (!$this->add_products($products)) {
-            return \false;
+            return;
         }
         wp_send_json_success($this->generate_purchase_units());
-        return \true;
     }
     /**
      * Based on the cart contents, the purchase units are created.
@@ -82,5 +80,30 @@ class ChangeCartEndpoint extends \WooCommerce\PayPalCommerce\Button\Endpoint\Abs
     {
         $pu = $this->purchase_unit_factory->from_wc_cart();
         return array($pu->to_array());
+    }
+    /**
+     * Adds products to cart with shipping data preservation.
+     *
+     * @param array $products Array of products to be added to cart.
+     * @return bool
+     * @throws Exception Add to cart methods throw an exception on fail.
+     */
+    protected function add_products(array $products): bool
+    {
+        // Preserve shipping data before emptying cart.
+        $chosen_shipping_methods = WC()->session->get('chosen_shipping_methods');
+        $this->cart->empty_cart(\false);
+        try {
+            $this->cart_products->add_products($products);
+            if ($chosen_shipping_methods) {
+                WC()->session->set('chosen_shipping_methods', $chosen_shipping_methods);
+                $this->cart->calculate_shipping();
+                $this->cart->calculate_fees();
+                $this->cart->calculate_totals();
+            }
+        } catch (Exception $e) {
+            $this->handle_error();
+        }
+        return \true;
     }
 }

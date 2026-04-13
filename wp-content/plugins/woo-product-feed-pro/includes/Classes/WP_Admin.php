@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Author: Rymera Web Co.
  *
@@ -12,7 +13,7 @@ use AdTribes\PFP\Helpers\Helper;
 use AdTribes\PFP\Helpers\Product_Feed_Helper;
 use AdTribes\PFP\Updates\Version_13_3_5_Update;
 use AdTribes\PFP\Traits\Singleton_Trait;
-use AdTribes\PFP\Factories\Product_Feed;
+use AdTribes\PFP\Factories\Vite_App;
 use AdTribes\PFP\Factories\Product_Feed_Query;
 
 /**
@@ -21,6 +22,7 @@ use AdTribes\PFP\Factories\Product_Feed_Query;
  * @since 13.3.3
  */
 class WP_Admin extends Abstract_Class {
+
 
     use Singleton_Trait;
 
@@ -36,46 +38,65 @@ class WP_Admin extends Abstract_Class {
 
         // Enqueue scripts and styles only on the plugin pages.
         if ( Helper::is_plugin_page() ) {
-            $action = sanitize_text_field( $_REQUEST['action'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification
-            $step   = sanitize_text_field( $_REQUEST['step'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification
+            $action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
+            $step   = sanitize_text_field( wp_unslash( $_REQUEST['step'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification
 
             // Enqueue Jquery.
             wp_enqueue_script( 'jquery' );
             wp_enqueue_script( 'jquery-ui-dialog' );
             wp_enqueue_script( 'jquery-ui-calender' );
             wp_enqueue_script( 'jquery-ui-datepicker' );
-            wp_enqueue_script( 'jquery-tiptip' );
-            wp_enqueue_script( 'select2' );
+            wp_enqueue_script( Helper::get_wc_script_handle( 'jquery-tiptip' ) );
+            wp_enqueue_script( Helper::get_wc_script_handle( 'select2' ) );
+
+            wp_enqueue_script( 'adt-toastr', ADT_PFP_JS_URL . 'lib/toastr/toastr.min.js', array( 'jquery' ), WOOCOMMERCESEA_PLUGIN_VERSION, true );
+            wp_enqueue_style( 'adt-toastr', ADT_PFP_JS_URL . 'lib/toastr/toastr.min.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
 
             wp_enqueue_style( 'woocommerce_admin_styles' );
-            wp_enqueue_style( 'pfp-admin-css', ADT_PFP_CSS_URL . 'pfp-admin.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
-            wp_enqueue_style( 'woosea_admin-css', ADT_PFP_CSS_URL . 'woosea_admin.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
-            wp_enqueue_style( 'woosea_jquery_ui-css', ADT_PFP_CSS_URL . 'jquery-ui.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
-            wp_enqueue_style( 'woosea_jquery_typeahead-css', ADT_PFP_CSS_URL . 'jquery.typeahead.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
+            wp_enqueue_style( 'pfp-admin-css', ADT_PFP_CSS_URL . 'pfp-admin.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
+            wp_enqueue_style( 'woosea_admin-css', ADT_PFP_CSS_URL . 'woosea_admin.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
+            wp_enqueue_style( 'woosea_jquery_ui-css', ADT_PFP_CSS_URL . 'jquery-ui.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
+            wp_enqueue_style( 'woosea_jquery_typeahead-css', ADT_PFP_CSS_URL . 'jquery.typeahead.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
 
             if ( preg_match( '/woosea_manage_license/i', $hook ) ) {
-                wp_enqueue_style( 'woosea_license_settings-css', ADT_PFP_CSS_URL . 'license-settings.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
+                wp_enqueue_style( 'woosea_license_settings-css', ADT_PFP_CSS_URL . 'license-settings.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
             }
 
             // JS for adding table rows to the rules page.
-            wp_enqueue_script( 'woosea_filters_rules-js', ADT_PFP_JS_URL . 'woosea_filters_rules.js', '', ADT_PFP_OPTION_INSTALLED_VERSION, true );
+            wp_enqueue_script( 'woosea_filters_rules-js', ADT_PFP_JS_URL . 'woosea_filters_rules.js', '', WOOCOMMERCESEA_PLUGIN_VERSION, true );
 
-            // JS for adding table rows to the field mappings page.
-            wp_enqueue_script( 'woosea_field_mapping-js', ADT_PFP_JS_URL . 'woosea_field_mapping.js', '', ADT_PFP_OPTION_INSTALLED_VERSION, true );
+            // JS for field mapping.
+            $field_mapping_js = new Vite_App(
+                'adt-field-mapping-js',
+                'src/vanilla/field-mapping/index.ts',
+                array( 'jquery' ),
+                array(),
+                'adtObj',
+            );
+            $field_mapping_js->enqueue();
 
             // JS for getting channels.
-            wp_enqueue_script( 'woosea_channel-js', ADT_PFP_JS_URL . 'woosea_channel.js', '', ADT_PFP_OPTION_INSTALLED_VERSION, true );
+            wp_enqueue_script( 'woosea_channel-js', ADT_PFP_JS_URL . 'woosea_channel.js', '', WOOCOMMERCESEA_PLUGIN_VERSION, true );
 
             // JS for manage projects page.
-            wp_enqueue_script( 'woosea_manage-js', ADT_PFP_JS_URL . 'woosea_manage.js?yo=12', array( 'clipboard' ), ADT_PFP_OPTION_INSTALLED_VERSION, true );
-            wp_enqueue_script( 'woosea_manage-js', ADT_PFP_JS_URL . 'woosea_manage.js?yo=12', array( 'clipboard' ), ADT_PFP_OPTION_INSTALLED_VERSION, true );
+            wp_enqueue_script( 'woosea_manage-js', ADT_PFP_JS_URL . 'woosea_manage.js?yo=12', array( 'clipboard' ), WOOCOMMERCESEA_PLUGIN_VERSION, true );
+            wp_enqueue_script( 'woosea_manage-js', ADT_PFP_JS_URL . 'woosea_manage.js?yo=12', array( 'clipboard' ), WOOCOMMERCESEA_PLUGIN_VERSION, true );
             wp_localize_script( 'woosea_manage-js', 'woosea_manage_params', array( 'total_product_feeds' => Product_Feed_Helper::get_total_product_feed() ) );
 
+            // Enqueue the admin plugin JS and CSS.
+            $admin_js = new Vite_App(
+                'adt-admin-js',
+                'src/vanilla/index.ts',
+                array( 'jquery' ),
+                array(),
+                'adtObj',
+            );
+            $admin_js->enqueue();
         }
 
         // Admin wide styles and scripts.
-        wp_enqueue_style( 'pfp-admin-wide-css', ADT_PFP_CSS_URL . 'pfp-admin-wide.css', array(), ADT_PFP_OPTION_INSTALLED_VERSION );
-        wp_enqueue_script( 'pfp-admin-wide-js', ADT_PFP_JS_URL . 'pfp-admin-wide.js', array( 'jquery' ), ADT_PFP_OPTION_INSTALLED_VERSION, true );
+        wp_enqueue_style( 'pfp-admin-wide-css', ADT_PFP_CSS_URL . 'pfp-admin-wide.css', array(), WOOCOMMERCESEA_PLUGIN_VERSION );
+        wp_enqueue_script( 'pfp-admin-wide-js', ADT_PFP_JS_URL . 'pfp-admin-wide.js', array( 'jquery' ), WOOCOMMERCESEA_PLUGIN_VERSION, true );
         wp_localize_script(
             'pfp-admin-wide-js',
             'pfp_admin_wide',
@@ -212,6 +233,27 @@ class WP_Admin extends Abstract_Class {
                 'desc'  => __( 'Standardize all feed file URLs to lowercase format for better compatibility', 'woo-product-feed-pro' ),
                 'id'    => 'adt_update_file_url_to_lower_case',
             ),
+            array(
+                'title' => __( 'Fix duplicated feed', 'woo-product-feed-pro' ),
+                'type'  => 'button',
+                'desc'  => __( 'This will fix the issue with duplicated feeds due to data migration abnormalities', 'woo-product-feed-pro' ),
+                'id'    => 'adt_fix_duplicate_feed',
+            ),
+            array(
+                'title' => __( 'Use legacy filters and rules', 'woo-product-feed-pro' ),
+                'type'  => 'checkbox',
+                'desc'  => __( 'Use legacy filters and rules', 'woo-product-feed-pro' ),
+                'id'    => 'adt_use_legacy_filters_and_rules',
+            ),
+            array(
+                'title'        => __( 'Clean up plugin data on un-installation', 'woo-product-feed-pro' ),
+                'type'         => 'checkbox',
+                'desc'         => __( 'If checked, removes all plugin data when this plugin is uninstalled. Warning: This process is irreversible.', 'woo-product-feed-pro' ),
+                'id'           => ADT_PFP_CLEAN_UP_PLUGIN_OPTIONS,
+                'class'        => 'adt-pfp-general-setting',
+                'confirmation' => __( 'Are you sure you want to clean up plugin data on un-installation?', 'woo-product-feed-pro' ),
+                'show_title'   => true,
+            ),
         );
 
         /**
@@ -252,6 +294,7 @@ class WP_Admin extends Abstract_Class {
      * Update settings via AJAX.
      *
      * @since 13.3.4
+     * @since 13.5.2.1 - Added CSRF protection and allowed settings validation.
      * @access public
      */
     public function ajax_adt_pfp_update_settings() {
@@ -259,31 +302,140 @@ class WP_Admin extends Abstract_Class {
             wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-product-feed-pro' ) ) );
         }
 
-        if ( ! wp_verify_nonce( $_REQUEST['security'], 'woosea_ajax_nonce' ) ) {
+        // CSRF protection is now mandatory - nonce must be present and valid.
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
             wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
         }
 
-        $setting = $_REQUEST['setting'] ?? '';
-        $type    = $_REQUEST['type'] ?? '';
-        $value   = $_REQUEST['value'] ?? '';
+        $setting = sanitize_text_field( wp_unslash( $_REQUEST['setting'] ?? '' ) );
+        $type    = sanitize_text_field( wp_unslash( $_REQUEST['type'] ?? '' ) );
 
-        if ( empty( $setting ) || empty( $value ) || empty( $type ) ) {
+        // Allow empty values - check if value key exists in request.
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized in switch statement based on type.
+        $value = isset( $_REQUEST['value'] ) ? wp_unslash( $_REQUEST['value'] ) : '';
+
+        // Only validate required fields (setting and type), allow empty values.
+        if ( empty( $setting ) || empty( $type ) ) {
             wp_send_json_error( array( 'message' => __( 'Invalid request.', 'woo-product-feed-pro' ) ) );
         }
 
+        // Allowlist of plugin settings that can be updated via AJAX.
+        // This prevents arbitrary WordPress option updates.
+        $allowed_settings = $this->get_allowed_ajax_settings();
+
+        if ( ! in_array( $setting, $allowed_settings, true ) ) {
+            wp_send_json_error( array( 'message' => __( 'Invalid setting parameter.', 'woo-product-feed-pro' ) ) );
+        }
+
+        // Process value based on type.
         switch ( $type ) {
             case 'checkbox':
-                $value = 'true' === sanitize_text_field( $value ) ? 'yes' : 'no';
+                // Handle checkbox: convert boolean strings to yes/no.
+                $value = in_array( $value, array( 'true', '1', 'yes' ), true ) ? 'yes' : 'no';
                 break;
             case 'text':
+            case 'number':
+                // Allow empty text/number values (for clearing fields).
+                $value = sanitize_text_field( $value );
+                break;
+            case 'textarea':
+                // Allow empty textarea values.
+                $value = sanitize_textarea_field( $value );
+                break;
             default:
+                // Default sanitization for unknown types.
                 $value = sanitize_text_field( $value );
                 break;
         }
 
+        // Update the option (allows empty values).
         update_option( $setting, $value );
 
         wp_send_json_success( array( 'message' => __( 'Settings updated.', 'woo-product-feed-pro' ) ) );
+    }
+
+    /**
+     * Get allowed settings that can be updated via AJAX.
+     *
+     * @since 13.5.2.1
+     * @access private
+     * @return array List of allowed option names.
+     */
+    private function get_allowed_ajax_settings() {
+        // Define allowlist of plugin-specific settings that can be updated via AJAX.
+        // Only plugin-owned settings are allowed to prevent arbitrary WordPress option updates.
+        $allowed = array(
+            // General settings from Settings_Page::get_general_settings().
+            'adt_use_parent_variable_product_image',
+            'adt_add_all_shipping',
+            'adt_remove_other_shipping_classes_on_free_shipping',
+            'adt_remove_free_shipping',
+            'adt_remove_local_pickup_shipping',
+            'adt_show_only_basis_attributes',
+            'adt_enable_logging',
+            'adt_add_facebook_pixel',
+            'adt_facebook_pixel_id',
+            'adt_facebook_pixel_content_ids',
+            'adt_add_remarketing',
+            'adt_adwords_conversion_id',
+            'adt_enable_batch',
+            'adt_batch_size',
+            'adt_disable_http_feed_generation',
+            // Other settings from Settings_Page::get_other_settings().
+            'adt_use_legacy_filters_and_rules',
+            defined( 'ADT_PFP_CLEAN_UP_PLUGIN_OPTIONS' ) ? (string) ADT_PFP_CLEAN_UP_PLUGIN_OPTIONS : 'adt_clean_up_plugin_data',
+            // Elite general settings.
+            'adt_structured_data_fix',
+            'adt_structured_vat',
+            'adt_enable_data_manipulation_support',
+            'adt_enable_wpml_support',
+            'adt_enable_aelia_support',
+            'adt_enable_curcy_support',
+            'adt_enable_polylang_support',
+            'adt_enable_translatepress_support',
+            'adt_enable_facebook_capi',
+            'adt_facebook_capi_token',
+        );
+
+        /**
+         * Filter the list of allowed AJAX settings.
+         *
+         * This filter allows extending the allowlist for child plugins (like Elite version).
+         * All added settings must use the 'adt_' prefix to ensure they are plugin-owned.
+         *
+         * WARNING: Be extremely careful when adding settings to this list.
+         * Never allow core WordPress options like 'default_role', 'users_can_register',
+         * 'admin_email', 'siteurl', 'home', etc.
+         *
+         * Example usage (in Elite plugin):
+         * add_filter('adt_pfp_allowed_ajax_settings', function($allowed) {
+         *     return array_merge($allowed, array(
+         *         'adt_structured_data_fix',
+         *         'adt_enable_wpml_support',
+         *     ));
+         * });
+         *
+         * @since 13.5.2.1
+         * @param array $allowed Array of allowed option names.
+         * @return array List of allowed option names.
+         */
+        $filtered = apply_filters( 'adt_pfp_allowed_ajax_settings', $allowed );
+
+        // Validate filtered result is an array to prevent PHP errors.
+        // Falls back to original allowlist if filter returns invalid type.
+        if ( ! is_array( $filtered ) ) {
+            $filtered = $allowed;
+        }
+
+        // Enforce prefix requirement to prevent arbitrary option updates.
+        $allowed = array_filter(
+            $filtered,
+            function ( $value ) {
+                return is_string( $value ) && 0 === strpos( $value, 'adt_' );
+            }
+        );
+
+        return array_values( $allowed );
     }
 
     /**
@@ -297,7 +449,7 @@ class WP_Admin extends Abstract_Class {
             wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-product-feed-pro' ) ) );
         }
 
-        if ( ! wp_verify_nonce( $_REQUEST['security'], 'woosea_ajax_nonce' ) ) {
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
             wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
         }
 
@@ -325,7 +477,7 @@ class WP_Admin extends Abstract_Class {
             wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-product-feed-pro' ) ) );
         }
 
-        if ( ! wp_verify_nonce( $_REQUEST['security'], 'woosea_ajax_nonce' ) ) {
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
             wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
         }
 
@@ -348,7 +500,7 @@ class WP_Admin extends Abstract_Class {
             wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-product-feed-pro' ) ) );
         }
 
-        if ( ! wp_verify_nonce( $_REQUEST['security'], 'woosea_ajax_nonce' ) ) {
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
             wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
         }
 
@@ -421,13 +573,96 @@ class WP_Admin extends Abstract_Class {
     }
 
     /**
+     * Use legacy filters and rules.
+     *
+     * @since 13.4.6
+     * @access public
+     */
+    public function ajax_use_legacy_filters_and_rules() {
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
+            wp_send_json_error( array( 'message' => __( 'Invalid security token', 'woo-product-feed-pro' ) ) );
+        }
+
+        if ( ! Helper::is_current_user_allowed() ) {
+            wp_send_json_error( array( 'message' => __( 'You do not have permission to do this', 'woo-product-feed-pro' ) ) );
+        }
+
+        $value = sanitize_text_field( wp_unslash( $_REQUEST['value'] ?? '' ) );
+        $value = 'true' === $value ? 'yes' : 'no';
+
+        if ( update_option( 'adt_use_legacy_filters_and_rules', $value, false ) ) {
+            if ( 'yes' === $value ) {
+                wp_send_json_success( array( 'message' => __( 'Legacy filters and rules enabled', 'woo-product-feed-pro' ) ) );
+            } else {
+                wp_send_json_success( array( 'message' => __( 'Legacy filters and rules disabled', 'woo-product-feed-pro' ) ) );
+            }
+        } else {
+            wp_send_json_error( array( 'message' => __( 'Error enabling legacy filters and rules', 'woo-product-feed-pro' ) ) );
+        }
+    }
+
+    /**
+     * Fix duplicated feed.
+     *
+     * @since 13.4.6
+     * @access public
+     */
+    public function ajax_fix_duplicate_feed() {
+        if ( ! Helper::is_current_user_allowed() ) {
+            wp_send_json_error( array( 'message' => __( 'You do not have permission to perform this action.', 'woo-product-feed-pro' ) ) );
+        }
+
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
+            wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
+        }
+
+        // Reset backward compatibility options.
+        delete_option( 'adt_cron_projects' );
+
+        // If the file name or legacy project hash is empty that means the feed is duplicated, delete the post.
+        $args  = array(
+            'post_type'      => 'adt_product_feed',
+            'posts_per_page' => -1,
+            'meta_query'     => array(
+                'relation' => 'OR',
+                array(
+                    'key'     => 'adt_file_name',
+                    'value'   => '',
+                    'compare' => '=',
+                ),
+                array(
+                    'key'     => 'adt_file_name',
+                    'compare' => 'NOT EXISTS',
+                ),
+                array(
+                    'key'     => 'adt_legacy_project_hash',
+                    'value'   => '',
+                    'compare' => '=',
+                ),
+                array(
+                    'key'     => 'adt_legacy_project_hash',
+                    'compare' => 'NOT EXISTS',
+                ),
+            ),
+        );
+        $posts = get_posts( $args );
+        foreach ( $posts as $post ) {
+            wp_delete_post( $post->ID, true );
+        }
+        wp_reset_postdata();
+
+        wp_send_json_success( array( 'message' => __( 'Duplicated feed fixed.', 'woo-product-feed-pro' ) ) );
+    }
+
+
+    /**
      * Dismiss the get Elite notification.
      *
      * @since 13.3.6
      * @access public
      **/
     public function ajax_dismiss_get_elite_notice() {
-        if ( ! wp_verify_nonce( $_REQUEST['security'], 'woosea_ajax_nonce' ) ) {
+        if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['security'] ) ), 'woosea_ajax_nonce' ) ) {
             wp_send_json_error( __( 'Invalid security token', 'woo-product-feed-pro' ) );
         }
 
@@ -478,5 +713,7 @@ class WP_Admin extends Abstract_Class {
         add_action( 'wp_ajax_adt_migrate_to_custom_post_type', array( $this, 'ajax_migrate_to_custom_post_type' ) );
         add_action( 'wp_ajax_adt_clear_custom_attributes_product_meta_keys', array( $this, 'ajax_adt_clear_custom_attributes_product_meta_keys' ) );
         add_action( 'wp_ajax_adt_update_file_url_to_lower_case', array( $this, 'ajax_update_file_url_to_lower_case' ) );
+        add_action( 'wp_ajax_adt_use_legacy_filters_and_rules', array( $this, 'ajax_use_legacy_filters_and_rules' ) );
+        add_action( 'wp_ajax_adt_fix_duplicate_feed', array( $this, 'ajax_fix_duplicate_feed' ) );
     }
 }

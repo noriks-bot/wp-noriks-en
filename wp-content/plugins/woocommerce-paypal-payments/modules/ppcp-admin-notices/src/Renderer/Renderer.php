@@ -11,6 +11,7 @@ namespace WooCommerce\PayPalCommerce\AdminNotices\Renderer;
 use WooCommerce\PayPalCommerce\AdminNotices\Repository\RepositoryInterface;
 use WooCommerce\PayPalCommerce\AdminNotices\Endpoint\MuteMessageEndpoint;
 use WooCommerce\PayPalCommerce\AdminNotices\Entity\PersistentMessage;
+use WooCommerce\PayPalCommerce\Assets\AssetGetter;
 /**
  * Class Renderer
  */
@@ -22,12 +23,7 @@ class Renderer implements \WooCommerce\PayPalCommerce\AdminNotices\Renderer\Rend
      * @var RepositoryInterface
      */
     private $repository;
-    /**
-     * Used to enqueue assets.
-     *
-     * @var string
-     */
-    private $module_url;
+    private AssetGetter $asset_getter;
     /**
      * Used to enqueue assets.
      *
@@ -41,16 +37,14 @@ class Renderer implements \WooCommerce\PayPalCommerce\AdminNotices\Renderer\Rend
      */
     private $can_mute_message = \false;
     /**
-     * Renderer constructor.
-     *
      * @param RepositoryInterface $repository The message repository.
-     * @param string              $module_url The module URL.
+     * @param AssetGetter         $asset_getter
      * @param string              $version The module version.
      */
-    public function __construct(RepositoryInterface $repository, string $module_url, string $version)
+    public function __construct(RepositoryInterface $repository, AssetGetter $asset_getter, string $version)
     {
         $this->repository = $repository;
-        $this->module_url = untrailingslashit($module_url);
+        $this->asset_getter = $asset_getter;
         $this->version = $version;
     }
     /**
@@ -67,7 +61,7 @@ class Renderer implements \WooCommerce\PayPalCommerce\AdminNotices\Renderer\Rend
             }
             printf(
                 '<div class="notice notice-%s %s" %s%s><p>%s</p></div>',
-                $message->type(),
+                esc_attr($message->type()),
                 $message->is_dismissible() ? 'is-dismissible' : '',
                 $message->wrapper() ? sprintf('data-ppcp-wrapper="%s"', esc_attr($message->wrapper())) : '',
                 // Use `empty()` in condition, to avoid false phpcs warning.
@@ -85,8 +79,8 @@ class Renderer implements \WooCommerce\PayPalCommerce\AdminNotices\Renderer\Rend
         if (!$this->can_mute_message) {
             return;
         }
-        wp_register_style('wc-ppcp-admin-notice', $this->module_url . '/assets/css/styles.css', array(), $this->version);
-        wp_register_script('wc-ppcp-admin-notice', $this->module_url . '/assets/js/boot-admin.js', array(), $this->version, \true);
+        wp_register_style('wc-ppcp-admin-notice', $this->asset_getter->get_asset_url('styles.css'), array(), $this->version);
+        wp_register_script('wc-ppcp-admin-notice', $this->asset_getter->get_asset_url('boot-admin.js'), array(), $this->version, \true);
         wp_localize_script('wc-ppcp-admin-notice', 'wc_admin_notices', $this->script_data_for_admin());
         wp_enqueue_style('wc-ppcp-admin-notice');
         wp_enqueue_script('wc-ppcp-admin-notice');

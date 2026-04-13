@@ -72,27 +72,6 @@ class Cron extends Abstract_Class {
     }
 
     /**
-     * Move the feed file to the final file.
-     *
-     * @since 13.4.1
-     * @access public
-     *
-     * @param Product_Feed $feed The feed data object.
-     */
-    public function move_feed_file_to_final( $feed ) {
-        $upload_dir = wp_upload_dir();
-        $base       = $upload_dir['basedir'];
-        $path       = $base . '/woo-product-feed-pro/' . $feed->file_format;
-        $tmp_file   = $path . '/' . sanitize_file_name( $feed->file_name ) . '_tmp.' . $feed->file_format;
-        $new_file   = $path . '/' . sanitize_file_name( $feed->file_name ) . '.' . $feed->file_format;
-
-        // Move the temporary file to the final file.
-        if ( copy( $tmp_file, $new_file ) ) {
-            wp_delete_file( $tmp_file );
-        }
-    }
-
-    /**
      * Schedule the next batch.
      *
      * @since 13.4.1
@@ -142,7 +121,7 @@ class Cron extends Abstract_Class {
 
         Product_Feed_Helper::disable_cache();
 
-        $feed->generate( 'cron' );
+        $feed->generate( 'schedule' );
     }
 
     /**

@@ -6,17 +6,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AdTribes\PFP\Helpers\Helper;
 ?>
-<div class="adt-license-settings">
-    <div class="adt-license-settings-container">
-        <a href="<?php echo esc_url( Helper::get_utm_url( '', 'pfp', 'logo', 'adminpagelogo' ) ); ?>" target="_blank">
-            <img style="max-height: 72px;" class="logo" src="<?php echo esc_attr( ADT_PFP_IMAGES_URL . 'logo.png' ); ?>" alt="<?php esc_attr_e( 'AdTribes', 'woo-product-feed-pro' ); ?>">
-        </a>
-        <?php if ( Helper::is_show_logo_upgrade_button() ) : ?>
-        <a href="<?php echo esc_url( Helper::get_utm_url( '', 'pfp', 'logo', 'adminpagelogo' ) ); ?>" target="_blank" class="logo-upgrade">Upgrade to Elite</a>
-        <?php endif; ?>
-        <h1 class="title">Licenses</h1>
-        <p class="desc"><?php esc_html_e( 'Enter your license keys below to enjoy full access, plugin updates, and support.', 'woo-product-feed-pro' ); ?></p>
-        
+<div class="wrap adt-tw-wrapper adt-license-settings">
+    <div class="adt-container adt-license-settings-container lg:adt-tw-px-8 sm:adt-tw-py-4 adt-tw-py-0">
+        <?php Helper::locate_admin_template( 'header.php', true ); ?>
+        <h1 class="adt-tw-text-[32px] adt-tw-font-semibold adt-tw-text-gray-800 adt-tw-mb-2">
+            <?php esc_html_e( 'Licenses', 'woo-product-feed-pro' ); ?>
+            <p class="adt-tw-text-base adt-tw-mt-2 adt-tw-font-normal">
+                <?php esc_html_e( 'Enter your license keys below to enjoy full access, plugin updates, and support.', 'woo-product-feed-pro' ); ?>
+            </p>
+        </h1>
         <div class="postbox license-box">
             <ul class="license-nav-tabs">
                 <li class="active">

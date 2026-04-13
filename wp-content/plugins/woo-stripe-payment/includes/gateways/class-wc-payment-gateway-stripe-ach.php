@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit();
  *
  * @since   3.0.5
  * @author  Payment Plugins
- * @package Stripe/Gateways
+ * @package PaymentPlugins\Gateways
  *
  */
 class WC_Payment_Gateway_Stripe_ACH extends WC_Payment_Gateway_Stripe_Local_Payment {
@@ -27,6 +27,7 @@ class WC_Payment_Gateway_Stripe_ACH extends WC_Payment_Gateway_Stripe_Local_Paym
 		$this->id                 = 'stripe_ach';
 		$this->currencies         = array( 'USD' );
 		$this->countries          = array( 'US' );
+		$this->limited_countries  = array( 'US' );
 		$this->tab_title          = __( 'ACH', 'woo-stripe-payment' );
 		$this->method_title       = __( 'ACH (Stripe) by Payment Plugins', 'woo-stripe-payment' );
 		$this->method_description = __( 'ACH gateway that integrates with your Stripe account.', 'woo-stripe-payment' );

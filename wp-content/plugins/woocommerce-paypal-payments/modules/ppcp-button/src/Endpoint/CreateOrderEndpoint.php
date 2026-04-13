@@ -12,6 +12,7 @@ use Exception;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
 use stdClass;
 use Throwable;
+use WC_Order;
 use WooCommerce\PayPalCommerce\ApiClient\Endpoint\OrderEndpoint;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\Amount;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\ExperienceContext;
@@ -25,8 +26,11 @@ use WooCommerce\PayPalCommerce\ApiClient\Exception\RuntimeException;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\ExperienceContextBuilder;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\PayerFactory;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\PurchaseUnitFactory;
+use WooCommerce\PayPalCommerce\ApiClient\Factory\ReturnUrlFactory;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\ShippingPreferenceFactory;
 use WooCommerce\PayPalCommerce\Button\Exception\ValidationException;
+use WooCommerce\PayPalCommerce\Button\Session\CartDataFactory;
+use WooCommerce\PayPalCommerce\Button\Session\CartDataTransientStorage;
 use WooCommerce\PayPalCommerce\Button\Validation\CheckoutFormValidator;
 use WooCommerce\PayPalCommerce\Button\Helper\EarlyOrderHandler;
 use WooCommerce\PayPalCommerce\Session\SessionHandler;
@@ -35,7 +39,7 @@ use WooCommerce\PayPalCommerce\WcGateway\CardBillingMode;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CardButtonGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CreditCardGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
-use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
+use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\ContactPreferenceFactory;
 /**
  * Class CreateOrderEndpoint
@@ -44,6 +48,7 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
 {
     use FreeTrialHandlerTrait;
     const ENDPOINT = 'ppc-create-order';
+    public const RETURN_URL_CART_QUERY_ARG = 'pcp-cart';
     /**
      * The request data helper.
      *
@@ -62,6 +67,7 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      * @var ShippingPreferenceFactory
      */
     private $shipping_preference_factory;
+    private ReturnUrlFactory $return_url_factory;
     /**
      * The contact_preference factors.
      */
@@ -88,18 +94,15 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      * @var SessionHandler
      */
     private $session_handler;
-    /**
-     * The settings.
-     *
-     * @var Settings
-     */
-    private $settings;
+    private SettingsProvider $settings_provider;
     /**
      * The early order handler.
      *
      * @var EarlyOrderHandler
      */
     private $early_order_handler;
+    protected CartDataFactory $cart_data_factory;
+    protected CartDataTransientStorage $cart_data_transient_storage;
     /**
      * Data from the request.
      *
@@ -170,13 +173,16 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      * @param RequestData               $request_data The RequestData object.
      * @param PurchaseUnitFactory       $purchase_unit_factory The PurchaseUnit factory.
      * @param ShippingPreferenceFactory $shipping_preference_factory The shipping_preference factory.
+     * @param ReturnUrlFactory          $return_url_factory  The return URL factory.
      * @param ContactPreferenceFactory  $contact_preference_factory The contact_preference factory.
      * @param ExperienceContextBuilder  $experience_context_builder The ExperienceContextBuilder.
      * @param OrderEndpoint             $order_endpoint The OrderEndpoint object.
      * @param PayerFactory              $payer_factory The PayerFactory object.
      * @param SessionHandler            $session_handler The SessionHandler object.
-     * @param Settings                  $settings The Settings object.
+     * @param SettingsProvider          $settings_provider The SettingsProvider object.
      * @param EarlyOrderHandler         $early_order_handler The EarlyOrderHandler object.
+     * @param CartDataFactory           $cart_data_factory
+     * @param CartDataTransientStorage  $cart_data_transient_storage
      * @param bool                      $registration_needed  Whether a new user must be registered during checkout.
      * @param string                    $card_billing_data_mode The value of card_billing_data_mode from the settings.
      * @param bool                      $early_validation_enabled Whether to execute WC validation of the checkout form.
@@ -186,18 +192,21 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      * @param string[]                  $funding_sources_without_redirect The sources that do not cause issues about redirecting (on mobile, ...) and sometimes not returning back.
      * @param LoggerInterface           $logger The logger.
      */
-    public function __construct(\WooCommerce\PayPalCommerce\Button\Endpoint\RequestData $request_data, PurchaseUnitFactory $purchase_unit_factory, ShippingPreferenceFactory $shipping_preference_factory, ContactPreferenceFactory $contact_preference_factory, ExperienceContextBuilder $experience_context_builder, OrderEndpoint $order_endpoint, PayerFactory $payer_factory, SessionHandler $session_handler, Settings $settings, EarlyOrderHandler $early_order_handler, bool $registration_needed, string $card_billing_data_mode, bool $early_validation_enabled, array $pay_now_contexts, bool $handle_shipping_in_paypal, bool $server_side_shipping_callback_enabled, array $funding_sources_without_redirect, LoggerInterface $logger)
+    public function __construct(\WooCommerce\PayPalCommerce\Button\Endpoint\RequestData $request_data, PurchaseUnitFactory $purchase_unit_factory, ShippingPreferenceFactory $shipping_preference_factory, ReturnUrlFactory $return_url_factory, ContactPreferenceFactory $contact_preference_factory, ExperienceContextBuilder $experience_context_builder, OrderEndpoint $order_endpoint, PayerFactory $payer_factory, SessionHandler $session_handler, SettingsProvider $settings_provider, EarlyOrderHandler $early_order_handler, CartDataFactory $cart_data_factory, CartDataTransientStorage $cart_data_transient_storage, bool $registration_needed, string $card_billing_data_mode, bool $early_validation_enabled, array $pay_now_contexts, bool $handle_shipping_in_paypal, bool $server_side_shipping_callback_enabled, array $funding_sources_without_redirect, LoggerInterface $logger)
     {
         $this->request_data = $request_data;
         $this->purchase_unit_factory = $purchase_unit_factory;
         $this->shipping_preference_factory = $shipping_preference_factory;
         $this->contact_preference_factory = $contact_preference_factory;
+        $this->return_url_factory = $return_url_factory;
         $this->experience_context_builder = $experience_context_builder;
         $this->api_endpoint = $order_endpoint;
         $this->payer_factory = $payer_factory;
         $this->session_handler = $session_handler;
-        $this->settings = $settings;
+        $this->settings_provider = $settings_provider;
         $this->early_order_handler = $early_order_handler;
+        $this->cart_data_factory = $cart_data_factory;
+        $this->cart_data_transient_storage = $cart_data_transient_storage;
         $this->registration_needed = $registration_needed;
         $this->card_billing_data_mode = $card_billing_data_mode;
         $this->early_validation_enabled = $early_validation_enabled;
@@ -219,10 +228,9 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
     /**
      * Handles the request.
      *
-     * @return bool
      * @throws Exception On Error.
      */
-    public function handle_request(): bool
+    public function handle_request(): void
     {
         try {
             $data = $this->request_data->read_request($this->nonce());
@@ -230,14 +238,20 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
             $payment_method = $data['payment_method'] ?? '';
             $funding_source = $data['funding_source'] ?? '';
             $wc_order = null;
+            do_action('woocommerce_paypal_payments_create_order_request_started', $data);
             if ('pay-now' === $data['context']) {
                 $wc_order = wc_get_order((int) $data['order_id']);
-                if (!is_a($wc_order, \WC_Order::class)) {
+                if (!$wc_order instanceof WC_Order) {
                     wp_send_json_error(array('name' => 'order-not-found', 'message' => __('Order not found', 'woocommerce-paypal-payments'), 'code' => 0, 'details' => array()));
                 }
-                $this->purchase_unit = $this->purchase_unit_factory->from_wc_order($wc_order);
+                $order_key = $data['order_key'] ?? '';
+                //phpcs:ignore WordPress.WP.Capabilities.Unknown
+                if (!$wc_order->key_is_valid($order_key) || !current_user_can('view_order', $data['order_id'])) {
+                    wp_send_json_error(array('name' => 'invalid-request', 'message' => __('You cannot pay for this order. Contact the shop for assistance.', 'woocommerce-paypal-payments'), 'code' => 0, 'details' => array()));
+                }
+                $this->purchase_unit = $this->purchase_unit_factory->from_wc_order($wc_order, $payment_method);
             } else {
-                $this->purchase_unit = $this->purchase_unit_factory->from_wc_cart(null, $this->should_handle_shipping_in_paypal($funding_source));
+                $this->purchase_unit = $this->purchase_unit_factory->from_wc_cart(null, $this->should_handle_shipping_in_paypal($funding_source), $payment_method);
                 // Do not allow completion by webhooks when started via non-checkout buttons,
                 // it is needed only for some APMs in checkout.
                 if (in_array($data['context'], array('product', 'cart', 'cart-block'), \true)) {
@@ -274,7 +288,7 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
                 }
                 $this->early_order_handler->register_for_order($order);
             }
-            if ('pay-now' === $data['context'] && is_a($wc_order, \WC_Order::class)) {
+            if ('pay-now' === $data['context'] && $wc_order instanceof WC_Order) {
                 $wc_order->update_meta_data(PayPalGateway::ORDER_ID_META_KEY, $order->id());
                 $wc_order->update_meta_data(PayPalGateway::INTENT_META_KEY, $order->intent());
                 $payment_source = $order->payment_source();
@@ -290,26 +304,24 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
                 do_action('woocommerce_paypal_payments_woocommerce_order_created', $wc_order, $order);
             }
             wp_send_json_success($this->make_response($order));
-            return \true;
         } catch (ValidationException $error) {
             $response = array('message' => $error->getMessage(), 'errors' => $error->errors(), 'refresh' => isset(WC()->session->refresh_totals));
             unset(WC()->session->refresh_totals);
             wp_send_json_error($response);
         } catch (\RuntimeException $error) {
             $this->logger->error('Order creation failed: ' . $error->getMessage());
-            wp_send_json_error(array('name' => is_a($error, PayPalApiException::class) ? $error->name() : '', 'message' => $error->getMessage(), 'code' => $error->getCode(), 'details' => is_a($error, PayPalApiException::class) ? $error->details() : array()));
+            wp_send_json_error(array('name' => $error instanceof PayPalApiException ? $error->name() : '', 'message' => $error->getMessage(), 'code' => $error->getCode(), 'details' => $error instanceof PayPalApiException ? $error->details() : array()));
         } catch (Exception $exception) {
             $this->logger->error('Order creation failed: ' . $exception->getMessage());
             wc_add_notice($exception->getMessage(), 'error');
         }
-        return \false;
     }
     /**
      * Creates the order in the PayPal, uses data from WC order if provided.
      *
-     * @param \WC_Order|null $wc_order WC order to get data from.
-     * @param string         $payment_method WC payment method.
-     * @param array          $data Request data.
+     * @param WC_Order|null $wc_order WC order to get data from.
+     * @param string        $payment_method WC payment method.
+     * @param array         $data Request data.
      *
      * @return Order Created PayPal order.
      *
@@ -318,12 +330,12 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      *
      * phpcs:disable Squiz.Commenting.FunctionCommentThrowTag.WrongNumber
      */
-    private function create_paypal_order(\WC_Order $wc_order = null, string $payment_method = '', array $data = array()): Order
+    private function create_paypal_order(?WC_Order $wc_order = null, string $payment_method = '', array $data = array()): Order
     {
         assert($this->purchase_unit instanceof PurchaseUnit);
         $funding_source = $this->parsed_request_data['funding_source'] ?? '';
         $payer = $this->payer($this->parsed_request_data, $wc_order);
-        $shipping_preference = $this->shipping_preference_factory->from_state($this->purchase_unit, $this->parsed_request_data['context'], WC()->cart, $funding_source);
+        $shipping_preference = $this->shipping_preference_factory->from_state($this->purchase_unit, $this->parsed_request_data['context'], WC()->cart, $funding_source, $wc_order);
         $action = in_array($this->parsed_request_data['context'], $this->pay_now_contexts, \true) ? ExperienceContext::USER_ACTION_PAY_NOW : ExperienceContext::USER_ACTION_CONTINUE;
         if ('card' === $funding_source) {
             if (CardBillingMode::MINIMAL_INPUT === $this->card_billing_data_mode) {
@@ -348,13 +360,28 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
             $payment_source_key = 'paypal';
         }
         $contact_preference = $this->contact_preference_factory->from_state($payment_source_key);
-        $experience_context = $this->experience_context_builder->with_default_paypal_config($shipping_preference, $action)->with_contact_preference($contact_preference);
-        if ($this->server_side_shipping_callback_enabled && $shipping_preference === ExperienceContext::SHIPPING_PREFERENCE_GET_FROM_FILE) {
+        $custom_args = array();
+        $cart_data = null;
+        // Save the cart to be able to access it after cross-browser AppSwitch.
+        if ('pay-now' !== $data['context']) {
+            try {
+                $cart_data = $this->cart_data_factory->from_current_cart();
+                $cart_data->generate_key();
+                $key = $cart_data->key();
+                assert(!empty($key));
+                $custom_args[self::RETURN_URL_CART_QUERY_ARG] = $key;
+            } catch (Throwable $exception) {
+                $this->logger->error('Failed to serialize cart: ' . $exception->getMessage());
+            }
+        }
+        $return_url = $this->return_url_factory->from_context($this->parsed_request_data['context'], $this->parsed_request_data, $custom_args);
+        $experience_context = $this->experience_context_builder->with_default_paypal_config($shipping_preference, $action)->with_contact_preference($contact_preference)->with_custom_return_url($return_url)->with_custom_cancel_url($return_url);
+        if ($this->should_handle_shipping_in_paypal($funding_source) && $this->server_side_shipping_callback_enabled && $shipping_preference === ExperienceContext::SHIPPING_PREFERENCE_GET_FROM_FILE) {
             $experience_context = $experience_context->with_shipping_callback();
         }
         $payment_source = new PaymentSource($payment_source_key, (object) array('experience_context' => $experience_context->build()->to_array()));
         try {
-            return $this->api_endpoint->create(array($this->purchase_unit), $shipping_preference, $payer, $payment_method, $data, $payment_source);
+            $order = $this->api_endpoint->create(array($this->purchase_unit), $shipping_preference, $payer, $payment_method, $data, $payment_source);
         } catch (PayPalApiException $exception) {
             // Looks like currently there is no proper way to validate the shipping address for PayPal,
             // so we cannot make some invalid addresses null in PurchaseUnitFactory,
@@ -364,20 +391,30 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
             })) {
                 $this->logger->info('Invalid shipping address for order creation, retrying without it.');
                 $this->purchase_unit->set_shipping(null);
-                return $this->api_endpoint->create(array($this->purchase_unit), $shipping_preference, $payer, $payment_method, $data, $payment_source);
+                $order = $this->api_endpoint->create(array($this->purchase_unit), $shipping_preference, $payer, $payment_method, $data, $payment_source);
+            } else {
+                throw $exception;
             }
-            throw $exception;
         }
+        if ($cart_data) {
+            try {
+                $cart_data->set_paypal_order_id($order->id());
+                $this->cart_data_transient_storage->save($cart_data);
+            } catch (Throwable $exception) {
+                $this->logger->error('Failed to save cart: ' . $exception->getMessage());
+            }
+        }
+        return $order;
     }
     /**
      * Returns the Payer entity based on the request data.
      *
-     * @param array          $data The request data.
-     * @param \WC_Order|null $wc_order The order.
+     * @param array         $data The request data.
+     * @param WC_Order|null $wc_order The order.
      *
      * @return Payer|null
      */
-    private function payer(array $data, \WC_Order $wc_order = null)
+    private function payer(array $data, ?WC_Order $wc_order = null)
     {
         if ('pay-now' === $data['context']) {
             $payer = $this->payer_factory->from_wc_order($wc_order);
@@ -465,7 +502,7 @@ class CreateOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint
      */
     protected function should_handle_shipping_in_paypal(string $funding_source): bool
     {
-        $is_vaulting_enabled = $this->settings->has('vault_enabled') && $this->settings->get('vault_enabled');
+        $is_vaulting_enabled = $this->settings_provider->save_paypal_and_venmo();
         if (!$this->handle_shipping_in_paypal) {
             return \false;
         }

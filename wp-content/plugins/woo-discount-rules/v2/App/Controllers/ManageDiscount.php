@@ -1558,17 +1558,16 @@ class ManageDiscount extends Base
     /**
      * save discounts of order for future
      *
-     * @param $order_id
-     * @param $items
+     * @param $order
      * @return void
      */
-    function orderItemsSaved($order_id, $items)
+    function orderItemsSaveDiscount($order)
     {
-        $order = self::$woocommerce_helper->getOrder($order_id);
-        if (empty($order)) {
+        if (empty($order) || !is_object($order)) {
             return;
         }
 
+        $order_id = $order->get_id();
         $free_shipping = false;
         if (self::$woocommerce_helper->orderHasShippingMethod($order, 'wdr_free_shipping')) {
             $free_shipping = true;
@@ -1677,6 +1676,38 @@ class ManageDiscount extends Base
         if (!empty($order_discount_info['free_shipping']) || !empty($order_discount_info['saved_amount']['total'])) {
             self::$woocommerce_helper->setOrderMeta($order, '_wdr_discounts', $order_discount_info);
         }
+    }
+
+    /**
+     * save discounts of order for future - classic checkout
+     *
+     * @param $order_id
+     * @param $items
+     * @return void
+     */
+    function orderItemsSaved($order_id, $items)
+    {
+        $order = self::$woocommerce_helper->getOrder($order_id);
+        if (!$order){
+            return;
+        }
+
+        $this->orderItemsSaveDiscount($order);
+    }
+
+    /**
+     * Save discounts of order for future - block checkout
+     *
+     * @param WC_Order $order
+     * @return void
+     */
+    function blockCheckoutOrderItemsSaved($order)
+    {
+        if (!$order || !is_object($order)){
+            return;
+        }
+
+        $this->orderItemsSaveDiscount($order);
     }
 
     /**
@@ -3011,26 +3042,28 @@ class ManageDiscount extends Base
     /**
      * Export Data via CSV
      */
-    public function awdrExportCsv(){
-        if (isset($_POST['wdr-export']) && isset($_POST['security'])) {
-            if(wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['security'])),'awdr_export_rules')) {
-                ob_end_clean();
-                $rule_helper = new Rule();
-                $rules = $rule_helper->exportRuleByName('all');
-                $file_name = 'advanced-discount-rules-' . gmdate("Y-m-d-h-i-a") . '.csv';
-                $file = fopen('php://output', 'w');
-                header('Content-type: application/csv');
-                header('Content-Disposition: attachment; filename=' . $file_name);
-                $export_csv_separator = apply_filters('advanced_woo_discount_rules_csv_import_export_separator', ',');
-                fputcsv($file, array('id', 'enabled', 'deleted', 'exclusive', 'title', 'priority', 'apply_to', 'filters', 'conditions', 'product_adjustments', 'cart_adjustments', 'buy_x_get_x_adjustments', 'buy_x_get_y_adjustments', 'bulk_adjustments', 'set_adjustments', 'other_discounts', 'date_from', 'date_to', 'usage_limits', 'rule_language', 'used_limits', 'additional', 'max_discount_sum', 'advanced_discount_message', 'discount_type', 'used_coupons', 'created_by', 'created_on', 'modified_by', 'modified_on'), $export_csv_separator);
-                foreach ($rules as $rule_row) {
-                    $row_data = (array)$rule_row;
-                    fputcsv($file, $row_data, $export_csv_separator);
-                }
-                exit;
-            }
-        }
-    }
+	public function awdrExportCsv(){
+		if (isset($_POST['wdr-export']) && isset($_POST['security'])) {
+			if(wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['security'])),'awdr_export_rules')) {
+				ob_end_clean();
+				$rule_helper = new Rule();
+				$rules = $rule_helper->exportRuleByName('all');
+				$file_name = 'advanced-discount-rules-' . gmdate("Y-m-d-h-i-a") . '.csv';
+				$file = fopen('php://output', 'w');
+				header('Content-type: application/csv');
+				header('Content-Disposition: attachment; filename=' . $file_name);
+				$export_csv_separator = apply_filters('advanced_woo_discount_rules_csv_import_export_separator', ',');
+				$enclosure =  apply_filters('advanced_woo_discount_rules_csv_import_export_encloser','"');
+				$escape =  apply_filters('advanced_woo_discount_rules_csv_import_export_escape',"\\");
+				fputcsv($file, array('id', 'enabled', 'deleted', 'exclusive', 'title', 'priority', 'apply_to', 'filters', 'conditions', 'product_adjustments', 'cart_adjustments', 'buy_x_get_x_adjustments', 'buy_x_get_y_adjustments', 'bulk_adjustments', 'set_adjustments', 'other_discounts', 'date_from', 'date_to', 'usage_limits', 'rule_language', 'used_limits', 'additional', 'max_discount_sum', 'advanced_discount_message', 'discount_type', 'used_coupons', 'created_by', 'created_on', 'modified_by', 'modified_on'), $export_csv_separator,$enclosure,$escape);
+				foreach ($rules as $rule_row) {
+					$row_data = (array)$rule_row;
+					fputcsv($file, $row_data, $export_csv_separator, $enclosure, $escape);
+				}
+				exit;
+			}
+		}
+	}
 
     /**
      * Display total savings in order
@@ -3087,6 +3120,137 @@ class ManageDiscount extends Base
 			return Woocommerce::changeCustomTaxonomyLabel($custom_taxonomies);
 		}
 		return $custom_taxonomies;
+	}
 
+
+	/**
+	 * Add coupon meta data to validate the coupon restrictions
+	 *
+	 * @param $item
+	 * @param $code
+	 * @param $coupon
+	 * @param $order
+	 */
+	public static function addCouponMeta($item, $code, $coupon, $order ){
+		if ( is_a( $coupon, 'WC_Coupon' ) ) {
+			!empty($coupon->get_product_ids()) ? $item->add_meta_data( 'wdr_apply_coupon_product_ids', $coupon->get_product_ids(), true ) : '';
+				!empty($coupon->get_excluded_product_ids()) ? $item->add_meta_data( 'wdr_exclude_product_ids', $coupon->get_excluded_product_ids(), true ): '';
+				!empty($coupon->get_product_categories()) ? $item->add_meta_data( 'wdr_product_categories', $coupon->get_product_categories(), true ): '';
+				!empty($coupon->get_excluded_product_categories()) ? $item->add_meta_data( 'wdr_exclude_product_categories', $coupon->get_excluded_product_categories(), true ): '';
+				!empty($coupon->get_exclude_sale_items()) ? $item->add_meta_data( 'wdr_exclude_sale_items', $coupon->get_exclude_sale_items(), true ): '';
+				!empty($coupon->get_minimum_amount()) ? $item->add_meta_data( 'wdr_minimum_amount', $coupon->get_minimum_amount(), true ): '';
+				!empty($coupon->get_maximum_amount()) ?	$item->add_meta_data( 'wdr_maximum_amount', $coupon->get_maximum_amount(), true ): '';
+				!empty($coupon->get_email_restrictions()) ? $item->add_meta_data( 'wdr_customer_emails', $coupon->get_email_restrictions(), true ): '';
+				!empty($coupon->get_usage_limit()) ? $item->add_meta_data( 'wdr_usage_limit', $coupon->get_usage_limit(), true ): '';
+				!empty($coupon->get_usage_limit_per_user()) ? $item->add_meta_data( 'wdr_usage_limit_per_user', $coupon->get_usage_limit_per_user(), true ): '';
+		}
+	}
+
+	/**
+	 * validate the coupon restrictions based on product, category, sale items
+	 *
+	 * @param $valid
+	 * @param $product
+	 * @param $coupon
+	 * @param $order_item
+	 *
+	 * @return false
+	 */
+
+	public static function validateCoupon( $valid, $product, $coupon, $order_item ) {
+		// Only proceed if we are in admin and wc_get_order() exists
+		if ( ! $order_item || ! is_admin() || ! function_exists( 'wc_get_order' ) ) {
+			return $valid;
+		}
+		//Safely get order ID (works for both array and object)
+		$order_id = 0;
+		if ( is_object( $order_item ) && method_exists( $order_item, 'get_order_id' ) ) {
+			$order_id = $order_item->get_order_id();
+		} elseif ( is_array( $order_item ) && ! empty( $order_item['order_id'] ) ) {
+			$order_id = absint( $order_item['order_id'] );
+		}
+		if ( ! $order_id ) {
+			return $valid;
+		}
+		// Check if function wc_get_order exists before calling
+		if ( ! function_exists( 'wc_get_order' ) ) {
+			return $valid;
+		}
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return $valid;
+		}
+		$coupon_code = $coupon->get_code();
+		$matched_coupon_item = null;
+		// Loop through coupon items
+		foreach ( $order->get_items( 'coupon' ) as $order_coupon ) {
+			if ( strtolower( $order_coupon->get_code() ) === strtolower( $coupon_code ) ) {
+				$matched_coupon_item = $order_coupon;
+				break;
+			}
+		}
+		if ( ! $matched_coupon_item ) {
+			return $valid;
+		}
+		// Safely get product data
+		if ( ! is_object( $product ) || ! method_exists( $product, 'get_id' ) ) {
+			return $valid;
+		}
+		$product_id       = $product->get_id();
+		$product_cats     = method_exists( $product, 'get_category_ids' ) ? $product->get_category_ids() : [];
+		$product_on_sale  = method_exists( $product, 'is_on_sale' ) ? $product->is_on_sale() : false;
+		// Coupon restrictions
+		$coupon_product_ids = array_filter((array) $matched_coupon_item->get_meta( 'wdr_apply_coupon_product_ids', true ));
+		if ( ! empty( $coupon_product_ids ) ) {
+			if ( method_exists( $product, 'is_type' ) && $product->is_type( 'variation' ) ) {
+				$parent_product_id = $product->get_parent_id();
+				if ( in_array( $parent_product_id, $coupon_product_ids, true ) ) {
+					$parent_product = wc_get_product( $parent_product_id );
+					if ( is_object( $parent_product ) && method_exists( $parent_product, 'get_children' ) ) {
+						$variable_product_ids = $parent_product->get_children();
+						if ( is_array( $variable_product_ids ) && ! empty( $variable_product_ids ) ) {
+							$coupon_product_ids = array_merge( $coupon_product_ids, $variable_product_ids );
+						}
+					}
+				}
+			}
+			if ( ! in_array( $product_id, $coupon_product_ids, true ) ) {
+				return false;
+			}
+		}
+		// Excluded products
+		$exclude_product_ids =  array_filter((array) $matched_coupon_item->get_meta( 'wdr_exclude_product_ids', true ));
+		if ( ! empty($exclude_product_ids ) && in_array( $product_id, $exclude_product_ids, true ) ) {
+			return false;
+		}
+		// Allowed categories (your logic was reversed)
+		$allowed_cats = array_filter( (array)$matched_coupon_item->get_meta( 'wdr_product_categories', true ));
+		if ( ! empty( $allowed_cats ) ) {
+			$found_allowed_cat = false;
+			foreach ( $product_cats as $cat_id ) {
+				if ( in_array( $cat_id, $allowed_cats, true ) ) {
+					$found_allowed_cat = true;
+					break;
+				}
+			}
+			if ( ! $found_allowed_cat ) {
+				return false;
+			}
+		}
+		// Excluded categories
+		$excluded_cats = array_filter((array) $matched_coupon_item->get_meta( 'wdr_exclude_product_categories', true ));
+		if ( ! empty( $excluded_cats) ) {
+			foreach ( $product_cats as $cat_id ) {
+				if ( in_array( $cat_id, $excluded_cats, true ) ) {
+					return false;
+				}
+			}
+		}
+		// Exclude sale items
+		$exclude_sale_items = (bool) $matched_coupon_item->get_meta( 'wdr_exclude_sale_items', true );
+		if ( $exclude_sale_items && $product_on_sale ) {
+			return false;
+		}
+		return $valid;
 	}
 }

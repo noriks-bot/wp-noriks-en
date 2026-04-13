@@ -1,82 +1,111 @@
-=== WooCommerce Cart Abandonment Recovery ===
+=== Cart Abandonment Recovery for WooCommerce – Recover Lost Sales with Automated Emails ===
 Contributors: sujaypawar, wpcrafter
 Tags: woocommerce, cart abandonment, cart recovery
 Requires at least: 5.4
-Tested up to: 6.8
-Stable tag: 1.3.3
+Tested up to: 6.9
+Stable tag: 2.1.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Recover your lost revenue. Capture email address of users on the checkout page and send follow up emails if they don't complete the purchase.
+Every store loses sales to cart abandonment. But with Cart Abandonment Recovery for WooCommerce, you can win them back—automatically.
 
 == Description ==
 
-**It’s Time to Stop Cart Abandonments and Recover Your Lost Revenue!**
+**Bring Back Lost Sales – Automatically**
 
-Research shows about 60% to 80% of the users who go to the checkout page, do not complete their purchase. Even the best <a href="https://wpastra.com/best-checkout-experience/" target="_blank">optimized checkout process</a> has an abandonment rate of 20%
+Every store loses sales to cart abandonment. But with Cart Abandonment Recovery for WooCommerce, you can win them back—automatically.
 
-Cart gets abandoned for many reasons.
+This powerful (and completely free) plugin captures emails when customers begin checkout, then sends automated follow-up emails to recover their cart and encourage them to complete the purchase.
 
-But we have good news for you. Install our plugin and automatically recover your lost revenue **absolutely free**.
+No coding. No complicated setup. Just install, enable, and start recovering lost revenue.
 
-**How Does This Plugin Work?**
+🎯 Recover lost revenue by re-engaging shoppers with automated emails
+📈 Improve checkout conversions with reminders and special offers
+🛒 Rebuild carts with 1-click restore links
+💰 Boost AOV with time-sensitive coupons
 
-The plugin captures the email address of users on the checkout page.
+## Made for Store Owners Who Care About Conversions
 
-If the purchase is not completed within 15 minutes, it starts sending an automated series of follow up emails that you can customize to match your brand.
+### 1. WooCommerce Store Owners
+Effortlessly recover lost sales without the need for third-party tools or subscriptions. Just install, activate, and start converting abandoned carts into revenue.
 
-Through the email series, you can: remind them to complete the purchase, ask for feedback or offer a custom discount that will entice potential buyers to complete the purchase. You can send as many emails as you would like.
+### 2. Fashion & Apparel Stores
+Send timely reminders to shoppers who left behind size, color, or style options. Bring them back with visual product recall and tailored offers.
 
-Below is just an example of email sequence you can have:
+### 3. DTC Brands & Small Businesses
+Boost your store's conversion rates with automated email sequences and dynamic coupon codes. Personalize recovery messages to match your brand voice.
 
-* **1st email after 1 hour**: Ask if there was any technical issue.
+### 4. Digital Product Sellers
+Perfect for stores selling courses, software, or downloads. Recover incomplete checkouts with cart restore links that bring customers right back to purchase.
 
-* **2nd email after 24 hours**: Remind to complete purchase
+### 5. Growth-Focused Shops
+Leverage in-depth reports to monitor cart recovery performance. Track email effectiveness and make data-driven tweaks to increase sales over time.
 
-* **3rd email after 72 hours**: Offer a unique, limited time 5% discount
+## 🧰 Powerful Features to Maximize Recoveries
 
-**Some Amazing Features**
+### 1. Automated Recovery Emails
+Set up and schedule a series of automated emails to go out at key intervals—like 15 minutes, 1 hour, or 24 hours after abandonment. Stay top-of-mind and bring customers back when they're most likely to convert.
 
+### 2. 1-Click Cart Recovery Links
+Every email includes a unique link that restores the exact cart contents and checkout details. Shoppers can pick up right where they left off—no friction, no hassle.
 
-WooCommerce Cart Abandonment Recovery offers everything you need to recover your abandoning carts.
+### 3. Unique Coupon Codes
+Automatically generate personalized, time-sensitive discount codes inside your recovery emails. Incentivize quick action and boost your chances of winning back the sale.
 
-* **Unique Checkout Links**: Email a unique checkout link to each shopper that takes them exactly where they left off. So if a shopper had filled the checkout form, click on the unique link takes him to a prefilled checkout page. Less the friction for the shopper, and more conversions for you!
+### 4. Abandoned Cart Capture
+The plugin captures the shopper's email address as soon as they enter it on the checkout page. This means you can follow up—even if they never hit the "Place Order" button.
 
-* **GDPR Compliant**:  You can optionally show a GDPR notice on the checkout page.
+### 5. Reports & Insights
+See real-time data on abandoned carts, recovered sales, and email performance. Use built-in analytics to tweak your strategy and increase conversions.
 
-* **Ready templates for follow up emails**: Writing emails from scratch can be a pain. Not everyone can frame effective follow-up emails. We provide ready conversion tested email templates.
+### 6. GDPR-Ready
+Easily enable a GDPR consent checkbox on your checkout page. Ensure you're collecting data responsibly and staying compliant with privacy laws.
 
-* **Webhooks**: Use a marketing automation tool like Active Campaign, Campaign Monitor, etc? This plugin integrates with all of them through webhook easily.
+### 7. Better Analytics Dashboard with Modern UI
+Access a cleaner, more user-friendly dashboard with improved visuals and reporting. Quickly understand what's working—at a glance.
 
-* **Coupon Code**: This plugin can generate limited time unique discount coupons to entice your shoppers and send them automatically via email.
+### 8. Dynamic Shortcode Support in Email Subjects
+Use smart shortcodes in email subject lines for personalized, dynamic messaging. Grab attention and improve open rates effortlessly.
 
-* **Reports**: You get a full report of how the plugin is working behind the scenes, and recovering your lost revenue on autopilot.
+### 9. Option to Show Tax/VAT in Emails
+Display tax or VAT details in recovery emails, based on plugin settings. Helps reduce confusion and builds purchase confidence.
 
-[youtube https://www.youtube.com/watch?v=VWGxjjuP2_k]
+### 10. Product-Specific Reports (Pro)
+Track abandoned/recovered stats for each product individually. View product name, number of times abandoned, and recovered—to see which products need attention.
 
-**Is This Plugin Really Free? What’s the Catch?**
+### 11. Advanced Email Tracking (Pro)
+Gain insights into how each email performs with metrics like sent, open rate, click rate, and unsubscribe rate. Perfect for testing and optimizing your recovery strategy.
 
-Absolutely. There is no catch at all. This is a 100% free gift for all WooCommerce users from our team at CartFlows.
+### 12. Rule Engine for Email Logic (Pro)
+Set up smart conditions for when and how emails are sent. Exclude certain products, send product-specific sequences, skip certain emails, or trigger offers based on cart subtotal.
 
-<a href="https://cartflows.com" target="_blank">CartFlows</a> is a premium WooCommerce plugin that is used to create marketing and sales funnels. With CartFlows, you can design better checkout pages, add <a href="https://cartflows.com" target="_blank">order bump</a> or even <a href="https://cartflows.com" target="_blank">one-click upsell</a> functionality.
+### 13. SMS Recovery Messages (Pro)
+Reach users via SMS for higher visibility and faster conversions. A great addition to your multi-channel recovery strategy.
 
-**Will It Affects the Performance of My WooCommerce Shop?**
+### 14. OttoKit Integration
+Connect with OttoKit to create powerful automations and sequences beyond email.
+Perfect for advanced marketers and power users.
 
-No. Just as WooCommerce, this plugin stores everything locally in the database of WordPress. Emails are sent via WordPress native 'wpmail' function or SMTP. We have optimized the plugin so it leaves no performance impact.
+### 15. Real-Time Admin Notifications (Coming Soon)
+Get instant alerts when a cart is abandoned or recovered. Stay informed and take action quickly if needed.
 
+### 16. WhatsApp Integration (Coming Soon)
+Send cart recovery messages via WhatsApp to connect with customers where they're most active. Boost engagement with a personal touch.
 
-**How Can I Get Started?**
+## 🔍 How It Works – Just 3 Simple Steps
 
-Getting started is very easy.
+Cart Abandonment Recovery works quietly in the background to help you recover lost sales with minimal effort.
 
-* **Step 1**: Install and activate the WooCommerce Cart Abandonment Recovery plugin.
+### 1. Capture Email at Checkout
+When a shopper enters their email during checkout, the plugin saves it automatically—no extra setup needed.
 
-* **Step 2**: Review the default email templates. Make necessary changes if required.
+### 2. Send Smart Follow-Up Emails
+If they don't complete the purchase, a series of recovery emails are sent with a link to restore their cart.
 
-* **Step 3**: You’re done!
+### 3. Recover the Sale
+The shopper clicks the link, returns to their cart, and completes the order—easy win!
 
-The plugin will start recovering your lost sales in as quickly as 15 minutes.
 
 == Installation ==
 
@@ -85,13 +114,17 @@ The plugin will start recovering your lost sales in as quickly as 15 minutes.
 
 == Frequently Asked Questions ==
 
-= What Is Meant by Cart Abandonment? =
+= How soon can I start recovering carts? =
+Right away! Set up takes less than 5 minutes, and emails begin sending automatically once activated.
 
-While shopping, a user adds products to the cart. But if this user doesn't complete the purchase on the checkout page, the cart is considered abandoned.
+= Can I customize the recovery emails? =
+Yes. You can write your own copy, add coupons, and configure when each email is sent.
 
-= How Often Cart Gets Abandoned? Is It Happening on My Shop? =
+= What if a user completes their purchase before all emails are sent? =
+Smart tracking automatically stops the sequence when an order is completed.
 
-According to research, 6 out of 10 visitors, leave the checkout  page and do not complete the purchase. Even if you have motivated enough, 20% to 25% of the shoppers leave the purchase process.
+= Is this plugin GDPR compliant? =
+Yes. You can enable a consent checkbox to collect customer emails ethically and legally.
 
 = Do I Need Any Technical Experience to Use This Plugin? =
 
@@ -105,19 +138,16 @@ Yes. You can generate and send unique, limited-time discount coupon. Though ther
 
 Absolutely. A unique checkout link can be sent with follow up email. This will take the shopper to their prefilled checkout page. This will make the purchase process easier for the shopper.
 
-= Can Marketing Automation Tools Be Integrated with This? =
-
-Plugin offers Webhooks. This allows integrating Active Campaign, Mautic, Campaign Monitor, etc with the plugin.
-
 = Will This Plugin Add Any Extra Time in Website Loading? =
 
 Not at all. All the plugin data is stored in its own database table. It is completely self-hosted plugin. It works smoothly and does not leave any impact on the performance of the website. So you don't have to worry about the speed.
 
-= Why This Awesome Plugin Is Free? =
+= Will it slow down my site? =
+Not at all. It's designed to be lightweight and uses best practices for performance.
 
-Here are few thoughts behind making it available for free:
-- It is our way of saying thank you to the community and helping shop owners to boost their profits.
-- And quite honestly, we want you to try one of our products for free. And when you see how helpful it is, it should get you excited to buy other products from us in the future
+= How can I report a security bug? =
+
+We take plugin security extremely seriously. If you discover a security vulnerability, please report it in a safe and responsible manner.
 
 = How can I report a security bug? =
 
@@ -133,6 +163,60 @@ You can report the issue through our [Bug Bounty Program](https://brainstormforc
 4. General settings for Email, Webhook (Coupon Code), GDPR
 
 == Changelog ==
+
+= Version 2.1.1 - Wednesday, 18th March 2026 =
+- New: Added integration with the WordPress Abilities API.
+- Improvement: Strengthened the plugin's security.
+
+= Version 2.1.0 - Tuesday, 24th February 2026 =
+- Security Fix: Hardened the security of the plugin suggested by PatchStack.
+- Improvement: Enhanced TinyMCE configuration for better compatibility with email templates and an improved editor UI.
+
+= Version 2.0.7 - Monday, 2nd February 2026 =
+- Fix: Resolved an issue where some address fields were not captured for abandoned carts in block-based checkout.
+- Fix: Improved responsiveness of the date range selector.
+
+= Version 2.0.6 - Monday, 26th January 2026 =
+- New: Added plugin rollback functionality.
+- New: Introduced a lost-time setting for abandoned carts.
+- Improvement: Improved structure and processing logic of weekly email reports.
+
+= Version 2.0.5 - Tuesday, 30th December 2025 =
+- New: Added onboarding screens for a smoother initial setup.
+- Improvement: Updated UI for improved usability.
+- Improvement: Enhanced dashboard metrics.
+
+= Version 2.0.4 - Thursday, 20th November 2025 =
+- Fix: Resolved the issue where the {store_address} shortcode did not render in Abandoned Cart emails when WooCommerce email styling was enabled.
+- Improvement: Removed unnecessary plugin notices from the dashboard.
+- Improvement: Added unsubscribed email indicators to the follow-up report and detailed report.
+
+= Version 2.0.3 - Wednesday, 29th October 2025 =
+- Fix: Resolved an issue where completed orders were incorrectly marked as abandoned after the cutoff time, despite being excluded.
+- Fix: Corrected incorrect UTM parameters used in tracking links.
+- Improvement: Added support for custom order statuses to improve compatibility.
+- Improvement: Implemented minor UI enhancements for a smoother and more intuitive user experience.
+
+= Version 2.0.2 - Friday, 17th October 2025 =
+- Fix: Users with the Shop Manager role were unable to delete records from Follow-up Reports.
+- Fix: UI toggle for switching to the older version was not functioning as expected.
+- Fix: Resolved a fatal error caused by a call to an undefined utils function when enabling webhook settings in certain cases.
+- Fix: Improved toggle field logic to ensure correct display and saving of values when enabling or disabling settings.
+- Fix: Resolved an issue where the GDPR opt-out link below the email field was unclickable.
+
+= Version 2.0.1 - Tuesday, 30th September 2025 =
+- Improvement: Added future compatibility support for the Pro plugin.
+- Improvement: Standardized function calls by replacing direct helper usage with common methods.
+- Improvement: Made minor UI enhancements across multiple screens.
+- Fix: Resolved an issue where the switch UI notice continued to display even after updating to the new UI.
+- Fix: Corrected the improper usage of the _load_textdomain_just_in_time function.
+- Fix: Fixed a critical error that occurred when all order statuses were unchecked in the "Exclude email sending for" option.
+
+= Version 2.0.0 - Thursday, 21st August 2025 =
+- New: Revamped the whole Cart Abandoned user-interface to add a user-friendly touch.
+- New: Introduced language files for multiple languages for quick translation of the plugin.
+- Improvement: Revamped the plugin dashboard to give more abandoned cart's recovery statistics. 
+- Improvement: Added a future compatibility of Pro plugin.
 
 = Version 1.3.3 - Tuesday, 24th June 2025 =
 * New: Added import and export functionality for follow-up email templates, making it easier to back up, share, and migrate email configurations.
@@ -337,3 +421,7 @@ You can report the issue through our [Bug Bounty Program](https://brainstormforc
 * Initial Release
 
 == Upgrade Notice ==
+
+= 2.0.0 =
+This update brings important changes to different parts of the plugin. 
+We strongly suggest backing up your site before updating, and first trying the update on a staging site.

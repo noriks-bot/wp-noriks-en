@@ -27,7 +27,12 @@ use AdTribes\PFP\Classes\Admin_Pages\License_Page;
 use AdTribes\PFP\Classes\Admin_Pages\Help_Page;
 use AdTribes\PFP\Classes\Admin_Pages\About_Page;
 use AdTribes\PFP\Classes\Admin_Pages\Upgrade_To_Elite_Page;
+use AdTribes\PFP\Classes\Feed_Writers\Feed_Writer_JSONL;
 use AdTribes\PFP\Post_Types\Product_Feed_Post_Type;
+use AdTribes\PFP\Classes\Upsell;
+use AdTribes\PFP\Classes\Legacy\Filters_Legacy;
+use AdTribes\PFP\Classes\Legacy\Rules_Legacy;
+use AdTribes\PFP\Classes\Export_Import_Tools;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -53,5 +58,10 @@ return array(
     Help_Page::instance(),
     About_Page::instance(),
     Upgrade_To_Elite_Page::instance(),
+    Feed_Writer_JSONL::instance(),
     Product_Feed_Post_Type::instance(),
+    Upsell::instance(),
+    Filters_Legacy::instance(),
+    Rules_Legacy::instance(),
+    Export_Import_Tools::instance(),
 );

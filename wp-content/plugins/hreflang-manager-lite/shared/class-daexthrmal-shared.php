@@ -40,7 +40,7 @@ class Daexthrmal_Shared {
 	private function __construct() {
 
 		$this->data['slug'] = 'daexthrmal';
-		$this->data['ver']  = '1.12';
+		$this->data['ver']  = '1.17';
 		$this->data['dir']  = substr( plugin_dir_path( __FILE__ ), 0, -7 );
 		$this->data['url']  = substr( plugin_dir_url( __FILE__ ), 0, -7 );
 
@@ -770,53 +770,7 @@ class Daexthrmal_Shared {
 
 		// Get the current url.
 		$current_url = $this->get_current_url();
-
-		global $wpdb;
-
-		/**
-		 * If the 'Auto Trailing Slash' option is enabled compare the 'url_to_connect' value in the database not only
-		 * with $current_url, but also with the URL present in $current_url with the trailing slash manually added or
-		 * removed.
-		 */
-		if ( 1 === intval( get_option( 'daexthrmal_auto_trailing_slash' ), 10 ) ) {
-
-			if ( substr( $current_url, strlen( $current_url ) - 1 ) === '/' ) {
-
-				/**
-				 * In this case there is a trailing slash, so remove it and compare the 'url_to_connect' value in the
-				 * database not only with $current_url, but also with $current_url_without_trailing_slash, which is
-				 * $current_url with the trailing slash removed.
-				 */
-				$current_url_without_trailing_slash = substr( $current_url, 0, -1 );
-
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				$results = $wpdb->get_row(
-					$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s or url_to_connect = %s", $current_url, $current_url_without_trailing_slash )
-				);
-
-			} else {
-
-				/**
-				 * In this case there is no trailing slash, so add it and compare the 'url_to_connect' value in the
-				 * database not only with $current_url, but also with $current_url_with_trailing_slash, which is
-				 * $current_url with the trailing slash added.
-				 */
-				$current_url_with_trailing_slash = $current_url . '/';
-
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				$results = $wpdb->get_row(
-					$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s or url_to_connect = %s", $current_url, $current_url_with_trailing_slash )
-				);
-
-			}
-		} else {
-
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$results = $wpdb->get_row(
-				$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s", $current_url )
-			);
-
-		}
+		$results = $this->get_connection_by_url( $current_url );
 
 		if ( null === $results ) {
 
@@ -849,10 +803,10 @@ class Daexthrmal_Shared {
 						// Echo the hreflang tags in the page HTML.
 						echo '<link rel="alternate" href="' . esc_url( $results->{'url' . $i} ) . '" hreflang="' . esc_attr( $language . $script . $locale ) . '" />';
 
-					} else {
+					} elseif ('tag_inspector' === $context ) {
 
 						// Echo the hreflang tags in the log element of the UI.
-						echo '<p>' . esc_html( '<link rel="alternate" href="' . $results->{'url' . $i} . '" hreflang="' . $language . $script . $locale . '" />' ) . '</p>';
+						echo esc_html( '<link rel="alternate" href="' . $results->{'url' . $i} . '" hreflang="' . $language . $script . $locale . '" />' ) . "\n";
 
 					}
 				}
@@ -1027,13 +981,13 @@ class Daexthrmal_Shared {
 							),
 							array(
 								'name'    => 'daexthrmal_show_log',
-								'label'   => __( 'Show Log', 'hreflang-manager-lite' ),
+								'label'   => __( 'Tag Inspector', 'hreflang-manager-lite' ),
 								'type'    => 'toggle',
 								'tooltip' => __(
-									'Select "Yes" to display the log on the front end. Please note that it will be visible only to the site administrator.',
+									'Toggle to display the Tag Inspector overlay at the bottom of the frontend page. This overlay shows all hreflang tags added to the current page and is visible only to privileged users (those with access to the "Connections" menu) for easy verification of hreflang implementation without inspecting the page\'s HTML source.',
 									'hreflang-manager-lite'
 								),
-								'help'    => __( "Display a log with the hreflang tags in the site's front end.", 'hreflang-manager-lite' ),
+								'help'    => __( "Display an overlay with the hreflang tags in the site's front end.", 'hreflang-manager-lite' ),
 							),
 						),
 					),
@@ -1232,6 +1186,58 @@ class Daexthrmal_Shared {
 				);
 
 				break;
+
+			case 'translate-01':
+
+				$xml = '<svg class="untitled-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12.913 17H20.087M12.913 17L11 21M12.913 17L15.7783 11.009C16.0092 10.5263 16.1246 10.2849 16.2826 10.2086C16.4199 10.1423 16.5801 10.1423 16.7174 10.2086C16.8754 10.2849 16.9908 10.5263 17.2217 11.009L20.087 17M20.087 17L22 21M2 5H8M8 5H11.5M8 5V3M11.5 5H14M11.5 5C11.0039 7.95729 9.85259 10.6362 8.16555 12.8844M10 14C9.38747 13.7248 8.76265 13.3421 8.16555 12.8844M8.16555 12.8844C6.81302 11.8478 5.60276 10.4266 5 9M8.16555 12.8844C6.56086 15.0229 4.47143 16.7718 2 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>';
+
+				$allowed_html = array(
+					'svg'  => array(
+						'class'   => array(),
+						'width'   => array(),
+						'height'  => array(),
+						'viewbox' => array(),
+						'fill'    => array(),
+						'xmlns'   => array(),
+					),
+					'path' => array(
+						'd'               => array(),
+						'stroke'          => array(),
+						'stroke-width'    => array(),
+						'stroke-linecap'  => array(),
+						'stroke-linejoin' => array(),
+					),
+				);
+
+				break;
+
+				case 'file-check-02':
+
+					$xml = '<svg class="untitled-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M20 12.5V6.8C20 5.11984 20 4.27976 19.673 3.63803C19.3854 3.07354 18.9265 2.6146 18.362 2.32698C17.7202 2 16.8802 2 15.2 2H8.8C7.11984 2 6.27976 2 5.63803 2.32698C5.07354 2.6146 4.6146 3.07354 4.32698 3.63803C4 4.27976 4 5.11984 4 6.8V17.2C4 18.8802 4 19.7202 4.32698 20.362C4.6146 20.9265 5.07354 21.3854 5.63803 21.673C6.27976 22 7.11984 22 8.8 22H12M14 11H8M10 15H8M16 7H8M14.5 19L16.5 21L21 16.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>';
+
+					$allowed_html = array(
+						'svg'  => array(
+							'class'   => array(),
+							'width'   => array(),
+							'height'  => array(),
+							'viewbox' => array(),
+							'fill'    => array(),
+							'xmlns'   => array(),
+						),
+						'path' => array(
+							'd'               => array(),
+							'stroke'          => array(),
+							'stroke-width'    => array(),
+							'stroke-linecap'  => array(),
+							'stroke-linejoin' => array(),
+						),
+					);
+
+					break;
 
 			case 'file-code-02':
 				$xml = '<svg class="untitled-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1779,6 +1785,36 @@ class Daexthrmal_Shared {
 
 				break;
 
+			case 'drag-handle':
+				$xml = '<svg class="untitled-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				  <path d="M8,6c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				  <path d="M8,13c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				  <path d="M8,20c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				  <path d="M16,6c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				  <path d="M16,13c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				  <path d="M16,20c.6,0,1-.4,1-1s-.4-1-1-1-1,.4-1,1,.4,1,1,1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>';
+
+				$allowed_html = array(
+					'svg'  => array(
+						'class'   => array(),
+						'width'   => array(),
+						'height'  => array(),
+						'viewbox' => array(),
+						'fill'    => array(),
+						'xmlns'   => array(),
+					),
+					'path' => array(
+						'd'               => array(),
+						'stroke'          => array(),
+						'stroke-width'    => array(),
+						'stroke-linecap'  => array(),
+						'stroke-linejoin' => array(),
+					),
+				);
+
+				break;
+
 			default:
 				$xml = '';
 
@@ -1975,4 +2011,164 @@ class Daexthrmal_Shared {
 			'size'     => intval( $file['size'], 10 ),
 		);
 	}
+
+	/**
+	 *
+	 * Generate the HTML of the Table View of the Tag Inspector.
+	 *
+	 * @param string $context The context in which the function is called. Possible values are 'page_html' and 'log'.
+	 *
+	 * @return false|void
+	 */
+	public function echo_table_view() {
+
+		// Get the current url.
+		$current_url = $this->get_current_url();
+		$results = $this->get_connection_by_url( $current_url );
+
+		if ( null === $results ) {
+
+			return false;
+
+		} else {
+
+			// Generate an array with all the connections.
+			for ( $i = 1; $i <= 10; $i ++ ) {
+
+				// Check if this is a valid hreflang.
+				if ( strlen( $results->{'url' . $i} ) > 0 && strlen( $results->{'language' . $i} ) > 0 ) {
+
+					$language = $results->{'language' . $i};
+
+					if ( strlen( $results->{'script' . $i} ) > 0 ) {
+						$script = '-' . $results->{'script' . $i};
+					} else {
+						$script = '';
+					}
+
+					if ( strlen( $results->{'locale' . $i} ) > 0 ) {
+						$locale = '-' . $results->{'locale' . $i};
+					} else {
+						$locale = '';
+					}
+
+					?>
+
+					<tr class="daexthrmal-table-view__row">
+						<td class="daexthrmal-table-view__cell daexthrmal-table-view__cell-language-script-locale"><?php echo esc_html( $language . $script . $locale ); ?></td>
+						<td class="daexthrmal-table-view__cell daexthrmal-table-view__cell-url"><a href="<?php echo esc_url( $results->{'url' . $i} ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $results->{'url' . $i} ); ?></a></td>
+					</tr>
+
+					<?php
+
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check if at least one valid hreflang tag exists.
+	 *
+	 * @return bool True if at least one valid hreflang tag exists, false otherwise.
+	 */
+	public function has_valid_hreflang_tags() {
+
+		// Get the current URL.
+		$current_url = $this->get_current_url();
+		$results     = $this->get_connection_by_url( $current_url );
+
+		// If no results, return false.
+		if ( null === $results ) {
+			return false;
+		}
+
+		// Check for at least one valid hreflang tag.
+		for ( $i = 1; $i <= 10; $i ++ ) {
+			if ( ! empty( $results->{'url' . $i} ) && ! empty( $results->{'language' . $i} ) ) {
+				return true; // Valid tag found.
+			}
+		}
+
+		return false; // No valid tags found.
+	}
+
+	/**
+	 * Get the connection based on the provided URL.
+	 *
+	 * @param string $current_url The current URL.
+	 *
+	 * @return object|null The connection object or null if no connection is found.
+	 */
+	public function get_connection_by_url($current_url){
+
+			global $wpdb;
+
+			/**
+			 * If the 'Auto Trailing Slash' option is enabled compare the 'url_to_connect' value in the database not only
+			 * with $current_url, but also with the URL present in $current_url with the trailing slash manually added or
+			 * removed.
+			 */
+			if ( 1 === intval( get_option( 'daexthrmal_auto_trailing_slash' ), 10 ) ) {
+
+				if ( substr( $current_url, strlen( $current_url ) - 1 ) === '/' ) {
+
+					/**
+					 * In this case there is a trailing slash, so remove it and compare the 'url_to_connect' value in the
+					 * database not only with $current_url, but also with $current_url_without_trailing_slash, which is
+					 * $current_url with the trailing slash removed.
+					 */
+					$current_url_without_trailing_slash = substr( $current_url, 0, -1 );
+
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					return $wpdb->get_row(
+						$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s or url_to_connect = %s", $current_url, $current_url_without_trailing_slash )
+					);
+
+				} else {
+
+					/**
+					 * In this case there is no trailing slash, so add it and compare the 'url_to_connect' value in the
+					 * database not only with $current_url, but also with $current_url_with_trailing_slash, which is
+					 * $current_url with the trailing slash added.
+					 */
+					$current_url_with_trailing_slash = $current_url . '/';
+
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					return $wpdb->get_row(
+						$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s or url_to_connect = %s", $current_url, $current_url_with_trailing_slash )
+					);
+
+				}
+			} else {
+
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				return $wpdb->get_row(
+					$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE url_to_connect = %s", $current_url )
+				);
+
+			}
+
+	}
+
+	/**
+	 * Get the post types with UI.
+	 *
+	 * @return array|string[]|WP_Post_Type[]
+	 */
+	public function get_post_types_with_ui() {
+
+		// Load the assets for the post editor.
+		$available_post_types_a = get_post_types(
+				array(
+						'public'  => true,
+						'show_ui' => true,
+				)
+		);
+
+		// Remove the "attachment" post type.
+		$available_post_types_a = array_diff( $available_post_types_a, array( 'attachment' ) );
+
+		return $available_post_types_a;
+	}
+
 }

@@ -18,19 +18,25 @@ use WooCommerce\PayPalCommerce\ApiClient\Exception\PayPalApiException;
 use WooCommerce\PayPalCommerce\ApiClient\Helper\DccApplies;
 use WooCommerce\PayPalCommerce\ApiClient\Helper\OrderHelper;
 use WooCommerce\PayPalCommerce\Button\Exception\RuntimeException;
-use WooCommerce\PayPalCommerce\Button\Helper\ContextTrait;
+use WooCommerce\PayPalCommerce\Button\Helper\Context;
 use WooCommerce\PayPalCommerce\Button\Helper\ThreeDSecure;
 use WooCommerce\PayPalCommerce\Button\Helper\WooCommerceOrderCreator;
 use WooCommerce\PayPalCommerce\Session\SessionHandler;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
-use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
+use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
+use WooCommerce\PayPalCommerce\Settings\Data\SettingsModel;
 /**
  * Class ApproveOrderEndpoint
  */
 class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoint\EndpointInterface
 {
-    use ContextTrait;
     const ENDPOINT = 'ppc-approve-order';
+    /**
+     * A helper providing information on the current page, is this a continuation mode, etc.
+     *
+     * @var Context $context
+     */
+    protected Context $context;
     /**
      * The request data helper.
      *
@@ -55,12 +61,8 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
      * @var ThreeDSecure
      */
     private $threed_secure;
-    /**
-     * The settings.
-     *
-     * @var Settings
-     */
-    private $settings;
+    private SettingsProvider $settings_provider;
+    private SettingsModel $settings_model;
     /**
      * The DCC applies object.
      *
@@ -104,7 +106,8 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
      * @param OrderEndpoint           $order_endpoint       The order endpoint.
      * @param SessionHandler          $session_handler      The session handler.
      * @param ThreeDSecure            $three_d_secure       The 3d secure helper object.
-     * @param Settings                $settings             The settings.
+     * @param SettingsProvider        $settings_provider    The settings provider.
+     * @param SettingsModel           $settings_model       The settings model.
      * @param DccApplies              $dcc_applies          The DCC applies object.
      * @param OrderHelper             $order_helper         The order helper.
      * @param bool                    $final_review_enabled Whether the final review is enabled.
@@ -112,19 +115,21 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
      * @param WooCommerceOrderCreator $wc_order_creator     The WooCommerce order creator.
      * @param LoggerInterface         $logger               The logger.
      */
-    public function __construct(\WooCommerce\PayPalCommerce\Button\Endpoint\RequestData $request_data, OrderEndpoint $order_endpoint, SessionHandler $session_handler, ThreeDSecure $three_d_secure, Settings $settings, DccApplies $dcc_applies, OrderHelper $order_helper, bool $final_review_enabled, PayPalGateway $gateway, WooCommerceOrderCreator $wc_order_creator, LoggerInterface $logger)
+    public function __construct(\WooCommerce\PayPalCommerce\Button\Endpoint\RequestData $request_data, OrderEndpoint $order_endpoint, SessionHandler $session_handler, ThreeDSecure $three_d_secure, SettingsProvider $settings_provider, SettingsModel $settings_model, DccApplies $dcc_applies, OrderHelper $order_helper, bool $final_review_enabled, PayPalGateway $gateway, WooCommerceOrderCreator $wc_order_creator, LoggerInterface $logger, Context $context)
     {
         $this->request_data = $request_data;
         $this->api_endpoint = $order_endpoint;
         $this->session_handler = $session_handler;
         $this->threed_secure = $three_d_secure;
-        $this->settings = $settings;
+        $this->settings_provider = $settings_provider;
+        $this->settings_model = $settings_model;
         $this->dcc_applies = $dcc_applies;
         $this->order_helper = $order_helper;
         $this->final_review_enabled = $final_review_enabled;
         $this->gateway = $gateway;
         $this->wc_order_creator = $wc_order_creator;
         $this->logger = $logger;
+        $this->context = $context;
     }
     /**
      * The nonce.
@@ -138,21 +143,21 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
     /**
      * Handles the request.
      *
-     * @return bool
      * @throws RuntimeException When order not found or handling failed.
      */
-    public function handle_request(): bool
+    public function handle_request(): void
     {
         try {
             $data = $this->request_data->read_request(self::nonce());
             if (!isset($data['order_id'])) {
-                throw new RuntimeException(__('No order id given', 'woocommerce-paypal-payments'));
+                throw new RuntimeException('No order id given');
             }
+            do_action('woocommerce_paypal_payments_approve_order_request_started', $data);
             $order = $this->api_endpoint->order($data['order_id']);
             $payment_source = $order->payment_source();
             if ($payment_source && $payment_source->name() === 'card') {
-                if ($this->settings->has('disable_cards')) {
-                    $disabled_cards = (array) $this->settings->get('disable_cards');
+                $disabled_cards = $this->settings_provider->disabled_cards();
+                if (!empty($disabled_cards)) {
                     $card = strtolower($payment_source->properties()->brand ?? '');
                     if ('master_card' === $card) {
                         $card = 'mastercard';
@@ -186,18 +191,16 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
                 $this->toggle_final_review_enabled_setting();
             }
             $should_create_wc_order = $data['should_create_wc_order'] ?? \false;
-            if (!$this->final_review_enabled && !$this->is_checkout() && $should_create_wc_order) {
-                $wc_order = $this->wc_order_creator->create_from_paypal_order($order, WC()->cart);
+            if (!$this->final_review_enabled && !$this->context->is_checkout() && $should_create_wc_order) {
+                $wc_order = $this->wc_order_creator->create_from_paypal_order($order, WC()->cart, $data);
                 $this->gateway->process_payment($wc_order->get_id());
                 $order_received_url = $wc_order->get_checkout_order_received_url();
                 wp_send_json_success(array('order_received_url' => $order_received_url));
             }
             wp_send_json_success();
-            return \true;
         } catch (Exception $error) {
             $this->logger->error('Order approve failed: ' . $error->getMessage());
-            wp_send_json_error(array('name' => is_a($error, PayPalApiException::class) ? $error->name() : '', 'message' => $error->getMessage(), 'code' => $error->getCode(), 'details' => is_a($error, PayPalApiException::class) ? $error->details() : array()));
-            return \false;
+            wp_send_json_error(array('name' => $error instanceof PayPalApiException ? $error->name() : '', 'message' => $error->getMessage(), 'code' => $error->getCode(), 'details' => $error instanceof PayPalApiException ? $error->details() : array()));
         }
     }
     /**
@@ -207,10 +210,9 @@ class ApproveOrderEndpoint implements \WooCommerce\PayPalCommerce\Button\Endpoin
      */
     protected function toggle_final_review_enabled_setting(): void
     {
-        // TODO new-ux: This flag must also be updated in the new settings.
-        $final_review_enabled_setting = $this->settings->has('blocks_final_review_enabled') && $this->settings->get('blocks_final_review_enabled');
-        $this->settings->set('blocks_final_review_enabled', !$final_review_enabled_setting);
-        $this->settings->persist();
+        $enable_pay_now = $this->settings_provider->enable_pay_now();
+        $this->settings_model->set_enable_pay_now(!$enable_pay_now);
+        $this->settings_model->save();
     }
     /**
      * Performs a 3DS check to verify the payment is not rejected from PayPal side.

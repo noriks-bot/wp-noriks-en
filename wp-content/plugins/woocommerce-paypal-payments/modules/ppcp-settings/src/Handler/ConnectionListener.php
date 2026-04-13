@@ -10,11 +10,11 @@ declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\Settings\Handler;
 
 use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
+use Exception;
 use RuntimeException;
 use WooCommerce\PayPalCommerce\Settings\Service\AuthenticationManager;
 use WooCommerce\PayPalCommerce\Settings\Service\OnboardingUrlManager;
 use WooCommerce\WooCommerce\Logging\Logger\NullLogger;
-use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 use WooCommerce\PayPalCommerce\Http\RedirectorInterface;
 use WooCommerce\PayPalCommerce\Settings\Enum\SellerTypeEnum;
 /**
@@ -28,69 +28,63 @@ use WooCommerce\PayPalCommerce\Settings\Enum\SellerTypeEnum;
 class ConnectionListener
 {
     /**
-     * ID of the current settings page; empty if not on a PayPal settings page.
-     *
-     * @var string
+     * Token processing states
      */
-    private string $settings_page_id;
+    private const TOKEN_STATE_PROCESSING = 'processing';
+    private const TOKEN_STATE_PROCESSED = 'processed';
+    /**
+     * Transient key for storing token state.
+     */
+    private const TOKEN_STATE_TRANSIENT = 'ppcp_auth_token_state';
+    /**
+     * Whether the current request renders the plugin's settings page.
+     */
+    private bool $is_settings_page;
     /**
      * Access to the onboarding URL manager.
-     *
-     * @var OnboardingUrlManager
      */
     private OnboardingUrlManager $url_manager;
     /**
      * Authentication manager service, responsible to update connection details.
-     *
-     * @var AuthenticationManager
      */
     private AuthenticationManager $authentication_manager;
     /**
      * A redirector-instance to redirect the merchant after authentication.
-     * ™
-     *
-     * @var RedirectorInterface
      */
     private RedirectorInterface $redirector;
     /**
      * Logger instance, mainly used for debugging purposes.
-     *
-     * @var LoggerInterface
      */
     private LoggerInterface $logger;
     /**
      * ID of the current user, set by the process() method.
      *
-     * Default value is 0 (guest), until the real ID is provided to process().
-     *
-     * @var int
+     * The default value is 0 (guest), until the real ID is provided to process().
      */
     private int $user_id = 0;
     /**
      * The request details (usually the GET data) which were provided.
-     *
-     * @var array
      */
     private array $request_data = array();
     /**
      * Prepare the instance.
      *
-     * @param string                $settings_page_id       Current plugin settings page ID.
+     * @param bool                  $is_settings_page       Whether this is the settings page.
      * @param OnboardingUrlManager  $url_manager            Get OnboardingURL instances.
      * @param AuthenticationManager $authentication_manager Authentication manager service.
      * @param RedirectorInterface   $redirector             Redirect-handler.
      * @param ?LoggerInterface      $logger                 The logger, for debugging purposes.
      */
-    public function __construct(string $settings_page_id, OnboardingUrlManager $url_manager, AuthenticationManager $authentication_manager, RedirectorInterface $redirector, LoggerInterface $logger = null)
+    public function __construct(bool $is_settings_page, OnboardingUrlManager $url_manager, AuthenticationManager $authentication_manager, RedirectorInterface $redirector, ?LoggerInterface $logger = null)
     {
-        $this->settings_page_id = $settings_page_id;
+        $this->is_settings_page = $is_settings_page;
         $this->url_manager = $url_manager;
         $this->authentication_manager = $authentication_manager;
         $this->redirector = $redirector;
         $this->logger = $logger ?: new NullLogger();
     }
     /**
-     * Process the request data, and extract connection details, if present.
+     * Process the request data and extract connection details, if present.
      *
      * @param int   $user_id The current user ID.
      * @param array $request Request details to process.
@@ -116,38 +110,60 @@ class ConnectionListener
      */
     private function process_oauth_token(string $token): void
     {
-        // The request contains OAuth details: To avoid abuse we'll slow down the processing.
-        sleep(2);
         if (!$token) {
             return;
         }
+        $log_token = (string) substr($token, 0, 2) . '...' . (string) substr($token, -6);
         if ($this->was_token_processed($token)) {
+            /*
+             * Token already processed:
+             * Do nothing as the DB already contains the full connection details.
+             */
+            $this->logger->info('Token already processed, continuing silently', array('token' => $log_token));
             return;
         }
+        if ($this->is_token_processing($token)) {
+            /*
+             * Authentication token is currently processed (in another request):
+             * Briefly wait and then retry this request, basically waiting for
+             * the above "was_processed" condition to become true.
+             */
+            $this->logger->info('Token is currently being processed, waiting and retrying', array('token' => $log_token));
+            sleep(1);
+            // Get the current URL.
+            $current_url = add_query_arg(null, null);
+            // Add time to the query parameter to prevent browser cache issues.
+            $current_url = add_query_arg('retry', microtime(\true), $current_url);
+            wp_safe_redirect($current_url);
+            exit;
+        }
         if (!$this->url_manager->validate_token_and_delete($token, $this->user_id)) {
+            $this->logger->error('Token validation failed', array('token' => $log_token));
             return;
         }
         $data = $this->extract_data();
         if (!$data) {
+            $this->logger->error('Failed to extract merchant data from request');
             return;
         }
         $this->logger->info('Found OAuth merchant data in request', $data);
         try {
-            $this->authentication_manager->finish_oauth_authentication($data);
-            $this->mark_token_as_processed($token);
-        } catch (\Exception $e) {
+            $this->set_token_state($token, self::TOKEN_STATE_PROCESSING);
+            $this->authentication_manager->handle_oauth_authentication($data);
+        } catch (Exception $e) {
             $this->logger->error('Failed to complete authentication: ' . $e->getMessage());
         }
+        $this->set_token_state($token, self::TOKEN_STATE_PROCESSED);
     }
     /**
-     * Determine, if the request details contain connection data that should be
+     * Determine if the request details contain connection data that should be
      * extracted and stored.
      *
      * @return bool True, if the request contains valid connection details.
      */
     private function is_valid_request(): bool
     {
-        if ($this->user_id < 1 || !$this->settings_page_id) {
+        if ($this->user_id < 1 || !$this->is_settings_page) {
             return \false;
         }
         if (!user_can($this->user_id, 'manage_woocommerce')) {
@@ -162,29 +178,52 @@ class ConnectionListener
         return \true;
     }
     /**
-     * Checks if the provided authentication token is new or has been used before.
+     * Sets the state for a token.
      *
-     * This check catches an issue where we receive the same authentication token twice,
-     * which does not impact the login flow but creates noise in the logs.
+     * @param string $token The token to set state for.
+     * @param string $state The state to set.
+     * @return void
+     */
+    private function set_token_state(string $token, string $state): void
+    {
+        $data = array('token' => $token, 'state' => $state);
+        // 10 second expiration will block the page for max 10 seconds.
+        set_transient(self::TOKEN_STATE_TRANSIENT, $data, 10);
+    }
+    /**
+     * Gets the current state of a token.
      *
-     * @param string $token The authentication token to check.
-     * @return bool True if the token was already processed.
+     * @param string $token The token to check.
+     * @return string The current state of the token, or empty string if the token doesn't match.
+     */
+    private function get_token_state(string $token): string
+    {
+        $data = get_transient(self::TOKEN_STATE_TRANSIENT);
+        if (empty($data) || !is_array($data) || empty($data['token']) || empty($data['state'])) {
+            return '';
+        }
+        // Only return the state if the token matches.
+        return $data['token'] === $token ? $data['state'] : '';
+    }
+    /**
+     * Checks if the token is currently being processed.
+     *
+     * @param string $token The token to check.
+     * @return bool True if the token is currently being processed, false otherwise.
+     */
+    private function is_token_processing(string $token): bool
+    {
+        return $this->get_token_state($token) === self::TOKEN_STATE_PROCESSING;
+    }
+    /**
+     * Checks if the token has been fully processed.
+     *
+     * @param string $token The token to check.
+     * @return bool True if the token has been processed, false otherwise.
      */
     private function was_token_processed(string $token): bool
     {
-        $prev_token = get_transient('ppcp_previous_auth_token');
-        return $prev_token && $prev_token === $token;
-    }
-    /**
-     * Stores the processed authentication token so we can prevent double-processing
-     * of already verified token.
-     *
-     * @param string $token The processed authentication token.
-     * @return void
-     */
-    private function mark_token_as_processed(string $token): void
-    {
-        set_transient('ppcp_previous_auth_token', $token, 60);
+        return $this->get_token_state($token) === self::TOKEN_STATE_PROCESSED;
     }
     /**
      * Extract the merchant details (ID & email) from the request details.
@@ -311,6 +350,6 @@ class ConnectionListener
         /**
          * The URL opened at the end of onboarding after saving the merchant ID/email.
          */
-        return apply_filters('woocommerce_paypal_payments_onboarding_redirect_url', admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway&ppcp-tab=' . Settings::CONNECTION_TAB_ID));
+        return apply_filters('woocommerce_paypal_payments_onboarding_redirect_url', admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway'));
     }
 }

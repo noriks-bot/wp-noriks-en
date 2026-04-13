@@ -215,15 +215,30 @@ class Product_Feed_Helper {
     public static function get_batch_size( $feed, $published_products = null ) {
         $published_products = $published_products ?? self::get_feed_total_published_products( $feed );
 
-        // By default process a 750 products per batch.
-        // If the number of products is greater than 50000, process a 2500 products per batch.
-        $batch_size = $published_products > 50000 ? 2500 : 750;
+        // Tiered batch sizes for better reliability and efficiency.
+        // Smaller batches = more reliable, better progress tracking, less memory usage.
+        if ( $published_products > 50000 ) {
+            // Very large feeds: 1500 products per batch.
+            $batch_size = 1500;
+        } elseif ( $published_products > 10000 ) {
+            // Large feeds: 1000 products per batch.
+            $batch_size = 1000;
+        } elseif ( $published_products > 5000 ) {
+            // Medium-large feeds: 500 products per batch.
+            $batch_size = 500;
+        } elseif ( $published_products > 1000 ) {
+            // Medium feeds: 300 products per batch.
+            $batch_size = 300;
+        } else {
+            // Small feeds: 200 products per batch.
+            $batch_size = 200;
+        }
 
         /**
-         * User set his own batch size
+         * User set his own batch size.
          */
-        $batch_option      = get_option( 'add_batch', 'no' );
-        $batch_size_option = get_option( 'woosea_batch_size', '' );
+        $batch_option      = get_option( 'adt_enable_batch', 'no' );
+        $batch_size_option = get_option( 'adt_batch_size', '' );
         if ( 'yes' === $batch_option && ! empty( $batch_size_option ) && is_numeric( $batch_size_option ) ) {
             $batch_size = intval( $batch_size_option );
         }
@@ -313,6 +328,15 @@ class Product_Feed_Helper {
             'daily'      => __( 'Daily', 'woo-product-feed-pro' ),
         );
 
+        /**
+         * Filters the refresh interval labels.
+         *
+         * @since 13.4.6
+         * @param array $refresh_intervals The refresh interval options.
+         * @return array
+         */
+        $refresh_intervals = apply_filters( 'adt_product_feed_refresh_interval_labels', $refresh_intervals );
+
         return $refresh_intervals[ $key ] ?? __( 'No Refresh', 'woo-product-feed-pro' );
     }
 
@@ -365,7 +389,12 @@ class Product_Feed_Helper {
 
         // Get already mapped categories.
         if ( null !== $feed ) {
-            $feed_mappings = $feed->mappings ?? array();
+            // Get the mappings from the feed.
+            if ( $feed instanceof Product_Feed ) {
+                $feed_mappings = $feed->mappings ?? array();
+            } else { // Get the mappings from the feed array if a new feed is created.
+                $feed_mappings = $feed['mappings'] ?? array();
+            }
 
             // Get category IDs that are already mapped.
             if ( ! empty( $feed_mappings ) ) {
@@ -594,10 +623,11 @@ class Product_Feed_Helper {
     public static function find_tax_rates( $args, $feed = null, $product = null ) {
         if ( 'base' === get_option( 'woocommerce_tax_based_on' ) ) {
             $args = array(
-                'country'  => WC()->countries->get_base_country(),
-                'state'    => WC()->countries->get_base_state(),
-                'postcode' => WC()->countries->get_base_postcode(),
-                'city'     => WC()->countries->get_base_city(),
+                'country'   => WC()->countries->get_base_country(),
+                'state'     => WC()->countries->get_base_state(),
+                'postcode'  => WC()->countries->get_base_postcode(),
+                'city'      => WC()->countries->get_base_city(),
+                'tax_class' => $args['tax_class'] ?? '',
             );
         }
 
@@ -729,5 +759,31 @@ class Product_Feed_Helper {
         );
 
         return ob_get_clean();
+    }
+
+    /**
+     * Check if the channel is all feeds channel.
+     *
+     * @since 13.4.6
+     * @access public
+     *
+     * @param string $feed_channel The Feed channel.
+     * @return bool
+     */
+    public static function is_all_feeds_channel( $feed_channel ) {
+        $legacy_channel_statics = include ADT_PFP_PLUGIN_DIR_PATH . 'includes/I18n/legacy_channel_statics.php';
+
+        $all_countries_feeds_channel = $legacy_channel_statics['All countries'];
+        $custom_feeds_channel        = $legacy_channel_statics['Custom Feed'];
+
+        $all_feeds_channel = array_merge( $all_countries_feeds_channel, $custom_feeds_channel );
+
+        foreach ( $all_feeds_channel as $channel ) {
+            if ( $channel['fields'] === $feed_channel ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

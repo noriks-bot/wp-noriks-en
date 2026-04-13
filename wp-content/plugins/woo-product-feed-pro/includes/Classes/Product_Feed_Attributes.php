@@ -71,10 +71,12 @@ class Product_Feed_Attributes extends Abstract_Class {
             'featured'                        => 'Featured',
             'tax_status'                      => 'Tax status',
             'tax_class'                       => 'Tax class',
+            'tax_class_name'                  => 'Tax class name',
             'vat'                             => 'VAT',
             'currency'                        => 'Currency',
             'categories'                      => 'Category',
             'raw_categories'                  => 'Category (not used for mapping)',
+            'categories_comma_separated'      => 'Category (comma separated)',
             'google_category'                 => 'Google category (for rules and filters only)',
             'category_link'                   => 'Category link',
             'category_path'                   => 'Category path',
@@ -195,29 +197,28 @@ class Product_Feed_Attributes extends Abstract_Class {
             'google_category' => 'Google category',
         ),
         'Other fields'             => array(
-            'product_tag'       => 'Product tags',
-            'product_tag_space' => 'Product tags space',
-            'menu_order'        => 'Menu order',
-            'reviews'           => 'Reviews',
-            'review_rating'     => 'Review rating',
-            'author'            => 'Author',
-            'installment'       => 'Installment',
-            'calculated'        => 'Plugin calculation',
-            'product_detail 1'  => 'Product detail 1',
-            'product_detail 2'  => 'Product detail 2',
-            'product_detail 3'  => 'Product detail 3',
-            'product_detail 4'  => 'Product detail 4',
-            'product_detail 5'  => 'Product detail 5',
-            'product_detail 6'  => 'Product detail 6',
-            'product_detail 7'  => 'Product detail 7',
-            'product_detail 8'  => 'Product detail 8',
-            'product_detail 9'  => 'Product detail 9',
-            'product_detail 10' => 'Product detail 10',
-            'product_highlight' => 'Product highlight',
-            'consumer_notice_1' => 'Consumer notice 1',
-            'consumer_notice_2' => 'Consumer notice 2',
-            'consumer_notice_3' => 'Consumer notice 3',
-            'static_value'      => 'Static value',
+            'site_url'                => 'Site URL',
+            'site_title'              => 'Site Title',
+            'shop_url'                => 'Shop URL',
+            'terms_condtion_page_url' => 'Terms and Conditions page URL (WooCommerce)',
+            'privacy_policy_page_url' => 'Privacy Policy page URL (WordPress)',
+            'boolean_true'            => 'True (Boolean)',
+            'boolean_false'           => 'False (Boolean)',
+            'product_tag'             => 'Product tags',
+            'product_tag_space'       => 'Product tags space',
+            'menu_order'              => 'Menu order',
+            'reviews'                 => 'Reviews',
+            'review_rating'           => 'Review rating',
+            'author'                  => 'Author',
+            'installment'             => 'Installment',
+            'calculated'              => 'Plugin calculation',
+            'product_highlight'       => 'Product highlight',
+            'consumer_notice_1'       => 'Consumer notice 1',
+            'consumer_notice_2'       => 'Consumer notice 2',
+            'consumer_notice_3'       => 'Consumer notice 3',
+            'static_value'            => 'Static value',
+            'page_url'                => 'Page URL',
+            'post_url'                => 'Post URL',
         ),
     );
 
@@ -451,7 +452,7 @@ class Product_Feed_Attributes extends Abstract_Class {
      */
     protected function get_products_meta_keys_for_custom_attributes() {
         global $wpdb;
-        $show_only_basis_attributes = get_option( 'add_woosea_basic', 'no' );
+        $show_only_basis_attributes = get_option( 'adt_show_only_basis_attributes', 'no' );
         $limit_clause               = 'yes' === $show_only_basis_attributes ? 'LIMIT 1' : '';
 
         $query = "SELECT DISTINCT pm.meta_key
@@ -466,6 +467,7 @@ class Product_Feed_Attributes extends Abstract_Class {
                 $limit_clause
             ) AS p ON pm.post_id = p.ID
             WHERE pm.meta_key NOT IN ('_product_attributes')
+                AND pm.meta_key NOT LIKE '_woosea_%'
         ";
 
         $custom_attributes = $wpdb->get_col( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -487,7 +489,7 @@ class Product_Feed_Attributes extends Abstract_Class {
     protected function get_product_variations_attributes_for_custom_attributes() {
         global $wpdb;
         $product_variations_attributes = array();
-        $show_only_basis_attributes    = get_option( 'add_woosea_basic', 'no' );
+        $show_only_basis_attributes    = get_option( 'adt_show_only_basis_attributes', 'no' );
         $limit_clause                  = 'yes' === $show_only_basis_attributes ? 'LIMIT 1' : '';
 
         $query = "SELECT DISTINCT pm.meta_value
