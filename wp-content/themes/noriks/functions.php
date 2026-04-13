@@ -45,6 +45,22 @@ else if ($webshop_language == "PL") {
 
 else if ($webshop_language == "GR") {
   include(get_template_directory() . '/functions/lang/gr.php');
+
+function noriks_term_group( $group ) {
+    $groups = array(
+        'tshirts'       => array( 't-shirts', 'orto-majice' ),
+        'boxers'       => array( 'boxers', 'orto-bokserice' ),
+        'boxers_build'       => array( 'boxers' ),
+        'sets'       => array( 'sets' ),
+        'socks'       => array( 'socks' ),
+        'starter'       => array( 'starter-pack', 'orto-starter' ),
+        'ortho_combo'       => array( 'orto-majica-bokserica' ),
+        'ortho'       => array( 'orto' ),
+    );
+
+    return $groups[ $group ] ?? array();
+}
+
 }
 
 
