@@ -259,7 +259,7 @@ function noriks_remove_upsell() {
     $order->calculate_totals();
     $order->save();
 
-    $order->add_order_note( sprintf( 'Upsell removed: %s', \$product_name ) );
+    $order->add_order_note( sprintf( 'Upsell removed: %s', $product_name ) );
 
     wp_send_json_success( array( 'message' => 'Removed' ) );
 }
