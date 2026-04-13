@@ -214,7 +214,7 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">Bokserice</h3>
+            <h3 class="collection-card__name">Boxers</h3>
           </div>
           <p class="collection-card__desc">
           Mekane. Prozračne. Pouzdane.

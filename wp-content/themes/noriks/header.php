@@ -149,8 +149,8 @@
                     </a>
                     <!--
                     <div class="dropdown-menu">
-                        <a href="/hr/product-category/bokserice-sastavi-paket/">Sastavi svoj paket</a>
-                        <a href="/hr/product-category/bokserice/">Gotovi paketi</a>
+                        <a href="/en/product-category/boxers/">Build Your Pack</a>
+                        <a href="/en/product-category/boxers/">Ready Packs</a>
                     </div>
                     -->
                 </div>

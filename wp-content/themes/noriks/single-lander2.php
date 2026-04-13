@@ -838,7 +838,7 @@ Individual results may vary. </em>
                 </h2>
               </div>
               <div style="margin-top: 15px;" class="rich-text__buttons">
-                <a href="https://noriks.com/en/product-category/bokserice/" class="button button--primary">Order Now i zaštiti svoje zdravlje</a>
+                <a href="https://noriks.com/en/product-category/bokserice/" class="button button--primary">Order Now and Protect Your Health</a>
               </div>
               <div class="rich-text__text rte">
                 <p>More than 2,225,000 men have already switched to NORIKS. Don't wait for rashes, infections, or unpleasant odors to appear.</p>

@@ -310,7 +310,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1"><?php echo esc_html($show_123_qty_1_t1); ?>  <br/><span class="qty-off">-<?php echo esc_html($discount_1); ?><?php echo esc_html($show_123_qty_2_t2); ?> </span> <span class="qty-off-text"><?php echo wc_price($price_per_one_1); ?> <?php echo esc_html($show_123_qty_1_t3); ?></span> </button>
                         <button type="button" class="qty-btn" data-qty="2"><?php echo esc_html($show_123_qty_2_t1); ?> <br/><span class="qty-off">-<?php echo esc_html($discount_2); ?><?php echo esc_html($show_123_qty_2_t2); ?></span><span class="qty-off-text"><?php echo wc_price($price_per_one_2); ?> <?php echo esc_html($show_123_qty_2_t3); ?></span></button>
@@ -339,7 +339,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">3 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">6 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
@@ -434,7 +434,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="6"><?php echo esc_html($show_6912_qty_1_t1); ?>  <br/><span class="qty-off">-<?php echo esc_html($discount_1); ?><?php echo esc_html($show_6912_qty_2_t2); ?> </span> <span class="qty-off-text"><?php echo wc_price($price_per_one_1); ?> <?php echo esc_html($show_6912_qty_1_t3); ?></span> </button>
                         <button type="button" class="qty-btn" data-qty="9"><?php echo esc_html($show_6912_qty_2_t1); ?> <br/><span class="qty-off">-<?php echo esc_html($discount_2); ?><?php echo esc_html($show_6912_qty_2_t2); ?></span><span class="qty-off-text"><?php echo wc_price($price_per_one_2); ?> <?php echo esc_html($show_6912_qty_2_t3); ?></span></button>
@@ -463,7 +463,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">2 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">4 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
@@ -492,7 +492,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">12 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">24 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
