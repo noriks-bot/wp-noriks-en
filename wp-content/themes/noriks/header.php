@@ -266,51 +266,51 @@
     <h3>Choose your country</h3>
    <div class="language-options">
 
-  <a href="/" class="language-option">
+  <a href="https://noriks.com/" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/eu.svg"><span>English (Europe)</span>
   </a>
 
-  <a href="/hr" class="language-option">
+  <a href="https://noriks.com/hr" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/hr.svg"><span>Croatia (HR)</span>
   </a>
 
-  <a href="/hu" class="language-option">
+  <a href="https://noriks.com/hu" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/hu.svg"><span>Hungary (HU)</span>
   </a>
 
-  <a href="/pl" class="language-option">
+  <a href="https://noriks.com/pl" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/pl.svg"><span>Poland (PL)</span>
   </a>
 
-  <a href="/sk" class="language-option">
+  <a href="https://noriks.com/sk" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/sk.svg"><span>Slovakia (SK)</span>
   </a>
 
-  <a href="/cz" class="language-option">
+  <a href="https://noriks.com/cz" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/cz.svg"><span>Czech Republic (CZ)</span>
   </a>
 
-  <a href="/ro" class="language-option">
+  <a href="https://noriks.com/ro" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/ro.svg"><span>Romania (RO)</span>
   </a>
 
-  <a href="/gr" class="language-option">
+  <a href="https://noriks.com/gr" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/gr.svg"><span>Greece (GR)</span>
   </a>
 
-  <a href="/bg" class="language-option">
+  <a href="https://noriks.com/bg" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/bg.svg"><span>Bulgaria (BG)</span>
   </a>
 
-  <a href="/it" class="language-option">
+  <a href="https://noriks.com/it" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/it.svg"><span>Italy (IT)</span>
   </a>
 
-  <a href="/si" class="language-option">
+  <a href="https://noriks.com/si" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/si.svg"><span>Slovenia (SI)</span>
   </a>
 
-  <a href="/de" class="language-option">
+  <a href="https://noriks.com/de" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/de.svg"><span>Germany (DE)</span>
   </a>
 
