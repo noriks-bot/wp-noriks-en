@@ -194,6 +194,14 @@ function enqueue_main_styles() {
         filemtime(get_template_directory() . '/css/footer.css'),
         'all'
     );
+    // Enqueue header.js (load everywhere)
+    wp_enqueue_script(
+        'header-js',
+        get_template_directory_uri() . '/js/header.js',
+        array(),
+        filemtime(get_template_directory() . '/js/header.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'enqueue_main_styles');
 
