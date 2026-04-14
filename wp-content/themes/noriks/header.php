@@ -276,9 +276,14 @@
     <img src="https://static.devit.software/countries/flags/rectangle/hr.svg"><span>Croatia (HR)</span>
   </a>
   
-  <a href="/hu" class="language-option">
+  <!--
+   <a disabled href="/hu" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/hu.svg"><span>Hungary (HU)</span>
   </a>
+    <a href="/de" class="language-option">
+    <img src="https://static.devit.software/countries/flags/rectangle/de.svg"><span>Germany (DE)</span>
+  </a>
+  -->
 
   <a href="/pl" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/pl.svg"><span>Poland (PL)</span>
@@ -294,10 +299,7 @@
     <img src="https://static.devit.software/countries/flags/rectangle/ro.svg"><span>Romania (RO)</span>
   </a>
   -->
-  <a href="/it" class="language-option">
-    <img src="https://static.devit.software/countries/flags/rectangle/it.svg"><span>Italy (IT)</span>
-  </a>
-    <a href="/gr" class="language-option">
+  <a href="/gr" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/gr.svg"><span>Greece (GR)</span>
   </a>
   <!--
