@@ -263,7 +263,7 @@
 <div id="languageModal" class="language-modal">
   <div class="language-modal-content">
     <span class="language-close" onclick="closeLanguageModal()">&times;</span>
-    <h3><?php  echo get_field("country_shop_list_POPUP_t1","options"); ?></h3>
+    <h3>Choose your country</h3>
    <div class="language-options">
 
   <a href="/" class="language-option">
