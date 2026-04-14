@@ -310,6 +310,10 @@
     <img src="https://static.devit.software/countries/flags/rectangle/si.svg"><span>Slovenia (SI)</span>
   </a>
 
+  <a href="/de" class="language-option">
+    <img src="https://static.devit.software/countries/flags/rectangle/de.svg"><span>Germany (DE)</span>
+  </a>
+
   <a href="https://www.noriksofficial.com/" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/us.svg"><span>English (USA)</span>
   </a>
