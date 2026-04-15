@@ -816,7 +816,32 @@ function custom_price_for_specific_product($price, $product) {
 if (!function_exists('my_allowed_product_ids')) {
     function my_allowed_product_ids() : array {
         // PARENT product IDs only (not variation IDs)
-        $ids = [2240, 2239, 2238, 2230, 250, 483, 471, 497,504, 1395, 490];
+        $ids = [
+            // Singles
+            250, 471, 483, 490, 497, 504, 1395, 5386,
+            // T-shirt bundles (3/6/9/12/15 packs)
+            605, 1014, 1021, 1035, 1042, 1154, 1168, 1175,
+            2781, 2787, 2793, 2799, 2805, 2811,
+            2817, 2823, 2829, 2835, 2841,
+            2733, 2739, 2745, 2751, 2757, 2763, 2769, 2775,
+            // Boxer bundles (3/5/7/10/15 packs)
+            2571, 2577, 2583, 2589,
+            2553, 2559, 2565,
+            2529, 2535, 2541, 2547,
+            2505, 2511, 2517, 2523,
+            2499,
+            // Boxers singles
+            2703, 2709, 2715, 2721, 2727,
+            // Sets (2+5, 4+10, 5+5, starter)
+            2595, 2601, 2607, 2613, 2619, 2625, 2631, 2637,
+            2643, 2649, 2655, 2661, 2667, 2673, 2679, 2685, 2691, 2697,
+            // Socks
+            2469, 2473, 2477, 2481, 2485, 2489, 2493,
+            // Custom packs
+            2230, 2238, 2239, 2240,
+            // Inline bundles
+            1494,
+        ];
 
         // If WPML is active, map to current language
         if (defined('ICL_SITEPRESS_VERSION') && function_exists('apply_filters')) {
