@@ -810,98 +810,12 @@ function custom_price_for_specific_product($price, $product) {
 }
 
 /* =========================================================================
-   SHOP PAGE: ONLY SELECTED PRODUCT IDs, SHOW ALL (NO PAGINATION / NO LOAD MORE)
+   SHOP PAGE: Show all products, no pagination
    ========================================================================= */
-
-if (!function_exists('my_allowed_product_ids')) {
-    function my_allowed_product_ids() : array {
-        // PARENT product IDs only (not variation IDs)
-        $ids = [
-            // Singles
-            250, 471, 483, 490, 497, 504, 1395, 5386,
-            // T-shirt bundles (3/6/9/12/15 packs)
-            605, 1014, 1021, 1035, 1042, 1154, 1168, 1175,
-            2781, 2787, 2793, 2799, 2805, 2811,
-            2817, 2823, 2829, 2835, 2841,
-            2733, 2739, 2745, 2751, 2757, 2763, 2769, 2775,
-            // Boxer bundles (3/5/7/10/15 packs)
-            2571, 2577, 2583, 2589,
-            2553, 2559, 2565,
-            2529, 2535, 2541, 2547,
-            2505, 2511, 2517, 2523,
-            2499,
-            // Boxers singles
-            2703, 2709, 2715, 2721, 2727,
-            // Sets (2+5, 4+10, 5+5, starter)
-            2595, 2601, 2607, 2613, 2619, 2625, 2631, 2637,
-            2643, 2649, 2655, 2661, 2667, 2673, 2679, 2685, 2691, 2697,
-            // Socks
-            2469, 2473, 2477, 2481, 2485, 2489, 2493,
-            // Custom packs
-            2230, 2238, 2239, 2240,
-            // Inline bundles
-            1494,
-        ];
-
-        // If WPML is active, map to current language
-        if (defined('ICL_SITEPRESS_VERSION') && function_exists('apply_filters')) {
-            $mapped = [];
-            foreach ($ids as $id) {
-                $t = apply_filters('wpml_object_id', $id, 'product', true);
-                if ($t) $mapped[] = (int) $t;
-            }
-            if (!empty($mapped)) $ids = $mapped;
-        }
-
-        return array_values(array_filter(array_map('absint', $ids)));
-    }
-}
-
-
-
-
-/** WooCommerce product query (builders/themes sometimes use this) */
 add_action('woocommerce_product_query', function ($q) {
-    if (!(function_exists('is_shop') && is_shop())) return;
-
-    $allowed = my_allowed_product_ids();
-    if (empty($allowed)) return;
-
-    $q->set('post__in', $allowed);
-    $q->set('orderby', 'post__in');
+    if (!(function_exists('is_shop') && is_shop()) && !is_product_category()) return;
     $q->set('posts_per_page', -1);
 });
-
-/** Shortcodes like [products] that might render the shop content */
-add_filter('woocommerce_shortcode_products_query', function ($args, $atts, $type) {
-    if (!(function_exists('is_shop') && is_shop())) return $args;
-
-    $allowed = my_allowed_product_ids();
-    if (empty($allowed)) return $args;
-
-    $args['post__in']       = $allowed;
-    $args['orderby']        = 'post__in';
-    $args['paginate']       = false;
-    $args['limit']          = count($allowed); // for shortcode contexts
-    $args['posts_per_page'] = -1;             // fallback
-
-    return $args;
-}, 10, 3);
-
-/** WooCommerce Blocks (All Products) */
-add_filter('woocommerce_blocks_product_grid_query', function ($query/*, $block */) {
-    if (!(function_exists('is_shop') && is_shop())) return $query;
-
-    $allowed = my_allowed_product_ids();
-    if (empty($allowed)) return $query;
-
-    $query['post__in'] = $allowed;
-    $query['orderby']  = 'post__in';
-    $query['per_page'] = count($allowed); // show all selected
-
-    return $query;
-}, 10, 2);
-
 /* =========================
-   END: SHOP PAGE CONSTRAINTS
+   END: SHOP PAGE
    ========================= */
