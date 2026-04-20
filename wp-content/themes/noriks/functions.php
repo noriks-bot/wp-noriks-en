@@ -573,7 +573,7 @@ function custom_quantity_buttons() {
             #main .product { margin-top: 20px; }
             .storefront-product-pagination  { display: none; }
             .quantity  { width: 100%; display: block; margin-bottom: 20px; }
-            .single_add_to_cart_button  { width: 100%; background: #c00 !important; color: #fff !important; border: none !important; border-radius: 8px; font-size: 17px !important; height: 60px; cursor: pointer; font-family: 'Roboto', sans-serif; font-weight: 700; }
+            .single_add_to_cart_button  { width: 100%; background: #f39c12; }
             .product .product_meta { display: none; }
             .edit-link { display: none; }
             .first-qty .quantity { display: block !important; }
