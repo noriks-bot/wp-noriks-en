@@ -930,3 +930,55 @@ ul.products::before, ul.products::after {
 
 
 
+
+/* ===== BASE BUTTON RESET (missing Storefront parent styles) ===== */
+.single-product .single_add_to_cart_button {
+    border: none !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    padding: 0 20px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.single-product .single_add_to_cart_button:hover {
+    background: #a00 !important;
+}
+
+/* Variation buttons — match HR exactly */
+.variation-button {
+    border-radius: 4px !important;
+    font-size: 15px !important;
+    min-height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Hide default WC select when buttons are present */
+.variations td.value select {
+    position: absolute !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Variations table — no default table styling */
+.single-product .variations {
+    border: none !important;
+    margin-bottom: 0 !important;
+}
+.single-product .variations td,
+.single-product .variations th {
+    border: none !important;
+    padding: 0 !important;
+    vertical-align: top !important;
+}
+.single-product .variations th.label label {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+}
