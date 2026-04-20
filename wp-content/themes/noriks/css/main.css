@@ -505,18 +505,30 @@ ul.products::before, ul.products::after {
 }
 
 .single-product .single_add_to_cart_button {
- 
-    
     font-family: 'Roboto', sans-serif;
     height: 60px;
     width: 100%;
     background: #c00 !important;
+    background-color: #c00 !important;
     text-transform: none;
-    letter-spacing: -0.5px !important;
+    letter-spacing: 0.2px !important;
     border-radius: 8px;
     font-size: 17px !important;
-    letter-spacing: 0.2px ! IMPORTANT;
-    color: white;
+    color: #fff !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0 20px;
+}
+.single-product .single_add_to_cart_button:hover {
+    background: #a00 !important;
+    background-color: #a00 !important;
+    color: #fff !important;
 }
 
 .single-product .onsale {
