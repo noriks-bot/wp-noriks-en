@@ -310,6 +310,17 @@ add_action( 'wp_footer', function() {
       font-weight: 700 !important;
       pointer-events: none !important;
     }
+    /* Fallback: also style WC default invalid class (server-side errors) */
+    body.woocommerce-checkout .form-row.woocommerce-invalid input,
+    body.woocommerce-checkout .form-row.woocommerce-invalid select,
+    body.woocommerce-checkout .form-row.woocommerce-invalid .select2-selection,
+    body.woocommerce-checkout .form-row.woocommerce-invalid-required-field input,
+    body.woocommerce-checkout .form-row.woocommerce-invalid-required-field select,
+    body.woocommerce-checkout .form-row.woocommerce-invalid-required-field .select2-selection {
+      border: 2px solid #CC0000 !important;
+      background-color: #fff !important;
+      box-shadow: none !important;
+    }
     </style>
 
     <script id="noriks-checkout-validation">
@@ -319,16 +330,49 @@ add_action( 'wp_footer', function() {
         billing_address_2: '\u2715 If you have no house number, enter NN',
       };
       var submitted = false; /* only validate after first submit attempt */
+
+      /* Validate ALL required fields at once — returns false if any invalid */
+      function validateAllFields() {
+        var allValid = true;
+        var firstInvalid = null;
+        $('.woocommerce-checkout .form-row.validate-required:visible').each(function(){
+          var input = $(this).find('input, select').first();
+          if (input.length && !validateField(input[0], true)) {
+            allValid = false;
+            if (!firstInvalid) firstInvalid = input[0];
+          }
+        });
+        $('.woocommerce-checkout .form-row.validate-email:visible, .woocommerce-checkout .form-row.validate-phone:visible').each(function(){
+          var input = $(this).find('input, select').first();
+          if (input.length && !validateField(input[0], true)) {
+            allValid = false;
+            if (!firstInvalid) firstInvalid = input[0];
+          }
+        });
+        if (firstInvalid) {
+          firstInvalid.focus();
+          firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+        return allValid;
+      }
+
       /* Set submitted=true when WC native button is clicked */
       $('form.checkout').on('checkout_place_order', function(){ submitted = true; });
-      $(document).on('click', '#place_order', function(){
+      $(document).on('click', '#place_order', function(e){
         submitted = true;
+        if (!validateAllFields()) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          return false;
+        }
         $(this).css('opacity','0.6').text('Processing...');
         $('form.checkout').css({'opacity':'0.4','pointer-events':'none','transition':'opacity 0.3s'});
       });
       $(document.body).on('checkout_error', function(){
+        submitted = true;
         $('#place_order').css('opacity','1').text('Order Now');
         $('form.checkout').css({'opacity':'1','pointer-events':''});
+        validateAllFields();
       });
 
       function showError($row, msg) {
@@ -611,7 +655,7 @@ add_action('woocommerce_review_order_before_submit', function(){
     </script>
     <?php
     endif;
-    echo '<h3 class="place-order-title" style="display:block;margin:15px 0 10px;">Sažetak narudžbe</h3>';
+    echo '<h3 class="place-order-title" style="display:block;margin:15px 0 10px;">Order Summary</h3>';
     echo '<div class="vigo-checkout-total order-total shop_table" style="margin-bottom:20px;">';
     woocommerce_order_review();
     echo '</div>';

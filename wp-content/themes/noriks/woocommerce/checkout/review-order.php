@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
         $attrs = '';
         if ( !empty($cart_item['variation']) ) {
           $parts = array();
-          foreach ($cart_item['variation'] as $k=>$v) $parts[] = wc_attribute_label(str_replace('attribute_','',$k)).': '.$v;
+          foreach ($cart_item['variation'] as $k=>$v) $parts[] = wc_attribute_label(str_replace('attribute_','',$k)).': '.urldecode($v);
           $attrs = implode(', ',$parts);
         }
       ?>
