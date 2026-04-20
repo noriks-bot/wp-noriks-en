@@ -706,43 +706,14 @@ function custom_bottom_sorting_wrapper_open() {
     echo '<div class="storefront-sorting storefront-sorting--bottom extra-class">';
 }
 
+/* Carousels: only load on pages that actually use them (not product pages) */
 function enqueue_custom_carousels_assets() {
-    // Slick Carousel CSS
-    wp_enqueue_style(
-        'slick-carousel-css',
-        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css',
-        array(),
-        '1.8.1'
-    );
-
-    // Glide.js CSS
-    wp_enqueue_style(
-        'glidejs-css',
-        'https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css',
-        array(),
-        null
-    );
-
-    // jQuery (Slick requires jQuery and WordPress includes jQuery by default)
+    if (function_exists('is_product') && is_product()) return; // Don't load on product pages
+    wp_enqueue_style('slick-carousel-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), '1.8.1');
+    wp_enqueue_style('glidejs-css', 'https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css', array(), null);
     wp_enqueue_script('jquery');
-
-    // Slick Carousel JS
-    wp_enqueue_script(
-        'slick-carousel-js',
-        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js',
-        array('jquery'),
-        '1.8.1',
-        true
-    );
-
-    // Glide.js JS
-    wp_enqueue_script(
-        'glidejs-js',
-        'https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js',
-        array(),
-        null,
-        true
-    );
+    wp_enqueue_script('slick-carousel-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), '1.8.1', true);
+    wp_enqueue_script('glidejs-js', 'https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js', array(), null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_carousels_assets');
 
