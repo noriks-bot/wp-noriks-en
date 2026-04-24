@@ -63,7 +63,7 @@ if ( $upsell_is_majice ) {
     $upsell_title_text = 'Add boxers now – 50% off';
 }
 $upsell_product    = wc_get_product( $upsell_product_id );
-$upsell_image      = $upsell_qty_images[3];
+$upsell_image      = $upsell_qty_images[1];
 // Get unit price from first variation (variable products have empty parent price)
 $upsell_unit_price = 15.99;
 if ( $upsell_product && $upsell_product->is_type('variable') ) {
@@ -72,7 +72,7 @@ if ( $upsell_product && $upsell_product->is_type('variable') ) {
 } elseif ( $upsell_product ) {
     $upsell_unit_price = (float) $upsell_product->get_regular_price() ?: (float) $upsell_product->get_price();
 }
-$upsell_sale_price = $upsell_qty_prices[3];
+$upsell_sale_price = $upsell_qty_prices[1];
 // Regular prices per qty (unit price * qty)
 $upsell_qty_regular = array();
 foreach ($upsell_qty_prices as $q => $p) {
@@ -508,11 +508,11 @@ body.woocommerce-order-received .woocommerce {
                     <!-- Qty picker FIRST — above product image -->
                     <div class="ty-qty-picker" style="display:flex;gap:8px;padding:0 0 10px;justify-content:center;">
                         <?php $qty_keys = array_keys($upsell_qty_prices); foreach ($qty_keys as $i => $q) :
-                            $is_mid = ($i === 1);
-                            $border = $is_mid ? '#f39c12' : '#ddd';
-                            $bg = $is_mid ? '#f39c1217' : '#fff';
-                            $cls = $is_mid ? ' active' : '';
-                            $chk = $is_mid ? ' checked' : '';
+                            $is_first = ($i === 0);
+                            $border = $is_first ? '#f39c12' : '#ddd';
+                            $bg = $is_first ? '#f39c1217' : '#fff';
+                            $cls = $is_first ? ' active' : '';
+                            $chk = $is_first ? ' checked' : '';
                         ?>
                         <label class="ty-qty-btn<?php echo $cls; ?>" style="flex:1;text-align:center;padding:10px 0;border:2px solid <?php echo $border; ?>;border-radius:4px;font-weight:700;font-size:14px;cursor:pointer;background:<?php echo $bg; ?>;color:#000;">
                             <input type="radio" name="ty_qty" value="<?php echo $q; ?>"<?php echo $chk; ?> style="display:none;"> <?php echo $q; ?>x kom
@@ -522,12 +522,12 @@ body.woocommerce-order-received .woocommerce {
 
                     <div class="product_data">
                         <div class="img">
-                            <img id="ty-upsell-img" alt="<?php echo esc_attr($upsell_name); ?>" src="<?php echo esc_url($upsell_qty_images[3]); ?>">
+                            <img id="ty-upsell-img" alt="<?php echo esc_attr($upsell_name); ?>" src="<?php echo esc_url($upsell_qty_images[1]); ?>">
                         </div>
                         <div class="right_section_wrapper">
-                            <div class="product_name" id="ty-upsell-name"><?php echo esc_html($upsell_qty_names[3]); ?></div>
-                            <div class="product_regular_price" id="ty-upsell-regular"><?php echo number_format($upsell_qty_regular[3], 2, ',', '.'); ?>€</div>
-                            <div class="product_new_sale_price" id="ty-upsell-price"><?php echo number_format($upsell_qty_prices[3], 2, ',', '.'); ?>€</div>
+                            <div class="product_name" id="ty-upsell-name"><?php echo esc_html($upsell_qty_names[1]); ?></div>
+                            <div class="product_regular_price" id="ty-upsell-regular"><?php echo number_format($upsell_qty_regular[1], 2, ',', '.'); ?>€</div>
+                            <div class="product_new_sale_price" id="ty-upsell-price"><?php echo number_format($upsell_qty_prices[1], 2, ',', '.'); ?>€</div>
                         </div>
                     </div>
 
