@@ -93,6 +93,10 @@ add_action( 'wp_footer', function() {
     if ( ! is_checkout() ) return;
     ?>
     <style id="noriks-checkout-overrides">
+    /* ===== POSTCODE + CITY — always side by side ===== */
+    p#billing_postcode_field { clear: both !important; float: left !important; width: 35% !important; }
+    p#billing_city_field { clear: none !important; float: right !important; width: 61% !important; }
+
     /* Payment methods — native WC rendering, no overrides */
 
     /* ===== ORDER SUMMARY ===== */
