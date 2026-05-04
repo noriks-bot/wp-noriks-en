@@ -386,9 +386,21 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
 }
 
 
-/* ===== Country field — force visible (vendor CSS hides it) ===== */
+/* ===== Country field — force visible + match input height ===== */
 body.woocommerce-checkout p#billing_country_field {
   display: block !important;
+}
+body.woocommerce-checkout #billing_country_field select,
+body.woocommerce-checkout #billing_country_field .select2-selection {
+  height: 59px !important;
+  line-height: 59px !important;
+  font-size: 16px !important;
+}
+body.woocommerce-checkout #billing_country_field .select2-selection .select2-selection__rendered {
+  line-height: 59px !important;
+}
+body.woocommerce-checkout #billing_country_field .select2-selection .select2-selection__arrow {
+  height: 59px !important;
 }
 
 /* ===== Postal Code + City side by side (all screens) ===== */
@@ -404,19 +416,24 @@ body.woocommerce-checkout #customer_details p#billing_city_field {
   float: right !important;
   width: 61% !important;
 }
-@media (max-width: 575.98px) {
-  body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_postcode_field,
-  body.woocommerce-checkout #customer_details p#billing_postcode_field {
-    width: 35% !important;
-    float: left !important;
-    clear: both !important;
-  }
-  body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_city_field,
-  body.woocommerce-checkout #customer_details p#billing_city_field {
-    width: 61% !important;
-    float: right !important;
-    clear: none !important;
-  }
+/* Force postcode/city side-by-side even after country change (WC swaps select↔input) */
+body.woocommerce-checkout p#billing_postcode_field {
+  clear: both !important;
+  float: left !important;
+  width: 35% !important;
+}
+body.woocommerce-checkout p#billing_city_field {
+  clear: none !important;
+  float: right !important;
+  width: 61% !important;
+}
+
+/* ===== GLS logo — constrain size ===== */
+body.woocommerce-checkout #custom_shipping .delivery_img img.gls {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 80px !important;
+  object-fit: contain !important;
 }
 
 /* PayPal reCaptcha container — no margin */
