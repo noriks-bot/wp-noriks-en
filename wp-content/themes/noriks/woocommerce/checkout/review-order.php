@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
         $attrs = '';
         if ( !empty($cart_item['variation']) ) {
           $parts = array();
-          foreach ($cart_item['variation'] as $k=>$v) $parts[] = wc_attribute_label(str_replace('attribute_','',$k)).': '.urldecode($v);
+          foreach ($cart_item['variation'] as $k=>$v) $parts[] = wc_attribute_label(str_replace('attribute_','',$k)).': '.$v;
           $attrs = implode(', ',$parts);
         }
       ?>
@@ -31,8 +31,17 @@ defined( 'ABSPATH' ) || exit;
 
       <!-- Shipping -->
       <div class="c--darkgray review-section-container review-addons shipping_order_review">
-        <div class="review-addons-title"><div>Standard Shipping</div></div>
-        <div class="review-addons-price review-sale-price" id="noriks-shipping-price"><span style="display:inline-block;padding:3px 10px;border-radius:5px;background:#9ce79c;color:#228b22;font-size:14px;font-weight:500;">Free</span></div>
+        <div class="review-addons-title"><div>Dostava</div></div>
+        <div class="review-addons-price review-sale-price" id="noriks-shipping-price">
+          <?php
+            $ship = (float) WC()->cart->get_shipping_total();
+            if ( $ship > 0 ) {
+              echo wc_price( $ship );
+            } else {
+              echo '<span class="shipping-free-badge">Besplatno</span>';
+            }
+          ?>
+        </div>
       </div>
 
       <!-- Coupon discounts -->

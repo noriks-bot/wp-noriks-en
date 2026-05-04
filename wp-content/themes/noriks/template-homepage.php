@@ -47,9 +47,9 @@ get_header(); ?>
 
   <div class="hero__content">
     <!--<p class="hero__eyebrow">NOVO: NORIKS </p>-->
-    <h1 class="hero__title">The t-shirt that solves all problems.</h1>
+    <h1 class="hero__title">Majica koja rješava sve probleme.</h1>
 
-    <a class="hero__btn" href="/en/shop">SHOP NOW</a>
+    <a class="hero__btn" href="/hr/shop">KUPUJTE SADA</a>
   </div>
 </section>
 
@@ -171,16 +171,16 @@ get_header(); ?>
   
   <section class="collections">
   <div class="collections__header">
-    <h2 class="collections__title">Shop by Collection</h2>
+    <h2 class="collections__title">Kupujte po kolekciji</h2>
 
-    <a class="collections__cta" href="/en/shop">
-      All Products <span aria-hidden="true">›</span>
+    <a class="collections__cta" href="/hr/shop">
+      Svi produkti <span aria-hidden="true">›</span>
     </a>
   </div>
 
   <div class="collections__grid">
     <!-- Card 1 -->
-    <a class="collection-card" href="/en/product-category/t-shirts/">
+    <a class="collection-card" href="/hr/product-category/majice/">
       <div class="collection-card__media">
         <img
           src="<?php echo get_template_directory_uri(); ?>/img/noriks-majice.jpeg"
@@ -191,10 +191,10 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">T-Shirts</h3>
+            <h3 class="collection-card__name">Majice</h3>
           </div>
           <p class="collection-card__desc">
-           All-day comfort. No tightness.
+           Udobnost cijeli dan. Bez stezanja.
           </p>
         </div>
 
@@ -203,7 +203,7 @@ get_header(); ?>
     </a>
 
     <!-- Card 2 -->
-    <a class="collection-card" href="/en/product-category/bokserice/">
+    <a class="collection-card" href="/hr/product-category/bokserice/">
       <div class="collection-card__media">
         <img
           src="<?php echo get_template_directory_uri(); ?>/img/noriks-boksarice.jpeg"
@@ -214,7 +214,7 @@ get_header(); ?>
       <div class="collection-card__body">
         <div class="collection-card__text">
           <div class="collection-card__topline">
-            <h3 class="collection-card__name">Boxers</h3>
+            <h3 class="collection-card__name">Bokserice</h3>
           </div>
           <p class="collection-card__desc">
           Mekane. Prozračne. Pouzdane.
@@ -227,7 +227,7 @@ get_header(); ?>
     </a>
 
     <!-- Card 3 -->
-    <a class="collection-card" href="/en/product-category/kompleti/">
+    <a class="collection-card" href="/hr/product-category/kompleti/">
       <div class="collection-card__media">
         <img
           src="<?php echo get_template_directory_uri(); ?>/img/noriks-kompleti.jpeg"
@@ -251,7 +251,7 @@ Najbolja vrijednost po paketu.
     </a>
     
     <!-- Card 3 -->
-    <a class="collection-card" href="/en/product-category/starter-paketi/">
+    <a class="collection-card" href="/hr/product-category/starter-paketi/">
       <div class="collection-card__media">
         <img
           src="<?php echo get_template_directory_uri(); ?>/img/starter-paket_.jpeg"
@@ -267,7 +267,7 @@ Najbolja vrijednost po paketu.
            
           </div>
           <p class="collection-card__desc">
-Try NORIKS at a better entry price.
+Probaj NORIKS po boljoj cijeni.
 
           </p>
         </div>
@@ -587,8 +587,8 @@ a:hover {
       <?php echo get_field("homepage_section_2_t1"); ?>
     </h2>
 
-    <a class="collections__cta" href="/en/shop">
-      All Products <span aria-hidden="true">›</span>
+    <a class="collections__cta" href="/hr/shop">
+      Svi produkti  <span aria-hidden="true">›</span>
     </a>
   </div>
 
@@ -675,7 +675,7 @@ a:hover {
                       if ( has_term('black-friday', 'product_cat', $current_product_id ) ):
                         $topseler_text = "Black Friday ";
                       else:
-                        $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . "€ per boxer";
+                        $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . "€ po boksericama";
                       endif;
                     else:
                       $topseler_text = get_field("singlepp_priceper_before","options") . " " . $tmp_price . " " . get_field("singlepp_priceper_after","options");
@@ -873,7 +873,6 @@ a:hover {
 	</div><!-- #primary -->
 <?php
 get_footer();
-
 
 
 

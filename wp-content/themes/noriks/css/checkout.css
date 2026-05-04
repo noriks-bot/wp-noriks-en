@@ -205,7 +205,7 @@ body.woocommerce-checkout #payment .wc_payment_method > label img {
 }
 /* Fee badges — "Besplatno" for card & PayPal, price for COD */
 body.woocommerce-checkout #payment .wc_payment_method > label::after {
-  content: 'Free' !important;
+  content: 'Besplatno' !important;
   display: inline-block !important;
   padding: 3px 10px !important;
   margin-left: auto !important;
@@ -239,7 +239,7 @@ body.woocommerce-checkout #payment .payment_box fieldset {
 
 /* ===== Field descriptions via CSS ::after ===== */
 #billing_email_field::after {
-  content: 'For order confirmation and shipment tracking';
+  content: 'Za potvrdu narudžbe i praćenje pošiljke';
   display: block;
   font-size: 13px;
   color: #5f6061;
@@ -252,7 +252,7 @@ body.woocommerce-checkout #payment .payment_box fieldset {
   position: relative !important;
 }
 #billing_phone_field::after {
-  content: 'Example: 0912345678' !important;
+  content: 'Primjer: 0912345678' !important;
   position: absolute !important;
   left: 0 !important;
   bottom: -20px !important;
@@ -261,7 +261,7 @@ body.woocommerce-checkout #payment .payment_box fieldset {
   line-height: 1.4 !important;
 }
 #billing_phone_field::before {
-  content: 'For delivery assistance' !important;
+  content: 'Za pomoć s dostavom' !important;
   position: absolute !important;
   right: 0 !important;
   bottom: -20px !important;
@@ -394,8 +394,8 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
 #custom_shipping { margin-bottom: 0 !important; }
 
 
-/* All free shipping badges — same green */
-.noriks-order-summary .shipping_order_review .review-addons-price span {
+/* Free shipping badge — only the explicit .shipping-free-badge span */
+.noriks-order-summary .shipping_order_review .review-addons-price .shipping-free-badge {
   display: inline-block !important;
   padding: 3px 10px !important;
   border-radius: 5px !important;

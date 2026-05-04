@@ -454,7 +454,7 @@ border: 1px solid #ccc;
     
 
     
-    30-Day Size Exchange Guarantee
+    30 dana jamstva na zamjenu veličine
 
          
    
@@ -510,7 +510,7 @@ border: 1px solid #ccc;
     
 
     
-     30-Day Size Exchange Guarantee
+     30 dana jamstva na zamjenu veličine
 
          
    
@@ -620,7 +620,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const baseSize = getBaseSize(height, weight);
             const bodyType = selectedInput.value;
             const finalSize = adjustSize(baseSize, bodyType);
-            resultDiv.innerHTML = `Recommended size: <strong>${finalSize}</strong>`;
+            resultDiv.innerHTML = `Preporučena veličina: <strong>${finalSize}</strong>`;
             resultDiv.style.display = "block";
             
             

@@ -7,11 +7,107 @@
 
 include(get_template_directory() . '/functions/checkout_mods.php');
 include(get_template_directory() . '/functions/thankyou_upsell.php');
-include(get_template_directory() . '/functions/sidecart-upsell-modal.php');
 include(get_template_directory() . '/functions/cpts.php');
 include(get_template_directory() . '/functions/options.php');
 include(get_template_directory() . '/functions/single_product_mods.php');
 include(get_template_directory() . '/functions/discounts.php');
+
+
+
+add_filter( 'woocommerce_gallery_image_size', function() {
+    return 'large';
+});
+
+
+
+
+/**
+ * Auto-apply coupon from URL parameter on checkout
+ * Usage: /checkout/?coupon=SMS20
+ */
+add_action('woocommerce_before_checkout_form', 'auto_apply_coupon_from_url', 10);
+function auto_apply_coupon_from_url() {
+    if (isset($_GET['coupon']) && !empty($_GET['coupon'])) {
+        $coupon_code = sanitize_text_field($_GET['coupon']);
+        if (!WC()->cart->has_discount($coupon_code)) {
+            WC()->cart->apply_coupon($coupon_code);
+        }
+    }
+}
+
+
+
+
+
+// Dodaj v functions.php ali kot mu-plugin
+add_action('rest_api_init', function() {
+    register_rest_route('noriks/v1', '/abandoned-carts', array(
+        'methods' => 'GET',
+        'callback' => 'noriks_get_abandoned_carts',
+        'permission_callback' => function() {
+            return isset($_GET['key']) && $_GET['key'] === 'n0r1k5-c4rt-4cc355';
+        }
+    ));
+});
+
+function noriks_get_abandoned_carts($request) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'cartflows_ca_cart_abandonment';
+    
+    $results = $wpdb->get_results("
+        SELECT id, email, cart_contents, cart_total, 
+               other_fields, order_status, time
+        FROM $table 
+        WHERE order_status = 'abandoned'
+        ORDER BY time DESC LIMIT 500
+    ", ARRAY_A);
+    
+    foreach($results as &$row) {
+        $row['cart_contents'] = maybe_unserialize($row['cart_contents']);
+        $row['other_fields'] = maybe_unserialize($row['other_fields']);
+    }
+    return new WP_REST_Response($results, 200);
+}
+
+
+// Bulk cleanup abandoned carts that have orders
+add_action('rest_api_init', function() {
+    register_rest_route('noriks/v1', '/abandoned-carts/cleanup', array(
+        'methods' => 'POST',
+        'callback' => function($req) {
+            global $wpdb;
+            $table = $wpdb->prefix . 'cartflows_ca_cart_abandonment';
+            $body = json_decode($req->get_body(), true);
+            $ids = array_map('intval', $body['ids'] ?? []);
+            if (empty($ids)) return new WP_REST_Response(['error' => 'No IDs'], 400);
+            $cleaned = 0;
+            foreach ($ids as $id) {
+                if ($wpdb->update($table, ['order_status' => 'completed'], ['id' => $id, 'order_status' => 'abandoned'])) $cleaned++;
+            }
+            return new WP_REST_Response(['cleaned' => $cleaned, 'total' => count($ids)], 200);
+        },
+        'permission_callback' => function() {
+            return isset($_GET['key']) && $_GET['key'] === 'n0r1k5-c4rt-4cc355';
+        }
+    ));
+});
+
+
+
+/**
+ * Force redirect to Cart after add-to-cart on single product pages
+ * and neutralize any upsell modal JS.
+
+add_action('init', function () {
+	// Server-side redirect for NON-AJAX adds (highest priority wins)
+	add_filter('woocommerce_add_to_cart_redirect', function ($url) {
+		return home_url('/hr/cart/'); // or wc_get_cart_url()
+	}, 9999);
+});
+ */
+
+
+
 
 $webshop_language = get_field("webshop_language", "options");
 
@@ -25,48 +121,6 @@ if ($webshop_language == "EN") {
 } else if ($webshop_language == "HR") {
   include(get_template_directory() . '/functions/lang/hr.php');
 }
-
-
-else if ($webshop_language == "SK") {
-  include(get_template_directory() . '/functions/lang/sk.php');
-}
-
-
-
-else if ($webshop_language == "CZ") {
-  include(get_template_directory() . '/functions/lang/cz.php');
-}
-
-
-else if ($webshop_language == "PL") {
-  include(get_template_directory() . '/functions/lang/pl.php');
-}
-
-
-else if ($webshop_language == "GR") {
-  include(get_template_directory() . '/functions/lang/gr.php');
-
-function noriks_term_group( $group ) {
-    $groups = array(
-        'tshirts'       => array( 't-shirts', 'orto-majice' ),
-        'boxers'       => array( 'boxers', 'orto-bokserice' ),
-        'boxers_build'       => array( 'boxers' ),
-        'sets'       => array( 'sets' ),
-        'socks'       => array( 'socks' ),
-        'starter'       => array( 'starter-pack', 'orto-starter' ),
-        'ortho_combo'       => array( 'orto-majica-bokserica' ),
-        'ortho'       => array( 'orto' ),
-    );
-
-    return $groups[ $group ] ?? array();
-}
-
-}
-
-
-
-
-
 /*  include language specific files */
 
 /**
@@ -168,15 +222,37 @@ function enqueue_main_styles() {
 
     // Enqueue checkout.css on checkout
     if (function_exists('is_checkout') && is_checkout()) {
+        wp_enqueue_style('google-roboto', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap', array(), null);
         wp_enqueue_style(
             'checkout-style',
             get_template_directory_uri() . '/css/checkout.css',
             array(),
-            filemtime(get_template_directory() . '/css/checkout.css'),
+            md5_file(get_template_directory() . '/css/checkout.css'),
+            'all'
+        );
+        wp_enqueue_script(
+            'checkout-fields',
+            get_template_directory_uri() . '/js/checkout-fields.js',
+            array('jquery'),
+            filemtime(get_template_directory() . '/js/checkout-fields.js'),
+            true
+        );
+    }
+    
+    
+   
+        if ( function_exists( 'is_cart' ) && is_cart() ) {
+        wp_enqueue_style(
+            'cart-style',
+            get_template_directory_uri() . '/css/cart.css',
+            array(),
+            filemtime( get_template_directory() . '/css/cart.css' ),
             'all'
         );
     }
-
+    
+    
+    
     // Enqueue header.css (load everywhere)
     wp_enqueue_style(
         'header-style',
@@ -194,6 +270,7 @@ function enqueue_main_styles() {
         filemtime(get_template_directory() . '/css/footer.css'),
         'all'
     );
+
     // Enqueue header.js (load everywhere)
     wp_enqueue_script(
         'header-js',
@@ -202,6 +279,17 @@ function enqueue_main_styles() {
         filemtime(get_template_directory() . '/js/header.js'),
         true
     );
+
+    // Enqueue price-update.js only on product pages
+    if (function_exists('is_product') && is_product()) {
+        wp_enqueue_script(
+            'price-update-js',
+            get_template_directory_uri() . '/js/price-update.js',
+            array(),
+            filemtime(get_template_directory() . '/js/price-update.js'),
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'enqueue_main_styles');
 
@@ -318,7 +406,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1"><?php echo esc_html($show_123_qty_1_t1); ?>  <br/><span class="qty-off">-<?php echo esc_html($discount_1); ?><?php echo esc_html($show_123_qty_2_t2); ?> </span> <span class="qty-off-text"><?php echo wc_price($price_per_one_1); ?> <?php echo esc_html($show_123_qty_1_t3); ?></span> </button>
                         <button type="button" class="qty-btn" data-qty="2"><?php echo esc_html($show_123_qty_2_t1); ?> <br/><span class="qty-off">-<?php echo esc_html($discount_2); ?><?php echo esc_html($show_123_qty_2_t2); ?></span><span class="qty-off-text"><?php echo wc_price($price_per_one_2); ?> <?php echo esc_html($show_123_qty_2_t3); ?></span></button>
@@ -347,7 +435,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">3 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">6 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
@@ -442,7 +530,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="6"><?php echo esc_html($show_6912_qty_1_t1); ?>  <br/><span class="qty-off">-<?php echo esc_html($discount_1); ?><?php echo esc_html($show_6912_qty_2_t2); ?> </span> <span class="qty-off-text"><?php echo wc_price($price_per_one_1); ?> <?php echo esc_html($show_6912_qty_1_t3); ?></span> </button>
                         <button type="button" class="qty-btn" data-qty="9"><?php echo esc_html($show_6912_qty_2_t1); ?> <br/><span class="qty-off">-<?php echo esc_html($discount_2); ?><?php echo esc_html($show_6912_qty_2_t2); ?></span><span class="qty-off-text"><?php echo wc_price($price_per_one_2); ?> <?php echo esc_html($show_6912_qty_2_t3); ?></span></button>
@@ -471,7 +559,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">2 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">4 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
@@ -500,7 +588,7 @@ function custom_quantity_buttons() {
                 qtyField.hide();
                 // Add custom quantity buttons
                 qtyWrapper.append(`
-                    <div class="label choose-your-pack"><label for="choose-your-pack">Choose your pack</label></div>
+                    <div class="label choose-your-pack"><label for="choose-your-pack">Odaberite svoj paket</label></div>
                     <div class="custom-qty-buttons">
                         <button type="button" class="qty-btn" data-qty="1">12 pack  <br/><span class="qty-off">39% OFF</span> <span class="qty-off-text">€15,75 per item</span> </button>
                         <button type="button" class="qty-btn" data-qty="2">24 pack <br/><span class="qty-off"> 49% OFF</span><span class="qty-off-text">€15,75 per item</span></button>
@@ -573,7 +661,7 @@ function custom_quantity_buttons() {
             #main .product { margin-top: 20px; }
             .storefront-product-pagination  { display: none; }
             .quantity  { width: 100%; display: block; margin-bottom: 20px; }
-            .single_add_to_cart_button  { width: 100%; background: #f39c12 !important; }
+            .single_add_to_cart_button  { width: 100%; background: #f39c12; }
             .product .product_meta { display: none; }
             .edit-link { display: none; }
             .first-qty .quantity { display: block !important; }
@@ -674,39 +762,69 @@ function custom_loop_columns() {
     return 4; // 4 products per row
 }
 
-// (REMOVED) custom_shop_products_per_page (we're showing all products now)
-// (REMOVED) Load More scripts, AJAX, and button
+function noriks_should_use_collection_gallery_image_for_loop($product_id) {
+    return noriks_get_collection_gallery_image_for_loop($product_id) > 0;
+}
+
+function noriks_get_collection_gallery_image_for_loop($product_id) {
+    if ( ! is_tax( 'collections' ) ) {
+        return 0;
+    }
+
+    $term = get_queried_object();
+    if ( ! ( $term instanceof WP_Term ) ) {
+        return 0;
+    }
+
+    $raw = get_term_meta( $term->term_id, 'noriks_collection_gallery_image_map', true );
+    if ( empty( $raw ) || ! function_exists( 'noriks_collection_order_ids_from_string' ) ) {
+        return 0;
+    }
+
+    if ( ! function_exists( 'noriks_collection_gallery_image_map_from_string' ) ) {
+        return 0;
+    }
+
+    $map = noriks_collection_gallery_image_map_from_string( $raw );
+    return isset( $map[ $product_id ] ) ? (int) $map[ $product_id ] : 0;
+}
+
+
 
 add_action( 'woocommerce_before_shop_loop_item_title', 'add_second_product_thumbnail', 11 );
 function add_second_product_thumbnail() {
     global $product;
+    if ( ! $product ) {
+        return;
+    }
+
+    $product_id = $product->get_id();
     $gallery = $product->get_gallery_image_ids();
-    if ( ! empty( $gallery ) ) {
-        $second = wp_get_attachment_image_src( $gallery[0], 'woocommerce_thumbnail' );
+    if ( empty( $gallery ) && ! noriks_should_use_collection_gallery_image_for_loop( $product_id ) ) {
+        return;
+    }
+
+    $secondary_image_id = 0;
+
+    if ( noriks_should_use_collection_gallery_image_for_loop( $product_id ) ) {
+        $secondary_image_id = get_post_thumbnail_id( $product_id );
+    } elseif ( ! empty( $gallery ) ) {
+        $secondary_image_id = (int) $gallery[0];
+    }
+
+    if ( $secondary_image_id ) {
+        $second = wp_get_attachment_image_src( $secondary_image_id, 'woocommerce_thumbnail' );
         if ( $second ) {
             echo '<img class="secondary-image" src="' . esc_url( $second[0] ) . '" alt="" />';
         }
     }
 }
 
-add_action('woocommerce_before_shop_loop', 'conditionally_remove_bottom_sorting', 1);
-function conditionally_remove_bottom_sorting() {
-    // Remove sorting dropdown before it's output the second time
-    remove_action('woocommerce_after_shop_loop', 'woocommerce_catalog_ordering', 10);
-}
 
-// Remove default bottom sorting wrapper
-remove_action('woocommerce_after_shop_loop', 'storefront_sorting_wrapper', 9);
-remove_action('woocommerce_after_shop_loop', 'storefront_sorting_wrapper_close', 11);
 
-// Add custom bottom sorting wrapper with extra class
-add_action('woocommerce_after_shop_loop', 'custom_bottom_sorting_wrapper_open', 9);
-add_action('woocommerce_after_shop_loop', 'storefront_sorting_wrapper_close', 11);
-function custom_bottom_sorting_wrapper_open() {
-    echo '<div class="storefront-sorting storefront-sorting--bottom extra-class">';
-}
 
-/* Carousels removed — not needed */
+
+/* Slick/Glide carousel assets removed */
 
 add_action( 'woocommerce_before_variations_form', function() {
     get_template_part( 'template_parts/size-chart-modal' );
@@ -771,13 +889,140 @@ function custom_price_for_specific_product($price, $product) {
     return $price;
 }
 
-/* =========================================================================
-   SHOP PAGE: Show all products, no pagination
-   ========================================================================= */
-add_action('woocommerce_product_query', function ($q) {
-    if (!(function_exists('is_shop') && is_shop()) && !is_product_category()) return;
-    $q->set('posts_per_page', -1);
+
+   
+   
+   add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    ob_start(); ?>
+    <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+    <?php
+    $fragments['.cart-count'] = ob_get_clean();
+    return $fragments;
 });
-/* =========================
-   END: SHOP PAGE
-   ========================= */
+   
+   
+   
+   
+   
+   
+   
+   // Replace product thumbnail on archive/category pages with ACF image
+add_action( 'after_setup_theme', function() {
+    // Remove default thumbnail output in product loops
+    remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+    // Add our custom thumbnail
+    add_action( 'woocommerce_before_shop_loop_item_title', 'my_alt_loop_product_thumbnail', 10 );
+}, 20 );
+
+function my_alt_loop_product_thumbnail() {
+    global $product;
+
+    if ( ! $product ) {
+        return;
+    }
+
+    // IMPORTANT: don't affect images on single product page (incl. related/upsells)
+    if ( is_product() ) {
+        woocommerce_template_loop_product_thumbnail();
+        return;
+    }
+
+    $product_id = $product->get_id();
+
+    if ( noriks_should_use_collection_gallery_image_for_loop( $product_id ) ) {
+        $selected_gallery_image_id = noriks_get_collection_gallery_image_for_loop( $product_id );
+        if ( $selected_gallery_image_id ) {
+            echo wp_get_attachment_image(
+                $selected_gallery_image_id,
+                'woocommerce_thumbnail',
+                false,
+                array(
+                    'class'   => 'attachment-woocommerce_thumbnail size-woocommerce_thumbnail',
+                    'loading' => 'lazy',
+                    'alt'     => esc_attr( $product->get_name() ),
+                )
+            );
+            return;
+        }
+    }
+
+    // Get your ACF image field (adjust field name if needed)
+    // If the field returns an image ID:
+    $alt_image_id = get_field( '_singlepp_alternative_primary_image', $product_id );
+
+    // If your field is stored as plain meta instead, use this instead of get_field():
+    // $alt_image_id = get_post_meta( $product_id, '_singlepp_alternative_primary_image', true );
+
+    if ( $alt_image_id ) {
+        // Output alternative image in archive/category loop
+        echo wp_get_attachment_image(
+            $alt_image_id,
+            'woocommerce_thumbnail',
+            false,
+            array(
+                'class'   => 'attachment-woocommerce_thumbnail size-woocommerce_thumbnail',
+                'loading' => 'lazy',
+                'alt'     => esc_attr( $product->get_name() ),
+            )
+        );
+    } else {
+        // Fallback to normal product thumbnail
+        woocommerce_template_loop_product_thumbnail();
+    }
+}
+   
+   
+   
+   
+   
+   
+   
+   add_filter( 'woocommerce_ajax_variation_threshold', 'wc_ninja_ajax_threshold' );
+function wc_ninja_ajax_threshold() {
+    return 50;
+}
+   
+   
+   
+   
+   
+   
+   
+   
+   add_action( 'pre_get_posts', 'show_all_products_on_shop_page' );
+function show_all_products_on_shop_page( $query ) {
+
+    if (
+        ! is_admin() &&
+        $query->is_main_query() &&
+        is_shop()
+    ) {
+        $query->set( 'posts_per_page', -1 );
+    }
+}
+
+
+
+
+add_filter('loop_shop_per_page', function($per_page) {
+    if (is_product_category()) {
+        return -1; // show ALL products in category
+    }
+    return $per_page;
+}, 20);
+
+
+// Disable WordPress emoji conversion
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('admin_print_scripts', 'print_emoji_detection_script');
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('admin_print_styles', 'print_emoji_styles');
+remove_filter('the_content_feed', 'wp_staticize_emoji');
+remove_filter('comment_text_rss', 'wp_staticize_emoji');
+remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+add_filter('tiny_mce_plugins', function ($plugins) {
+    return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
+});
+
+// Custom side cart upsell modal (replaces YITH Quick View)
+include(get_template_directory() . '/functions/sidecart-upsell-modal.php');

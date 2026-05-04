@@ -99,7 +99,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                     </svg>
                   </span>
                   <span class="wc-reserve-note__text">
-                    Please hurry! Someone just ordered one of the products in your cart. 
+                    Molimo, požuri! Netko je upravo naručio jedan od proizvoda u tvojoj košarici. 
                     Rezervacija vrijedi još samo <strong id="wc-reserve-timer">10:00</strong> minuta.
                   </span>
                 </div>

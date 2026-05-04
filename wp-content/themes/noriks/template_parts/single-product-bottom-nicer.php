@@ -19,7 +19,7 @@ if (  has_term( array( 'starter-paketi','orto-starter' ), 'product_cat', get_the
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-WHY PEOPLE CHOOSE THE STARTER PACK?
+ZAŠTO LJUDI BIRAJU STARTER PAKET?
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
@@ -29,7 +29,7 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
 
 </strong><span style="font-weight:normal;">Marko - Zagreb</span></p>
-        <p class="description">Many customers start with the starter pack because they want to first see how NORIKS fits and feels. One t-shirt and one pair of boxers is enough to make the decision without a big investment.
+        <p class="description">Mnogi kupci krenu sa starter paketom jer žele prvo vidjeti kako NORIKS stoji i kako se nosi. Jedna majica i jedne bokserice dovoljne su da bez velikog ulaganja donesu odluku.
 
 
 
@@ -43,7 +43,7 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
 
 </strong><span style="font-weight:normal;">Pavle - Split</span></p>
-        <p class="description">More than 95% of customers reorder after the starter pack. Not because they planned to, but because on the very first day they feel the difference in fit, comfort, and quality.
+        <p class="description">Više od 95% kupaca nakon starter paketa ponovno naruči. Ne zato što su planirali, nego zato što već prvi dan osjete razliku u kroju, udobnosti i kvaliteti.
 
 
 </p>
@@ -56,7 +56,7 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
 
 </strong><span style="font-weight:normal;">Ante - Pula</span></p>
-        <p class="description">The t-shirt and boxers are soft, lightweight, and comfortable on the skin. The starter pack is the most common reason why NORIKS quickly becomes part of everyday wardrobe.
+        <p class="description">Majica i bokserice su mekane, lagane i ugodne na koži. Starter paket je najčešći razlog zašto NORIKS brzo postane dio svakodnevne garderobe.
 
 
 
@@ -83,38 +83,38 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-THE COMBINATION WORN EVERY DAY
+KOMBINACIJA KOJA SE NOSI SVAKI DAN
 
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Designed for all-day comfort
+        <p><strong>Dizajnirano za cjelodnevnu udobnost
 
 
 </strong></p>
-        <p class="description">The t-shirt and boxers are made to be worn from morning to evening, without adjustment or discomfort. Everything stays in place, doesn't constrict, and allows free movement throughout the day.
+        <p class="description">Majica i bokserice napravljene su za nošenje od jutra do večeri, bez prilagođavanja i nelagode. Sve stoji na mjestu, ne steže i omogućuje slobodno kretanje tijekom cijelog dana.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>A cut that works with the body
+        <p><strong>Kroj koji radi s tijelom
 
 
 </strong></p>
-        <p class="description">The t-shirt cut emphasizes the upper body, while the boxers provide ample room and stability without riding up. The result is a confident, relaxed feel and a neat look in any situation.
+        <p class="description">Kroj majice naglašava gornji dio tijela, dok bokserice pružaju dovoljno prostora i stabilnost bez podizanja. Rezultat je siguran, opušten osjećaj i uredan izgled u svakoj situaciji.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Quality you feel immediately
+        <p><strong>Kvaliteta koju osjetiš odmah
 
 
 </strong></p>
-        <p class="description">The materials are soft, breathable, and comfortable on the skin, without losing shape after washing. From the very first wear, it's clear why this combination quickly becomes part of everyday wardrobe.
+        <p class="description">Materijali su mekani, prozračni i ugodni na koži, bez gubitka oblika nakon pranja. Već pri prvom nošenju jasno je zašto ova kombinacija brzo postaje dio svakodnevne garderobe.
 
 
 </p>
@@ -143,39 +143,39 @@ THE COMBINATION WORN EVERY DAY
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-THE EASIEST AND SAFEST START
+NAJLAKŠI I NAJSIGURNIJI POČETAK
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Minimum possible risk
+        <p><strong>Najmanji mogući rizik
 
 
 </strong></p>
-        <p class="description">Because it lets you discover the quality without a large investment.
-Instead of buying multiple items upfront, you take one t-shirt and one pair of boxers — just enough to see how they fit, how they wear, and how the material feels.
+        <p class="description">Zato što ti omogućuje da upoznaš kvalitetu bez velikog ulaganja.
+Umjesto da kupuješ više komada unaprijed, uzmeš jednu majicu i jedne bokserice — taman dovoljno da vidiš kako stoje, kako se nose i kako se osjeća materijal.
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Designed for the first step
+        <p><strong>Osmišljeno za prvi korak
 
 
 </strong></p>
-        <p class="description">The starter pack is designed as a first experience, not a supply.
-It's available only once per customer at a special price, so the decision is simple and straightforward.
+        <p class="description">Starter paket je osmišljen kao prvo iskustvo, ne kao zaliha.
+Dostupan je samo jednom po kupcu i po posebnoj cijeni, kako bi odluka bila jednostavna i bez razmišljanja.
 
 
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>An experience that repeats
+        <p><strong>Iskustvo koje se ponavlja
 
 
 </strong></p>
-        <p class="description">Most men continue with NORIKS after that because they understand the difference in fit, comfort, and quality.
-But the first step is this — minimum risk, clearest impression. 
+        <p class="description">Većina muškaraca nakon toga nastavi s NORIKS-om jer shvati razliku u kroju, udobnosti i kvaliteti.
+Ali prvi korak je ovaj — najmanji rizik, najčišći dojam. 
 
 </p>
       </div>
@@ -211,7 +211,7 @@ if (  has_term( array( 'majice', 'orto-majice' ), 'product_cat', get_the_id() ) 
         <video 
           autoplay muted loop playsinline 
           class="why-video">
-          <source src="https://noriks.com/en/wp-content/uploads/2025/09/noriks_gif_hr_2-1.mp4" type="video/mp4">
+          <source src="https://noriks.com/hr/wp-content/uploads/2025/09/noriks_gif_hr_2-1.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -321,27 +321,27 @@ if (  has_term( array( 'majice', 'orto-majice' ), 'product_cat', get_the_id() ) 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-        WHY WILL THIS T-SHIRT BECOME YOUR STANDARD?
+        ZAŠTO ĆE TI OVA MAJICA POSTATI STANDARD?
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Designed for real life
+        <p><strong>Dizajnirana za stvarni život
 </strong></p>
-        <p class="description">This t-shirt is made for all-day wear, from morning to evening. It requires no adjustment or thought — it simply looks good in any situation.
+        <p class="description">Ova majica napravljena je za cjelodnevno nošenje, od jutra do večeri. Ne traži prilagođavanje ni razmišljanje — jednostavno stoji dobro u svakoj situaciji.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>A cut that understands the body
+        <p><strong>Kroj koji razumije tijelo
 </strong></p>
-        <p class="description">The cut is developed to follow the body's lines without constriction and accentuates where it should. The result is a neat, confident look without any discomfort.
+        <p class="description">Kroj je razvijan da prati liniju tijela bez stezanja i naglašava ono što treba. Rezultat je uredan, samopouzdan izgled bez osjećaja nelagode.
 </p>
       </div>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Feel the difference from the very first wear
+        <p><strong>Osjeti razliku već pri prvom nošenju
 </strong></p>
-        <p class="description">The material is soft, lightweight, and breathable on the skin. After the first wear, it's clear why this t-shirt quickly becomes the one you reach for most often.
+        <p class="description">Materijal je mekan, lagan i prozračan na koži. Nakon prvog nošenja jasno je zašto ova majica brzo postaje ona koju najčešće biraš.
 </p>
       </div>
     </div>
@@ -363,6 +363,8 @@ if (  has_term( array( 'majice', 'orto-majice' ), 'product_cat', get_the_id() ) 
 <!-- here we include new file BOXERIRICE-->
 
 <?php if ( has_term( array( 'bokserice', 'bokserice-sastavi-paket',  'orto-bokserice' ), 'product_cat', get_the_ID() )  && !has_term( 'black-friday', 'product_cat', get_the_ID() ) ): ?>
+
+
 
 
 
@@ -389,6 +391,134 @@ endif;
 
 
 
+<?php if ( has_term( array( 'bokserice-savrsene-za-ispod-kupacih' ), 'product_cat', get_the_ID() )  && !has_term( 'black-friday', 'product_cat', get_the_ID() ) ): ?>
+
+
+
+<!-- 1  morska  boksarica -->
+
+
+<section class="why-section">
+  <div class="container why-container">
+
+    <!-- Left Video -->
+    <div class="why-col">
+       <img src="https://noriks.com/hr/wp-content/uploads/2026/04/2026-04-21-10.28.03-2.jpg">
+    </div>
+
+    <!-- Right Content -->
+    <div class="why-col why-content">
+      <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
+       Stvorene za ljeto i plažu
+      </h2>
+
+      <div style="margin-left: 20px;" class="why-point">
+        <p><strong>Ispod kupaćih — kao da ništa ne nosite
+</strong></p>
+        <p class="description">Posebno dizajnirano za muškarce koji žele udobnost ispod kupaćih hlača. Ultralagan materijal ne upija vodu i suši se u minutama — nema više onog neugodnog mokrog osjećaja ispod. Bokserice ostaju na mjestu i ne skupljaju se ispod kupaćih, pa uživajte u kupanju bez brige.</p>
+      </div>
+
+    
+    
+    </div>
+
+  </div>
+</section>
+<style>
+/* your styles */
+</style>
+
+
+
+
+
+<!-- 2 morska boksarica -->
+
+<section  style="background: white;" class="why-section">
+  <div class="container why-container">
+
+    <!-- Left Video -->
+    <div class="why-col">
+       <img src="https://noriks.com/hr/wp-content/uploads/2026/04/2026-04-21-10.27.36-1.jpg">
+    </div>
+
+    <!-- Right Content -->
+    <div class="why-col why-content">
+      <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
+      Suhe za par minuta
+      </h2>
+
+      <div style="margin-left: 20px;" class="why-point">
+        <p><strong>Super izdržljivo 💪
+</strong></p>
+        <p class="description">aboravite na teške, mokre bokserice koje se suše satima nakon kupanja. NORIKS bokserice izrađene su od brzosušećeg materijala — izađete iz vode i za par minuta ste potpuno suhi.
+</p>
+      </div>
+
+      <div style="margin-left: 20px;" class="why-point">
+        
+        
+        <p class="description">
+        
+      ✅  Suše se u minutama <br/>
+      ✅   Lagane kao zrak <br/>
+       ✅  Savršene ispod kupaćih i za svaki dan
+      <br/>
+                
+        </p>
+      </div>
+
+     
+    </div>
+
+  </div>
+</section>
+<style>
+/* your styles */
+</style>
+
+
+
+
+<!-- 3 morska boksarica -->
+
+<section class="why-section">
+  <div class="container why-container">
+
+    <!-- Left Video -->
+    <div class="why-col">
+       <img style="width: 100%;       
+    aspect-ratio: 1/1; 
+    object-fit: cover;  " src="https://noriks.com/hr/wp-content/uploads/2026/04/2026-04-21-10.27.22-1.jpg">
+    </div>
+
+    <!-- Right Content -->
+    <div class="why-col why-content">
+      <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
+      Jedne bokserice za cijelo ljeto
+      </h2>
+
+      <div style="margin-left: 20px;" class="why-point">
+        <p><strong>Plaža, bazen ili običan dan — uvijek iste.
+</strong></p>
+        <p class="description">NORIKS bokserice pružaju podršku cijeli dan, a da pritom ne gube oblik. Nebeski lagan materijal diše i rasteže se savršeno na pravim mjestima. Nosite ih ispod kupaćih na plaži ili kao svakodnevno donje rublje — jednako su savršene u obje uloge.</p>
+      </div>
+
+   
+   
+    </div>
+
+  </div>
+</section>
+<style>
+/* your styles */
+</style>
+
+
+
+
+
+<?php else: ?>
 
 
 
@@ -403,19 +533,19 @@ endif;
 
     <!-- Left Video -->
     <div class="why-col">
-       <img src="/en/wp-content/uploads/2025/12/recreate_without_photo_equipment_98300wkq98yf4jbkroa5.jpg">
+       <img src="https://noriks.com/hr/wp-content/uploads/2026/04/2026-04-24-09.28.40-1.jpg">
     </div>
 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-        Flexible cut for stronger legs
+        Fleksibilan rez za snažnije noge
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>All-day comfort
+        <p><strong>Cjelodnevna udobnost
 </strong></p>
-        <p class="description">Specially designed for men with thicker thighs. Elastic and stretchy material provides maximum comfort without tightening or an uncomfortable waistband. The underwear stays in place and doesn't ride up, so you can move freely all day.</p>
+        <p class="description">Posebno dizajnirano za muškarce s debljim bedrima. Elastični i rastezljivi materijal pruža maksimalnu udobnost bez zatezanja ili neugodnog pojasa. Donje rublje ostaje na mjestu i ne podiže se, pa se možete slobodno kretati cijeli dan.</p>
       </div>
 
     
@@ -439,19 +569,19 @@ endif;
 
     <!-- Left Video -->
     <div class="why-col">
-       <img src="/en/wp-content/uploads/2025/12/recreate_this_picture_to_look_more_real_same_text_on_it_zidddz68sbcgp6wmizbl.jpg">
+       <img src="https://noriks.com/hr/wp-content/uploads/2026/04/hr.jpg">
     </div>
 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-       Less wear and damage
+       Manje trošenja i oštećenja
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Super durable 💪
+        <p><strong>Super izdržljivo 💪
 </strong></p>
-        <p class="description">Forget about constantly buying torn underwear. NORIKS boxers are made from stronger material – they last longer and save you a trip to the store.
+        <p class="description">Zaboravite na stalnu kupovinu poderanog donjeg rublja. NORIKS šortsevi su napravljeni od jačeg materijala – traju duže i štede vam put u trgovinu.
 </p>
       </div>
 
@@ -460,9 +590,9 @@ endif;
         
         <p class="description">
         
-        ✅ Less tearing  <br/>
-        ✅ Less sweating  <br/>
-        ✅ All-day comfort <br/>
+        ✅ Manje poderanja  <br/>
+        ✅ Manje znojenja  <br/>
+        ✅ Udobnost tijekom cijelog dana <br/>
                 
         </p>
       </div>
@@ -488,17 +618,17 @@ endif;
     <div class="why-col">
        <img style="width: 100%;       
     aspect-ratio: 1/1; 
-    object-fit: cover;  " src="/en/wp-content/uploads/2025/12/create_same_style_studio_photo_with_younger_guy_30_years_normal_look_and_croatian_can_look_midldle__e99c86vy07c57mjd38f6.jpg">
+    object-fit: cover;  " src="https://noriks.com/hr/wp-content/uploads/2026/04/2026-04-24-09.28.49-1.jpg">
     </div>
 
     <!-- Right Content -->
     <div class="why-col why-content">
       <h2 style="color: #222; text-align:left; margin-left: 20px; font-family: 'Barlow', sans-serif; color:#222223;">
-       Enough room for everything
+       Dovoljno prostora za sve
       </h2>
 
       <div style="margin-left: 20px;" class="why-point">
-        <p><strong>Guys, let your crotch breathe!
+        <p><strong>Dečki, dopustite svom međunožju da slobodno diše!
 </strong></p>
         <p class="description">NORIKS donje rublje pruža podršku tijekom cijelog dana, a da pritom ne gubi oblik. Nebeski mekan Modal materijal rasteže se i savršeno pristaje na pravim mjestima. Prostor za vaše “gadžete” je prostraniji i fleksibilniji, pa se ne osjećate skučenima.</p>
       </div>
@@ -514,6 +644,8 @@ endif;
 </style>
 
 
+
+<?php endif; ?>
 
 
 
@@ -777,7 +909,7 @@ a:hover {
 
 <section style="display:block; max-width:1440px; margin:0 auto; padding-bottom:30px;" class="most-popular">
   <div class="container" style="padding-left:10px; padding-right:10px;">
-    <h2 class="section-title" style="margin-bottom:20px;">Ready-made combinations – simple and fast</h2>
+    <h2 class="section-title" style="margin-bottom:20px;">Gotove kombinacije – jednostavno i brzo</h2>
 
     <div class="products-grid slider-mobile">
       <?php foreach ($products as $index => $product): ?>
@@ -982,19 +1114,39 @@ a:hover {
       <!--<h4 style="" class="highlight"><?php echo get_field("singlepp_content_standard_reviews_t1","options"); ?></h4>-->
       <h1 style="color:black;     margin-bottom: 4px;">
           
-          <?php if ( !has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() ) ): ?>
+          
+          <?php if ( has_term( array( 'bokserice-savrsene-za-ispod-kupacih' ), 'product_cat', get_the_ID() )  ): ?>
+          
+          
+          Nisi sam u potrazi za savršenim boksericama za ljeto.
+          
+          
+          <?php elseif ( !has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() ) ): ?>
           
           <?php echo get_field("singlepp_content_standard_reviews_t2","options"); ?>
           
-          <?php else: ?>
+        
           
-          You're not alone in the search for the perfect boxers.
+          Nisi sam u potrazi za savršenim boksericama.
           
           <?php endif; ?>
           
           
           </h1>
-    <p class="note" style="color: black; margin-top: 0px; margin-bottom: 5px;"><?php echo get_field("singlepp_content_standard_reviews_t3","options"); ?></p>
+    <p class="note" style="color: black; margin-top: 0px; margin-bottom: 5px;">
+        
+           <?php if ( has_term( array( 'bokserice-savrsene-za-ispod-kupacih' ), 'product_cat', get_the_ID() )  ): ?>
+           
+           Više od 120.000 kupaca već je potvrdilo: NORIKS je rješenje koje spaja udobnost na plaži, brzo sušenje i kroj koji konačno odgovara stvarnim muškarcima.
+           
+           <?php else: ?>
+        
+        
+        <?php echo get_field("singlepp_content_standard_reviews_t3","options"); ?>
+        
+        <?php endif; ?>
+        
+        </p>
     </div>
   </section>
   </div>
@@ -1069,7 +1221,7 @@ a:hover {
   if ( ! $is_bokserice_page )  {
     include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'.php';
   } else {
-    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_bokserice.php';
+    include get_stylesheet_directory() . '/auto_reviews/HR_bokserice.php';
   }
 
   include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'-2.php';
@@ -1195,7 +1347,7 @@ a:hover {
    *  - /auto_reviews/majice-slike/
    */
   function get_review_avatar_pool(string $type = 'majice'): array {
-    $type = ($type === 'boxers' || $type === 'bokserice') ? 'bokserice' : 'majice';
+    $type = ($type === 'bokserice') ? 'bokserice' : 'majice';
 
     $dir_path = trailingslashit(get_stylesheet_directory()) . 'auto_reviews/' . $type . '-slike/';
     $dir_url  = trailingslashit(get_stylesheet_directory_uri()) . 'auto_reviews/' . $type . '-slike/';
@@ -1446,11 +1598,11 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
     <div class="reviews-tabs" style="display:flex;gap:18px;border-bottom:1px solid #cbc8c8;margin-bottom:18px;">
       <button type="button" class="reviews-tab is-active" data-tab="product"
         style="appearance:none;background:#00000008;border:1px solid #cbc8c8;border-bottom:0;padding:8px 14px;border-radius:0;font-weight:700;">
-        <?php echo esc_html__('Product Reviews', 'your-textdomain'); ?> (692)
+        <?php echo esc_html__('Recenzije proizvoda', 'your-textdomain'); ?> (692)
       </button>
       <button type="button" class="reviews-tab" data-tab="shipping"
         style="appearance:none;background:transparent;border:1px solid transparent;border-bottom:0;padding:8px 14px;border-radius:0;font-weight:700;">
-        <?php echo esc_html__('Shipping Reviews', 'your-textdomain'); ?> (389)
+        <?php echo esc_html__('Recenzije dostave', 'your-textdomain'); ?> (389)
       </button>
     </div>
 
@@ -1459,7 +1611,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
       <?php if (!empty($initial_product)) : foreach ($initial_product as $review) :
         $name  = $review['name'] ?? 'Anonymní';
         $text  = $review['text'] ?? '';
-        $title = !empty($review['product_title']) ? $review['product_title'] : 'One Gray T-Shirt';
+        $title = !empty($review['product_title']) ? $review['product_title'] : 'Jedna Siva Majica';
         $url   = !empty($review['product_url'])   ? $review['product_url']   : '#';
         $stars = '★★★★★';
         $date_display = $review['assigned_date'] ?? '';
@@ -1482,7 +1634,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
               <div class="avatar">👤</div>
             <?php endif; ?>
             <div class="name"><?php echo esc_html($name); ?></div>
-            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
           </div>
           <div class="content"><?php echo esc_html($text); ?></div>
         </article>
@@ -1494,7 +1646,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
       <?php if (!empty($initial_ship)) : foreach ($initial_ship as $review) :
         $name  = $review['name'] ?? 'Anonymní';
         $text  = $review['text'] ?? '';
-        $title = !empty($review['product_title']) ? $review['product_title'] : 'One Gray T-Shirt';
+        $title = !empty($review['product_title']) ? $review['product_title'] : 'Jedna Siva Majica';
         $url   = !empty($review['product_url'])   ? $review['product_url']   : '#';
         $stars = '★★★★★';
         $date_display = $review['assigned_date'] ?? '';
@@ -1519,7 +1671,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
               <div class="avatar">👤</div>
             <?php endif; ?>
             <div class="name"><?php echo esc_html($name); ?></div>
-            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
           </div>
           <?php if (!empty($review['headline'])) : ?>
             <div class="headline"><?php echo esc_html($review['headline']); ?></div>
@@ -1598,7 +1750,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
         article.className = 'review-card is-new';
 
         const url       = review.product_url   || '#';
-        const title     = review.product_title || 'One Gray T-Shirt';
+        const title     = review.product_title || 'Jedna Siva Majica';
         const name      = review.name          || 'Anonymní';
         const text      = review.text          || '';
         const headline  = review.headline      || '';
@@ -1614,7 +1766,7 @@ $auto_reviews_ship = assign_unique_avatars_first_n($auto_reviews_ship, $avatar_p
           <div class="identity">
             ${avatarHtml(avatarUrl)}
             <div class="name">${esc(name)}</div>
-            <span class="verified"><?php _e('Verified','your-textdomain'); ?></span>
+            <span class="verified"><?php _e('Potvrđeno','your-textdomain'); ?></span>
           </div>
           ${headline ? `<div class="headline">${esc(headline)}</div>` : ''}
           <div class="content">${esc(text)}</div>

@@ -42,18 +42,18 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 <?php if ( $email_improvements_enabled ) : ?>
 
 
-	<p style="color:black;">Your order has been successfully received – thank you for choosing NORIKS!
+	<p style="color:black;">Tvoja narudžba je uspješno zaprimljena – hvala ti što si odabrao NORIKS!
 	<br/>	<br/>
-	We are now preparing your NORIKS product and it will be on its way soon.
+	Sad pripremamo tvoj NORIKS proizvod i uskoro kreće na put.
     <br/><br/>
-    Pure comfort and a great feeling – all day long.<br/><br/>
+    Samo udobnost i dobar osjećaj – cijeli dan.<br/><br/>
     
-    We will notify you as soon as your package is on its way.<br/>
-    If you need anything – we're here. 🙂<br/><br/>
+    Javit ćemo ti čim tvoj paket krene prema tebi.<br/>
+    Ako ti bilo što zatreba – tu smo. 🙂<br/><br/>
     
     
-    <strong>If you made a mistake with size, quantity, or color in your order – no worries!</strong><br/>
-    Reply directly to this email and let us know what needs to be changed before the package is sent. We'll be happy to sort it out quickly.<br/><br/>
+    <strong>Ako ste se zabunili oko veličine, količine ili boje u narudžbi – bez brige!</strong><br/>
+    Odgovorite direktno na ovaj e-mail i javite nam što treba promijeniti prije slanja paketa. Rado ćemo sve brzo srediti.<br/><br/>
     
     NORIKS tim
     </p>
@@ -65,18 +65,18 @@ if ( ! empty( $order->get_billing_first_name() ) ) {
 	<?php /* translators: %s: Order number */ ?>
 	
 		
-	<p style="color:black;">Your order has been successfully received – thank you for choosing NORIKS!
+	<p style="color:black;">Tvoja narudžba je uspješno zaprimljena – hvala ti što si odabrao NORIKS!
 	<br/>	<br/>
-We are now preparing your NORIKS product and it will be on its way soon.
+Sad pripremamo tvoj NORIKS proizvod i uskoro kreće na put.
     <br/><br/>
-    Pure comfort and a great feeling – all day long.<br/><br/>
+    Samo udobnost i dobar osjećaj – cijeli dan.<br/><br/>
     
-    We will notify you as soon as your package is on its way.<br/>
-    If you need anything – we're here. 🙂<br/><br/>
+    Javit ćemo ti čim tvoj paket krene prema tebi.<br/>
+    Ako ti bilo što zatreba – tu smo. 🙂<br/><br/>
     
     
-    <strong>If you made a mistake with size, quantity, or color in your order – no worries!</strong><br/>
-    Reply directly to this email and let us know what needs to be changed before the package is sent. We'll be happy to sort it out quickly.<br/><br/>
+    <strong>Ako ste se zabunili oko veličine, količine ili boje u narudžbi – bez brige!</strong><br/>
+    Odgovorite direktno na ovaj e-mail i javite nam što treba promijeniti prije slanja paketa. Rado ćemo sve brzo srediti.<br/><br/>
     
     NORIKS tim
     </p>

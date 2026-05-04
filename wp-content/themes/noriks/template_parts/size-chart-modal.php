@@ -53,7 +53,7 @@
 /* When opened */
 #custom-size-chart-modal.show { display: block; }
 
-/* --- Mobile tweaks (kept minimal) --- */
+/* --- Mobile tweaks --- */
 @media (max-width: 768px) {
   .info-box-desktop { display: none !important; }
   .second-one, .third-one { display: inline-block; width: 49%; }
@@ -62,7 +62,25 @@
   .size-chart-field { margin-top: 10px; text-align: left; }
   .size-chart-field label { text-align: left; }
 
-  /* Modal stays auto-height on mobile too; nothing else needed */
+  /* Fullscreen modal on mobile for better readability */
+  #custom-size-chart-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Remove large margins on mobile so image fills the screen */
+  .size-chart-left img {
+    margin-top: 50px !important;
+    margin-bottom: 20px !important;
+  }
 }
 
 /* Desktop cleanups */
@@ -106,7 +124,7 @@
     
     style="margin-top: 70px;margin-bottom: 70px;"
     
-      src="/en/wp-content/uploads/2025/12/boxers_size.jpg"
+      src="/hr/wp-content/uploads/2025/12/boxers_size.jpg"
       alt="Size Guide">
       
       
@@ -118,7 +136,7 @@
     
     style="margin-top: 70px;margin-bottom: 70px;"
     
-      src="/en/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg"
+      src="/hr/wp-content/uploads/2025/11/Nogavice_tabela_velikosti.jpg"
       alt="Size Guide">
       
       
@@ -130,7 +148,7 @@
     
     style="margin-top: 35px;margin-bottom: 0px;"
     
-      src="https://noriks.com/en/wp-content/uploads/2026/04/hr_majice.jpeg"
+      src="https://noriks.com/hr/wp-content/uploads/2026/04/hr_majice.jpeg"
       alt="Size Guide">
       
       
@@ -138,7 +156,7 @@
     
     style="margin-top: 0px;margin-bottom: 0px;"
     
-      src="/en/wp-content/uploads/2025/12/boxers_size.jpg"
+      src="/hr/wp-content/uploads/2025/12/boxers_size.jpg"
       alt="Size Guide">
      
       
@@ -150,7 +168,7 @@
     
     style="margin-top: 70px;margin-bottom: 70px;"
     
-      src="https://noriks.com/en/wp-content/uploads/2026/04/hr_majice.jpeg"
+      src="https://noriks.com/hr/wp-content/uploads/2026/04/hr_majice.jpeg"
       alt="Size Guide">
       
       <?php endif; ?>
