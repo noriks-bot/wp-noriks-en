@@ -484,8 +484,8 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     $fields['billing']['billing_last_name']['class']  = array('form-row','form-row-last','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_address_1']['class']  = array('form-row','form-row-wide','address-field','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_address_2']['class']  = array('form-row','form-row-wide','address-field','form-group','col-xs-12','validate-required');
-    $fields['billing']['billing_postcode']['class']   = array('form-row','form-row-first','address-field','form-group','col-xs-12','validate-required','validate-postcode');
-    $fields['billing']['billing_city']['class']       = array('form-row','form-row-last','dropdown','form-group','col-xs-12','validate-required');
+    $fields['billing']['billing_postcode']['class']   = array('form-row','form-row-last','address-field','form-group','col-xs-12','validate-required','validate-postcode');
+    $fields['billing']['billing_city']['class']       = array('form-row','form-row-first','dropdown','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_phone']['class']      = array('form-row','form-row-wide','form-group','col-xs-12','validate-required','validate-phone');
     $fields['billing']['billing_email']['class']      = array('form-row','form-row-wide','form-group','col-xs-12','validate-email');
 
