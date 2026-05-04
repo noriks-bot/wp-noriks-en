@@ -386,6 +386,11 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
 }
 
 
+/* ===== Country field — force visible (vendor CSS hides it) ===== */
+body.woocommerce-checkout p#billing_country_field {
+  display: block !important;
+}
+
 /* ===== Postal Code + City side by side (all screens) ===== */
 body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_postcode_field,
 body.woocommerce-checkout #customer_details p#billing_postcode_field {
