@@ -476,7 +476,7 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     /* Description injected via JS to survive update_checkout AJAX re-renders */
     // $fields['billing']['billing_email']['description'] = 'Za potvrdu narudžbe i praćenje pošiljke';
     $fields['billing']['billing_email']['required'] = true;
-    $fields['billing']['billing_country']['default'] = 'HR';
+    $fields['billing']['billing_country']['default'] = '';
     $fields['billing']['billing_country']['required'] = true;
     $fields['billing']['billing_country']['priority'] = 90;
     unset( $fields['billing']['billing_company'] );
@@ -518,7 +518,7 @@ add_action( 'woocommerce_before_checkout_billing_form', function() {
     echo '<h3 class="checkout-billing-title">Payment and Delivery</h3>';
 });
 
-add_filter( 'default_checkout_billing_country', function() { return 'HR'; });
+add_filter( 'default_checkout_billing_country', function() { return ''; });
 add_filter( 'woocommerce_order_button_text', function() { return 'Order Now'; });
 
 /**
