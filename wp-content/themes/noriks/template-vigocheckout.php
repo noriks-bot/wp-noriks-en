@@ -227,7 +227,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
                         <div class="inner-wrapper-img">
                                                         <span class="shipping_method_delivery_price tag tag--red">
                                 <span class="woocommerce-Price-amount amount"><bdi>2,99<span class="woocommerce-Price-currencySymbol">&euro;</span></bdi></span>                            </span>
-                                                        <span class="delivery_img"><img decoding="async" class="hrvatska_posta standard" src="https://images.vigo-shop.com/general/curriers/home_small_paket24@2x.png"/></span>
+                                                        <span class="delivery_img"><img decoding="async" class="gls standard" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/GLS_Logo_2021.svg/200px-GLS_Logo_2021.svg.png" alt="GLS"/></span>
                         </div>
                     </div>
                 </label>
@@ -441,7 +441,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
             <div class="c--darkgray review-section-container review-addons shipping_order_review">
                 <div class="review-addons-title">
                     <div>
-                        Paket24 Hrvatske pošte                    </div>
+                        GLS                    </div>
                 </div>
 
                                     <div class="review-addons-price review-sale-price"> <span class="woocommerce-Price-amount amount"><bdi>2,99<span class="woocommerce-Price-currencySymbol">&euro;</span></bdi></span>                    </div>
@@ -986,7 +986,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
         <div class="partial_inner_section">
             <img src="https://images.vigo-shop.com/general/banner_icons/delivery_icon.svg" alt="">
             <div class="text_wrapper">
-                Dostavlja: Paket24 Hrvatske pošte            </div>
+                Dostavlja: GLS            </div>
         </div>
 
                     <div class="partial_inner_section">

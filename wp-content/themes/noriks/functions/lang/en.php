@@ -30,5 +30,6 @@ add_action( 'woocommerce_before_checkout_billing_form', 'add_contact_heading_bef
 function add_contact_heading_before_email() {
 
     
-    echo '<h3 class="checkout-section-title">Your data</h3>';
+    // "Your data" heading removed per request
+    // echo '<h3 class="checkout-section-title">Your data</h3>';
 }
