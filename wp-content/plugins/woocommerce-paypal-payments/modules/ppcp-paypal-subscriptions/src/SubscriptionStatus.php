@@ -110,7 +110,7 @@ class SubscriptionStatus
     private function get_error(RuntimeException $exception): string
     {
         $error = $exception->getMessage();
-        if ($exception instanceof PayPalApiException) {
+        if (is_a($exception, PayPalApiException::class)) {
             $error = $exception->get_details($error);
         }
         return $error;

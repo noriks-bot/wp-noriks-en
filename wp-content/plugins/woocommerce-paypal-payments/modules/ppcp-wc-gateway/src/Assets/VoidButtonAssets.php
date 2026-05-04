@@ -81,8 +81,12 @@ class VoidButtonAssets
         if ($theorder->get_remaining_refund_amount() !== $theorder->get_total()) {
             return \false;
         }
+        $order_id = $theorder->get_meta(PayPalGateway::ORDER_ID_META_KEY);
+        if (!$order_id) {
+            return \false;
+        }
         try {
-            $order = $this->order_endpoint->order($theorder);
+            $order = $this->order_endpoint->order($order_id);
             if ($this->refund_processor->determine_refund_mode($order) !== RefundProcessor::REFUND_MODE_VOID) {
                 return \false;
             }

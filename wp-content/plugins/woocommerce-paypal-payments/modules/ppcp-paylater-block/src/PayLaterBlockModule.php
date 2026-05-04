@@ -12,15 +12,16 @@ use WooCommerce\PayPalCommerce\Assets\AssetGetter;
 use WooCommerce\PayPalCommerce\Button\Endpoint\CartScriptParamsEndpoint;
 use WooCommerce\PayPalCommerce\Button\Helper\MessagesApply;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
+use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExtendingModule;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\SettingsStatus;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 /**
  * Class PayLaterBlockModule
  */
-class PayLaterBlockModule implements ServiceModule, ExecutableModule
+class PayLaterBlockModule implements ServiceModule, ExtendingModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
     /**
@@ -54,6 +55,13 @@ class PayLaterBlockModule implements ServiceModule, ExecutableModule
     /**
      * {@inheritDoc}
      */
+    public function extensions(): array
+    {
+        return require __DIR__ . '/../extensions.php';
+    }
+    /**
+     * {@inheritDoc}
+     */
     public function run(ContainerInterface $c): bool
     {
         $messages_apply = $c->get('button.helper.messages-apply');
@@ -62,13 +70,13 @@ class PayLaterBlockModule implements ServiceModule, ExecutableModule
             return \true;
         }
         add_action('init', function () use ($c): void {
-            $settings_provider = $c->get('settings.settings-provider');
-            assert($settings_provider instanceof SettingsProvider);
+            $settings = $c->get('wcgateway.settings');
+            assert($settings instanceof Settings);
             $asset_getter = $c->get('paylater-block.asset_getter');
             assert($asset_getter instanceof AssetGetter);
             $script_handle = 'ppcp-paylater-block';
             wp_register_script($script_handle, $asset_getter->get_asset_url('paylater-block.js'), array(), $c->get('ppcp.asset-version'), \true);
-            wp_localize_script($script_handle, 'PcpPayLaterBlock', array('ajax' => array('cart_script_params' => array('endpoint' => \WC_AJAX::get_endpoint(CartScriptParamsEndpoint::ENDPOINT))), 'settingsUrl' => admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway'), 'vaultingEnabled' => $settings_provider->save_paypal_and_venmo(), 'placementEnabled' => self::is_block_enabled($c->get('wcgateway.settings.status')), 'payLaterSettingsUrl' => admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway')));
+            wp_localize_script($script_handle, 'PcpPayLaterBlock', array('ajax' => array('cart_script_params' => array('endpoint' => \WC_AJAX::get_endpoint(CartScriptParamsEndpoint::ENDPOINT))), 'settingsUrl' => admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway'), 'vaultingEnabled' => $settings->has('vault_enabled') && $settings->get('vault_enabled'), 'placementEnabled' => self::is_block_enabled($c->get('wcgateway.settings.status')), 'payLaterSettingsUrl' => admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway&ppcp-tab=ppcp-pay-later')));
             wp_register_style('ppcp-paylater-block-style', $asset_getter->get_asset_url('edit.css'), array(), $c->get('ppcp.asset-version'));
             register_block_type($c->get('ppcp.path-to-plugin-folder') . 'modules/ppcp-paylater-block/', array('render_callback' => function (array $attributes) use ($c) {
                 $renderer = $c->get('paylater-block.renderer');

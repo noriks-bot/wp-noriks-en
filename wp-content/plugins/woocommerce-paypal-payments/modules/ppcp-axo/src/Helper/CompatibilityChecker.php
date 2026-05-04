@@ -10,6 +10,8 @@ declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\Axo\Helper;
 
 use WooCommerce\PayPalCommerce\WcGateway\Helper\CartCheckoutDetector;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
+use WooCommerce\PayPalCommerce\WcGateway\Exception\NotFoundException;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
 /**
  * Class CompatibilityChecker

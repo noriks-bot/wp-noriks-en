@@ -208,18 +208,16 @@ class GeneralSettings extends \WooCommerce\PayPalCommerce\Settings\Data\Abstract
         return SellerTypeEnum::BUSINESS === $this->data['seller_type'];
     }
     /**
-     * Whether the merchant is a casual seller (i.e., not a confirmed business).
+     * Whether the merchant is a casual seller using a personal account.
      *
-     * Returns true for both explicitly personal accounts and unknown seller
-     * types. This prevents unresolvable UNKNOWN types from triggering
-     * repeated API calls in the seller-type resolution loop, while keeping
-     * the persisted value unchanged.
+     * Note: It's possible that the seller type is unknown, and both methods,
+     * `is_casual_seller()` and `is_business_seller()` return false.
      *
      * @return bool
      */
     public function is_casual_seller(): bool
     {
-        return SellerTypeEnum::BUSINESS !== $this->data['seller_type'];
+        return SellerTypeEnum::PERSONAL === $this->data['seller_type'];
     }
     /**
      * Gets the currently connected merchant ID.

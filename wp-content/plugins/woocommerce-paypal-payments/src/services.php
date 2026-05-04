@@ -12,7 +12,6 @@ use WooCommerce\PayPalCommerce\Assets\AssetGetterFactory;
 use WooCommerce\PayPalCommerce\Http\RedirectorInterface;
 use WooCommerce\PayPalCommerce\Http\WpRedirector;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Package;
-use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Properties\PluginProperties;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Properties\Properties;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 return array('ppcp.asset-version' => function (ContainerInterface $container): string {
@@ -36,7 +35,7 @@ return array('ppcp.asset-version' => function (ContainerInterface $container): s
     $properties = $container->get(Package::PROPERTIES);
     return $properties->basePath();
 }, 'ppcp.path-to-plugin-main-file' => function (ContainerInterface $container): string {
-    /** @var PluginProperties $properties */
+    /** @var Properties $properties */
     $properties = $container->get(Package::PROPERTIES);
     /** @psalm-suppress UndefinedInterfaceMethod */
     return $properties->pluginMainFile();

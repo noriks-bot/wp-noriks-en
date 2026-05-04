@@ -43,13 +43,13 @@ class SellerStatus
     public function __construct(array $products, array $capabilities, string $country = '')
     {
         foreach ($products as $key => $product) {
-            if ($product instanceof \WooCommerce\PayPalCommerce\ApiClient\Entity\SellerStatusProduct) {
+            if (is_a($product, \WooCommerce\PayPalCommerce\ApiClient\Entity\SellerStatusProduct::class)) {
                 continue;
             }
             unset($products[$key]);
         }
         foreach ($capabilities as $key => $capability) {
-            if ($capability instanceof \WooCommerce\PayPalCommerce\ApiClient\Entity\SellerStatusCapability) {
+            if (is_a($capability, \WooCommerce\PayPalCommerce\ApiClient\Entity\SellerStatusCapability::class)) {
                 continue;
             }
             unset($capabilities[$key]);

@@ -38,7 +38,7 @@ class FraudProtectionModule implements ServiceModule, ExtendingModule, Executabl
              * @psalm-suppress MissingClosureParamType
              * @psalm-suppress MissingClosureReturnType
              */
-            static function ($integrations) {
+            static function ($integrations) use ($container) {
                 // WC always creates a new instance here.
                 $integrations[] = RecaptchaIntegration::class;
                 return $integrations;

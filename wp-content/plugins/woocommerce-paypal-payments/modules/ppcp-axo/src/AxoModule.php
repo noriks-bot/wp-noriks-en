@@ -16,14 +16,16 @@ use WooCommerce\PayPalCommerce\Axo\Gateway\AxoGateway;
 use WooCommerce\PayPalCommerce\Axo\Service\AxoApplies;
 use WooCommerce\PayPalCommerce\Button\Assets\SmartButtonInterface;
 use WooCommerce\PayPalCommerce\Button\Helper\Context;
+use WooCommerce\PayPalCommerce\Onboarding\Render\OnboardingOptionsRenderer;
 use WooCommerce\PayPalCommerce\Session\SessionHandler;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
+use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExtendingModule;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CreditCardGateway;
-use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\SettingsListener;
 use WooCommerce\PayPalCommerce\WcSubscriptions\Helper\SubscriptionHelper;
 use WC_Payment_Gateways;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
@@ -32,7 +34,7 @@ use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
  *
  * @psalm-suppress MissingConstructor
  */
-class AxoModule implements ServiceModule, ExecutableModule
+class AxoModule implements ServiceModule, ExtendingModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
     /**
@@ -51,6 +53,13 @@ class AxoModule implements ServiceModule, ExecutableModule
     /**
      * {@inheritDoc}
      */
+    public function extensions(): array
+    {
+        return require __DIR__ . '/../extensions.php';
+    }
+    /**
+     * {@inheritDoc}
+     */
     public function run(ContainerInterface $c): bool
     {
         add_filter(
@@ -60,7 +69,7 @@ class AxoModule implements ServiceModule, ExecutableModule
              *
              * @psalm-suppress MissingClosureParamType
              */
-            function ($methods) use ($c) {
+            function ($methods) use ($c): array {
                 if (!is_array($methods)) {
                     return $methods;
                 }
@@ -128,11 +137,22 @@ class AxoModule implements ServiceModule, ExecutableModule
                 }
             }
         });
+        // Force 'cart-block' and 'cart' Smart Button locations in the settings.
+        add_action('admin_init', static function () use ($c) {
+            $listener = $c->get('wcgateway.settings.listener');
+            assert($listener instanceof SettingsListener);
+            $dcc_configuration = $c->get('wcgateway.configuration.card-configuration');
+            assert($dcc_configuration instanceof CardPaymentsConfiguration);
+            $listener->filter_settings($dcc_configuration->use_fastlane(), 'smart_button_locations', function (array $existing_setting_value) {
+                $axo_forced_locations = array('cart-block', 'cart');
+                return array_unique(array_merge($existing_setting_value, $axo_forced_locations));
+            });
+        });
         add_action('wp_loaded', function () use ($c) {
             $this->session_handler = $c->get('session.handler');
-            $settings_provider = $c->get('settings.settings-provider');
-            assert($settings_provider instanceof SettingsProvider);
-            $is_paypal_enabled = $settings_provider->is_method_enabled(PayPalGateway::ID);
+            $settings = $c->get('wcgateway.settings');
+            assert($settings instanceof Settings);
+            $is_paypal_enabled = $settings->has('enabled') && $settings->get('enabled') ?? \false;
             $subscription_helper = $c->get('wc-subscriptions.helper');
             assert($subscription_helper instanceof SubscriptionHelper);
             /**
@@ -195,6 +215,25 @@ class AxoModule implements ServiceModule, ExecutableModule
                     $this->add_feature_detection_tag(\false);
                 }
             });
+            add_filter(
+                'ppcp_onboarding_dcc_table_rows',
+                /**
+                 * Param types removed to avoid third-party issues.
+                 *
+                 * @psalm-suppress MissingClosureParamType
+                 */
+                function ($rows, $renderer): array {
+                    if (!is_array($rows)) {
+                        return $rows;
+                    }
+                    if ($renderer instanceof OnboardingOptionsRenderer) {
+                        $rows[] = $renderer->render_table_row(__('Fastlane by PayPal', 'woocommerce-paypal-payments'), __('Yes', 'woocommerce-paypal-payments'), __('Help accelerate guest checkout with PayPal\'s autofill solution.', 'woocommerce-paypal-payments'));
+                    }
+                    return $rows;
+                },
+                10,
+                2
+            );
             // Set Axo as the default payment method on checkout for guest customers.
             add_action('template_redirect', function () use ($c) {
                 $axo_applies = $c->get('axo.service.axo-applies');

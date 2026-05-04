@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Handles the webhook simulation.
+ *
+ * @package WooCommerce\PayPalCommerce\Webhooks\Status
+ */
 declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\Webhooks\Status;
 
@@ -9,30 +14,37 @@ use WooCommerce\PayPalCommerce\ApiClient\Endpoint\WebhookEndpoint;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\Webhook;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\WebhookEvent;
 /**
- * Handles the webhook simulation.
+ * Class WebhookSimulation
  */
 class WebhookSimulation
 {
     public const STATE_WAITING = 'waiting';
     public const STATE_RECEIVED = 'received';
     public const OPTION_ID = 'ppcp-webhook-simulation';
-    private WebhookEndpoint $webhook_endpoint;
-    // @phpstan-ignore property.onlyWritten
+    /**
+     * The webhooks endpoint.
+     *
+     * @var WebhookEndpoint
+     */
+    private $webhook_endpoint;
     /**
      * Our registered webhook.
+     *
+     * @var Webhook|null
      */
-    private ?Webhook $webhook;
-    // @phpstan-ignore property.onlyWritten
+    private $webhook;
     /**
      * The event type that will be simulated, such as CHECKOUT.ORDER.APPROVED.
+     *
+     * @var string
      */
-    private string $event_type;
-    // @phpstan-ignore property.onlyWritten
+    private $event_type;
     /**
      * The event resource version, such as 2.0.
+     *
+     * @var string|null
      */
-    private ?string $resource_version;
-    // @phpstan-ignore property.onlyWritten
+    private $resource_version;
     /**
      * WebhookSimulation constructor.
      *
@@ -57,7 +69,6 @@ class WebhookSimulation
     {
         // Disabled for 3.3.1 release.
         return;
-        /** @phpstan-ignore deadCode.unreachable */
         if (!$webhook) {
             $webhook = $this->webhook;
         }

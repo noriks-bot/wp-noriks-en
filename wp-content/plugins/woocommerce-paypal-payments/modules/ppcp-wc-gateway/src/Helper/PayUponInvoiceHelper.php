@@ -11,7 +11,8 @@ namespace WooCommerce\PayPalCommerce\WcGateway\Helper;
 use WC_Customer;
 use WC_Order;
 use WC_Order_Item_Product;
-use WooCommerce\PayPalCommerce\Settings\Data\PaymentSettings;
+use WooCommerce\PayPalCommerce\WcGateway\Exception\NotFoundException;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 /**
  * Class PayUponInvoiceHelper
  */
@@ -30,23 +31,15 @@ class PayUponInvoiceHelper
      */
     protected $api_shop_country;
     /**
-     * The payment settings.
-     *
-     * @var PaymentSettings
-     */
-    protected PaymentSettings $payment_settings;
-    /**
      * PayUponInvoiceHelper constructor.
      *
-     * @param CheckoutHelper  $checkout_helper The checkout helper.
-     * @param string          $api_shop_country The api shop country.
-     * @param PaymentSettings $payment_settings The payment settings.
+     * @param CheckoutHelper $checkout_helper The checkout helper.
+     * @param string         $api_shop_country The api shop country.
      */
-    public function __construct(\WooCommerce\PayPalCommerce\WcGateway\Helper\CheckoutHelper $checkout_helper, string $api_shop_country, PaymentSettings $payment_settings)
+    public function __construct(\WooCommerce\PayPalCommerce\WcGateway\Helper\CheckoutHelper $checkout_helper, string $api_shop_country)
     {
         $this->checkout_helper = $checkout_helper;
         $this->api_shop_country = $api_shop_country;
-        $this->payment_settings = $payment_settings;
     }
     /**
      * Checks whether checkout is ready for PUI.
@@ -56,7 +49,8 @@ class PayUponInvoiceHelper
      */
     public function is_checkout_ready_for_pui(): bool
     {
-        if ('' === $this->payment_settings->get_pui_brand_name() || '' === $this->payment_settings->get_pui_logo_url() || '' === $this->payment_settings->get_pui_customer_service_instructions()) {
+        $gateway_settings = get_option('woocommerce_ppcp-pay-upon-invoice-gateway_settings');
+        if ($gateway_settings && '' === $gateway_settings['customer_service_instructions']) {
             return \false;
         }
         if (!WC()->customer instanceof WC_Customer) {
@@ -84,7 +78,8 @@ class PayUponInvoiceHelper
      */
     public function is_pui_gateway_enabled(): bool
     {
-        return $this->payment_settings->is_method_enabled('ppcp-pay-upon-invoice-gateway') && 'DE' === $this->api_shop_country;
+        $gateway_settings = get_option('woocommerce_ppcp-pay-upon-invoice-gateway_settings');
+        return isset($gateway_settings['enabled']) && $gateway_settings['enabled'] === 'yes' && 'DE' === $this->api_shop_country;
     }
     /**
      * Checks if product is valid for PUI.
@@ -117,9 +112,9 @@ class PayUponInvoiceHelper
             if (isset($wp->query_vars['order-pay']) && absint($wp->query_vars['order-pay']) > 0) {
                 $order_id = absint($wp->query_vars['order-pay']);
                 $order = wc_get_order($order_id);
-                if ($order instanceof WC_Order) {
+                if (is_a($order, WC_Order::class)) {
                     foreach ($order->get_items() as $item_id => $item) {
-                        if ($item instanceof WC_Order_Item_Product) {
+                        if (is_a($item, WC_Order_Item_Product::class)) {
                             $product = wc_get_product($item->get_product_id());
                             if ($product && !$this->checkout_helper->is_physical_product($product)) {
                                 return \false;
@@ -149,7 +144,7 @@ class PayUponInvoiceHelper
             return \false;
         }
         $order = wc_get_order($order_id);
-        if (!$order instanceof WC_Order) {
+        if (!is_a($order, WC_Order::class)) {
             return \false;
         }
         $address = $order->get_address();
@@ -175,7 +170,7 @@ class PayUponInvoiceHelper
             return 'EUR' === get_woocommerce_currency();
         }
         $order = wc_get_order($order_id);
-        if ($order instanceof WC_Order) {
+        if (is_a($order, WC_Order::class)) {
             return 'EUR' === $order->get_currency();
         }
         return \false;

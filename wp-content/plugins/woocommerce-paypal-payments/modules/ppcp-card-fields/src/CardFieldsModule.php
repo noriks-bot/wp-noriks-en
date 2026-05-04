@@ -13,17 +13,18 @@ use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\Order;
 use WooCommerce\PayPalCommerce\ApiClient\Factory\ExperienceContextBuilder;
 use WooCommerce\PayPalCommerce\CardFields\Service\CardCaptureValidator;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
+use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExtendingModule;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CreditCardGateway;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
 /**
  * Class CardFieldsModule
  */
-class CardFieldsModule implements ServiceModule, ExecutableModule
+class CardFieldsModule implements ServiceModule, ExtendingModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
     /**
@@ -36,24 +37,18 @@ class CardFieldsModule implements ServiceModule, ExecutableModule
     /**
      * {@inheritDoc}
      */
-    public function run(ContainerInterface $c): bool
+    public function extensions(): array
     {
-        add_action('init', function () use ($c): void {
-            $eligibility_check = $c->get('card-fields.eligibility.check');
-            if (!$eligibility_check()) {
-                return;
-            }
-            $this->register_hooks($c);
-        });
-        return \true;
+        return require __DIR__ . '/../extensions.php';
     }
     /**
-     * Registers all hooks that require card-fields eligibility.
-     *
-     * @param ContainerInterface $c The DI container.
+     * {@inheritDoc}
      */
-    private function register_hooks(ContainerInterface $c): void
+    public function run(ContainerInterface $c): bool
     {
+        if (!$c->get('card-fields.eligible')) {
+            return \true;
+        }
         add_filter('woocommerce_paypal_payments_sdk_components_hook', static function (array $components) use ($c) {
             $dcc_config = $c->get('wcgateway.configuration.card-configuration');
             assert($dcc_config instanceof CardPaymentsConfiguration);
@@ -121,12 +116,12 @@ class CardFieldsModule implements ServiceModule, ExecutableModule
             if ($payment_method !== CreditCardGateway::ID) {
                 return $data;
             }
-            $settings = $c->get('settings.settings-provider');
-            assert($settings instanceof SettingsProvider);
+            $settings = $c->get('wcgateway.settings');
+            assert($settings instanceof Settings);
             $experience_context_builder = $c->get('wcgateway.builder.experience-context');
             assert($experience_context_builder instanceof ExperienceContextBuilder);
             $payment_source_data = array('experience_context' => $experience_context_builder->with_endpoint_return_urls()->build()->to_array());
-            $three_d_secure_contingency = $settings->three_d_secure_enum() ? apply_filters('woocommerce_paypal_payments_three_d_secure_contingency', $settings->three_d_secure_enum()) : '';
+            $three_d_secure_contingency = $settings->has('3d_secure_contingency') ? apply_filters('woocommerce_paypal_payments_three_d_secure_contingency', $settings->get('3d_secure_contingency')) : '';
             if ($three_d_secure_contingency === 'SCA_ALWAYS' || $three_d_secure_contingency === 'SCA_WHEN_REQUIRED') {
                 $payment_source_data['attributes'] = array('verification' => array('method' => $three_d_secure_contingency));
             }
@@ -148,5 +143,6 @@ class CardFieldsModule implements ServiceModule, ExecutableModule
                 throw new DomainException(esc_html__('Could not capture the PayPal order.', 'woocommerce-paypal-payments'));
             }
         });
+        return \true;
     }
 }

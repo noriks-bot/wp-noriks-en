@@ -36,12 +36,6 @@ class ConfigurationFlagsDTO
      */
     public bool $use_card_payments = \false;
     /**
-     * Whether digital wallets (Apple Pay/Google Pay) should be enabled.
-     *
-     * @var bool
-     */
-    public bool $use_digital_wallets = \false;
-    /**
      * If the shop needs to process subscription payments.
      *
      * @var bool

@@ -43,9 +43,5 @@ class Daexthrmal_Options_Menu_Elements extends Daexthrmal_Menu_Elements {
 		</div>
 
 		<?php
-
-		// Display the Pro features section.
-		$this->display_pro_features();
-
 	}
 }

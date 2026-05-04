@@ -21,6 +21,8 @@ use WooCommerce\PayPalCommerce\WcGateway\Exception\GatewayGenericException;
 use WooCommerce\PayPalCommerce\WcGateway\Exception\PayPalOrderMissingException;
 use WooCommerce\PayPalCommerce\WcGateway\Processor\OrderProcessor;
 use WooCommerce\PayPalCommerce\WcGateway\Processor\RefundProcessor;
+use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\SettingsRenderer;
 /**
  * Class CardButtonGateway
  */
@@ -28,13 +30,26 @@ class CardButtonGateway extends \WC_Payment_Gateway
 {
     use \WooCommerce\PayPalCommerce\WcGateway\Gateway\ProcessPaymentTrait;
     use FreeTrialHandlerTrait;
+    use \WooCommerce\PayPalCommerce\WcGateway\Gateway\GatewaySettingsRendererTrait;
     const ID = 'ppcp-card-button-gateway';
+    /**
+     * The Settings Renderer.
+     *
+     * @var SettingsRenderer
+     */
+    protected $settings_renderer;
     /**
      * The processor for orders.
      *
      * @var OrderProcessor
      */
     protected $order_processor;
+    /**
+     * The settings.
+     *
+     * @var ContainerInterface
+     */
+    protected $config;
     /**
      * The Session Handler.
      *
@@ -98,7 +113,9 @@ class CardButtonGateway extends \WC_Payment_Gateway
     /**
      * CardButtonGateway constructor.
      *
+     * @param SettingsRenderer        $settings_renderer The Settings Renderer.
      * @param OrderProcessor          $order_processor The Order Processor.
+     * @param ContainerInterface      $config The settings.
      * @param SessionHandler          $session_handler The Session Handler.
      * @param RefundProcessor         $refund_processor The Refund Processor.
      * @param bool                    $is_connected Whether onboarding was completed.
@@ -111,10 +128,12 @@ class CardButtonGateway extends \WC_Payment_Gateway
      * @param callable(string):string $paypal_checkout_url_factory The function return the PayPal checkout URL for the given order ID.
      * @param string                  $place_order_button_text The text for the standard "Place order" button.
      */
-    public function __construct(OrderProcessor $order_processor, SessionHandler $session_handler, RefundProcessor $refund_processor, bool $is_connected, \WooCommerce\PayPalCommerce\WcGateway\Gateway\TransactionUrlProvider $transaction_url_provider, SubscriptionHelper $subscription_helper, bool $default_enabled, Environment $environment, PaymentTokenRepository $payment_token_repository, LoggerInterface $logger, callable $paypal_checkout_url_factory, string $place_order_button_text)
+    public function __construct(SettingsRenderer $settings_renderer, OrderProcessor $order_processor, ContainerInterface $config, SessionHandler $session_handler, RefundProcessor $refund_processor, bool $is_connected, \WooCommerce\PayPalCommerce\WcGateway\Gateway\TransactionUrlProvider $transaction_url_provider, SubscriptionHelper $subscription_helper, bool $default_enabled, Environment $environment, PaymentTokenRepository $payment_token_repository, LoggerInterface $logger, callable $paypal_checkout_url_factory, string $place_order_button_text)
     {
         $this->id = self::ID;
+        $this->settings_renderer = $settings_renderer;
         $this->order_processor = $order_processor;
+        $this->config = $config;
         $this->session_handler = $session_handler;
         $this->refund_processor = $refund_processor;
         $this->transaction_url_provider = $transaction_url_provider;
@@ -162,7 +181,7 @@ class CardButtonGateway extends \WC_Payment_Gateway
     public function process_payment($order_id)
     {
         $wc_order = wc_get_order($order_id);
-        if (!$wc_order instanceof WC_Order) {
+        if (!is_a($wc_order, WC_Order::class)) {
             return $this->handle_payment_failure(null, new GatewayGenericException(new Exception('WC order was not found.')));
         }
         /**
@@ -225,7 +244,7 @@ class CardButtonGateway extends \WC_Payment_Gateway
     public function process_refund($order_id, $amount = null, $reason = '')
     {
         $order = wc_get_order($order_id);
-        if (!$order instanceof \WC_Order) {
+        if (!is_a($order, \WC_Order::class)) {
             return \false;
         }
         return $this->refund_processor->process($order, (float) $amount, (string) $reason);
@@ -241,6 +260,15 @@ class CardButtonGateway extends \WC_Payment_Gateway
     {
         $this->view_transaction_url = $this->transaction_url_provider->get_transaction_url_base($order);
         return parent::get_transaction_url($order);
+    }
+    /**
+     * Returns the settings renderer.
+     *
+     * @return SettingsRenderer
+     */
+    protected function settings_renderer(): SettingsRenderer
+    {
+        return $this->settings_renderer;
     }
     /**
      * Determines if the Gateway is available for use.

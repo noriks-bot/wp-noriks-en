@@ -8,11 +8,10 @@
 declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\Applepay\Helper;
 
-use WooCommerce\PayPalCommerce\Applepay\Assets\ApplePayButton;
-use WooCommerce\PayPalCommerce\Applepay\Assets\AppleProductStatus;
 use WooCommerce\PayPalCommerce\AdminNotices\Entity\Message;
 use WooCommerce\PayPalCommerce\AdminNotices\Repository\Repository;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
+use WooCommerce\PayPalCommerce\Applepay\Assets\ApplePayButton;
+use WooCommerce\PayPalCommerce\Applepay\Assets\AppleProductStatus;
 /**
  * Class AvailabilityNotice
  */
@@ -20,32 +19,46 @@ class AvailabilityNotice
 {
     /**
      * The product status handler.
+     *
+     * @var AppleProductStatus
      */
-    private AppleProductStatus $product_status;
+    private $product_status;
     /**
      * Indicates if we're on the WooCommerce gateways list page.
+     *
+     * @var bool
      */
-    private bool $is_wc_gateways_list_page;
+    private $is_wc_gateways_list_page;
     /**
      * Indicates if we're on a PPCP Settings page.
+     *
+     * @var bool
      */
-    private bool $is_ppcp_settings_page;
+    private $is_ppcp_settings_page;
     /**
      * Indicates if ApplePay is available to be enabled.
+     *
+     * @var bool
      */
-    private bool $is_available;
+    private $is_available;
     /**
      * Indicates if this server is supported for ApplePay.
+     *
+     * @var bool
      */
-    private bool $is_server_supported;
+    private $is_server_supported;
     /**
-     * Used to verify if the merchant-validation (domain registration) was successful
+     * Indicates if the merchant is validated for ApplePay.
+     *
+     * @var bool
      */
-    private SettingsProvider $settings;
+    private $is_merchant_validated;
     /**
      * The button.
+     *
+     * @var ApplePayButton
      */
-    private ApplePayButton $button;
+    private $button;
     /**
      * Class ApmProductStatus constructor.
      *
@@ -54,17 +67,17 @@ class AvailabilityNotice
      * @param bool               $is_ppcp_settings_page Indicates if we're on a PPCP Settings page.
      * @param bool               $is_available Indicates if ApplePay is available to be enabled.
      * @param bool               $is_server_supported Indicates if this server is supported for ApplePay.
-     * @param SettingsProvider   $settings Used to inspect the domain verification status.
+     * @param bool               $is_merchant_validated Indicates if the merchant is validated for ApplePay.
      * @param ApplePayButton     $button The button.
      */
-    public function __construct(AppleProductStatus $product_status, bool $is_wc_gateways_list_page, bool $is_ppcp_settings_page, bool $is_available, bool $is_server_supported, SettingsProvider $settings, ApplePayButton $button)
+    public function __construct(AppleProductStatus $product_status, bool $is_wc_gateways_list_page, bool $is_ppcp_settings_page, bool $is_available, bool $is_server_supported, bool $is_merchant_validated, ApplePayButton $button)
     {
         $this->product_status = $product_status;
         $this->is_wc_gateways_list_page = $is_wc_gateways_list_page;
         $this->is_ppcp_settings_page = $is_ppcp_settings_page;
         $this->is_available = $is_available;
         $this->is_server_supported = $is_server_supported;
-        $this->settings = $settings;
+        $this->is_merchant_validated = $is_merchant_validated;
         $this->button = $button;
     }
     /**
@@ -101,7 +114,7 @@ class AvailabilityNotice
         if (!$button_enabled) {
             return;
         }
-        if (!$this->settings->applepay_validated()) {
+        if (!$this->is_merchant_validated) {
             $this->add_merchant_not_validated_notice();
         }
     }

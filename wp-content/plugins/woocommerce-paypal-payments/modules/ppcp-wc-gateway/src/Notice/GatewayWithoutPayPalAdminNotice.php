@@ -10,8 +10,7 @@ namespace WooCommerce\PayPalCommerce\WcGateway\Notice;
 
 use WC_Payment_Gateway;
 use WooCommerce\PayPalCommerce\AdminNotices\Entity\Message;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
-use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
+use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\SettingsStatus;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
 /**
@@ -35,7 +34,12 @@ class GatewayWithoutPayPalAdminNotice
      * @var bool
      */
     private bool $is_connected;
-    private SettingsProvider $settings_provider;
+    /**
+     * The settings.
+     *
+     * @var ContainerInterface
+     */
+    private $settings;
     /**
      * Whether the current page is the WC payment page.
      *
@@ -60,11 +64,22 @@ class GatewayWithoutPayPalAdminNotice
      * @var CardPaymentsConfiguration
      */
     private CardPaymentsConfiguration $dcc_configuration;
-    public function __construct(string $id, bool $is_connected, SettingsProvider $settings_provider, bool $is_payments_page, bool $is_ppcp_settings_page, CardPaymentsConfiguration $dcc_configuration, ?SettingsStatus $settings_status = null)
+    /**
+     * ConnectAdminNotice constructor.
+     *
+     * @param string                    $id                    The gateway ID.
+     * @param bool                      $is_connected          Whether onboarding was completed.
+     * @param ContainerInterface        $settings              The settings.
+     * @param bool                      $is_payments_page      Whether the current page is the WC payment page.
+     * @param bool                      $is_ppcp_settings_page Whether the current page is the PPCP settings page.
+     * @param CardPaymentsConfiguration $dcc_configuration     DCC gateway configuration.
+     * @param SettingsStatus|null       $settings_status       The Settings status helper.
+     */
+    public function __construct(string $id, bool $is_connected, ContainerInterface $settings, bool $is_payments_page, bool $is_ppcp_settings_page, CardPaymentsConfiguration $dcc_configuration, ?SettingsStatus $settings_status = null)
     {
         $this->id = $id;
         $this->is_connected = $is_connected;
-        $this->settings_provider = $settings_provider;
+        $this->settings = $settings;
         $this->is_payments_page = $is_payments_page;
         $this->is_ppcp_settings_page = $is_ppcp_settings_page;
         $this->dcc_configuration = $dcc_configuration;
@@ -93,7 +108,7 @@ class GatewayWithoutPayPalAdminNotice
                 /* translators: %1$s Standard Card Button section URL, %2$s Advanced Card Processing section URL. */
                 $text = __('The <a href="%1$s">Standard Card Button</a> cannot be used while <a href="%2$s">Advanced Card Processing</a> is enabled.', 'woocommerce-paypal-payments');
                 $url1 = admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-card-button-gateway');
-                $url2 = admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway');
+                $url2 = admin_url('admin.php?page=wc-settings&tab=checkout&section=ppcp-gateway&ppcp-tab=ppcp-credit-card-gateway');
                 break;
             default:
                 return null;
@@ -124,7 +139,7 @@ class GatewayWithoutPayPalAdminNotice
         if (!$gateway_enabled) {
             return self::NOTICE_OK;
         }
-        $paypal_enabled = $this->settings_provider->gateway_enabled(PayPalGateway::ID);
+        $paypal_enabled = $this->settings->has('enabled') && $this->settings->get('enabled');
         if (!$paypal_enabled) {
             return self::NOTICE_DISABLED_GATEWAY;
         }
@@ -132,7 +147,8 @@ class GatewayWithoutPayPalAdminNotice
             return self::NOTICE_DISABLED_LOCATION;
         }
         $is_dcc_enabled = $this->dcc_configuration->is_enabled();
-        if ($is_dcc_enabled) {
+        $is_card_button_allowed = $this->settings->has('allow_card_button_gateway') && $this->settings->get('allow_card_button_gateway');
+        if ($is_dcc_enabled && $is_card_button_allowed) {
             return self::NOTICE_DISABLED_CARD_BUTTON;
         }
         return self::NOTICE_OK;

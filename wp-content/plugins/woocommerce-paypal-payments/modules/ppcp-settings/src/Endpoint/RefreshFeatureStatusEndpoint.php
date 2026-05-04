@@ -13,6 +13,7 @@ use WP_REST_Response;
 use WP_REST_Request;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
 use WooCommerce\PayPalCommerce\ApiClient\Helper\Cache;
+use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 /**
  * REST controller for refreshing feature status.
  */
@@ -37,6 +38,12 @@ class RefreshFeatureStatusEndpoint extends \WooCommerce\PayPalCommerce\Settings\
      */
     private const CACHE_KEY = 'refresh_feature_status_timeout';
     /**
+     * The settings.
+     *
+     * @var ContainerInterface
+     */
+    protected ContainerInterface $settings;
+    /**
      * The cache.
      *
      * @var Cache
@@ -48,8 +55,16 @@ class RefreshFeatureStatusEndpoint extends \WooCommerce\PayPalCommerce\Settings\
      * @var LoggerInterface
      */
     protected LoggerInterface $logger;
-    public function __construct(Cache $cache, LoggerInterface $logger)
+    /**
+     * Constructor.
+     *
+     * @param ContainerInterface $settings The settings.
+     * @param Cache              $cache    The cache.
+     * @param LoggerInterface    $logger   The logger.
+     */
+    public function __construct(ContainerInterface $settings, Cache $cache, LoggerInterface $logger)
     {
+        $this->settings = $settings;
         $this->cache = $cache;
         $this->logger = $logger;
     }
@@ -82,7 +97,7 @@ class RefreshFeatureStatusEndpoint extends \WooCommerce\PayPalCommerce\Settings\
             ));
         }
         $this->cache->set(self::CACHE_KEY, $now, self::TIMEOUT);
-        do_action('woocommerce_paypal_payments_clear_apm_product_status');
+        do_action('woocommerce_paypal_payments_clear_apm_product_status', $this->settings);
         $this->logger->info('Feature status refreshed successfully');
         return $this->return_success(array('message' => __('Feature status refreshed successfully.', 'woocommerce-paypal-payments')));
     }

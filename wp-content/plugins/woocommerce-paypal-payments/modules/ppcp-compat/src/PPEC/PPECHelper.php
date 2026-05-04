@@ -19,12 +19,43 @@ class PPECHelper
      */
     const PPEC_GATEWAY_ID = 'ppec_paypal';
     /**
-     * Checks if the PayPal Express Checkout plugin is active.
+     * The path to the PayPal Express Checkout main plugin file.
      */
-    public static function is_plugin_active(): bool
+    const PPEC_PLUGIN_FILE = 'woocommerce-gateway-paypal-express-checkout/woocommerce-gateway-paypal-express-checkout.php';
+    /**
+     * Option name for PayPal Express Checkout settings.
+     */
+    const PPEC_SETTINGS_OPTION_NAME = 'woocommerce_ppec_paypal_settings';
+    /**
+     * Checks if the PayPal Express Checkout plugin was configured previously.
+     *
+     * @return bool
+     */
+    public static function is_plugin_configured()
+    {
+        return is_array(get_option(self::PPEC_SETTINGS_OPTION_NAME));
+    }
+    /**
+     * Checks if the PayPal Express Checkout plugin is active.
+     *
+     * @return bool
+     */
+    public static function is_plugin_active()
     {
         return is_callable('wc_gateway_ppec');
-        // @phpstan-ignore function.impossibleType
+    }
+    /**
+     * Checks whether the PayPal Express Checkout plugin is available (plugin active and gateway configured).
+     *
+     * @return bool
+     */
+    public static function is_gateway_available()
+    {
+        if (!self::is_plugin_active() || !is_callable('wc_gateway_ppec')) {
+            return \false;
+        }
+        $ppec = wc_gateway_ppec();
+        return is_object($ppec) && $ppec->settings && $ppec->settings->get_active_api_credentials();
     }
     /**
      * Checks whether the site has subscriptions handled through PayPal Express Checkout.
@@ -56,6 +87,6 @@ class PPECHelper
         /**
          * The filter returning whether the compatibility layer for PPEC Subscriptions should be initialized.
          */
-        return !self::is_plugin_active() && self::site_has_ppec_subscriptions() && apply_filters('woocommerce_paypal_payments_process_legacy_subscriptions', \true);
+        return !self::is_gateway_available() && self::site_has_ppec_subscriptions() && apply_filters('woocommerce_paypal_payments_process_legacy_subscriptions', \true);
     }
 }

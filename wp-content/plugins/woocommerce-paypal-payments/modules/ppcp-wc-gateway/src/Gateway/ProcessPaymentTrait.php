@@ -65,7 +65,7 @@ trait ProcessPaymentTrait
     protected function format_exception(Throwable $exception): string
     {
         $message = $exception->getMessage();
-        if ($exception instanceof PayPalApiException) {
+        if (is_a($exception, PayPalApiException::class)) {
             $message = $exception->get_details($message);
         }
         $output = $message . ' ' . basename($exception->getFile()) . ':' . $exception->getLine();

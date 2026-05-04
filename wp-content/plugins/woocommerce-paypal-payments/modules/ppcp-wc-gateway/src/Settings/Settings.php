@@ -8,6 +8,7 @@
 declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\WcGateway\Settings;
 
+use WooCommerce\PayPalCommerce\Compat\Settings\SettingsMapHelper;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Exception\NotFoundException;
 /**
@@ -16,6 +17,8 @@ use WooCommerce\PayPalCommerce\WcGateway\Exception\NotFoundException;
 class Settings implements ContainerInterface
 {
     const KEY = 'woocommerce-ppcp-settings';
+    const CONNECTION_TAB_ID = 'ppcp-connection';
+    const PAY_LATER_TAB_ID = 'ppcp-pay-later';
     /**
      * The settings.
      *
@@ -47,24 +50,33 @@ class Settings implements ContainerInterface
      */
     protected string $default_dcc_gateway_title;
     /**
+     * A helper for mapping the new/old settings.
+     *
+     * @var SettingsMapHelper
+     */
+    protected SettingsMapHelper $settings_map_helper;
+    /**
      * Settings constructor.
      *
-     * @param string[] $default_button_locations              The list of selected default
+     * @param string[]          $default_button_locations              The list of selected default
      *                                                                 button locations.
-     * @param string   $default_dcc_gateway_title             The default ACDC gateway
+     * @param string            $default_dcc_gateway_title             The default ACDC gateway
      *                                                                 title.
-     * @param string[] $default_pay_later_button_locations    The list of selected default
+     * @param string[]          $default_pay_later_button_locations    The list of selected default
      *                                                                 pay later button locations.
-     * @param string[] $default_pay_later_messaging_locations The list of selected default
+     * @param string[]          $default_pay_later_messaging_locations The list of selected default
      *                                                                 pay later messaging
      *                                                                 locations.
+     * @param SettingsMapHelper $settings_map_helper                   A helper for mapping the
+     *                                                                 new/old settings.
      */
-    public function __construct(array $default_button_locations, string $default_dcc_gateway_title, array $default_pay_later_button_locations, array $default_pay_later_messaging_locations)
+    public function __construct(array $default_button_locations, string $default_dcc_gateway_title, array $default_pay_later_button_locations, array $default_pay_later_messaging_locations, SettingsMapHelper $settings_map_helper)
     {
         $this->default_button_locations = $default_button_locations;
         $this->default_dcc_gateway_title = $default_dcc_gateway_title;
         $this->default_pay_later_button_locations = $default_pay_later_button_locations;
         $this->default_pay_later_messaging_locations = $default_pay_later_messaging_locations;
+        $this->settings_map_helper = $settings_map_helper;
     }
     /**
      * Returns the value for an id.
@@ -80,11 +92,15 @@ class Settings implements ContainerInterface
         if (!$this->has($id)) {
             throw new NotFoundException();
         }
+        $mapped_value = $this->settings_map_helper->mapped_value($id);
+        if (!is_null($mapped_value)) {
+            return $mapped_value;
+        }
         if (isset($this->settings[$id])) {
-            return $this->settings[$id];
+            return apply_filters('woocommerce_paypal_payments_settings_value', $this->settings[$id], $id);
         }
         $defaults = $this->get_defaults();
-        return $defaults[$id];
+        return $defaults[$id] ?? '';
     }
     /**
      * Whether a value exists.
@@ -95,6 +111,9 @@ class Settings implements ContainerInterface
      */
     public function has(string $id)
     {
+        if ($this->settings_map_helper->has_mapped_key($id) && !is_null($this->settings_map_helper->mapped_value($id))) {
+            return \true;
+        }
         $this->load();
         if (isset($this->settings[$id])) {
             return \true;

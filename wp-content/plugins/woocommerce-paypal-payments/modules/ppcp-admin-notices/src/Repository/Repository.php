@@ -33,7 +33,7 @@ class Repository implements \WooCommerce\PayPalCommerce\AdminNotices\Repository\
                 if ($element instanceof PersistentMessage) {
                     return !$element->is_muted();
                 }
-                return $element instanceof Message;
+                return is_a($element, Message::class);
             }
         );
     }

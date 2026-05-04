@@ -10,7 +10,7 @@ namespace WooCommerce\PayPalCommerce\Settings\Endpoint;
 
 use WooCommerce\PayPalCommerce\PayLaterConfigurator\Endpoint\SaveConfig;
 use WooCommerce\PayPalCommerce\PayLaterConfigurator\Factory\ConfigFactory;
-use WooCommerce\PayPalCommerce\Settings\Data\PayLaterMessagingSettings;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -31,9 +31,9 @@ class PayLaterMessagingEndpoint extends \WooCommerce\PayPalCommerce\Settings\End
     /**
      * The settings.
      *
-     * @var PayLaterMessagingSettings
+     * @var Settings
      */
-    protected PayLaterMessagingSettings $settings;
+    protected $settings;
     /**
      * Save config handler.
      *
@@ -43,10 +43,10 @@ class PayLaterMessagingEndpoint extends \WooCommerce\PayPalCommerce\Settings\End
     /**
      * PayLaterMessagingEndpoint constructor.
      *
-     * @param PayLaterMessagingSettings $settings The settings.
-     * @param SaveConfig                $save_config Save config handler.
+     * @param Settings   $settings The settings.
+     * @param SaveConfig $save_config Save config handler.
      */
-    public function __construct(PayLaterMessagingSettings $settings, SaveConfig $save_config)
+    public function __construct(Settings $settings, SaveConfig $save_config)
     {
         $this->settings = $settings;
         $this->save_config = $save_config;

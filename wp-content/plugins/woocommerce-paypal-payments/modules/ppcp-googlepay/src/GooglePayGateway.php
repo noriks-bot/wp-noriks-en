@@ -112,7 +112,7 @@ class GooglePayGateway extends WC_Payment_Gateway
     public function process_payment($order_id)
     {
         $wc_order = wc_get_order($order_id);
-        if (!$wc_order instanceof WC_Order) {
+        if (!is_a($wc_order, WC_Order::class)) {
             return $this->handle_payment_failure(null, new GatewayGenericException(new Exception('WC order was not found.')));
         }
         /**
@@ -164,7 +164,7 @@ class GooglePayGateway extends WC_Payment_Gateway
     public function process_refund($order_id, $amount = null, $reason = '')
     {
         $order = wc_get_order($order_id);
-        if (!$order instanceof \WC_Order) {
+        if (!is_a($order, \WC_Order::class)) {
             return \false;
         }
         return $this->refund_processor->process($order, (float) $amount, (string) $reason);

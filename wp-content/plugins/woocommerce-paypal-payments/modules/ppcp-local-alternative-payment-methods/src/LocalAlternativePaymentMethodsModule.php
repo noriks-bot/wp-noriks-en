@@ -12,17 +12,17 @@ use WC_Order;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use WooCommerce\PayPalCommerce\Assets\AssetGetter;
 use WooCommerce\PayPalCommerce\Settings\Data\Definition\FeaturesDefinition;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExecutableModule;
+use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ExtendingModule;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ModuleClassNameIdTrait;
 use WooCommerce\PayPalCommerce\Vendor\Inpsyde\Modularity\Module\ServiceModule;
 use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
-use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\FeesUpdater;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 /**
  * Class LocalAlternativePaymentMethodsModule
  */
-class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableModule
+class LocalAlternativePaymentMethodsModule implements ServiceModule, ExtendingModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
     /**
@@ -37,6 +37,13 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
     public function services(): array
     {
         return require __DIR__ . '/../services.php';
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public function extensions(): array
+    {
+        return require __DIR__ . '/../extensions.php';
     }
     /**
      * {@inheritDoc}
@@ -57,11 +64,11 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
     private function run_with_translations(ContainerInterface $c): void
     {
         $this->payment_methods = $c->get('ppcp-local-apms.payment-methods');
-        $this->register_pwc_feature_flag_filters();
         // When Local APMs are disabled, none of the following hooks are needed.
         if (!$this->should_add_local_apm_gateways($c)) {
             return;
         }
+        $this->register_pwc_feature_flag_filters();
         add_action('wp_enqueue_scripts', function () use ($c) {
             if (!is_checkout() && !is_cart() && !is_wc_endpoint_url('order-pay')) {
                 return;
@@ -89,18 +96,7 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
                 }
                 $payment_methods = $c->get('ppcp-local-apms.payment-methods');
                 $payment_methods = apply_filters('woocommerce_paypal_payments_local_apm_payment_methods', $payment_methods);
-                // Only register eligible gateways when the merchant is connected.
-                $is_connected = $c->get('settings.flag.is-connected');
-                $eligibility_checks = array();
-                if ($is_connected) {
-                    $eligibility_service = $c->get('settings.service.payment_methods_eligibilities');
-                    $eligibility_checks = $eligibility_service->get_eligibility_checks();
-                }
                 foreach ($payment_methods as $key => $value) {
-                    $gateway_id = $value['id'];
-                    if (isset($eligibility_checks[$gateway_id]) && !$eligibility_checks[$gateway_id]()) {
-                        continue;
-                    }
                     $methods[] = $c->get('ppcp-local-apms.' . $key . '.wc-gateway');
                 }
                 return $methods;
@@ -118,7 +114,6 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
              * @psalm-suppress MissingClosureParamType
              */
             function ($methods) use ($c) {
-                // @phpstan-ignore empty.property
                 if (!is_array($methods) || is_admin() || empty(WC()->customer)) {
                     // Don't restrict the gateway list on wp-admin or when no customer is known.
                     return $methods;
@@ -202,13 +197,12 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
         if (!$order instanceof WC_Order) {
             return;
         }
-        $request_uri = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash((string) $_SERVER['REQUEST_URI'])) : '';
-        $query_string = (string) wp_parse_url($request_uri, \PHP_URL_QUERY);
-        $params = array();
-        wp_parse_str(str_replace('?', '&', $query_string), $params);
-        $params = array_map('sanitize_text_field', $params);
-        $cancelled = $params['cancelled'] ?? '';
-        $order_key = $params['key'] ?? '';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        $cancelled = wc_clean(wp_unslash($_GET['cancelled'] ?? ''));
+        $cancelled = is_array($cancelled) ? '' : (string) $cancelled;
+        $order_key = wc_clean(wp_unslash($_GET['key'] ?? ''));
+        $order_key = is_array($order_key) ? '' : (string) $order_key;
+        // phpcs:enable
         if (!$this->is_local_apm($order->get_payment_method(), $this->payment_methods) || !$cancelled || $order->get_order_key() !== $order_key) {
             return;
         }
@@ -216,7 +210,7 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
             $this->handle_cancelled_crypto_payment($order, $cancelled);
             return;
         }
-        $this->handle_cancelled_standard_apm($order, $params);
+        $this->handle_cancelled_standard_apm($order);
     }
     /**
      * Handle cancelled crypto payments.
@@ -232,7 +226,7 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
         }
         if ($order->get_status() === 'on-hold') {
             $order->update_status('failed', __('Pay with Crypto payment was cancelled or failed.', 'woocommerce-paypal-payments'));
-            $order->add_order_note(__('Payment was cancelled or failed during the Pay with Crypto payment process.', 'woocommerce-paypal-payments'), 1);
+            $order->add_order_note(__('Payment was cancelled during the Pay with Crypto payment process.', 'woocommerce-paypal-payments'), 1);
         }
         add_filter('woocommerce_order_has_status', '__return_true');
         if (!wp_doing_ajax() && !is_admin()) {
@@ -245,12 +239,12 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
      * Handle cancelled standard APM payments (non-crypto).
      *
      * @param WC_Order $order The WooCommerce order.
-     * @param array    $params Parsed query parameters from the return URL.
      * @return void
      */
-    private function handle_cancelled_standard_apm(WC_Order $order, array $params = array()): void
+    private function handle_cancelled_standard_apm(WC_Order $order): void
     {
-        $error_code = $params['errorcode'] ?? '';
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $error_code = wc_clean(wp_unslash($_GET['errorcode'] ?? ''));
         if ($error_code === 'processing_error' || $error_code === 'payment_error') {
             $order->update_status('failed', __("The payment can't be processed because of an error.", 'woocommerce-paypal-payments'));
             add_filter('woocommerce_order_has_status', '__return_true');
@@ -293,9 +287,14 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
              */
             return $this->is_rest_request();
         }
-        $settings_provider = $container->get('settings.settings-provider');
-        assert($settings_provider instanceof SettingsProvider);
-        return $settings_provider->is_method_enabled(PayPalGateway::ID);
+        // The general plugin functionality must be enabled.
+        $settings = $container->get('wcgateway.settings');
+        assert($settings instanceof Settings);
+        if (!$settings->has('enabled') || !$settings->get('enabled')) {
+            return \false;
+        }
+        // Register APM gateways, when the relevant setting is active.
+        return $settings->has('allow_local_apm_gateways') && $settings->get('allow_local_apm_gateways') === \true;
     }
     /**
      * Register PWC feature flag filters.
@@ -384,12 +383,9 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
         if (!is_wc_endpoint_url('order-received')) {
             return;
         }
-        $request_uri = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash((string) $_SERVER['REQUEST_URI'])) : '';
-        $query_string = (string) wp_parse_url($request_uri, \PHP_URL_QUERY);
-        $params = array();
-        wp_parse_str(str_replace('?', '&', $query_string), $params);
-        $params = array_map('sanitize_text_field', $params);
-        if (empty($params['token']) || !empty($params['cancelled'])) {
+        // Check if 'token' exists anywhere in the URL first.
+        $request_uri = isset($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : '';
+        if (strpos($request_uri, 'token=') === \false) {
             return;
         }
         // Get order ID from the URL endpoint.
@@ -430,7 +426,7 @@ class LocalAlternativePaymentMethodsModule implements ServiceModule, ExecutableM
         return apply_filters(
             // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
             'woocommerce.feature-flags.woocommerce_paypal_payments.pwc_enabled',
-            getenv('PCP_PWC_ENABLED') !== '0'
+            getenv('PCP_PWC_ENABLED') === '1'
         );
     }
 }

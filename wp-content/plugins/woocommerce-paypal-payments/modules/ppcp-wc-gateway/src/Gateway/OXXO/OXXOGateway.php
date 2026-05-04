@@ -156,10 +156,6 @@ class OXXOGateway extends WC_Payment_Gateway
     public function process_payment($order_id)
     {
         $wc_order = wc_get_order($order_id);
-        if (!$wc_order instanceof WC_Order) {
-            $this->logger->error('Invalid WC_Order id ' . (int) $order_id);
-            return array('result' => 'failure', 'redirect' => wc_get_checkout_url());
-        }
         $purchase_unit = $this->purchase_unit_factory->from_wc_order($wc_order);
         $payer_action = '';
         try {
@@ -177,7 +173,7 @@ class OXXOGateway extends WC_Payment_Gateway
             }
         } catch (RuntimeException $exception) {
             $error = $exception->getMessage();
-            if ($exception instanceof PayPalApiException) {
+            if (is_a($exception, PayPalApiException::class)) {
                 $error = $exception->get_details($error);
             }
             $this->logger->error($error);

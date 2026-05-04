@@ -9,32 +9,53 @@ declare (strict_types=1);
 namespace WooCommerce\PayPalCommerce\WcGateway\Checkout;
 
 use WooCommerce\PayPalCommerce\Button\Helper\Context;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
+use WooCommerce\PayPalCommerce\Session\SessionHandler;
 use WooCommerce\PayPalCommerce\WcSubscriptions\Helper\SubscriptionHelper;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CardButtonGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\CreditCardGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
-use WooCommerce\PayPalCommerce\WcGateway\Helper\CardPaymentsConfiguration;
+use WooCommerce\PayPalCommerce\Vendor\Psr\Container\ContainerInterface;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\SettingsStatus;
 /**
  * Class DisableGateways
  */
 class DisableGateways
 {
+    /**
+     * @var Context Context data provider.
+     */
     private Context $context;
-    private SettingsProvider $settings_provider;
-    protected SettingsStatus $settings_status;
-    private SubscriptionHelper $subscription_helper;
-    private CardPaymentsConfiguration $card_configuration;
-    private string $store_country;
-    public function __construct(SettingsProvider $settings_provider, SettingsStatus $settings_status, SubscriptionHelper $subscription_helper, Context $context, CardPaymentsConfiguration $card_configuration, string $store_country)
+    /**
+     * The Settings.
+     *
+     * @var ContainerInterface
+     */
+    private $settings;
+    /**
+     * The Settings status helper.
+     *
+     * @var SettingsStatus
+     */
+    protected $settings_status;
+    /**
+     * The subscription helper.
+     *
+     * @var SubscriptionHelper
+     */
+    private $subscription_helper;
+    /**
+     * DisableGateways constructor.
+     *
+     * @param ContainerInterface $settings The Settings.
+     * @param SettingsStatus     $settings_status The Settings status helper.
+     * @param SubscriptionHelper $subscription_helper The subscription helper.
+     */
+    public function __construct(ContainerInterface $settings, SettingsStatus $settings_status, SubscriptionHelper $subscription_helper, Context $context)
     {
-        $this->settings_provider = $settings_provider;
+        $this->settings = $settings;
         $this->settings_status = $settings_status;
         $this->subscription_helper = $subscription_helper;
         $this->context = $context;
-        $this->card_configuration = $card_configuration;
-        $this->store_country = $store_country;
     }
     /**
      * Controls the logic for enabling/disabling gateways.
@@ -54,8 +75,7 @@ class DisableGateways
             unset($methods[CardButtonGateway::ID]);
             return $methods;
         }
-        $client_id = $this->settings_provider->merchant_data()->client_id;
-        if (empty($client_id)) {
+        if (!$this->settings->has('client_id') || empty($this->settings->get('client_id'))) {
             unset($methods[CreditCardGateway::ID]);
         }
         if (!$this->settings_status->is_smart_button_enabled_for_location('checkout')) {
@@ -63,9 +83,6 @@ class DisableGateways
             if ($this->subscription_helper->cart_contains_subscription()) {
                 unset($methods[PayPalGateway::ID]);
             }
-        }
-        if ($this->card_configuration->use_acdc() && $this->store_country !== 'MX') {
-            unset($methods[CardButtonGateway::ID]);
         }
         if (!$this->needs_to_disable_gateways()) {
             return $methods;
@@ -92,8 +109,7 @@ class DisableGateways
                 return \true;
             }
         }
-        $merchant_email = $this->settings_provider->merchant_email();
-        if (empty($merchant_email) || !is_email($merchant_email)) {
+        if (!$this->settings->has('merchant_email') || !is_email($this->settings->get('merchant_email'))) {
             return \true;
         }
         return \false;

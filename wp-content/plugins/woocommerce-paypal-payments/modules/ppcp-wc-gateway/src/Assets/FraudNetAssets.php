@@ -10,13 +10,14 @@ namespace WooCommerce\PayPalCommerce\WcGateway\Assets;
 
 use WooCommerce\PayPalCommerce\Assets\AssetGetter;
 use WooCommerce\PayPalCommerce\Button\Helper\Context;
-use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\Environment;
 use WooCommerce\PayPalCommerce\Session\SessionHandler;
+use WooCommerce\PayPalCommerce\WcGateway\Exception\NotFoundException;
 use WooCommerce\PayPalCommerce\WcGateway\FraudNet\FraudNet;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\GatewayRepository;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayUponInvoice\PayUponInvoiceGateway;
+use WooCommerce\PayPalCommerce\WcGateway\Settings\Settings;
 /**
  * Class FraudNetAssets
  */
@@ -41,7 +42,12 @@ class FraudNetAssets
      * @var Environment
      */
     protected $environment;
-    protected SettingsProvider $settings_provider;
+    /**
+     * The Settings.
+     *
+     * @var Settings
+     */
+    protected $settings;
     /**
      * The list of enabled PayPal gateways.
      *
@@ -67,13 +73,23 @@ class FraudNetAssets
      */
     protected $is_fraudnet_enabled;
     protected Context $context;
-    public function __construct(AssetGetter $asset_getter, string $version, FraudNet $fraud_net, Environment $environment, SettingsProvider $settings_provider, GatewayRepository $gateway_repository, SessionHandler $session_handler, bool $is_fraudnet_enabled, Context $context)
+    /**
+     * @param AssetGetter       $asset_getter
+     * @param string            $version The assets version.
+     * @param FraudNet          $fraud_net The FraudNet entity.
+     * @param Environment       $environment The environment.
+     * @param Settings          $settings The Settings.
+     * @param GatewayRepository $gateway_repository The GatewayRepository.
+     * @param SessionHandler    $session_handler The session handler.
+     * @param bool              $is_fraudnet_enabled true if FraudNet support is enabled in settings, otherwise false.
+     */
+    public function __construct(AssetGetter $asset_getter, string $version, FraudNet $fraud_net, Environment $environment, Settings $settings, GatewayRepository $gateway_repository, SessionHandler $session_handler, bool $is_fraudnet_enabled, Context $context)
     {
         $this->asset_getter = $asset_getter;
         $this->version = $version;
         $this->fraud_net = $fraud_net;
         $this->environment = $environment;
-        $this->settings_provider = $settings_provider;
+        $this->settings = $settings;
         $this->gateway_repository = $gateway_repository;
         $this->session_handler = $session_handler;
         $this->is_fraudnet_enabled = $is_fraudnet_enabled;
@@ -87,7 +103,7 @@ class FraudNetAssets
         add_action('wp_enqueue_scripts', function () {
             if ($this->should_load_fraudnet_script()) {
                 wp_enqueue_script('ppcp-fraudnet', $this->asset_getter->get_asset_url('fraudnet.js'), array(), $this->version, \true);
-                wp_localize_script('ppcp-fraudnet', 'FraudNetConfig', array('f' => $this->fraud_net->session_id(), 's' => $this->fraud_net->source_website_id(), 'sandbox' => $this->environment->is_sandbox()));
+                wp_localize_script('ppcp-fraudnet', 'FraudNetConfig', array('f' => $this->fraud_net->session_id(), 's' => $this->fraud_net->source_website_id(), 'sandbox' => $this->environment->current_environment_is(Environment::SANDBOX)));
             }
         });
     }
@@ -118,8 +134,9 @@ class FraudNetAssets
         if (!in_array(PayPalGateway::ID, $this->enabled_ppcp_gateways(), \true)) {
             return \false;
         }
-        $button_locations = $this->settings_provider->smart_button_locations();
-        if (empty($button_locations)) {
+        try {
+            $button_locations = $this->settings->get('smart_button_locations');
+        } catch (NotFoundException $exception) {
             return \false;
         }
         if ($this->context->context() === 'pay-now') {

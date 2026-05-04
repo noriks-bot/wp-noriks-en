@@ -569,10 +569,6 @@ class Daexthrmal_Admin {
 		foreach ( $shared->get( 'options' ) as $key => $value ) {
 			delete_option( $key );
 		}
-
-		// Delete the option used by the DAEXT_Notices_Manager class to persist the notices state.
-		delete_option( $shared->get( 'slug' ) . '_notices_state' );
-
 	}
 
 	/**
@@ -1135,10 +1131,10 @@ class Daexthrmal_Admin {
 
 		add_submenu_page(
 			$this->shared->get( 'slug' ) . '_connections',
-			esc_html__( 'Documentation', 'hreflang-manager-lite' ),
-			esc_html__( 'Documentation', 'hreflang-manager-lite' ) . '<i class="dashicons dashicons-external" style="font-size:12px;vertical-align:-2px;height:10px;"></i>',
+			esc_html__( 'Help & Support', 'hreflang-manager-lite' ),
+			esc_html__( 'Help & Support', 'hreflang-manager-lite' ) . '<i class="dashicons dashicons-external" style="font-size:12px;vertical-align:-2px;height:10px;"></i>',
 			'manage_options',
-			'https://daext.com/kb/hreflang-manager/',
+			'https://daext.com/doc/hreflang-manager/',
 		);
 	}
 

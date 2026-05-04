@@ -53,9 +53,10 @@ class FrontendLogger implements EndpointInterface
     /**
      * Handles the request.
      *
+     * @return bool
      * @throws Exception On Error.
      */
-    public function handle_request(): void
+    public function handle_request(): bool
     {
         $data = $this->request_data->read_request($this->nonce());
         $level = $data['log']['level'] ?? 'info';
@@ -68,5 +69,6 @@ class FrontendLogger implements EndpointInterface
                 break;
         }
         wp_send_json_success();
+        return \true;
     }
 }

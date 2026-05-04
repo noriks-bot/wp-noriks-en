@@ -41,19 +41,19 @@ class Payments
     public function __construct(array $authorizations, array $captures, array $refunds = array())
     {
         foreach ($authorizations as $key => $authorization) {
-            if ($authorization instanceof \WooCommerce\PayPalCommerce\ApiClient\Entity\Authorization) {
+            if (is_a($authorization, \WooCommerce\PayPalCommerce\ApiClient\Entity\Authorization::class)) {
                 continue;
             }
             unset($authorizations[$key]);
         }
         foreach ($captures as $key => $capture) {
-            if ($capture instanceof \WooCommerce\PayPalCommerce\ApiClient\Entity\Capture) {
+            if (is_a($capture, \WooCommerce\PayPalCommerce\ApiClient\Entity\Capture::class)) {
                 continue;
             }
             unset($captures[$key]);
         }
         foreach ($refunds as $key => $refund) {
-            if ($refund instanceof \WooCommerce\PayPalCommerce\ApiClient\Entity\Refund) {
+            if (is_a($refund, \WooCommerce\PayPalCommerce\ApiClient\Entity\Refund::class)) {
                 continue;
             }
             unset($refunds[$key]);

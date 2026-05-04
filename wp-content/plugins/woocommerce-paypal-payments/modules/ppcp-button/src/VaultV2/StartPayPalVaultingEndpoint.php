@@ -62,8 +62,10 @@ class StartPayPalVaultingEndpoint implements EndpointInterface
     }
     /**
      * Handles the request.
+     *
+     * @return bool
      */
-    public function handle_request(): void
+    public function handle_request(): bool
     {
         try {
             $data = $this->request_data->read_request($this->nonce());
@@ -72,9 +74,11 @@ class StartPayPalVaultingEndpoint implements EndpointInterface
             $cancel_url = add_query_arg(array('ppcp_vault' => 'cancel'), $return_url);
             $links = $this->payment_token_endpoint->start_paypal_token_creation($user_id, $return_url, $cancel_url);
             wp_send_json_success(array('approve_link' => $links->approve_link()));
+            return \true;
         } catch (Exception $error) {
             $this->logger->error('Failed to start PayPal vaulting: ' . $error->getMessage());
-            wp_send_json_error(array('name' => $error instanceof PayPalApiException ? $error->name() : '', 'message' => $error->getMessage()));
+            wp_send_json_error(array('name' => is_a($error, PayPalApiException::class) ? $error->name() : '', 'message' => $error->getMessage()));
+            return \false;
         }
     }
 }
