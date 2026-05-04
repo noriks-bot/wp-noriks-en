@@ -388,15 +388,31 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
 
 
 /* ===== Postal Code + City side by side (all screens) ===== */
-body.woocommerce-checkout p#billing_postcode_field {
+body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_postcode_field,
+body.woocommerce-checkout #customer_details p#billing_postcode_field {
   clear: both !important;
   float: left !important;
   width: 35% !important;
 }
-body.woocommerce-checkout p#billing_city_field {
+body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_city_field,
+body.woocommerce-checkout #customer_details p#billing_city_field {
   clear: none !important;
   float: right !important;
   width: 61% !important;
+}
+@media (max-width: 575.98px) {
+  body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_postcode_field,
+  body.woocommerce-checkout #customer_details p#billing_postcode_field {
+    width: 35% !important;
+    float: left !important;
+    clear: both !important;
+  }
+  body.woocommerce-checkout .woocommerce-billing-fields__field-wrapper p#billing_city_field,
+  body.woocommerce-checkout #customer_details p#billing_city_field {
+    width: 61% !important;
+    float: right !important;
+    clear: none !important;
+  }
 }
 
 /* PayPal reCaptcha container — no margin */
