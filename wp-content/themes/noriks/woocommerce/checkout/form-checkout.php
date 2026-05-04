@@ -47,7 +47,7 @@ if ( WC()->cart->is_empty() ) return;
                     <span class="shipping_method_delivery_price tag tag--red">
                       <span class="woocommerce-Price-amount amount"><bdi>2,99<span class="woocommerce-Price-currencySymbol">&euro;</span></bdi></span>
                     </span>
-                    <span class="delivery_img"><img decoding="async" class="standard-shipping standard" src="https://images.vigo-shop.com/general/curriers/home_small_paket24@2x.png"/></span>
+                    <span class="delivery_img"><img decoding="async" class="gls standard" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/GLS_Logo_2021.svg/200px-GLS_Logo_2021.svg.png" alt="GLS"/></span>
                   </div>
                 </div>
               </label>
