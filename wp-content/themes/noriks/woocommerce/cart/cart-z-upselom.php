@@ -99,7 +99,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
                     </svg>
                   </span>
                   <span class="wc-reserve-note__text">
-                    Molimo, požuri! Netko je upravo naručio jedan od proizvoda u tvojoj košarici. 
+                    Please hurry! Someone just ordered one of the products in your cart. 
                     Rezervacija vrijedi još samo <strong id="wc-reserve-timer">10:00</strong> minuta.
                   </span>
                 </div>
@@ -373,7 +373,7 @@ $(this).append('<div class="qty-btn-group"><button type="button" class="qty-btn 
  */
 
 
-$TRIGGER_CATEGORY_SLUGS = array( 'bokserice', 'boxers', 'singles-boxers', 'orto-bokserice', 'majice-i-bokserice-paketi', 'black-friday' );
+$TRIGGER_CATEGORY_SLUGS = array( 'boxers', 'orto-bokserice', 'sets', 'black-friday' );
 
 $UPSELL_ID_CAT  = 4154;  // ID1 (when category match)
 $UPSELL_ID_ELSE = 4162;  // ID2 (when NO category match) <-- change 999 to your real product id
@@ -875,7 +875,7 @@ img.emoji {
 
         <div class="upsell-actions">
           <button type="button" class="upsell-add-btn" id="upsell-add-btn">
-            <span id="upsell-btn-text"><?php echo $upsell_in_cart ? 'DODANO' : 'Dodaj u košaricu'; ?></span>
+            <span id="upsell-btn-text"><?php echo $upsell_in_cart ? 'ADDED' : 'Add to cart'; ?></span>
           </button>
 
           <button type="button" class="upsell-remove-btn" id="upsell-remove-btn" <?php echo $upsell_in_cart ? '' : 'style="display:none"'; ?>>
@@ -958,7 +958,7 @@ img.emoji {
       if (removeBtn) removeBtn.style.display = isAdded ? 'inline-flex' : 'none';
 
       setOptionsDisabled(isAdded);
-      if (btnText) btnText.textContent = isAdded ? 'DODANO' : 'Dodaj u košaricu';
+      if (btnText) btnText.textContent = isAdded ? 'ADDED' : 'Add to cart';
     }
 
     function clearAttrHiddenInputs(){
@@ -1220,7 +1220,7 @@ img.emoji {
         }
 
         if (!removeUrl) {
-          alert('Ne mogu ukloniti proizvod (ne mogu pronaći remove link u košarici).');
+          alert('Cannot remove product (cannot find remove link in cart).');
           checkbox.checked = true;
           syncAddedUI(true);
           setBusy(false);

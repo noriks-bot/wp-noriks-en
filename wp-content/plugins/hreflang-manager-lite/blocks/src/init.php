@@ -38,7 +38,7 @@ function daexthrmal_register_hreflang_manager_sidebar() {
 	);
 	// Pass editor config data to JS (not used for translations).
 	wp_localize_script( 'daexthrmal-editor-js', 'DAEXTHRMAL_OPTIONS', array(
-		'connectionsInMenu' => intval( get_option( $shared->get( 'slug' ) . '_connections_in_menu' ), 10 )
+		'connectionsInMenu' => 10
 	));
 
 	/**

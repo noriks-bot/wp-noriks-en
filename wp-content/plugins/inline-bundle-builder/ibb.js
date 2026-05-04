@@ -103,7 +103,7 @@ jQuery(function($){
       var $msg = $card.find('.ibb-msg');
 
       if(slots.length){
-        var label = (slots.length === 1) ? 'Dodano u slot: ' : 'Dodano u slotove: ';
+        var label = (slots.length === 1) ? 'Added in slot: ' : 'Added in slot: ';
         $msg.text(label + slots.join(', '));
       } else {
         $msg.empty();
@@ -111,48 +111,10 @@ jQuery(function($){
     });
   }
 
-  /* ---------- GRATIS slots parsing (1-based) ---------- */
-  function parseGratisSet($wrap, totalSlots){
-    var attr = String($wrap.attr('data-ibb-gratis-slots') || '').trim().toLowerCase();
-    var set = {};
-    if (!attr) return set;
-
-    if (attr === 'all'){
-      for (var i=1; i<=totalSlots; i++) set[i] = true;
-      return set;
-    }
-
-    attr.split(',').forEach(function(tok){
-      tok = tok.trim();
-      if(!tok) return;
-      if(tok.indexOf('-') > -1){
-        var parts = tok.split('-');
-        var a = parseInt(parts[0], 10);
-        var b = parseInt(parts[1], 10);
-        if(!isNaN(a) && !isNaN(b)){
-          var start = Math.min(a,b), end = Math.max(a,b);
-          for (var j = start; j <= end; j++) set[j] = true;
-        }
-      } else {
-        var n = parseInt(tok, 10);
-        if(!isNaN(n)) set[n] = true;
-      }
-    });
-    return set;
-  }
-
-  /* ---------- render slots (now renders GRATIS when applicable) ---------- */
+  /* ---------- render slots ---------- */
   function refreshSlots($wrap){
-    var wid   = $wrap.attr('data-ibb-id');
-    var cart  = carts[wid] || [];
-    var total = $wrap.find('.ibb-slot').length;
-
-    // Cache parsed gratis set per wrapper
-    var gratisSet = $wrap.data('ibbGratisSet');
-    if (!gratisSet) {
-      gratisSet = parseGratisSet($wrap, total);
-      $wrap.data('ibbGratisSet', gratisSet);
-    }
+    var wid = $wrap.attr('data-ibb-id');
+    var cart = carts[wid] || [];
 
     $wrap.find('.ibb-slot').each(function(i){
       var s = cart[i] || emptySlot();
@@ -169,58 +131,19 @@ jQuery(function($){
         $('<span>', { class: 'ibb-slot-plus', text: '+', 'aria-hidden': 'true' }).appendTo($thumb);
       }
 
-      // Build slot attr content with optional GRATIS prefix
-      var $attr = $slot.find('.ibb-slot-attr');
-      $attr.empty();
-
-      var idx1 = i + 1; // 1-based
-      if (gratisSet[idx1]) {
-        $('<span>', { class: 'ibb-slot-attr-gratis', text: 'GRATIS' }).appendTo($attr);
-      }
-
       if(filled){
         var size = '';
         var attr = s.attr || {};
         for(var k in attr){
-          if(!Object.prototype.hasOwnProperty.call(attr, k)) continue;
+          if(!attr.hasOwnProperty(k)) continue;
           var key = (k+'').toLowerCase();
           if(key.indexOf('size')!==-1 || key.indexOf('velicina')!==-1 || key.indexOf('veličina')!==-1){
             size = (attr[k]+'').toUpperCase();
           }
         }
-        // append size (or fallback label) as plain text
-        $attr.append(document.createTextNode(size || ''));
-        if (!size) {
-          // if no size available (filled but no size attribute), show title as fallback
-          var title = s.title || '';
-          if (title) $attr.append(document.createTextNode(title));
-        }
+        $slot.find('.ibb-slot-attr').text(size);
       } else {
-          
-         //
-       // Try to find the closest product container that has data-is-boxers
-        var productEl =
-          $wrap.closest('[id^="product-"][data-is-boxers]').get(0) ||
-          document.querySelector('[id^="product-"][data-is-boxers]');
-
-        // Default fallback (in case element not found or attribute missing)
-        var isBoxers = false;
-
-        if (productEl && typeof productEl.dataset.isBoxers !== 'undefined') {
-          var flag = productEl.dataset.isBoxers;
-          // Accept "1" or "true" as truthy
-          isBoxers = (flag === '1' || flag === 'true');
-        }
-
-        console.log('isBoxers:', isBoxers);
-
-        // Write correct text based on value
-        $attr.append(
-          document.createTextNode(isBoxers ? 'Dodaj proizvod' : 'Dodaj majicu')
-        );
-        //
-
-        
+        $slot.find('.ibb-slot-attr').text('Add shirt');
       }
 
       $slot.find('.ibb-slot-price').html(filled ? (s.price_html || '') : '');
@@ -263,43 +186,17 @@ jQuery(function($){
     }
   }
 
-
-
-function renderSteps($wrap, $modal, total, active) {
-
-    // Detect isBoxers EXACTLY the same way as in refreshSlots()
-    var productEl =
-        $wrap.closest('[id^="product-"][data-is-boxers]').get(0) ||
-        document.querySelector('[id^="product-"][data-is-boxers]');
-
-    var isBoxers = false;
-    if (productEl && typeof productEl.dataset.isBoxers !== 'undefined') {
-        var flag = productEl.dataset.isBoxers;
-        isBoxers = (flag === '1' || flag === 'true');
-    }
-
-    // Choose label
-    var labelBase = isBoxers ? 'Proizvod ' : 'Majica ';
-
-    // Render steps
+  function renderSteps($wrap,$modal,total,active){
     var $steps = $modal.find('.ibb-steps').empty();
-    for (var i = 0; i < total; i++) {
-        var $p = $('<button type="button" class="ibb-step" role="tab"></button>')
-            .text(labelBase + (i + 1) + ' od ' + total)
-            .attr('data-index', i);
-
-        if (i === active) {
-            $p.addClass('is-active').attr('aria-selected', 'true');
-        }
-
-        $steps.append($p);
+    for(var i=0;i<total;i++){
+      var $p = $('<button type="button" class="ibb-step" role="tab"></button>')
+        .text('Shirt ' + (i+1) + ' od ' + total)
+        .attr('data-index', i);
+      if(i===active) $p.addClass('is-active').attr('aria-selected','true');
+      $steps.append($p);
     }
-
-    $modal.find('.ibb-step-num').text(active + 1);
-}
-
-  
-  
+    $modal.find('.ibb-step-num').text(active+1);
+  }
 
   function preselectDefaultSizeS($scope){
     var sizeKeys={'size':1,'velicina':1,'veličina':1,'pa_size':1,'pa_velicina':1};

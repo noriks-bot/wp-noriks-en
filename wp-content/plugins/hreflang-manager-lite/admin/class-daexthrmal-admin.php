@@ -427,7 +427,7 @@ class Daexthrmal_Admin {
 	 */
 	public static function ac_initialize_options() {
 
-		if ( intval( get_option( 'daexthrmal_options_version' ), 10 ) < 2 ) {
+		if ( intval( get_option( 'daexthrmal_options_version' ), 10 ) < 1 ) {
 
 			// Assign an instance of Daexthrmal_Shared.
 			$shared = Daexthrmal_Shared::get_instance();
@@ -437,7 +437,7 @@ class Daexthrmal_Admin {
 			}
 
 			// Update options version.
-			update_option( 'daexthrmal_options_version', '2' );
+			update_option( 'daexthrmal_options_version', '1' );
 
 		}
 	}
@@ -652,7 +652,7 @@ class Daexthrmal_Admin {
 			 */
 
 			// Get the number of connections that should be displayed in the menu.
-			$connections_in_menu = intval( get_option( $this->shared->get( 'slug' ) . '_connections_in_menu' ), 10 );
+			$connections_in_menu = 10;
 
 			$permalink = $this->shared->get_permalink( get_the_ID(), true );
 
@@ -948,27 +948,62 @@ class Daexthrmal_Admin {
 
 			// Update an existing connection.
 
-			// Get the number of connections that should be displayed in the menu.
-			$connections_in_menu = intval( get_option( $this->shared->get( 'slug' ) . '_connections_in_menu' ), 10 );
-
-			$sets = array();
-			$params = array();
-
-			for ( $i = 1; $i <= $connections_in_menu; $i++ ) {
-				$sets[] = "url{$i} = %s";
-				$sets[] = "language{$i} = %s";
-				$sets[] = "script{$i} = %s";
-				$sets[] = "locale{$i} = %s";
-
-				array_push( $params, $url[ $i ], $language[ $i ], $script[ $i ], $locale[ $i ] );
-			}
-
-			$sql = "UPDATE {$wpdb->prefix}daexthrmal_connection SET " . implode( ', ', $sets ) . ' WHERE url_to_connect = %s';
-			$params[] = $permalink;
-
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$query_result = $wpdb->query(
-				$wpdb->prepare( $sql, $params )
+				$wpdb->prepare(
+					"UPDATE {$wpdb->prefix}daexthrmal_connection SET "
+					. 'url1 = %s, language1 = %s, script1 = %s, locale1 = %s,'
+					. 'url2 = %s, language2 = %s, script2 = %s, locale2 = %s ,'
+					. 'url3 = %s, language3 = %s, script3 = %s, locale3 = %s ,'
+					. 'url4 = %s, language4 = %s, script4 = %s, locale4 = %s ,'
+					. 'url5 = %s, language5 = %s, script5 = %s, locale5 = %s ,'
+					. 'url6 = %s, language6 = %s, script6 = %s, locale6 = %s ,'
+					. 'url7 = %s, language7 = %s, script7 = %s, locale7 = %s ,'
+					. 'url8 = %s, language8 = %s, script8 = %s, locale8 = %s ,'
+					. 'url9 = %s, language9 = %s, script9 = %s, locale9 = %s ,'
+					. 'url10 = %s, language10 = %s, script10 = %s, locale10 = %s WHERE url_to_connect = %s ',
+					$url[1],
+					$language[1],
+					$script[1],
+					$locale[1],
+					$url[2],
+					$language[2],
+					$script[2],
+					$locale[2],
+					$url[3],
+					$language[3],
+					$script[3],
+					$locale[3],
+					$url[4],
+					$language[4],
+					$script[4],
+					$locale[4],
+					$url[5],
+					$language[5],
+					$script[5],
+					$locale[5],
+					$url[6],
+					$language[6],
+					$script[6],
+					$locale[6],
+					$url[7],
+					$language[7],
+					$script[7],
+					$locale[7],
+					$url[8],
+					$language[8],
+					$script[8],
+					$locale[8],
+					$url[9],
+					$language[9],
+					$script[9],
+					$locale[9],
+					$url[10],
+					$language[10],
+					$script[10],
+					$locale[10],
+					$permalink
+				)
 			);
 
 		} else {

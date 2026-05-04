@@ -30,6 +30,8 @@
 <!-- Hotjar tracking code removed -->
 
 
+<meta name="google-site-verification" content="oiCYKUD2F4vs6BnswNHmEC2xubekyuMRXyM6ZjbY1-w" />
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -46,19 +48,19 @@
 	<div class="top-header">
   <div class="marquee">
     <div class="marquee-content">
-      <span><a href="/hr/shop">Besplatna dostava za narudžbe iznad 70 €</a></span>
-      <span><a href="/hr/shop">30 dana bez rizika – probaj bez brige</a></span>
-      <!--<span><a href="/hr/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
+      <!--<span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
 
       <!-- DUPLICATED for seamless infinite loop -->
-      <span><a href="/hr/shop">Besplatna dostava za narudžbe iznad 70 €</a></span>
-      <span><a href="/hr/shop">30 dana bez rizika – probaj bez brige</a></span>
-     <!-- <span><a href="/hr/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
+     <!-- <span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
       
        <!-- DUPLICATED for seamless infinite loop -->
-      <span><a href="/hr/shop">Besplatna dostava za narudžbe iznad 70 €</a></span>
-      <span><a href="/hr/shop">30 dana bez rizika – probaj bez brige</a></span>
-     <!-- <span><a href="/hr/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
+      <span><a href="/en/shop">Free shipping on orders over €70</a></span>
+      <span><a href="/en/shop">30-day risk-free trial – try without worry</a></span>
+     <!-- <span><a href="/en/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
     </div>
   </div>
 </div>
@@ -135,7 +137,7 @@
                         
                     <!--
                     <div class="dropdown-menu">
-                        <a href="/hr/shop">Sastavi svoj paket</a>
+                        <a href="/en/shop">Sastavi svoj paket</a>
                         <a href="/hr/product-category/bundles/">Gotovi paketi</a>
                     </div>
                     -->
@@ -149,8 +151,8 @@
                     </a>
                     <!--
                     <div class="dropdown-menu">
-                        <a href="/hr/product-category/bokserice-sastavi-paket/">Sastavi svoj paket</a>
-                        <a href="/hr/product-category/bokserice/">Gotovi paketi</a>
+                        <a href="/en/product-category/boxers/">Build Your Pack</a>
+                        <a href="/en/product-category/boxers/">Ready Packs</a>
                     </div>
                     -->
                 </div>
@@ -232,7 +234,7 @@
           
           
         <?php if ( class_exists( 'WooCommerce' ) ) : ?>
-            <a class="header-cart" href="/hr/cart">
+            <a class="header-cart" href="/en/cart">
                 <div class="cart-icon">
                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="26" height="23" viewBox="0 0 26 23">
                     <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAXCAYAAAAV1F8QAAACM0lEQVR4AbRVPYsaURS9M07AXgURixR+dbtbS9ZSEIv8AbUTxb+w6exFLURQWxUUooWi4AciiDGdFoqIhE2tVVZEcDLngUM2mxlnwjrMee+8e8+9h3m84fGk83l4uBfv7+5EnWWky8jn84mzbzOafZ8RuB4zXUaFQoEMgkCC8IHAb2KUzWZFh8NBx+ORARwxrWaavujx8ZMYj8dZz2QySQAWiCEHfg2ajAqFIhkMBppOpzDhJCMOHDHkrpkgf9UonU6LTqeTXl5+USgUQg0DOGLIQcOCKoOqkdfrFROJBCt/evpC6/WaYwtpAEdMogQNtOBKUDUqlUpsy5bLJaVSKdnk0gwx5LCFxWLxEv7nzFerVVHpcblcrMjj8ZCSBjmI3G63ogYevN1uh+6msFgsxPf7/ZuaoPlwOCS+1WqB3xSdTof4yWTC7XY7TUbn85m63S4DuJai/X6P/49jp240GmmpoWAwSH6/nwMCgYCmmvF4zHTMqNfrsYXasFgsqN1uy0dc2g5uPp+rlbDcpTczajS+NlhUZbBarW+yNpvtTezvQLPZ/IEYM3p+/vlZ+tOxVoTZbKZcLocLT5BEQj6fF00mk0SV381mQ9vt9iMUzAgERxCzGmKxGB0OhxMQjUbVpCw3GAzYjEE2kvYc66swGo0EXBVKgj97ykb1ep07nU5S+n1e9KrVavLhkY3QvlwuY3oXVCqVV31eGUUiEU66WwjHdrVa0f8AtZlMhsLhsPw1cPwNAAD//6RURXgAAAAGSURBVAMAUxNB668Ak78AAAAASUVORK5CYII=" x="0" y="0" width="26" height="23"/>
@@ -263,56 +265,61 @@
 <div id="languageModal" class="language-modal">
   <div class="language-modal-content">
     <span class="language-close" onclick="closeLanguageModal()">&times;</span>
-    <h3><?php  echo get_field("country_shop_list_POPUP_t1","options"); ?></h3>
+    <h3>Choose your country</h3>
    <div class="language-options">
- 
- 
-      
-  <a href="/" class="language-option">
+
+  <a href="https://noriks.com/" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/eu.svg"><span>English (Europe)</span>
   </a>
-  
-<a href="/hr" class="language-option">
+
+  <a href="https://noriks.com/hr" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/hr.svg"><span>Croatia (HR)</span>
   </a>
-  
-  <!--
-   <a disabled href="/hu" class="language-option">
+
+  <a href="https://noriks.com/hu" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/hu.svg"><span>Hungary (HU)</span>
   </a>
-    <a href="/de" class="language-option">
-    <img src="https://static.devit.software/countries/flags/rectangle/de.svg"><span>Germany (DE)</span>
-  </a>
-  -->
 
-  <a href="/pl" class="language-option">
+  <a href="https://noriks.com/pl" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/pl.svg"><span>Poland (PL)</span>
   </a>
-  <a href="/sk" class="language-option">
+
+  <a href="https://noriks.com/sk" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/sk.svg"><span>Slovakia (SK)</span>
   </a>
-  <a href="/cz" class="language-option">
+
+  <a href="https://noriks.com/cz" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/cz.svg"><span>Czech Republic (CZ)</span>
   </a>
-  <!--
-  <a href="/ro" class="language-option">
+
+  <a href="https://noriks.com/ro" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/ro.svg"><span>Romania (RO)</span>
   </a>
-  -->
-  <a href="/gr" class="language-option">
+
+  <a href="https://noriks.com/gr" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/gr.svg"><span>Greece (GR)</span>
   </a>
-  <!--
-  <a href="/si" class="language-option">
+
+  <a href="https://noriks.com/bg" class="language-option">
+    <img src="https://static.devit.software/countries/flags/rectangle/bg.svg"><span>Bulgaria (BG)</span>
+  </a>
+
+  <a href="https://noriks.com/it" class="language-option">
+    <img src="https://static.devit.software/countries/flags/rectangle/it.svg"><span>Italy (IT)</span>
+  </a>
+
+  <a href="https://noriks.com/si" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/si.svg"><span>Slovenia (SI)</span>
   </a>
-  -->
-  
-    <a href="https://www.noriksofficial.com/" class="language-option">
+
+  <a href="https://noriks.com/de" class="language-option">
+    <img src="https://static.devit.software/countries/flags/rectangle/de.svg"><span>Germany (DE)</span>
+  </a>
+
+  <a href="https://www.noriksofficial.com/" class="language-option">
     <img src="https://static.devit.software/countries/flags/rectangle/us.svg"><span>English (USA)</span>
   </a>
-  
-  
+
 </div>
   </div>
 </div>

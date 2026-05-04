@@ -13,8 +13,7 @@ use WooCommerce\PayPalCommerce\ApiClient\Endpoint\PaymentMethodTokensEndpoint;
 use WooCommerce\PayPalCommerce\ApiClient\Entity\PaymentSource;
 use WooCommerce\PayPalCommerce\Button\Endpoint\EndpointInterface;
 use WooCommerce\PayPalCommerce\Button\Endpoint\RequestData;
-use WooCommerce\PayPalCommerce\Button\Exception\NonceValidationException;
-use WooCommerce\PayPalCommerce\WcPaymentTokens\WooCommercePaymentTokens;
+use WooCommerce\PayPalCommerce\Vaulting\WooCommercePaymentTokens;
 /**
  * Class CreatePaymentToken
  */
@@ -98,8 +97,6 @@ class CreatePaymentToken implements EndpointInterface
                 }
             }
             wp_send_json_success($wc_token_id);
-        } catch (NonceValidationException $error) {
-            wp_send_json_error(array('message' => $error->getMessage()), 400);
         } catch (Exception $exception) {
             wp_send_json_error();
         }

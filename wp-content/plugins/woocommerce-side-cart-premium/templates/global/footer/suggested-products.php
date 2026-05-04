@@ -76,9 +76,9 @@ while ( $products->have_posts() ) : $products->the_post();
                                 if ( $product->is_type('variable') ) {
                                     // Embed variation data directly on button for instant modal
                                     $vdata = noriks_get_product_variation_data($product_id);
-                                    echo '<a style="font-size:13px; padding: 5px 9px 5px 9px;" href="#" class="button noriks-upsell-btn" data-product_id="' . esc_attr($product_id) . '" data-vdata="' . esc_attr(json_encode($vdata)) . '">+ DODAJ</a>';
+                                    echo '<a style="font-size:13px; padding: 5px 9px 5px 9px;" href="#" class="button noriks-upsell-btn" data-product_id="' . esc_attr($product_id) . '" data-vdata="' . esc_attr(json_encode($vdata)) . '">+ ADD</a>';
                                 } else {
-                                    echo '<a style="font-size:13px; padding: 5px 9px 5px 9px;" href="' . esc_url($product->add_to_cart_url()) . '" class="button add_to_cart_button ajax_add_to_cart" data-product_id="' . esc_attr($product_id) . '" data-quantity="1">+ DODAJ</a>';
+                                    echo '<a style="font-size:13px; padding: 5px 9px 5px 9px;" href="' . esc_url($product->add_to_cart_url()) . '" class="button add_to_cart_button ajax_add_to_cart" data-product_id="' . esc_attr($product_id) . '" data-quantity="1">+ ADD</a>';
                                 }
     			        ?>
 					

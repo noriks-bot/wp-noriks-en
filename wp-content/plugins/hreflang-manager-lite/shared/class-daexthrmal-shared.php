@@ -40,7 +40,7 @@ class Daexthrmal_Shared {
 	private function __construct() {
 
 		$this->data['slug'] = 'daexthrmal';
-		$this->data['ver']  = '1.18';
+		$this->data['ver']  = '1.17';
 		$this->data['dir']  = substr( plugin_dir_path( __FILE__ ), 0, -7 );
 		$this->data['url']  = substr( plugin_dir_url( __FILE__ ), 0, -7 );
 
@@ -59,7 +59,6 @@ class Daexthrmal_Shared {
 			$this->get( 'slug' ) . '_auto_trailing_slash'  => '1',
 
 			$this->get( 'slug' ) . '_auto_alternate_pages' => '0',
-			$this->get( 'slug' ) . '_connections_in_menu'  => '10',
 
 			$this->get( 'slug' ) . '_auto_delete'          => '1',
 			$this->get( 'slug' ) . '_show_log'             => '0',
@@ -779,11 +778,8 @@ class Daexthrmal_Shared {
 
 		} else {
 
-			// Get the number of connections to echo from the plugin options.
-			$connections_in_menu = intval( get_option( $this->get( 'slug' ) . '_connections_in_menu' ), 10 );
-
 			// Echo the hreflang link elements.
-			for ( $i = 1; $i <= $connections_in_menu; $i++ ) {
+			for ( $i = 1; $i <= 10; $i++ ) {
 
 				// Check if this is a valid hreflang.
 				if ( strlen( $results->{'url' . $i} ) > 0 && strlen( $results->{'language' . $i} ) > 0 ) {
@@ -966,19 +962,6 @@ class Daexthrmal_Shared {
 									'hreflang-manager-lite'
 								),
 								'help'    => __( 'Automatically generate the connections for the alternate pages.', 'hreflang-manager-lite' ),
-							),
-							array(
-									'name'      => 'daexthrmal_connections_in_menu',
-									'label'     => __( 'Maximum Alternate Pages', 'hreflang-manager-lite' ),
-									'type'      => 'range',
-									'tooltip'   => __(
-											'This option sets the maximum number of alternate pages displayed in the plugin UI and used in the front-end hreflang output. Alternate pages exceeding the limit are preserved but not displayed or used unless the limit is increased.',
-											'hreflang-manager-lite'
-									),
-									'help'      => __( 'Define the maximum number of alternate pages displayed in the plugin UI and used in the hreflang output.', 'hreflang-manager-lite' ),
-									'rangeMin'  => 1,
-									'rangeMax'  => 10,
-									'rangeStep' => 1,
 							),
 						),
 					),
@@ -1947,10 +1930,7 @@ class Daexthrmal_Shared {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$connection_obj = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}daexthrmal_connection WHERE connection_id = %d", $connection_id ) );
 
-		// Get the number of connections that should be displayed in the menu.
-		$connections_in_menu = intval( get_option( $this->get( 'slug' ) . '_connections_in_menu' ), 10 );
-
-		for ( $i = 1;$i <= $connections_in_menu;$i++ ) {
+		for ( $i = 1;$i <= 10;$i++ ) {
 
 			if ( isset( $connection_obj->{'url' . $i} ) && strlen( $connection_obj->{'url' . $i} ) > 0 ) {
 				echo '<a target="_blank" href="' . esc_attr( stripslashes( $connection_obj->{'url' . $i} ) ) . '">' . esc_html( stripslashes( $connection_obj->{'language' . $i} ) );
@@ -2052,11 +2032,8 @@ class Daexthrmal_Shared {
 
 		} else {
 
-			// Get the number of connections to echo from the plugin options.
-			$connections_in_menu = intval( get_option( $this->get( 'slug' ) . '_connections_in_menu' ), 10 );
-
 			// Generate an array with all the connections.
-			for ( $i = 1; $i <= $connections_in_menu; $i ++ ) {
+			for ( $i = 1; $i <= 10; $i ++ ) {
 
 				// Check if this is a valid hreflang.
 				if ( strlen( $results->{'url' . $i} ) > 0 && strlen( $results->{'language' . $i} ) > 0 ) {

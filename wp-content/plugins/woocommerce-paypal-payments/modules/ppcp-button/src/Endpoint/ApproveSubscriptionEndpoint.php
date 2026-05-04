@@ -13,7 +13,6 @@ use WooCommerce\PayPalCommerce\Vendor\Psr\Log\LoggerInterface;
 use WooCommerce\PayPalCommerce\ApiClient\Endpoint\BillingSubscriptions;
 use WooCommerce\PayPalCommerce\ApiClient\Endpoint\OrderEndpoint;
 use WooCommerce\PayPalCommerce\ApiClient\Exception\PayPalApiException;
-use WooCommerce\PayPalCommerce\Button\Exception\NonceValidationException;
 use WooCommerce\PayPalCommerce\Button\Exception\RuntimeException;
 use WooCommerce\PayPalCommerce\Button\Helper\Context;
 use WooCommerce\PayPalCommerce\Button\Helper\WooCommerceOrderCreator;
@@ -121,8 +120,6 @@ class ApproveSubscriptionEndpoint implements \WooCommerce\PayPalCommerce\Button\
                 wp_send_json_success(array('order_received_url' => $order_received_url));
             }
             wp_send_json_success();
-        } catch (NonceValidationException $error) {
-            wp_send_json_error(array('message' => $error->getMessage()), 400);
         } catch (Exception $error) {
             $this->logger->error('Subscription approve failed: ' . $error->getMessage());
             wp_send_json_error(array('name' => $error instanceof PayPalApiException ? $error->name() : '', 'message' => $error->getMessage(), 'code' => $error->getCode(), 'details' => $error instanceof PayPalApiException ? $error->details() : (object) array()));

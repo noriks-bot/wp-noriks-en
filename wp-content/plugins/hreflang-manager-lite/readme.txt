@@ -5,7 +5,7 @@ Donate link: https://daext.com
 Requires at least: 4.0
 Tested up to: 6.9.4
 Requires PHP: 5.2
-Stable tag: 1.18
+Stable tag: 1.17
 License: GPLv3
 
 The Hreflang Manager plugin provides you an easy and reliable method to implement hreflang in WordPress.
@@ -46,13 +46,13 @@ For more advanced configuration, examples, and troubleshooting, visit the [Plugi
 1. Upload the plugin files to the `/wp-content/plugins/hreflang-manager-lite/` directory, or install the plugin through the WordPress Plugins screen directly.
 2. Activate the plugin through the Plugins screen in WordPress.
 
-### 1. Add Hreflang Data
+### 1. Add hreflang data
 
 Go to **Hreflang → Connections** and start adding hreflang data.
 
 Alternatively, you can create connections directly from the post editor using the **Hreflang Manager** panel. This panel is available in both the Block Editor and the Classic Editor. If you don’t see it, enable it from the editor options.
 
-### 2. Verify Your Implementation
+### 2. Verify your implementation
 
 To verify your hreflang implementation, you can use the built-in **Tag Inspector**.
 
@@ -62,16 +62,9 @@ For detailed guidance and advanced configuration, visit the [official Knowledge 
 
 == Changelog ==
 
-= 1.18 =
-
-*April 25, 2026*
-
-* Added the "Maximum Alternate Pages" option, allowing administrators to define a hard limit for the number of alternate pages used across the plugin UI and hreflang output.
-* Removed the unexpected output message displayed during plugin activation.
-
 = 1.17 =
 
-*March 26, 2026*
+*Mar 26, 2026*
 
 * The Pro version upgrade banner previously displayed at the bottom of all plugin menu pages is now shown only in the Options menu.
 * Added a notices manager class used to display documentation resources and a link to rate the plugin. A related action hook has also been introduced to allow notices to be rendered in a specific area of the plugin UI.

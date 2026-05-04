@@ -27,6 +27,7 @@ use WooCommerce\PayPalCommerce\Button\Helper\ThreeDSecure;
 use WooCommerce\PayPalCommerce\WcGateway\Helper\Environment;
 use WooCommerce\PayPalCommerce\Session\SessionHandler;
 use WooCommerce\PayPalCommerce\WcSubscriptions\Helper\SubscriptionHelper;
+use WooCommerce\PayPalCommerce\Vaulting\PaymentTokenRepository;
 use WooCommerce\PayPalCommerce\Settings\Data\SettingsProvider;
 use WooCommerce\PayPalCommerce\WcGateway\Exception\PayPalOrderMissingException;
 use WooCommerce\PayPalCommerce\WcGateway\Gateway\PayPalGateway;
@@ -37,6 +38,7 @@ class OrderProcessor
     use \WooCommerce\PayPalCommerce\WcGateway\Processor\PaymentsStatusHandlingTrait;
     use \WooCommerce\PayPalCommerce\WcGateway\Processor\TransactionIdHandlingTrait;
     protected Environment $environment;
+    protected PaymentTokenRepository $payment_token_repository;
     private SessionHandler $session_handler;
     private OrderEndpoint $order_endpoint;
     private OrderFactory $order_factory;

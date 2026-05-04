@@ -87,7 +87,7 @@
     
     style="margin-top: 70px;margin-bottom: 70px;"
     
-      src="/hr/wp-content/uploads/2025/12/boxers_size.jpg"
+      src="https://noriks.com/wp-content/uploads/2026/05/bokserice_en.jpg"
       alt="Size Guide">
       
       

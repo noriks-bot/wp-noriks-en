@@ -13,7 +13,6 @@ use WC_Order;
 use WC_Payment_Tokens;
 use WooCommerce\PayPalCommerce\Button\Endpoint\EndpointInterface;
 use WooCommerce\PayPalCommerce\Button\Endpoint\RequestData;
-use WooCommerce\PayPalCommerce\Button\Exception\NonceValidationException;
 /**
  * Class SubscriptionChangePaymentMethod
  */
@@ -64,8 +63,6 @@ class SubscriptionChangePaymentMethod implements EndpointInterface
                 wp_send_json_success();
             }
             wp_send_json_error();
-        } catch (NonceValidationException $error) {
-            wp_send_json_error(array('message' => $error->getMessage()), 400);
         } catch (Exception $exception) {
             wp_send_json_error();
         }

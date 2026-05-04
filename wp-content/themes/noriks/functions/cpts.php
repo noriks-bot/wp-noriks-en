@@ -83,12 +83,12 @@ function noriks_render_landigs_meta_box($post) {
     $fields = array(
         '_landigs_target_product_id'  => '',
         '_landigs_target_product_url' => '',
-        '_landigs_primary_label'      => 'Boja',
-        '_landigs_primary_options'    => "Crna|#000000\nBijela|#f5f5f5\nSiva|#9ca3af\nTamnoplava|#243647\nSmeđa|#7c5a3c\nMaslinasta|#607d33",
-        '_landigs_secondary_label'    => 'Veličina',
+        '_landigs_primary_label'      => 'Color',
+        '_landigs_primary_options'    => "Black|#000000\nWhite|#f5f5f5\nGray|#9ca3af\nNavy|#243647\nBrown|#7c5a3c\nOlive|#607d33",
+        '_landigs_secondary_label'    => 'Size',
         '_landigs_secondary_options'  => "S\nM\nL\nXL\nXXL\n3XL\n4XL",
         '_landigs_hide_secondary'     => '0',
-        '_landigs_offer_options'      => "1|1 majica|odličan ulazni paket 17.96€|PRIHRANITE 49%\n2|2 majice|najbolji omjer cijene i količine 44.28€|PRIHRANITE 59%\n3|3 majice|najveća ušteda po komadu 69.26€|PRIHRANITE 62%\n5|5 majica|najveći paket za maksimalnu uštedu 135.38€|PRIHRANITE 73%",
+        '_landigs_offer_options'      => "1|1 t-shirt|great entry package 17.96€|SAVE 49%\n2|2 t-shirts|best price/quantity ratio 44.28€|SAVE 59%\n3|3 t-shirts|maximum savings per piece 69.26€|SAVE 62%\n5|5 t-shirts|largest pack for maximum savings 135.38€|SAVE 73%",
     );
 
     echo '<table class="form-table"><tbody>';
@@ -183,13 +183,13 @@ function noriks_ensure_default_step_landing() {
     }
 
     update_post_meta($post_id, '_landigs_target_product_id', 3421);
-    update_post_meta($post_id, '_landigs_target_product_url', home_url('/hr/product/noriks-majica/'));
-    update_post_meta($post_id, '_landigs_primary_label', 'Boja');
-    update_post_meta($post_id, '_landigs_primary_options', "Crna|#000000\nBijela|#f5f5f5\nSiva|#9ca3af\nTamnoplava|#243647\nSmeđa|#7c5a3c\nMaslinasta|#607d33");
-    update_post_meta($post_id, '_landigs_secondary_label', 'Veličina');
+    update_post_meta($post_id, '_landigs_target_product_url', home_url('/en/product/noriks-t-shirt/'));
+    update_post_meta($post_id, '_landigs_primary_label', 'Color');
+    update_post_meta($post_id, '_landigs_primary_options', "Black|#000000\nWhite|#f5f5f5\nGray|#9ca3af\nNavy|#243647\nBrown|#7c5a3c\nOlive|#607d33");
+    update_post_meta($post_id, '_landigs_secondary_label', 'Size');
     update_post_meta($post_id, '_landigs_secondary_options', "S\nM\nL\nXL\nXXL\n3XL\n4XL");
     update_post_meta($post_id, '_landigs_hide_secondary', '0');
-    update_post_meta($post_id, '_landigs_offer_options', "1|1 majica|odličan ulazni paket 17.96€|PRIHRANITE 49%\n2|2 majice|najbolji omjer cijene i količine 44.28€|PRIHRANITE 59%\n3|3 majice|najveća ušteda po komadu 69.26€|PRIHRANITE 62%\n5|5 majica|najveći paket za maksimalnu uštedu 135.38€|PRIHRANITE 73%");
+    update_post_meta($post_id, '_landigs_offer_options', "1|1 t-shirt|great entry package 17.96€|SAVE 49%\n2|2 t-shirts|best price/quantity ratio 44.28€|SAVE 59%\n3|3 t-shirts|maximum savings per piece 69.26€|SAVE 62%\n5|5 t-shirts|largest pack for maximum savings 135.38€|SAVE 73%");
     flush_rewrite_rules(false);
 }
 
@@ -239,8 +239,8 @@ function noriks_ensure_default_collection_akcija() {
         return;
     }
 
-    $created = wp_insert_term('Akcija', 'collections', array(
-        'slug' => 'akcija',
+    $created = wp_insert_term('Sale', 'collections', array(
+        'slug' => 'sale',
     ));
 
     if (is_wp_error($created) || empty($created['term_id'])) {

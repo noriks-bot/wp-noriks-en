@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Hreflang Manager
  * Description: Set language and regional URL for better SEO performance. (Lite Version)
- * Version: 1.18
+ * Version: 1.17
  * Author: DAEXT
  * Author URI: https://daext.com
  * Text Domain: hreflang-manager-lite
@@ -55,14 +55,6 @@ function daexthrmal_get_connections_count() {
 
 	if ( false !== $cached_count ) {
 		return (int) $cached_count;
-	}
-
-	/**
-	 * If the database version is not set or is less than 1, it means the table has not been created yet or is not
-	 * updated to the latest version. In this case, we can safely return 0 without running a query.
-	 */
-	if ( intval( get_option( 'daexthrmal_database_version' ), 10 ) < 1 ) {
-		return 0;
 	}
 
 	global $wpdb;

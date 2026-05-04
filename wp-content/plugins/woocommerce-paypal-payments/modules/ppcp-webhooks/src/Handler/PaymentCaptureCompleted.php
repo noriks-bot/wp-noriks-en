@@ -96,7 +96,7 @@ class PaymentCaptureCompleted implements \WooCommerce\PayPalCommerce\Webhooks\Ha
          * Allow access to the webhook logic before updating the WC order.
          */
         do_action('woocommerce_paypal_payments_payment_capture_completed_webhook_handler', $wc_order, $order_id);
-        if (!in_array($wc_order->get_status(), array('pending', 'on-hold'), \true)) {
+        if ($wc_order->get_status() !== 'on-hold') {
             return $this->success_response();
         }
         $wc_order->add_order_note(__('Payment successfully captured.', 'woocommerce-paypal-payments'));

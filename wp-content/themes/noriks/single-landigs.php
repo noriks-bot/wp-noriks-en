@@ -95,7 +95,7 @@ if (!function_exists('noriks_ensure_default_landing_offers')) {
             $offers[] = array(
                 'quantity' => 5,
                 'title'    => '5 majic',
-                'subtitle' => 'Najveći paket za maksimalnu uštedu',
+                'subtitle' => 'Largest pack for maximum savings',
                 'badge'    => '',
                 'selected' => false,
             );
@@ -489,7 +489,7 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
 
         $related_size_markup = '
                     <div class="related-product-size-options" id="related-product-sizes-rp-0">
-                      <span class="related-product-size-label">Veličina:</span>
+                      <span class="related-product-size-label">Size:</span>
                       <div class="related-product-size-list">
                         <button type="button" class="related-product-size-button is-selected" data-size="S">S</button>
                         <button type="button" class="related-product-size-button" data-size="M">M</button>
@@ -528,19 +528,19 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
         $markup = str_replace(
             array(
                 '<img class="related-product-image" src="https://images.hs-plus.com/product/product-image/67fb0394c5d0a_STEPHEEL-3831127625931-N-1.jpg">',
-                '2x blazinica za peto za zmanjšanje bolečin v peti',
-                'Zapolni prevelik čevelj, ne da bi drgnila ali povzročala žulje.',
+                '2x heel cushion for heel pain relief',
+                'Fills an oversized shoe without rubbing or causing blisters.',
                 '3.99&#x20AC;',
                 '11.95&#x20AC;',
-                'var relatedProductsData = [{"id":"rp-0","name":"2x blazinica za peto za zmanjšanje bolečin v peti","description":"Zapolni prevelik čevelj, ne da bi drgnila ali povzročala žulje.\n","price":3.99,"originalPrice":11.95,"discountPercentage":67,"wcId":981495,"imageUrl":"https://images.hs-plus.com/product/product-image/67fb0394c5d0a_STEPHEEL-3831127625931-N-1.jpg"}];',
+                'var relatedProductsData = [{"id":"rp-0","name":"2x heel cushion for heel pain relief","description":"Fills an oversized shoe without rubbing or causing blisters.\n","price":3.99,"originalPrice":11.95,"discountPercentage":67,"wcId":981495,"imageUrl":"https://images.hs-plus.com/product/product-image/67fb0394c5d0a_STEPHEEL-3831127625931-N-1.jpg"}];',
             ),
             array(
-                '<img class="related-product-image" src="' . esc_url($boxers_image_url) . '" alt="NORIKS bokserice">',
-                'NORIKS crne bokserice',
-                'Mekane, elastične i udobne bokserice za nošenje kroz cijeli dan.',
+                '<img class="related-product-image" src="' . esc_url($boxers_image_url) . '" alt="NORIKS boxers">',
+                'NORIKS black boxers',
+                'Soft, elastic and comfortable boxers for all-day wear.',
                 '7.99&#x20AC;',
                 '15.99&#x20AC;',
-                'var relatedProductsData = [{"id":"rp-0","name":"NORIKS crne bokserice","description":"Mekane, elastične i udobne bokserice za nošenje kroz cijeli dan.","price":7.99,"originalPrice":15.99,"discountPercentage":50,"wcId":981495,"imageUrl":"' . esc_js($boxers_image_url) . '"}];',
+                'var relatedProductsData = [{"id":"rp-0","name":"NORIKS black boxers","description":"Soft, elastic and comfortable boxers for all-day wear.","price":7.99,"originalPrice":15.99,"discountPercentage":50,"wcId":981495,"imageUrl":"' . esc_js($boxers_image_url) . '"}];',
             ),
             $markup
         );
@@ -554,17 +554,17 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
         $text_replacements = array(
             'STEPEASE - OrthoStep' => 'NORIKS - NORIKS',
             'Ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami | STEPEASE' => 'NORIKS MAJICA | NORIKS',
-            'Ortopedski vložki z masažnimi točkami | STEPEASE' => 'NORIKS MAJICA | NORIKS',
+            'Orthopaedic insoles with massage points | STEPEASE' => 'NORIKS T-SHIRT | NORIKS',
             'Ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami' => 'NORIKS majice',
-            'Ortopedski vložki z masažnimi točkami' => 'NORIKS majice',
+            'Orthopaedic insoles with massage points' => 'NORIKS T-Shirts',
             'STEPEASE&#xA0;|&#xA0;Masa&#x17E;ni vlo&#x17E;ki' => 'NORIKS&#xA0;|&#xA0;Majica',
-            'STEPEASE | Masažni vložki' => 'NORIKS | Majica',
+            'STEPEASE | Massage insoles' => 'NORIKS | T-Shirt',
             '93% strank je ocenilo Stepease z odličnostjo' => '93% strank je ocenilo NORIKS z odličnostjo',
             '93% strank je ocenilo NORIKS z odličnostjo' => '93% kupaca ocijenilo je NORIKS odličnim',
             'Odli&#x10D;no 4,8&#xA0;|&#xA0;1169&#xA0;ocen' => 'Odlično 4,8 | 1169 ocjena',
             'ocen kupcev' => 'ocjena kupaca',
-            'Ali se STEPEASE prilegajo mojim &#x10D;evljem?' => 'Ali mi NORIKS majica odgovara?',
-            'Ali se STEPEASE prilegajo mojim čevljem?' => 'Ali mi NORIKS majica odgovara?',
+            'Ali se STEPEASE prilegajo mojim &#x10D;evljem?' => 'Does NORIKS t-shirt fit me?',
+            'Ali se STEPEASE prilegajo mojim čevljem?' => 'Does NORIKS t-shirt fit me?',
             'Kako dolgo zdr&#x17E;ijo vlo&#x17E;ki STEPEASE?' => 'Kako dolgo traju NORIKS majice?',
             'Kako dolgo zdržijo vložki STEPEASE?' => 'Kako dolgo traju NORIKS majice?',
             'Domov' => 'Početna',
@@ -589,8 +589,8 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
             '✔ Takojšnje olajšanje ✔ Klinično preizkušeno ✔ Priporočajo podiatri' => '✔ Udoban kroj ✔ Kvalitetna izrada ✔ NORIKS stil',
             '✔ Takoj&#x161;nje olaj&#x161;anje ✔ Klini&#x10D;no preizku&#x161;eno ✔ Priporo&#x10D;ajo podiatri' => '✔ Udoban kroj ✔ Kvalitetna izrada ✔ NORIKS stil',
             'Poglejte, kako drugi' => 'Pogledajte kako drugi',
-            'Resni&#x10D;ne ocene resni&#x10D;nih uporabnikov' => 'Stvarne recenzije stvarnih kupaca',
-            'Resnične ocene resničnih uporabnikov' => 'Stvarne recenzije stvarnih kupaca',
+            'Resni&#x10D;ne ocene resni&#x10D;nih uporabnikov' => 'Real reviews from real customers',
+            'Resnične ocene resničnih uporabnikov' => 'Real reviews from real customers',
             'Razlika, ki jo prina&#x161;a <span class="accent">STEPEASE</span>' => 'Razlika koju donosi <span class="accent">NORIKS</span>',
             'Razlika, ki jo prinaša <span class="accent">STEPEASE</span>' => 'Razlika koju donosi <span class="accent">NORIKS</span>',
             'Razlika, ki jo prinaša' => 'Razlika koju donosi',
@@ -604,15 +604,15 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
             'Spletna trgovina Stepease' => 'Web trgovina NORIKS',
             'var brand = \'Stepease\';' => 'var brand = \'NORIKS\';',
             'var brandSettings = {"name":"Stepease"};' => 'var brandSettings = {"name":"NORIKS"};',
-            'OrthoStep &raquo; STEPEASE Vir komentarjev' => 'NORIKS &raquo; NORIKS Izvor recenzija',
+            'OrthoStep &raquo; STEPEASE Vir komentarjev' => 'NORIKS &raquo; NORIKS Review Source',
             'name":"STEPEASE"' => 'name":"NORIKS"',
             'name":"STEPEASE - OrthoStep"' => 'name":"NORIKS - NORIKS"',
             'Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank' => 'Više od 200 000 zadovoljnih kupaca',
             'Več kot 200 000 zadovoljnih strank' => 'Više od 200 000 zadovoljnih kupaca',
             'Sledenje po&#x161;iljki z zavarovano dostavo' => 'Praćenje pošiljke s osiguranom dostavom',
             'Sledenje pošiljki z zavarovano dostavo' => 'Praćenje pošiljke s osiguranom dostavom',
-            '90-dnevno jamstvo za vra&#x10D;ilo denarja' => '90-dnevno jamstvo povrata novca',
-            'Pravilna opora loka spodbuja bolj&#x161;o poravnavo hrbtenice.' => 'Dobro krojena majica pruža čišći izgled i bolju siluetu.',
+            '90-dnevno jamstvo za vra&#x10D;ilo denarja' => '90-day money-back guarantee',
+            'Pravilna opora loka spodbuja bolj&#x161;o poravnavo hrbtenice.' => 'A well-tailored t-shirt provides a cleaner look and better silhouette.',
             'Pove&#x10D;ajte zmogljivost' => 'Poboljšajte dojam',
             'Povečajte zmogljivost' => 'Poboljšajte dojam',
             'Enostavno pranje' => 'Jednostavno održavanje',
@@ -621,29 +621,29 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
             'Izstopajte iz množice' => 'Istaknite se iz mase',
             'Ogled znamenitosti' => 'Razgledavanje',
             'Dolge izmene' => 'Duge smjene',
-            'Dostava in po&#x161;iljanje' => 'Dostava i slanje',
-            'Dostava in pošiljanje' => 'Dostava i slanje',
-            'Politika vra&#x10D;il in povra&#x10D;il' => 'Politika povrata i refundacija',
-            'Politika vračil in povračil' => 'Politika povrata i refundacija',
-            'Popust za razli&#x10D;ne velikosti' => 'Popust za različite veličine',
-            'Popust za različne velikosti' => 'Popust za različite veličine',
-            'Na&#x161; popust lahko uporabite tudi za razli&#x10D;ne barve in velikosti!' => 'Naš popust možete iskoristiti i za različite boje i veličine!',
+            'Dostava in po&#x161;iljanje' => 'Shipping and Delivery',
+            'Dostava in pošiljanje' => 'Shipping and Delivery',
+            'Politika vra&#x10D;il in povra&#x10D;il' => 'Return and Refund Policy',
+            'Politika vračil in povračil' => 'Return and Refund Policy',
+            'Popust za razli&#x10D;ne velikosti' => 'Discount for different sizes',
+            'Popust za različne velikosti' => 'Discount for different sizes',
+            'Na&#x161; popust lahko uporabite tudi za razli&#x10D;ne barve in velikosti!' => 'Our discount can also be used for different colors and sizes!',
             'Postopek:' => 'Postupak:',
             'Dodajte eno velikost v ko&#x161;arico.' => 'Dodajte jednu veličinu u košaricu.',
             'Dodajte &#x161;e drugo velikost v ko&#x161;arico.' => 'Dodajte još jednu veličinu u košaricu.',
-            'Popust za 2,&#xA0;3&#xA0;ali&#xA0;5&#xA0;parov se bo samodejno obra&#x10D;unal pri skupni ceni.' => 'Popust za 2, 3 ili 5 komada automatski će se obračunati u ukupnoj cijeni.',
+            'Popust za 2,&#xA0;3&#xA0;ali&#xA0;5&#xA0;parov se bo samodejno obra&#x10D;unal pri skupni ceni.' => 'Discount for 2, 3 or 5 pieces will be automatically calculated in the total price.',
             'U&#x17E;ivajte v sledenju po&#x161;iljke z zavarovano dostavo v <strong>2&#x2013;3&#xA0;delovnih dneh.</strong> Za va&#x161;e udobje bo prilo&#x17E;ena &#x161;tevilka za sledenje.' => 'Uživajte u praćenju pošiljke s osiguranom dostavom u <strong>2–3 radna dana.</strong> Radi vaše sigurnosti bit će priložen broj za praćenje.',
-            'Prepri&#x10D;ani smo, da vam bo udobje vlo&#x17E;kov STEPEASE v&#x161;e&#x10D;. Zato ponujamo 90&#x2011;dnevno garancijo vra&#x10D;ila denarja brez tveganja. &#x10C;e ne boste popolnoma zadovoljni, nam preprosto pi&#x161;ite in uredili bomo vra&#x10D;ilo.' => 'Sigurni smo da će vam se svidjeti udobnost NORIKS majica. Zato nudimo 90-dnevno jamstvo povrata novca bez rizika. Ako ne budete potpuno zadovoljni, samo nam se javite i riješit ćemo povrat.',
+            'Prepri&#x10D;ani smo, da vam bo udobje vlo&#x17E;kov STEPEASE v&#x161;e&#x10D;. Zato ponujamo 90&#x2011;dnevno garancijo vra&#x10D;ila denarja brez tveganja. &#x10C;e ne boste popolnoma zadovoljni, nam preprosto pi&#x161;ite in uredili bomo vra&#x10D;ilo.' => 'We are confident you will love the comfort of NORIKS t-shirts. That is why we offer a 90-day money-back guarantee with no risk. If you are not completely satisfied, simply contact us and we will arrange a return.',
             'Olaj&#x161;aj</span> bole&#x10D;ine v stopalih' => 'Istakni</span> svoj stil',
             'Olajšaj</span> bolečine v stopalih' => 'Istakni</span> svoj stil',
-            'Prihodnost je </span>brez bole&#x10D;in v stopalih' => 'Budućnost je </span>u NORIKS majicama',
-            'Prihodnost je </span>brez bolečin v stopalih' => 'Budućnost je </span>u NORIKS majicama',
+            'Prihodnost je </span>brez bole&#x10D;in v stopalih' => 'The future is </span>in NORIKS t-shirts',
+            'Prihodnost je </span>brez bolečin v stopalih' => 'The future is </span>in NORIKS t-shirts',
             'Poskrbite za svoja stopala <span class="accent">&#x161;e danes</span>!' => 'Odaberi svoju NORIKS majicu <span class="accent">još danas</span>!',
             'Poskrbite za svoja stopala <span class="accent">še danes</span>!' => 'Odaberi svoju NORIKS majicu <span class="accent">još danas</span>!',
             'Ne glede na to, ali ste zaposlen strokovnjak ali &#x161;portnik, ki premika svoje meje &#x2013; ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami STEPEASE vam zagotavljajo vrhunsko oporo in olaj&#x161;anje. Vzemite si trenutek zase, vlo&#x17E;ite v udobje in ob&#x10D;utite razliko na lastnih stopalih.' => 'Bez obzira trebaš li majicu za svaki dan ili za poseban outfit, NORIKS majice donose udobnost, bolji fit i sigurniji izgled. Uzmi trenutak za sebe i odaberi model koji ti najbolje pristaje.',
             'Ne glede na to, ali ste zaposlen strokovnjak ali športnik, ki premika svoje meje – ortopedski vložki z masažnimi točkami STEPEASE vam zagotavljajo vrhunsko oporo in olajšanje. Vzemite si trenutek zase, vložite v udobje in občutite razliko na lastnih stopalih.' => 'Bez obzira trebaš li majicu za svaki dan ili za poseban outfit, NORIKS majice donose udobnost, bolji fit i sigurniji izgled. Uzmi trenutak za sebe i odaberi model koji ti najbolje pristaje.',
-            'Preizkusite spremembo na lastnih stopalih in zakorakajte v svetlej&#x161;o, nebole&#x10D;o prihodnost &#x17E;e danes.' => 'Isprobaj razliku na sebi i otkrij koliko dobra majica može promijeniti cijeli dojam outfita.',
-            'Preizkusite spremembo na lastnih stopalih in zakorakajte v svetlejšo, nebolečo prihodnost že danes.' => 'Isprobaj razliku na sebi i otkrij koliko dobra majica može promijeniti cijeli dojam outfita.',
+            'Preizkusite spremembo na lastnih stopalih in zakorakajte v svetlej&#x161;o, nebole&#x10D;o prihodnost &#x17E;e danes.' => 'Try the difference yourself and discover how a great t-shirt can transform your entire outfit.',
+            'Preizkusite spremembo na lastnih stopalih in zakorakajte v svetlejšo, nebolečo prihodnost že danes.' => 'Try the difference yourself and discover how a great t-shirt can transform your entire outfit.',
             'Obvladovanje zdravja stopal: Va&#x161; vodnik do sre&#x10D;nih stopal' => 'NORIKS vodič: kako izbrati pravo majico za svoj stil',
             'Obvladovanje zdravja stopal: Vaš vodnik do srečnih stopal' => 'NORIKS vodič: kako izbrati pravo majico za svoj stil',
             'Celovito znanje o stopalih' => 'Savjeti za bolji fit majice',
@@ -659,11 +659,11 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
             'strokovnjaki priporočajo' => 'kupci preporučuju',
             'Dolga leta sem se spopadal s plantarno fascio, a STEPEASE so vse spremenili. Podpora loku je neverjetna in bole&#x10D;ina je kon&#x10D;no izginila!' => 'Dugo sam tražio majicu koja mi stvarno dobro stoji, a NORIKS je konačno pogodio pravi kroj. Odmah se vidi razlika u izgledu i udobnosti.',
             'V slu&#x17E;bi ves dan stojim in ti vlo&#x17E;ki so mi re&#x161;ili noge. Ob koncu dneva me stopala ne bolijo ve&#x10D;.' => 'Majicu nosim cijeli dan na poslu i stvarno ostaje udobna od jutra do večeri. Kroj stoji odlično i nakon dugog dana izgleda uredno.',
-            'Preizkusil sem ne&#x161;teto vlo&#x17E;kov, a nobeni se ne morejo primerjati s&#xA0;STEPEASE. Razlika v udobju in po&#x10D;utju je res opazna.' => 'Isprobao sam puno basic majica, ali NORIKS je daleko iznad svega što sam nosio prije. Materijal, kroj i osjećaj na tijelu su odmah primjetni.',
-            'Svoje dni pre&#x17E;ivim na betonskih tleh v delovnih &#x10D;evljih s kovinsko kapico. Ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami | STEPEASE odli&#x10D;no bla&#x17E;ijo udarce in nudijo podporo, kar zmanj&#x161;uje obremenitev stopal in sklepov. Presene&#x10D;en sem, koliko so mi pomagali &#x2013; o njih sem povedal vsem sodelavcem.' => 'Radim zahtjevan posao i treba mi odjeća koja izgleda dobro i kada je dan dug. NORIKS majica drži formu, ugodna je za nošenje i izgleda dovoljno dobro da sam je preporučio i kolegama.',
-            'Kot medicinska sestra sem ves dan na nogah. Ko sem jih prvi&#x10D; vstavila, sem takoj za&#x10D;utila razliko. Podpora loka je odli&#x10D;na in prina&#x161;a prepotrebno olaj&#x161;anje. Mehka blazina popolno ubla&#x17E;i stalne pritiske na stopala.' => 'Kao medicinska sestra trebam odjeću koja je udobna i pouzdana cijeli dan. NORIKS majica je mekana, dobro sjedi i stvarno izgleda odlično i nakon duge smjene.',
-            'Vau, ti vlo&#x17E;ki so presegli vsa moja pri&#x10D;akovanja! Po dveh dneh no&#x161;enja med 12-urnimi izmenami sem ugotovil, da so resni&#x10D;no izjemni. So izredno udobni, nudijo oporo ves dan &#x2013; naro&#x10D;il sem &#x161;e dva para!' => 'Ova majica je nadmašila moja očekivanja. Nakon par dugih dana nošenja bilo mi je jasno da želim još komada, zato sam odmah naručio dodatne boje.',
-            'Sem predan teka&#x10D; in preizkusil sem &#x17E;e veliko vlo&#x17E;kov. Odkar uporabljam ortopedske vlo&#x17E;ke z masa&#x17E;nimi to&#x10D;kami STEPEASE, opa&#x17E;am bolj&#x161;o zmogljivost in hitrej&#x161;e okrevanje. Toplo priporo&#x10D;am vsem teka&#x10D;em, ki &#x17E;elijo izbolj&#x161;ati rezultate in za&#x161;&#x10D;ititi svoja stopala.' => 'Aktivan sam i volim odjeću koja izgleda čisto i sportski, ali i dalje dovoljno ozbiljno za svaki dan. NORIKS majica mi je postala prvi izbor jer odlično izgleda i lako se kombinira.',
+            'Preizkusil sem ne&#x161;teto vlo&#x17E;kov, a nobeni se ne morejo primerjati s&#xA0;STEPEASE. Razlika v udobju in po&#x10D;utju je res opazna.' => 'I have tried many basic t-shirts, but NORIKS is far above anything I have worn before. The material, cut and feel on the body are immediately noticeable.',
+            'Svoje dni pre&#x17E;ivim na betonskih tleh v delovnih &#x10D;evljih s kovinsko kapico. Ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami | STEPEASE odli&#x10D;no bla&#x17E;ijo udarce in nudijo podporo, kar zmanj&#x161;uje obremenitev stopal in sklepov. Presene&#x10D;en sem, koliko so mi pomagali &#x2013; o njih sem povedal vsem sodelavcem.' => 'I have a demanding job and need clothes that look good even on long days. The NORIKS t-shirt holds its shape, is comfortable to wear and looks good enough that I recommended it to my colleagues.',
+            'Kot medicinska sestra sem ves dan na nogah. Ko sem jih prvi&#x10D; vstavila, sem takoj za&#x10D;utila razliko. Podpora loka je odli&#x10D;na in prina&#x161;a prepotrebno olaj&#x161;anje. Mehka blazina popolno ubla&#x17E;i stalne pritiske na stopala.' => 'As a nurse I need clothes that are comfortable and reliable all day. The NORIKS t-shirt is soft, fits well and truly looks great even after a long shift.',
+            'Vau, ti vlo&#x17E;ki so presegli vsa moja pri&#x10D;akovanja! Po dveh dneh no&#x161;enja med 12-urnimi izmenami sem ugotovil, da so resni&#x10D;no izjemni. So izredno udobni, nudijo oporo ves dan &#x2013; naro&#x10D;il sem &#x161;e dva para!' => 'This t-shirt exceeded my expectations. After a few long days of wearing it, I knew I wanted more, so I immediately ordered additional colors.',
+            'Sem predan teka&#x10D; in preizkusil sem &#x17E;e veliko vlo&#x17E;kov. Odkar uporabljam ortopedske vlo&#x17E;ke z masa&#x17E;nimi to&#x10D;kami STEPEASE, opa&#x17E;am bolj&#x161;o zmogljivost in hitrej&#x161;e okrevanje. Toplo priporo&#x10D;am vsem teka&#x10D;em, ki &#x17E;elijo izbolj&#x161;ati rezultate in za&#x161;&#x10D;ititi svoja stopala.' => 'I am active and love clothes that look clean and sporty yet still serious enough for everyday wear. The NORIKS t-shirt has become my first choice because it looks great and is easy to combine.',
             'Moji vsakodnevni sprehodi s psom so zdaj povsem druga&#x10D;ni. Prej sem imela bole&#x10D;a stopala in utrujene noge, zdaj pa brez te&#x17E;av sledim svojemu kosmatincu. Ortopedski vlo&#x17E;ki z masa&#x17E;nimi to&#x10D;kami STEPEASE nudijo odli&#x10D;no oporo, udobje in izbolj&#x161;ajo dr&#x17E;o.' => 'NORIKS majico nosim za šetnje, obaveze i kavu u gradu. Udobna je, lijepo pada i uvijek izgleda dovoljno sređeno bez puno razmišljanja.',
             'Ortopedski vlo&#x17E;ki' => 'Majica',
             'Ortopedski vložki' => 'Majica',
@@ -691,7 +691,7 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
             'Slovensko skladi&#x161;&#x10D;e' => 'Hrvatsko skladište',
             'Slovensko skladišče' => 'Hrvatsko skladište',
             'Spletna trgovina NORIKS' => 'Web trgovina NORIKS',
-            'Vir komentarjev' => 'Izvor recenzija',
+            'Vir komentarjev' => 'Review Source',
             '<span> StepEase </span>' => '<span> NORIKS </span>',
             'StepEase' => 'NORIKS',
         );
@@ -704,7 +704,7 @@ if (!function_exists('noriks_customize_step_landing_markup')) {
 
 $target_product_url = get_post_meta(get_the_ID(), '_landigs_target_product_url', true);
 $target_product_id  = (int) get_post_meta(get_the_ID(), '_landigs_target_product_id', true);
-$boxers_image_url   = 'https://noriks.com/hr/wp-content/uploads/2025/11/boksarice_3x_crne-600x600.png';
+$boxers_image_url   = 'https://noriks.com/en/wp-content/uploads/2025/11/boksarice_3x_crne-600x600.png';
 $hero_image_url     = trailingslashit(get_template_directory_uri()) . 'assets/images/landigs/noriks-majice-garancija.jpg';
 $landing_image_urls = array(
     trailingslashit(get_template_directory_uri()) . 'assets/images/landigs/noriks-shirt-1.jpg',
@@ -717,27 +717,27 @@ $landing_image_urls = array(
     trailingslashit(get_template_directory_uri()) . 'assets/images/landigs/noriks-shirt-8.png',
 );
 $review_image_urls = array(
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_41AM.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_39AM.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_29AM.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_30AM%20%281%29.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_45AM.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_52AM.jpeg',
-    'https://noriks.com/hr/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_50AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_41AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_39AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_29AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_30AM%20%281%29.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_45AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_52AM.jpeg',
+    'https://noriks.com/en/wp-content/themes/noriks/auto_reviews/majice-slike/Generated%20Image%20January%2019%2C%202026%20-%2010_50AM.jpeg',
 );
 $purpose_image_urls = array(
-    'https://noriks.com/hr/wp-content/uploads/2025/11/crna-in-siva-majica-vse-barve-gat-bundle-600x600.png',
-    'https://noriks.com/hr/wp-content/uploads/2025/11/crna-in-modra-majica-vse-barve-gat-bundle-600x600.png',
-    'https://noriks.com/hr/wp-content/uploads/2025/11/crna-in-bela-majica-vse-barve-gat-bundle-600x600.png',
-    'https://noriks.com/hr/wp-content/uploads/2025/11/bela-in-siva-majica-vse-barve-gat-bundle-600x600.png',
-    'https://noriks.com/hr/wp-content/uploads/2025/09/monochrome-3x-600x600.jpg',
-    'https://noriks.com/hr/wp-content/uploads/2025/09/city-6x-600x600.jpg',
-    'https://noriks.com/hr/wp-content/uploads/2025/09/everyday-6X-600x600.jpg',
-    'https://noriks.com/hr/wp-content/uploads/2025/09/urban-earth-6x-600x600.jpg',
+    'https://noriks.com/en/wp-content/uploads/2025/11/crna-in-siva-majica-vse-barve-gat-bundle-600x600.png',
+    'https://noriks.com/en/wp-content/uploads/2025/11/crna-in-modra-majica-vse-barve-gat-bundle-600x600.png',
+    'https://noriks.com/en/wp-content/uploads/2025/11/crna-in-bela-majica-vse-barve-gat-bundle-600x600.png',
+    'https://noriks.com/en/wp-content/uploads/2025/11/bela-in-siva-majica-vse-barve-gat-bundle-600x600.png',
+    'https://noriks.com/en/wp-content/uploads/2025/09/monochrome-3x-600x600.jpg',
+    'https://noriks.com/en/wp-content/uploads/2025/09/city-6x-600x600.jpg',
+    'https://noriks.com/en/wp-content/uploads/2025/09/everyday-6X-600x600.jpg',
+    'https://noriks.com/en/wp-content/uploads/2025/09/urban-earth-6x-600x600.jpg',
 );
 
 if (!$target_product_url) {
-    $target_product_url = home_url('/hr/product/noriks-majica/');
+    $target_product_url = home_url('/en/product/noriks-majica/');
 }
 
 if (!$target_product_id) {
@@ -756,7 +756,7 @@ if ($primary_label === '') {
 }
 
 if ($secondary_label === '') {
-    $secondary_label = 'Veličina';
+    $secondary_label = 'Size';
 }
 
 if ($secondary_options === '') {
@@ -796,7 +796,7 @@ if ($primary_options === '') {
 
 if ($offer_options === '') {
     $offer_options = implode("\n", array(
-        '1|1 majica|Odličan ulazni paket|',
+        '1|1 t-shirt|Great starter pack|',
         '2|2 majice|Najbolji omjer cijene i količine|NAJPOPULARNIJE',
         '3|3 majice|Najveća ušteda po komadu|',
         '5|5 majic|Najveći paket za maksimalnu uštedu|',

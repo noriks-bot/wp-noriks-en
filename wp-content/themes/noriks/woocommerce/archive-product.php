@@ -46,23 +46,23 @@ function is_active_menu_item( $path ) {
 <nav class="category-menu">
   <ul>
     <li class="<?php echo is_shop() ? 'active' : ''; ?>">
-      <a href="/hr/shop">Svi produkti</a>
+      <a href="/shop">All Products</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/majice') ? 'active' : ''; ?>">
-      <a href="/hr/product-category/majice/">Majice</a>
+    <li class="<?php echo is_active_menu_item('/product-category/t-shirts') ? 'active' : ''; ?>">
+      <a href="/product-category/t-shirts/">T-Shirts</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/bokserice') ? 'active' : ''; ?>">
-      <a href="/hr/product-category/bokserice/">Bokserice</a>
+    <li class="<?php echo is_active_menu_item('/product-category/boxers') ? 'active' : ''; ?>">
+      <a href="/product-category/boxers/">Boxers</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/kompleti') ? 'active' : ''; ?>">
-      <a href="/hr/product-category/kompleti/">Kompleti</a>
+    <li class="<?php echo is_active_menu_item('/product-category/bundles') ? 'active' : ''; ?>">
+      <a href="/product-category/bundles/">Bundles</a>
     </li>
 
-    <li class="<?php echo is_active_menu_item('/product-category/carape') ? 'active' : ''; ?>">
-      <a href="/hr/product-category/carape/">Čarape</a>
+    <li class="<?php echo is_active_menu_item('/product-category/socks') ? 'active' : ''; ?>">
+      <a href="/product-category/socks/">Socks</a>
     </li>
   </ul>
 </nav>
@@ -356,41 +356,41 @@ $shop_filter_fields = get_field("shop_filter_fields", "option");
 // SHOP PAGE (/shop)
 if ( is_shop() ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2"]');
+    echo do_shortcode('[yith_wcan_filters slug="shop-all"]');
 
 // CATEGORY: /bokserice + ALL CHILD CATEGORIES
-} elseif ( is_product_category_or_child('bokserice') ) {
+} elseif ( is_product_category_or_child('boxers') ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2-2"]');
+    echo do_shortcode('[yith_wcan_filters slug="boxers"]');
 
 // CATEGORY GROUP
 } elseif (
     is_product_category_or_child('bestsellers') ||
     is_product_category_or_child('veliki-paketi') ||
-    is_product_category_or_child('starter-paketi')
+    is_product_category_or_child('starter-pack')
 ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-3"]');
+    echo do_shortcode('[yith_wcan_filters slug="shop-all"]');
 
 // CATEGORY: /majice + children
-} elseif ( is_product_category_or_child('majice') ) {
+} elseif ( is_product_category_or_child('t-shirts') ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2-2"]');
+    echo do_shortcode('[yith_wcan_filters slug="t-shirts"]');
 
 // CATEGORY: /kompleti + children
-} elseif ( is_product_category_or_child('kompleti') ) {
+} elseif ( is_product_category_or_child('sets') ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset"]');
+    echo do_shortcode('[yith_wcan_filters slug="sets"]');
 
 // CATEGORY: /carape + children
-} elseif ( is_product_category_or_child('carape') ) {
+} elseif ( is_product_category_or_child('socks') ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2"]');
+    echo do_shortcode('[yith_wcan_filters slug="socks"]');
 
 // FALLBACK for any other product category
 } elseif ( is_product_category() ) {
 
-    echo do_shortcode('[yith_wcan_filters slug="default-preset-2-2"]');
+    echo do_shortcode('[yith_wcan_filters slug="shop-all"]');
 }
 ?>
         </div>

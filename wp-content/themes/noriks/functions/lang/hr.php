@@ -2,6 +2,32 @@
 
 
 
+// Output a heading above the email field
+add_action( 'woocommerce_before_checkout_billing_form', 'add_contact_heading_before_email' );
+function add_contact_heading_before_email() {
+
+    
+    echo '<h3 class="checkout-section-title">Vaši podaci</h3>';
+}
+
+
+// Change only the sticky bar button (text + href) on single product pages.
+add_action( 'wp_footer', function () {
+	if ( ! is_product() ) return; ?>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+	  var btn = document.querySelector('.storefront-sticky-add-to-cart__content-button');
+	  if (!btn) return;
+	  btn.textContent = 'Natrag na odabir';
+	  btn.setAttribute('href', '#title-buy-now'); // put your desired URL here
+	});
+	</script>
+<?php
+} );
+
+
+
+
 add_filter( 'gettext', 'translate_attribute_labels', 20, 3 );
 
 function translate_attribute_labels( $translated_text, $text, $domain ) {
@@ -17,7 +43,7 @@ function translate_attribute_labels( $translated_text, $text, $domain ) {
 add_filter( 'woocommerce_checkout_fields', 'custom_billing_phone_placeholder' );
 function custom_billing_phone_placeholder( $fields ) {
     // Change the placeholder text for the billing phone field
-    $fields['billing']['billing_phone']['placeholder'] = 'Broj mobilnog telefona';
+    $fields['billing']['billing_phone']['placeholder'] = 'Mobitel (primjer: 0912345678)';
     
     return $fields;
 }
@@ -67,7 +93,7 @@ function hide_checkout_fields( $fields ) {
     // Optional: Remove shipping fields
     //unset( $fields['shipping']['shipping_country'] );
     unset( $fields['shipping']['shipping_state'] );
-     // shipping_address_2 kept — copied from billing via checkout_mods.php
+     unset( $fields['shipping']['shipping_address_2'] );
 
 
     return $fields;

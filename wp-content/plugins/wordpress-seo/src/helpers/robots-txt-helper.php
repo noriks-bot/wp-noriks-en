@@ -24,11 +24,19 @@ class Robots_Txt_Helper {
 	protected $robots_txt_sitemaps;
 
 	/**
+	 * Holds an array with absolute URLs of schema maps.
+	 *
+	 * @var array
+	 */
+	private $robots_txt_schemamaps;
+
+	/**
 	 * Constructor for Robots_Txt_Helper.
 	 */
 	public function __construct() {
 		$this->robots_txt_user_agents = new User_Agent_List();
 		$this->robots_txt_sitemaps    = [];
+		$this->robots_txt_schemamaps  = [];
 	}
 
 	/**
@@ -73,17 +81,14 @@ class Robots_Txt_Helper {
 	/**
 	 * Add schema to robots.txt if it does not exist yet.
 	 *
-	 * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-	 *
-	 * @deprecated 27.5
-	 * @codeCoverageIgnore
-	 *
 	 * @param string $absolute_path The absolute path to the sitemap to add.
 	 *
 	 * @return void
 	 */
-	public function add_schemamap( $absolute_path ) { // @phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
-		\_deprecated_function( __METHOD__, 'Yoast SEO 27.5' );
+	public function add_schemamap( $absolute_path ) {
+		if ( ! \in_array( $absolute_path, $this->robots_txt_schemamaps, true ) ) {
+			$this->robots_txt_schemamaps[] = $absolute_path;
+		}
 	}
 
 	/**
@@ -116,14 +121,10 @@ class Robots_Txt_Helper {
 	/**
 	 * Get all registered schemamap rules.
 	 *
-	 * @deprecated 27.5
-	 * @codeCoverageIgnore
-	 *
 	 * @return array<string> The registered schemamap rules.
 	 */
 	public function get_schemamap_rules() {
-		\_deprecated_function( __METHOD__, 'Yoast SEO 27.5' );
-		return [];
+		return $this->robots_txt_schemamaps;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Inline Bundle Builder
  * Description: Build a bundle in a responsive modal. Saves each slot as numbered meta (e.g., "1: Crna Majica - S") in orders. Cart/checkout shows the same lines without a label.
- * Version:     3.2.0
+ * Version:     3.1.0
  * Author:      You
  */
 
@@ -27,27 +27,23 @@ class IBB_Plugin_SimpleMeta {
      * Shortcode (enqueues assets ONLY when rendered)
      * ------------------------------------------------*/
     /**
-     * Usage: echo do_shortcode('[inline_bundle_builder products="504,505,506" slots="3" gratis_slots="1,3,5"]');
-     * - `gratis_slots` is optional. If provided, the specified 1-based slot numbers will render the GRATIS badge.
+     * Usage: echo do_shortcode('[inline_bundle_builder products="504,505,506" slots="3"]');
      */
     public function shortcode($atts) {
         if (!class_exists('WooCommerce')) return '';
 
         $a = shortcode_atts([
-            'products'     => '',
-            'slots'        => 3,
-            'gratis_slots' => '', // NEW: control GRATIS badge purely via data attribute (e.g., "3" or "1,3,5" or "1-3" or "all")
+            'products' => '',
+            'slots'    => 3,
         ], $atts);
 
-        $ids         = array_filter(array_map('absint', explode(',', $a['products'])));
-        $slots       = max(1, absint($a['slots']));
-        $gratis_attr = trim((string) $a['gratis_slots']);
-
+        $ids   = array_filter(array_map('absint', explode(',', $a['products'])));
+        $slots = max(1, absint($a['slots']));
         if (!$ids) return '<em>No products configured.</em>';
 
         // Enqueue assets *only* when shortcode renders
-        wp_enqueue_style ('ibb-style', plugins_url('ibb.css?dd', __FILE__), [], '3.2.0');
-        wp_enqueue_script('ibb-script', plugins_url('ibb.js?ds34343ddsds',  __FILE__), ['jquery'], '3.2.0', true);
+        wp_enqueue_style ('ibb-style', plugins_url('ibb.css', __FILE__), [], '3.1.0');
+        wp_enqueue_script('ibb-script', plugins_url('ibb.js?333',  __FILE__), ['jquery'], '3.1.0', true);
 
         // Hide the stray ":" dt in variation blocks (mini cart / cart / checkout / XOO side cart)
         $ibb_inline_css = '
@@ -247,49 +243,15 @@ JS;
         }
 
         ob_start(); ?>
-        <div class="ibb-wrapper"
-             data-slots="<?php echo esc_attr($slots); ?>"
-             <?php if ($gratis_attr !== ''): ?>
-             data-ibb-gratis-slots="<?php echo esc_attr($gratis_attr); ?>"
-             <?php endif; ?>>
+        <div class="ibb-wrapper" data-slots="<?php echo esc_attr($slots); ?>">
           <div class="ibb-slots">
             <?php for ($i=0; $i<$slots; $i++): ?>
               <div class="ibb-slot-wrap">
-                  
-                  
-                  <?php
-                  
-                  // make here boxerice if else
-                  $is_boxers = has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id );
-
-                  
-                  ?>
-                  
-                  
-                <div class="ibb-slot-header">
-                    
-                    <?php if( $is_boxers ): ?>
-                    Odaberite proizvod
-                    <?php else: ?>
-                     Odaberite majicu
-                    <?php endif; ?>
-                
-                
-                
-                <?php echo esc_html($i+1); ?> od <?php echo esc_html($slots); ?></div>
-                <div class="ibb-slot is-empty" data-index="<?php echo (int) $i; ?>" tabindex="0">
+                <div class="ibb-slot-header">Select a shirt <?php echo esc_html($i+1); ?> od <?php echo esc_html($slots); ?></div>
+                <div class="ibb-slot is-empty" data-index="<?php echo $i; ?>" tabindex="0">
                   <div class="ibb-slot-thumb"><span class="ibb-slot-plus" aria-hidden="true">+</span></div>
                   <div class="ibb-slot-info">
-                    <span class="ibb-slot-attr">
-                        
-                          <?php if( $is_boxers ): ?>
-                           <?php esc_html_e('Dodaj proizvod','ibb'); ?>
-                          <?php else: ?>
-                          
-                           <?php esc_html_e('Dodaj majicu','ibb'); ?>
-                          <?php endif; ?>
-                     
-                    </span>
+                    <span class="ibb-slot-attr"><?php esc_html_e('Add a shirt','ibb'); ?></span>
                     <span class="ibb-slot-price" hidden></span>
                   </div>
                 </div>
@@ -308,23 +270,9 @@ JS;
                 </div>
                 <button type="button" class="ibb-modal__close">×</button>
                 <div class="ibb-titlebar">
-                  <h2 class="ibb-heading">Odaberi <span class="ibb-step-num">1</span> 
-                  
-                   <?php if( $is_boxers ): ?>
-                  proizvod
-                  <?php else: ?>
-                  majicu
-                  <?php endif; ?>          
-                  
-                  </h2>
+                  <h2 class="ibb-heading">Select <span class="ibb-step-num">1</span> shirt</h2>
                   <p class="ibb-sub">
-                      
-                       <?php if( $is_boxers ): ?>
-                    <?php printf(__('Dodajte %1$d proizvod i dobit ćete paket za %2$s', 'ibb'), $slots, $bundle_price); ?>
-                     <?php else: ?>
-                      <?php printf(__('Dodajte %1$d majice i dobit ćete paket za %2$s', 'ibb'), $slots, $bundle_price); ?>
-                     <?php endif; ?>     
-                    
+                    <?php printf(__('Add %1$d shirts and you will receive a package for %2$s', 'ibb'), $slots, $bundle_price); ?>
                   </p>
                 </div>
               </div>
@@ -341,14 +289,14 @@ JS;
                             <select class="ibb-attr"
                               data-taxonomy="<?php echo esc_attr($a['norm']); ?>"
                               data-taxonomy-raw="<?php echo esc_attr('attribute_' . $a['norm']); ?>">
-                              <option value=""><?php echo esc_html__('Vyberte variantu', 'ibb'); ?></option>
+                              <option value=""><?php echo esc_html__('Choose an option', 'ibb'); ?></option>
                               <?php foreach ($a['opts'] as $o): ?>
                                 <option value="<?php echo esc_attr($o['value']); ?>"><?php echo esc_html($o['label']); ?></option>
                               <?php endforeach; ?>
                             </select>
                           <?php endforeach; ?>
                         <?php endif; ?>
-                        <button type="button" class="ibb-add"><?php esc_html_e('Dodaj u paket','ibb'); ?></button>
+                        <button type="button" class="ibb-add"><?php esc_html_e('Add to pack','ibb'); ?></button>
                         <div class="ibb-msg" aria-live="polite"></div>
                       </div>
                     </div>
