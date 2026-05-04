@@ -94,8 +94,38 @@ add_action( 'wp_footer', function() {
     ?>
     <style id="noriks-checkout-overrides">
     /* ===== POSTCODE + CITY — always side by side ===== */
-    p#billing_postcode_field { clear: both !important; float: left !important; width: 35% !important; }
-    p#billing_city_field { clear: none !important; float: right !important; width: 61% !important; }
+    .woocommerce-billing-fields__field-wrapper {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 0 4% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p.form-row {
+      flex: 0 0 100% !important;
+      float: none !important;
+      clear: none !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_postcode_field {
+      flex: 0 0 35% !important;
+      float: none !important;
+      clear: none !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_city_field {
+      flex: 0 0 61% !important;
+      float: none !important;
+      clear: none !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_first_name_field {
+      flex: 0 0 48% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_last_name_field {
+      flex: 0 0 48% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_address_1_field {
+      flex: 0 0 67% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_address_2_field {
+      flex: 0 0 29% !important;
+    }
 
     /* Payment methods — native WC rendering, no overrides */
 
