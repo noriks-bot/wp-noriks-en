@@ -478,7 +478,9 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     $fields['billing']['billing_email']['required'] = true;
     $fields['billing']['billing_country']['default'] = '';
     $fields['billing']['billing_country']['required'] = true;
-    $fields['billing']['billing_country']['priority'] = 90;
+    $fields['billing']['billing_country']['priority'] = 65;
+    $fields['billing']['billing_country']['label'] = 'Country';
+    $fields['billing']['billing_country']['class'] = array('form-row','form-row-wide','form-group','col-xs-12','validate-required','update_totals_on_change');
     unset( $fields['billing']['billing_company'] );
 
     // Vigoshop CSS classes
