@@ -1485,6 +1485,9 @@ class Daexthrmal_Menu_Elements {
 		// Display the Header Bar.
 		$this->header_bar();
 
+		// Allow the PluginNoticesManager class to add a notice below the header bar when needed.
+		do_action( 'daextpnm_after_header_bar' );
+
 		// Display the main content of the menu.
 		if ( 'crud' === $this->context ) {
 
@@ -1498,8 +1501,6 @@ class Daexthrmal_Menu_Elements {
 
 		}
 
-		// Display the Pro features section.
-		$this->display_pro_features();
 	}
 
 	/**

@@ -3,9 +3,9 @@ Contributors: DAEXT
 Tags: hreflang, seo, language, internationalization, multilingual
 Donate link: https://daext.com
 Requires at least: 4.0
-Tested up to: 6.9.1
+Tested up to: 6.9.4
 Requires PHP: 5.2
-Stable tag: 1.16
+Stable tag: 1.18
 License: GPLv3
 
 The Hreflang Manager plugin provides you an easy and reliable method to implement hreflang in WordPress.
@@ -13,56 +13,68 @@ The Hreflang Manager plugin provides you an easy and reliable method to implemen
 == Description ==
 The Hreflang Manager plugin provides you an easy and reliable method to implement hreflang in WordPress.
 
-For more information on the technical use of hreflang, please consider reading the [official documentation provided by Google](https://developers.google.com/search/docs/advanced/crawling/localized-versions).
+For more information on the technical use of hreflang, please consider reading the [official Google documentation](https://developers.google.com/search/docs/advanced/crawling/localized-versions).
 
 ### Pro Version
-A [Pro Version](https://daext.com/hreflang-manager/) of this plugin is available on our website with many additional features, like the ability to move the hreflang implementation in all the websites of the network, a maximum of 100 alternative versions of the page per connection, the ability to mass import hreflang data from a spreadsheet, and much more.
+The [Pro version](https://daext.com/hreflang-manager/) of this plugin is available on our website with additional features, including the synchronization of hreflang data across all sites in a network, an integrated Hreflang Checker for detecting implementation issues, a Locale Selector to display available alternate versions, support for adding hreflang information in XML sitemaps, up to 100 alternate versions per connection, tools for importing hreflang data from spreadsheets, and more.
 
 ### Features
 * Supports the hreflang implementation of different websites or the sub-sites of a WordPress network
-* Supports all the languages defined with [ISO_639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+* Supports all the languages defined with [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 * Supports all the scripts defined with [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924)
 * Supports all the countries defined with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
 * A maximum of 10 alternative versions of the page per connection
-* Includes a log system to verify the correct implementation in the front-end
+* Includes a tag inspector to verify the correct implementation in the front-end
+* Allows configuring hreflang from the post editor or from a centralized menu
 * Ability to select the default languages, scripts, and countries
 * Automatically deletes the hreflang data of the deleted posts
 
-### Credits
-This plugin makes use of the following resources:
+### Getting Started
 
-* [Select2](https://select2.org/) licensed under the MIT License
+To begin working with the plugin, you may find the following Knowledge Base article helpful:
 
-For each library you can find the actual copy of the license inside the folder used to store the library files.
+* [How to Manually Add Hreflang Data](https://daext.com/kb/hreflang-manager/how-to-manually-add-hreflang-data/)
+
+Once your configuration is complete, you can confirm that your hreflang implementation works as expected with the following guide:
+
+* [Verifying and Debugging Your Hreflang Implementation](https://daext.com/kb/hreflang-manager/verifying-and-debugging-your-hreflang-implementation/)
+
+For more advanced configuration, examples, and troubleshooting, visit the [Plugin Knowledge Base](https://daext.com/kb/hreflang-manager/).
 
 == Installation ==
-= Installation (Single Site) =
 
-With this procedure you will be able to install the Hreflang Manager plugin on your WordPress website:
+1. Upload the plugin files to the `/wp-content/plugins/hreflang-manager-lite/` directory, or install the plugin through the WordPress Plugins screen directly.
+2. Activate the plugin through the Plugins screen in WordPress.
 
-1. Visit the **Plugins -> Add New** menu
-2. Click on the **Upload Plugin** button and select the zip file you just downloaded
-3. Click on **Install Now**
-4. Click on **Activate Plugin**
+### 1. Add Hreflang Data
 
-= Installation (Multisite) =
+Go to **Hreflang → Connections** and start adding hreflang data.
 
-This plugin supports both a **Network Activation** (the plugin will be activated on all the sites of your WordPress Network) and a **Single Site Activation** in a **WordPress Network** environment (your plugin will be activate on single site of the network).
+Alternatively, you can create connections directly from the post editor using the **Hreflang Manager** panel. This panel is available in both the Block Editor and the Classic Editor. If you don’t see it, enable it from the editor options.
 
-With this procedure you will be able to perform a **Network Activation**:
+### 2. Verify Your Implementation
 
-1. Visit the **Plugins -> Add New** menu
-2. Click on the **Upload Plugin** button and select the zip file you just downloaded
-3. Click on **Install Now**
-4. Click on **Network Activate**
+To verify your hreflang implementation, you can use the built-in **Tag Inspector**.
 
-With this procedure you will be able to perform a **Single Site Activation** in a **WordPress Network** environment:
+Go to **Hreflang → Options** and enable the Tag Inspector option. Then visit your site pages on the front end. When hreflang data is present, the Tag Inspector will be displayed over the page. The Tag Inspector is visible only to logged-in users with appropriate permissions and is not shown to visitors.
 
-1. Visit the specific site of the **WordPress Network** where you want to install the plugin
-2. Visit the **Plugins** menu
-3. Click on the **Activate** button (just below the name of the plugin)
+For detailed guidance and advanced configuration, visit the [official Knowledge Base](https://daext.com/kb/hreflang-manager/).
 
 == Changelog ==
+
+= 1.18 =
+
+*April 25, 2026*
+
+* Added the "Maximum Alternate Pages" option, allowing administrators to define a hard limit for the number of alternate pages used across the plugin UI and hreflang output.
+* Removed the unexpected output message displayed during plugin activation.
+
+= 1.17 =
+
+*March 26, 2026*
+
+* The Pro version upgrade banner previously displayed at the bottom of all plugin menu pages is now shown only in the Options menu.
+* Added a notices manager class used to display documentation resources and a link to rate the plugin. A related action hook has also been introduced to allow notices to be rendered in a specific area of the plugin UI.
 
 = 1.16 =
 

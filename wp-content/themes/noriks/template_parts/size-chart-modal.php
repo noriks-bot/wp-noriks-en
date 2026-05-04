@@ -53,7 +53,7 @@
 /* When opened */
 #custom-size-chart-modal.show { display: block; }
 
-/* --- Mobile tweaks --- */
+/* --- Mobile tweaks (kept minimal) --- */
 @media (max-width: 768px) {
   .info-box-desktop { display: none !important; }
   .second-one, .third-one { display: inline-block; width: 49%; }
@@ -62,25 +62,7 @@
   .size-chart-field { margin-top: 10px; text-align: left; }
   .size-chart-field label { text-align: left; }
 
-  /* Fullscreen modal on mobile for better readability */
-  #custom-size-chart-modal {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    border-radius: 0 !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Remove large margins on mobile so image fills the screen */
-  .size-chart-left img {
-    margin-top: 50px !important;
-    margin-bottom: 20px !important;
-  }
+  /* Modal stays auto-height on mobile too; nothing else needed */
 }
 
 /* Desktop cleanups */
