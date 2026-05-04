@@ -280,6 +280,40 @@ function enqueue_main_styles() {
         true
     );
 
+    // On EN, some Woo product views can miss the Storefront/WooCommerce
+    // stylesheet layer depending on runtime/plugin conditions. Re-enqueue the
+    // core theme + Woo styles explicitly on Woo pages as a safe fallback.
+    if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+        global $storefront_version;
+
+        if ( ! wp_style_is( 'storefront-style', 'enqueued' ) ) {
+            wp_enqueue_style(
+                'storefront-style',
+                get_template_directory_uri() . '/style.css',
+                array(),
+                $storefront_version
+            );
+        }
+
+        if ( ! wp_style_is( 'storefront-icons', 'enqueued' ) ) {
+            wp_enqueue_style(
+                'storefront-icons',
+                get_template_directory_uri() . '/assets/css/base/icons.css',
+                array(),
+                $storefront_version
+            );
+        }
+
+        if ( ! wp_style_is( 'storefront-woocommerce-style', 'enqueued' ) ) {
+            wp_enqueue_style(
+                'storefront-woocommerce-style',
+                get_template_directory_uri() . '/assets/css/woocommerce/woocommerce.css',
+                array( 'storefront-style', 'storefront-icons' ),
+                $storefront_version
+            );
+        }
+    }
+
     // Enqueue price-update.js only on product pages
     if (function_exists('is_product') && is_product()) {
         wp_enqueue_script(
