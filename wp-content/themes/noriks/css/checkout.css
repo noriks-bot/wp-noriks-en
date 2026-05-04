@@ -387,6 +387,19 @@ body.woocommerce-checkout .noriks-order-summary .review-product-info div {
 }
 
 
+/* ===== Postal Code + City side by side (all screens) ===== */
+body.woocommerce-checkout p#billing_postcode_field {
+  float: left !important;
+  width: 49% !important;
+  margin-right: 2% !important;
+  clear: none !important;
+}
+body.woocommerce-checkout p#billing_city_field {
+  float: left !important;
+  width: 49% !important;
+  clear: none !important;
+}
+
 /* PayPal reCaptcha container — no margin */
 #ppcp-recaptcha-v2-container { margin: 0 !important; }
 

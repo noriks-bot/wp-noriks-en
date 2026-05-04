@@ -47,7 +47,7 @@ if ( WC()->cart->is_empty() ) return;
                     <span class="shipping_method_delivery_price tag tag--red">
                       <span class="woocommerce-Price-amount amount"><bdi>2,99<span class="woocommerce-Price-currencySymbol">&euro;</span></bdi></span>
                     </span>
-                    <span class="delivery_img"><img decoding="async" class="gls standard" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/GLS_Logo_2021.svg/200px-GLS_Logo_2021.svg.png" alt="GLS"/></span>
+                    <span class="delivery_img"><img decoding="async" class="gls standard" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 180'%3E%3Crect width='512' height='180' rx='10' fill='%23FFC107'/%3E%3Ctext x='256' y='110' font-family='Arial,sans-serif' font-size='100' font-weight='bold' fill='%23003DA5' text-anchor='middle'%3EGLS%3C/text%3E%3C/svg%3E" alt="GLS" style="height:30px;width:auto;"/></span>
                   </div>
                 </div>
               </label>
