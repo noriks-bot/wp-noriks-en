@@ -477,6 +477,8 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     // $fields['billing']['billing_email']['description'] = 'Za potvrdu narudžbe i praćenje pošiljke';
     $fields['billing']['billing_email']['required'] = true;
     $fields['billing']['billing_country']['default'] = 'HR';
+    $fields['billing']['billing_country']['required'] = true;
+    $fields['billing']['billing_country']['priority'] = 90;
     unset( $fields['billing']['billing_company'] );
 
     // Vigoshop CSS classes
