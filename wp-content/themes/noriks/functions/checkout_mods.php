@@ -99,20 +99,11 @@ add_action( 'wp_footer', function() {
       flex-wrap: wrap !important;
       gap: 0 4% !important;
     }
-    .woocommerce-billing-fields__field-wrapper > p.form-row {
+    .woocommerce-billing-fields__field-wrapper > * {
       flex: 0 0 100% !important;
       float: none !important;
       clear: none !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_postcode_field {
-      flex: 0 0 35% !important;
-      float: none !important;
-      clear: none !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_city_field {
-      flex: 0 0 61% !important;
-      float: none !important;
-      clear: none !important;
+      box-sizing: border-box !important;
     }
     .woocommerce-billing-fields__field-wrapper > p#billing_first_name_field {
       flex: 0 0 48% !important;
@@ -125,6 +116,12 @@ add_action( 'wp_footer', function() {
     }
     .woocommerce-billing-fields__field-wrapper > p#billing_address_2_field {
       flex: 0 0 29% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_postcode_field {
+      flex: 0 0 35% !important;
+    }
+    .woocommerce-billing-fields__field-wrapper > p#billing_city_field {
+      flex: 0 0 61% !important;
     }
 
     /* Payment methods — native WC rendering, no overrides */
@@ -520,8 +517,8 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     // Vigoshop CSS classes
     $fields['billing']['billing_first_name']['class'] = array('form-row','form-row-first','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_last_name']['class']  = array('form-row','form-row-last','form-group','col-xs-12','validate-required');
-    $fields['billing']['billing_address_1']['class']  = array('form-row','form-row-wide','address-field','form-group','col-xs-12','validate-required');
-    $fields['billing']['billing_address_2']['class']  = array('form-row','form-row-wide','address-field','form-group','col-xs-12','validate-required');
+    $fields['billing']['billing_address_1']['class']  = array('form-row','form-row-first','address-field','form-group','col-xs-12','validate-required');
+    $fields['billing']['billing_address_2']['class']  = array('form-row','form-row-last','address-field','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_postcode']['class']   = array('form-row','form-row-last','address-field','form-group','col-xs-12','validate-required','validate-postcode');
     $fields['billing']['billing_city']['class']       = array('form-row','form-row-first','dropdown','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_phone']['class']      = array('form-row','form-row-wide','form-group','col-xs-12','validate-required','validate-phone');
