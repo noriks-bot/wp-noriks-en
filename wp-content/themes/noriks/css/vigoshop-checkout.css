@@ -172,8 +172,8 @@ p#billing_phone_field.custom-validated span.custom-validation-fail::before { bac
 .sv-wc-external-checkout { display: none; }p#billing_address_1_field, p#billing_address_2_field, p#billing_city_field, p#billing_postcode_field { clear: none; }
 p#billing_address_1_field { float: left; width: 67%; }
 p#billing_address_2_field { float: right; width: 31%; }
-p#billing_postcode_field { clear: both; float: left; width: 35%; }
-p#billing_city_field { clear: none; float: right; width: 63%; }
+p#billing_postcode_field { clear: both; float: none; width: 100%; }
+p#billing_city_field { clear: both; float: none; width: 100%; }
 @media (max-width: 575.98px) {
   p#billing_address_1_field, p#billing_address_2_field, p#billing_city_field, p#billing_postcode_field { width: 100%; }
 }
