@@ -47,14 +47,14 @@ p#billing_country_field, p#billing_state_field { display: none; }
 .checkout .example-number, .checkout .phone_number_delivery_assist_tooltip { width: 50%; }
 .phone_number_delivery_assist_tooltip { float: right; padding-right: 15px; text-align: right; }
 @media (min-width: 430px) and (max-width: 767px) {
-  p#billing_postcode_field, p#shipping_postcode_field { margin-right: 2%; width: 49%; }
-  p#billing_city_field, p#shipping_city_field { width: 49%; }
+  p#billing_postcode_field, p#shipping_postcode_field { width: 100%; }
+  p#billing_city_field, p#shipping_city_field { width: 100%; }
 }
 span.custom-validation-fail::before { background: url("https://images.vigo-shop.com/general/cross-sign-dark-red.png") 0% 0% / 12px 12px no-repeat; content: ""; display: inline-block; height: 14px; margin-right: 5px; vertical-align: middle; width: 12px; }
 p#billing_phone_field.custom-validated span.custom-validation-fail::before { background: unset; content: "⚠️"; font-size: 17px; height: unset; width: unset; }
 @media (min-width: 768px) {
-  .col2-set .form-row-first, p#billing_postcode_field, p#shipping_postcode_field { margin-right: 2%; width: 49%; }
-  .col2-set .form-row-last, p#billing_city_field, p#shipping_city_field { width: 49%; }
+  .col2-set .form-row-first, p#billing_postcode_field, p#shipping_postcode_field { width: 100%; }
+  .col2-set .form-row-last, p#billing_city_field, p#shipping_city_field { width: 100%; }
   @keyframes dash-check { 
   0% { stroke-dashoffset: -100; }
   100% { stroke-dashoffset: 900; }
