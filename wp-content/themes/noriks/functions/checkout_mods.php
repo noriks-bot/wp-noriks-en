@@ -93,36 +93,13 @@ add_action( 'wp_footer', function() {
     if ( ! is_checkout() ) return;
     ?>
     <style id="noriks-checkout-overrides">
-    /* ===== POSTCODE + CITY — always side by side ===== */
-    .woocommerce-billing-fields__field-wrapper {
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 0 4% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > * {
-      flex: 0 0 100% !important;
-      float: none !important;
-      clear: none !important;
-      box-sizing: border-box !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_first_name_field {
-      flex: 0 0 48% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_last_name_field {
-      flex: 0 0 48% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_address_1_field {
-      flex: 0 0 67% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_address_2_field {
-      flex: 0 0 29% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_postcode_field {
-      flex: 0 0 35% !important;
-    }
-    .woocommerce-billing-fields__field-wrapper > p#billing_city_field {
-      flex: 0 0 61% !important;
-    }
+    /* ===== FIELD LAYOUT — simple float by ID ===== */
+    p#billing_first_name_field { float: left !important; width: 48% !important; margin-right: 4% !important; clear: both !important; }
+    p#billing_last_name_field { float: left !important; width: 48% !important; clear: none !important; }
+    p#billing_address_1_field { float: left !important; width: 67% !important; margin-right: 4% !important; clear: both !important; }
+    p#billing_address_2_field { float: left !important; width: 29% !important; clear: none !important; }
+    p#billing_postcode_field { float: left !important; width: 35% !important; margin-right: 4% !important; clear: both !important; }
+    p#billing_city_field { float: left !important; width: 61% !important; clear: none !important; }
 
     /* Payment methods — native WC rendering, no overrides */
 
