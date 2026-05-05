@@ -98,8 +98,8 @@ add_action( 'wp_footer', function() {
     p#billing_last_name_field { float: left !important; width: 48% !important; clear: none !important; }
     p#billing_address_1_field { float: left !important; width: 67% !important; margin-right: 4% !important; clear: both !important; }
     p#billing_address_2_field { float: left !important; width: 29% !important; clear: none !important; }
-    p#billing_postcode_field { float: left !important; width: 35% !important; margin-right: 4% !important; clear: both !important; }
-    p#billing_city_field { float: left !important; width: 61% !important; clear: none !important; }
+    p#billing_postcode_field { float: none !important; width: 100% !important; clear: both !important; }
+    p#billing_city_field { float: none !important; width: 100% !important; clear: both !important; }
 
     /* Payment methods — native WC rendering, no overrides */
 
