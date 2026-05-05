@@ -464,3 +464,7 @@ body.woocommerce-checkout p#billing_address_1_field { float: left !important; wi
 body.woocommerce-checkout p#billing_address_2_field { float: left !important; width: 29% !important; clear: none !important; box-sizing: border-box !important; }
 body.woocommerce-checkout p#billing_postcode_field { float: left !important; width: 35% !important; margin-right: 4% !important; clear: both !important; box-sizing: border-box !important; }
 body.woocommerce-checkout p#billing_city_field { float: left !important; width: 61% !important; clear: none !important; box-sizing: border-box !important; }
+@media (max-width: 575.98px) {
+  body.woocommerce-checkout p#billing_postcode_field { width: 35% !important; float: left !important; margin-right: 4% !important; clear: both !important; }
+  body.woocommerce-checkout p#billing_city_field { width: 61% !important; float: left !important; clear: none !important; }
+}
