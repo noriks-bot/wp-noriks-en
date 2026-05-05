@@ -496,8 +496,8 @@ add_filter( 'woocommerce_checkout_fields', function( $fields ) {
     $fields['billing']['billing_last_name']['class']  = array('form-row','form-row-last','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_address_1']['class']  = array('form-row','form-row-first','address-field','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_address_2']['class']  = array('form-row','form-row-last','address-field','form-group','col-xs-12','validate-required');
-    $fields['billing']['billing_postcode']['class']   = array('form-row','form-row-last','address-field','form-group','col-xs-12','validate-required','validate-postcode');
-    $fields['billing']['billing_city']['class']       = array('form-row','form-row-first','dropdown','form-group','col-xs-12','validate-required');
+    $fields['billing']['billing_postcode']['class']   = array('form-row','form-row-wide','address-field','form-group','col-xs-12','validate-required','validate-postcode');
+    $fields['billing']['billing_city']['class']       = array('form-row','form-row-wide','dropdown','form-group','col-xs-12','validate-required');
     $fields['billing']['billing_phone']['class']      = array('form-row','form-row-wide','form-group','col-xs-12','validate-required','validate-phone');
     $fields['billing']['billing_email']['class']      = array('form-row','form-row-wide','form-group','col-xs-12','validate-email');
 
@@ -518,6 +518,14 @@ add_filter( 'woocommerce_form_field_text', function( $field, $key ) {
     }
     return $field;
 }, 10, 2 );
+
+/* Force postcode + city full width via inline style on the rendered HTML */
+add_filter('woocommerce_form_field', function($field, $key) {
+    if ($key === 'billing_postcode' || $key === 'billing_city') {
+        $field = str_replace('id="' . $key . '_field"', 'id="' . $key . '_field" style="width:100%!important;float:none!important;clear:both!important;"', $field);
+    }
+    return $field;
+}, 99, 2);
 
 /* Phone description handled by CSS ::after — immune to WC AJAX */
 
