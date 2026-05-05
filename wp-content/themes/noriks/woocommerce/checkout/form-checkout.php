@@ -19,11 +19,7 @@ if ( WC()->cart->is_empty() ) return;
 
   <div class="col2-set" id="customer_details">
     <div class="col-1 clearfix">
-      <div class="woocommerce-billing-fields">
-        <div class="woocommerce-billing-fields__field-wrapper">
           <?php do_action( 'woocommerce_checkout_billing' ); ?>
-        </div>
-      </div>
     </div>
 
     <div class="col-2">
