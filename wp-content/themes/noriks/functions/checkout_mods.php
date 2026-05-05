@@ -519,6 +519,14 @@ add_filter( 'woocommerce_form_field_text', function( $field, $key ) {
     return $field;
 }, 10, 2 );
 
+/* Force postcode + city full width via inline style on the rendered HTML */
+add_filter('woocommerce_form_field', function($field, $key) {
+    if ($key === 'billing_postcode' || $key === 'billing_city') {
+        $field = str_replace('id="' . $key . '_field"', 'id="' . $key . '_field" style="width:100%!important;float:none!important;clear:both!important;"', $field);
+    }
+    return $field;
+}, 99, 2);
+
 /* Phone description handled by CSS ::after — immune to WC AJAX */
 
 /**
