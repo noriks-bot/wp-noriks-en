@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-04-30 18:33:58+0000\n"
+"PO-Revision-Date: 2026-05-12 21:41:52+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -154,7 +154,7 @@ msgstr "Upute za plaćanje"
 #: src/Internal/RestApi/Routes/V4/Settings/PaymentGateways/Schema/ChequeGatewaySettingsSchema.php:45
 #: src/Internal/RestApi/Routes/V4/Settings/PaymentGateways/Schema/CodGatewaySettingsSchema.php:54
 msgid "Shown to customers on the payment methods list at checkout."
-msgstr "Prikazuje se kupcima u popisu načina plaćanja prilikom plaćanja."
+msgstr "Prikazuje se kupcima u popisu načina plaćanja na blagajni."
 
 #: src/Internal/RestApi/Routes/V4/Settings/PaymentGateways/Schema/BacsGatewaySettingsSchema.php:41
 msgid "Enable Direct bank transfer at checkout"
@@ -623,7 +623,7 @@ msgstr "<strong>Omogućen je način rada sandbox</strong>. Mogu se koristiti sam
 
 #: includes/emails/class-wc-email-customer-partially-refunded-order.php:44
 msgid "Notifies customers when their order has been partially refunded."
-msgstr "Obavještava kupce kada je sproveden djelomičan povrat novca za njihovu narudžbu."
+msgstr "Obavještava kupce kada je izvršen djelomičan povrat novca za njihovu narudžbu."
 
 #. translators: %1$s: opening link tag, %2$s: closing link tag
 #: includes/admin/views/html-admin-settings.php:88
@@ -1494,7 +1494,7 @@ msgstr "Upravljajte izvanmrežnim načinima plaćanja dostupnima za vašu trgovi
 
 #: src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Controller.php:137
 msgid "Offline Payment Methods"
-msgstr "Izvanmrežne metode plaćanja"
+msgstr "Izvanmrežni načini plaćanja"
 
 #: src/Internal/RestApi/Routes/V4/Settings/OfflinePaymentMethods/Controller.php:80
 msgid "Country code to retrieve offline payment methods for."
@@ -1673,7 +1673,7 @@ msgstr "Porez stavke nije pronađen. Mora biti: %s."
 
 #: src/Internal/RestApi/Routes/V4/Refunds/DataUtils.php:206
 msgid "Tax id and refund_total are required."
-msgstr "ID poreza i ukupni iznos povrata su obavezni."
+msgstr "ID poreza i ukupni iznos povrata su obvezni."
 
 #. translators: %s: item quantity
 #: src/Internal/RestApi/Routes/V4/Refunds/DataUtils.php:182
@@ -2116,16 +2116,16 @@ msgstr "Ova stavka nije dostupna za kupnju."
 
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:104
 msgid "Raw shipping method settings for frontend processing."
-msgstr "Postavke sirove metode dostave za obradu na naslovnici."
+msgstr "Postavke sirovog načina dostave za obradu na naslovnici."
 
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:100
 msgid "Shipping method ID (e.g., flat_rate, free_shipping)."
-msgstr "ID metode dostave (npr. flat_rate, free_shipping)."
+msgstr "ID načina dostave (npr. flat_rate, free_shipping)."
 
 #: src/Internal/RestApi/Routes/V4/ShippingZoneMethod/ShippingMethodSchema.php:49
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:96
 msgid "Whether the shipping method is enabled."
-msgstr "Je li metoda dostave omogućena."
+msgstr "Je li način dostave omogućen."
 
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:81
 msgid "Shipping methods for this zone."
@@ -3356,7 +3356,7 @@ msgstr "Odabran je nevaljani proizvod."
 #: src/Internal/StockNotifications/Admin/ListTable.php:287
 msgctxt "column_name"
 msgid "Signed Up"
-msgstr "Registriran"
+msgstr "Prijavljen"
 
 #: src/Internal/StockNotifications/Admin/ListTable.php:286
 msgctxt "column_name"
@@ -4389,7 +4389,7 @@ msgstr "%1$s - Slika %2$d"
 #. translators: %s: URL to the documentation.
 #: src/Blocks/Shipping/ShippingController.php:211
 msgid "This feature is not available when using the <a href=\"%s\">Cart and checkout blocks</a>. Shipping will be calculated at checkout."
-msgstr "Ova značajka nije dostupna kada koristite <a href=\"%s\">blokove Košarica i Blagajna</a> . Dostava će se izračunati prilikom naplate."
+msgstr "Ova značajka nije dostupna kada koristite <a href=\"%s\">blokove Košarica i Blagajna</a>. Dostava će se izračunati pri naplati."
 
 #: src/Blocks/Domain/Services/CheckoutLink.php:67
 #: src/Blocks/Domain/Services/CheckoutLink.php:155
@@ -4594,7 +4594,7 @@ msgstr "Turska"
 
 #: includes/admin/views/html-admin-page-status-report.php:262
 msgid "Unable to determine server architecture.  Please ask your hosting provider for this information."
-msgstr "Nije moguće odrediti arhitekturu poslužitelja. Zatražite ove informacije od svog davatelja usluge hostinga."
+msgstr "Nije moguće odrediti arhitekturu poslužitelja. Zatražite ove informacije od svog pružatelja usluga hostinga."
 
 #: includes/admin/helper/class-wc-helper.php:116
 msgid "Some subscription data may be temporarily unavailable. Please refresh the page in a few minutes to try again."
@@ -4632,7 +4632,7 @@ msgstr "Prikažite naziv proizvoda."
 #: assets/client/blocks/product-title/block.json
 msgctxt "block title"
 msgid "Product Title"
-msgstr "Naziv priloga"
+msgstr "Naziv proizvoda"
 
 #: assets/client/blocks/product-stock-indicator/block.json
 msgctxt "block description"
@@ -4944,7 +4944,7 @@ msgstr "URL za plaćanje"
 
 #: src/Internal/EmailEditor/PersonalizationTags/OrderTagsProvider.php:105
 msgid "Order Tax"
-msgstr "Porez"
+msgstr "Porez na narudžbu"
 
 #: src/Internal/EmailEditor/PersonalizationTags/OrderTagsProvider.php:88
 msgid "Order Subtotal"
@@ -5037,7 +5037,7 @@ msgstr "ID koraka uvođenja nije važeći: %s"
 #. translators: %s: The required key that is missing.
 #: src/Internal/Admin/Settings/PaymentsProviders/WooPayments/WooPaymentsService.php:2031
 msgid "The onboarding step is missing required entries: %s"
-msgstr "U koraku uvođenja nedostaju obavezni unosi: %s"
+msgstr "U koraku uvođenja nedostaju obvezni unosi: %s"
 
 #: src/Internal/Admin/Settings/PaymentsProviders/WooPayments/WooPaymentsService.php:1727
 #: assets/client/admin/chunks/6526.js:1
@@ -5455,7 +5455,7 @@ msgstr "Arhitektura poslužitelja."
 
 #: includes/emails/class-wc-email-customer-pos-refunded-order.php:69
 msgid "Order refunded emails are sent to customers when their POS orders are refunded."
-msgstr "E-poruke o povratu novca za narudžbe šalju se kupcima kada im se refundira narudžba putem POS sustava."
+msgstr "E-poruke o povratu novca za narudžbe šalju se kupcima kada im se vrati uplata za narudžba putem POS sustava."
 
 #: includes/emails/class-wc-email-customer-pos-refunded-order.php:68
 msgid "Let customers know when a full or partial refund is on its way to them for their POS order."
@@ -5608,7 +5608,7 @@ msgstr "Ukupni trošak"
 #. translators: 1: WooCommerce.com connection URL, 2: home URL
 #: includes/admin/helper/class-wc-woo-helper-connection.php:42
 msgid "Your site is currently connected to WooCommerce.com using <b>%1$s</b>, but your actual site URL is <b>%2$s</b>. To fix this, please reconnect your site to <b>WooCommerce.com</b> to ensure everything works correctly."
-msgstr "Vaša je web-stranica trenutno povezana s WooCommerce.com putem <b>%1$s</b> , ali stvarni URL vaše web-stranice je <b>%2$s</b> . Da biste to popravili, ponovno povežite svoju web-stranicu s <b>WooCommerce.com</b> kako biste osigurali da sve ispravno radi."
+msgstr "Vaša je web-stranica trenutno povezana s WooCommerce.com putem <b>%1$s</b>, ali stvarni URL vaše web-stranice je <b>%2$s</b>. Da biste to popravili, ponovno povežite svoju web-stranicu s <b>WooCommerce.com</b> kako biste osigurali da sve ispravno radi."
 
 #. translators: %d: HTTP status code.
 #: includes/admin/helper/class-wc-helper.php:2931
@@ -5639,7 +5639,7 @@ msgstr "Autentifikacija nije uspjela. Pokušajte ponovno za nekoliko minuta. Ako
 
 #: includes/admin/helper/class-wc-helper-admin.php:251
 msgid "API response is missing required elements, or they are in the wrong form."
-msgstr "API odgovoru nedostaju obavezni elementi ili su u pogrešnom obliku."
+msgstr "API odgovoru nedostaju obvezni elementi ili su u pogrešnom obliku."
 
 #: includes/admin/helper/class-wc-helper-admin.php:229
 msgid "We couldn't find a preview for this product."
@@ -5943,7 +5943,7 @@ msgstr "Ako niste poslali ovaj zahtjev, jednostavno zanemarite ovu e-poruku. Ako
 #: templates/emails/plain/customer-pos-refunded-order.php:40
 #: templates/emails/plain/customer-refunded-order.php:36
 msgid "Your order from %s has been refunded."
-msgstr "Za vašu narudžbu na %s sproveden je povrat novca."
+msgstr "Za vašu narudžbu na %s izvršen je povrat novca."
 
 #. translators: %s: Site title
 #: templates/emails/block/customer-partially-refunded-order.php:43
@@ -5952,7 +5952,7 @@ msgstr "Za vašu narudžbu na %s sproveden je povrat novca."
 #: templates/emails/plain/customer-pos-refunded-order.php:37
 #: templates/emails/plain/customer-refunded-order.php:33
 msgid "Your order from %s has been partially refunded."
-msgstr "Za vašu narudžbu na %s sproveden je djelomičan povrat novca."
+msgstr "Za vašu narudžbu na %s izvršen je djelomičan povrat novca."
 
 #: templates/emails/customer-on-hold-order.php:41
 #: templates/emails/plain/customer-on-hold-order.php:31
@@ -6260,7 +6260,7 @@ msgstr "GoCardless"
 
 #: src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.php:4269
 msgid "Billie is the leading provider of Buy Now, Pay Later payment methods for B2B stores."
-msgstr "Billie je vodeći pružatelj metoda plaćanja \"Kupi sada, plati kasnije\" za B2B trgovine."
+msgstr "Billie je vodeći pružatelj načina plaćanja \"Kupi sada, plati kasnije\" za B2B trgovine."
 
 #: src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.php:4268
 msgid "Billie"
@@ -6379,7 +6379,7 @@ msgstr "Dodaj u košaricu + Opcije"
 #. translators: 1: Disconnected user email
 #: src/Admin/PluginsHelper.php:1213
 msgid "Successfully connected to <b>%s</b>."
-msgstr "Uspješno povezano s <b>%s</b> ."
+msgstr "Uspješno povezano s <b>%s</b>."
 
 #: src/Admin/Features/ShippingPartnerSuggestions/DefaultShippingPartners.php:241
 #: assets/client/admin/chunks/6568.js:1
@@ -6514,7 +6514,7 @@ msgstr "Neispravna adresa e-pošte"
 
 #: packages/email-editor/src/Engine/class-send-preview-email.php:204
 msgid "Missing required data"
-msgstr "Nedostaju obavezni podaci"
+msgstr "Nedostaju obvezni podaci"
 
 #: packages/action-scheduler/classes/WP_CLI/System_Command.php:167
 msgid "Detailed information about registered sources is not currently available."
@@ -6691,7 +6691,7 @@ msgstr "[{site_title}]: Imate novu narudžbu: #{order_number}"
 #: includes/emails/class-wc-email-failed-order.php:174
 #: templates/emails/block/admin-failed-order.php:47
 msgid "We hope they’ll be back soon! Read more about <a href=\"https://woocommerce.com/document/managing-orders/\">troubleshooting failed payments</a>."
-msgstr "Nadamo se da će se uskoro vratiti! Pročitajte više o <a href=\"https://woocommerce.com/document/managing-orders/\">rješavanju problema s neuspjelim plaćanjima</a> ."
+msgstr "Nadamo se da će se uskoro vratiti! Pročitajte više o <a href=\"https://woocommerce.com/document/managing-orders/\">rješavanju problema s neuspjelim plaćanjima</a>."
 
 #: includes/emails/class-wc-email-failed-order.php:80
 msgid "Order failed: #{order_number}"
@@ -7100,7 +7100,7 @@ msgstr "Prikaži lozinku"
 
 #: includes/admin/class-wc-admin-assets.php:515
 msgid "Warning: Sale prices will be removed if they are not lower than regular prices."
-msgstr "Upozorenje: Akcijske cijene biti će uklonjene ako nisu niže od redovnih cijena."
+msgstr "Upozorenje: Akcijske cijene bit će uklonjene ako nisu niže od redovnih cijena."
 
 #: assets/client/blocks/product-summary/block.json
 msgctxt "block description"
@@ -7366,15 +7366,15 @@ msgstr "Aktivni poticaj za pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:1075
 msgid "The suggestion ID matching this provider."
-msgstr "ID prijedloga koji odgovara ovom davatelju usluga."
+msgstr "ID prijedloga koji odgovara ovom pružatelju usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:1069
 msgid "Tag associated with the provider."
-msgstr "Oznaka povezana s davateljem usluga."
+msgstr "Oznaka povezana s pružateljem usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:1063
 msgid "The tags associated with the provider."
-msgstr "Oznake povezane s davateljem usluga."
+msgstr "Oznake povezane s pružateljem usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:1014
 msgid "The URL of the payment method icon or a base64-encoded SVG image."
@@ -7452,11 +7452,11 @@ msgstr "Podaci o upravljanju pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:837
 msgid "Whether the provider is in dev mode. Having this true usually leads to forcing test payments. "
-msgstr "Je li davatelj usluga u razvojnom načinu rada. Ako je postavljeno kao true, obično dovodi do forsiranja na test plaćanja. "
+msgstr "Je li pružatelj usluga u razvojnom načinu rada. Ako je postavljeno kao true, obično dovodi do forsiranja na test plaćanja. "
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:831
 msgid "Whether the provider is in test mode for payments processing."
-msgstr "Je li davatelj usluga u testnom načinu obrade plaćanja."
+msgstr "Je li pružatelj usluga u testnom načinu obrade plaćanja."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:825
 msgid "Whether the provider needs setup."
@@ -7468,7 +7468,7 @@ msgstr "Ima li pružatelj usluga povezan račun za obradu plaćanja."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:813
 msgid "Whether the provider is enabled for use on checkout."
-msgstr "Je li davatelj usluga omogućen za korištenje na blagajni."
+msgstr "Je li pružatelj usluga omogućen za korištenje na blagajni."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:809
 msgid "The general state of the provider with regards to it's payments processing."
@@ -7490,11 +7490,11 @@ msgstr "Poveznice za pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:781
 msgid "The URL of the provider icon (square aspect ratio - 72px by 72px)."
-msgstr "URL ikone davatelja usluga (kvadratni omjer slike - 72 x 72 piksela)."
+msgstr "URL ikone pružatelja usluga (kvadratni omjer slike - 72 x 72 piksela)."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:776
 msgid "The URL of the provider image."
-msgstr "URL slike davatelja usluga."
+msgstr "URL slike pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:1186
 msgid "The status of the plugin."
@@ -7518,7 +7518,7 @@ msgstr "Odgovarajući detalji dodatka pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:723
 msgid "Supported features for this provider."
-msgstr "Podržane značajke za ovog davatelja usluga."
+msgstr "Podržane značajke za ovog pružatelja usluga."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:718
 msgid "The description of the provider."
@@ -7586,7 +7586,7 @@ msgstr "Vrijednost narudžbe mora biti cijeli broj."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:417
 msgid "The ordering argument must be an object with provider IDs as keys and numeric values as values."
-msgstr "Argument redoslijeda mora biti objekt s ID-ovima davatelja usluga kao ključevima i numeričkim vrijednostima kao vrijednostima."
+msgstr "Argument redoslijeda mora biti objekt s ID-ovima pružatelja usluga kao ključevima i numeričkim vrijednostima kao vrijednostima."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:412
 msgid "The ordering argument must be an object."
@@ -7608,7 +7608,7 @@ msgstr "ID konteksta za odbacivanje poticaja. Ako se ne pruži, odbacit će poti
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:111
 msgid "A map of provider ID to integer values representing the sort order."
-msgstr "Mapiranje ID-a davatelja usluga na cjelobrojne vrijednosti koje predstavljaju redoslijed sortiranja."
+msgstr "Mapiranje ID-a pružatelja usluga na cjelobrojne vrijednosti koje predstavljaju redoslijed sortiranja."
 
 #: src/Internal/Admin/Settings/PaymentsRestController.php:89
 msgid "ISO3166 alpha-2 country code. Defaults to WooCommerce's base location country."
@@ -7698,7 +7698,7 @@ msgstr "Društvene poveznice uskoro dostupne"
 
 #: src/Blocks/BlockTypes/Checkout.php:114
 msgid "Address Line 2"
-msgstr "Adresa"
+msgstr "Adresa 2"
 
 #: src/Blocks/BlockTypes/Checkout.php:113
 msgid "Controls the display of the apartment (address_2) field in checkout."
@@ -8356,7 +8356,7 @@ msgstr "Popis"
 #: assets/client/blocks/order-confirmation-create-account/block.json
 msgctxt "block title"
 msgid "Account Creation"
-msgstr "Izrada korisničkog računa"
+msgstr "Stvaranje računa"
 
 #: src/Blocks/BlockTypes/OrderConfirmation/CreateAccount.php:74
 #: assets/client/blocks/order-confirmation-create-account.js:3
@@ -8380,7 +8380,7 @@ msgstr "&uarr; Vrh"
 
 #: src/Packages.php:280
 msgid "This plugin can no longer be activated because its functionality is now included in <strong>WooCommerce</strong>. It is recommended to <strong>delete</strong> it."
-msgstr "Ovaj se dodatak više ne može aktivirati jer je njegova funkcionalnost sada uključena u <strong>WooCommerce</strong>. Preporuča se <strong>brisanje</strong> ."
+msgstr "Ovaj se dodatak više ne može aktivirati jer je njegova funkcionalnost sada uključena u <strong>WooCommerce</strong>. Preporuča se <strong>brisanje</strong>."
 
 #: src/Packages.php:240
 msgid "Return to the Plugins page"
@@ -8464,7 +8464,7 @@ msgstr "Nemate pretplatu za <strong>%1$s</strong>. Pretplatite se za primanje a�
 
 #: includes/widgets/class-wc-widget-brand-thumbnails.php:227
 msgid "Order by:"
-msgstr "Sortiraj prema:"
+msgstr "Poredaj po:"
 
 #: includes/widgets/class-wc-widget-brand-thumbnails.php:219
 msgid "Hide empty brands:"
@@ -8964,7 +8964,7 @@ msgstr[0] ""
 "%%C%1$d%%n nekompatibilni dodatak pronađen%2$s"
 msgstr[1] ""
 "\n"
-"%%C%1$d%%n nekompatibilna dodatka pronađeno%2$s"
+"%%C%1$d%%n nekompatibilna dodatka pronađena%2$s"
 msgstr[2] ""
 "\n"
 "%%C%1$d%%n nekompatibilnih dodataka pronađeno%2$s"
@@ -9785,7 +9785,7 @@ msgstr "HPOS Indeksi pretraživanja cijelog teksta"
 #. translators: %d is an order ID.
 #: src/Internal/DataStores/Orders/LegacyDataHandler.php:162
 msgid "%d is not of a valid order type."
-msgstr "%d nije važeća vrste narudžbe."
+msgstr "%d nije valjana vrsta narudžbe."
 
 #: src/Internal/DataStores/Orders/CustomOrdersTableController.php:736
 msgid "Sync orders now"
@@ -10191,7 +10191,7 @@ msgstr "Dodatak je instalirao %1$s u %2$s. <a target=\"_blank\" href=\"%3$s\">Vi
 
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:892
 msgid "Enter an optional note attached to the order confirmation message sent to the shopper."
-msgstr "Unesite neobaveznu bilješku priloženu poruci potvrde narudžbe poslanoj kupcu."
+msgstr "Unesite neobveznu bilješku priloženu poruci potvrde narudžbe poslanoj kupcu."
 
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:891
 msgid "Post-purchase note"
@@ -10356,7 +10356,7 @@ msgstr "⚠️ WooCommerce je <a href=\"%1$s\">instalirao dodatak Legacy REST AP
 #. translators: %s: coupon code
 #: includes/class-wc-coupon.php:1125 includes/class-wc-coupon.php:1425
 msgid "Please enter a valid email at checkout to use coupon code \"%s\"."
-msgstr "Unesite valjanu e-poštu na blagajni kako biste koristili kod kupona \"%s\"."
+msgstr "Unesite valjanu e-poštu na blagajni kako biste koristili kôd kupona \"%s\"."
 
 #. translators: %s: coupon code
 #: includes/class-wc-coupon.php:1119 includes/class-wc-coupon.php:1430
@@ -10528,7 +10528,7 @@ msgstr "Naziv aplikacije"
 
 #: src/Internal/ReceiptRendering/ReceiptRenderingEngine.php:390
 msgid "Payment method"
-msgstr "Metoda plaćanja"
+msgstr "Način plaćanja"
 
 #: src/Internal/ReceiptRendering/ReceiptRenderingEngine.php:389
 msgid "Date Paid"
@@ -11470,7 +11470,7 @@ msgstr "Prodajni kanali"
 
 #: src/Admin/API/Reports/Revenue/Stats/Controller.php:253
 msgid "Override the \"woocommerce_date_type\" option that is used for the database date field considered for revenue reports."
-msgstr "Zamjenite opciju \"woocommerce_date_type\" koja se koristi za polje datuma baze podataka koje se uzima u obzir za izvješća o prihodima."
+msgstr "Zamijenite opciju \"woocommerce_date_type\" koja se koristi za polje datuma baze podataka koje se uzima u obzir za izvješća o prihodima."
 
 #: src/Admin/API/OnboardingProducts.php:80
 msgid "Sorry, you cannot create dummy products."
@@ -11791,7 +11791,7 @@ msgstr "Čišćenje se može izvesti samo kada je HPOS aktivan i kada je način 
 #. translators: %s is field key.
 #: src/Blocks/Domain/Services/CheckoutFields.php:177
 msgid "The field %s is required."
-msgstr "Polje %s je obavezno."
+msgstr "Polje %s je obvezno."
 
 #. translators: %1$s is field key, %2$s location.
 #: src/Blocks/Domain/Services/CheckoutFields.php:1120
@@ -12102,7 +12102,7 @@ msgstr "Dodaj u košaricu: &ldquo;%s&rdquo;"
 
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:57
 msgid "An optional zone you can use to set the shipping method(s) available to any regions that have not been listed above."
-msgstr "Neobavezna zona koju možete koristiti za postavljanje načina dostave dostupnih za sve regije koje nisu gore navedene."
+msgstr "Neobvezna zona koju možete koristiti za postavljanje načina dostave dostupnih za sve regije koje nisu gore navedene."
 
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:21
 msgid "A shipping zone consists of the region(s) you'd like to ship to and the shipping method(s) offered. A shopper can only be matched to one zone, and we'll use their shipping address to show them the methods available in their area."
@@ -12545,7 +12545,7 @@ msgstr "Hvala. Vaša narudžba je ispunjena."
 #. translators: %s: date and time of the order refund.
 #: src/Blocks/BlockTypes/OrderConfirmation/Status.php:116
 msgid "Your order was refunded %s."
-msgstr "Sproveden je povrat novca za vašu narudžbu %s."
+msgstr "Izvršen je povrat novca za vašu narudžbu %s."
 
 #: src/Blocks/BlockTypes/OrderConfirmation/Status.php:96
 msgid "Your order has been cancelled."
@@ -12604,7 +12604,7 @@ msgstr "Nasljeđe"
 #. translators: Placeholders are URLs.
 #: includes/admin/class-wc-admin-notices.php:199
 msgid "⚠️ The WooCommerce Legacy REST API has been removed from WooCommerce, this will cause <a href=\"%1$s\">webhooks on this site that are configured to use the Legacy REST API</a> to stop working. <a target=\"_blank\" href=\"%2$s\">A separate WooCommerce extension is available</a> to allow these webhooks to keep using the Legacy REST API without interruption. You can also edit these webhooks to use the current REST API version to generate the payload instead. <b><a target=\"_blank\" href=\"%3$s\">Learn more about this change.</a></b>"
-msgstr "⚠️ WooCommerce Legacy REST API uklonjen je iz WooCommercea, što će uzrokovati prestanak rada <a href=\"%1$s\">webhookova na ovoj web stranici koji su konfigurirani za korištenje Legacy REST API</a> . <a target=\"_blank\" href=\"%2$s\">Dostupno je zasebno proširenje WooCommerce</a> koje omogućuje tim webhookovima da nastave koristiti Legacy REST API bez prekida. Te webhookove možete urediti i tako da biste umjesto toga koristili trenutnu verziju REST API-ja za generiranje korisnog tereta. <b><a target=\"_blank\" href=\"%3$s\">Saznajte više o toj promjeni.</a></b>"
+msgstr "⚠️ WooCommerce Legacy REST API uklonjen je iz WooCommercea, što će uzrokovati prestanak rada <a href=\"%1$s\">webhookova na ovoj web stranici koji su konfigurirani za korištenje Legacy REST API</a>. <a target=\"_blank\" href=\"%2$s\">Dostupno je zasebno proširenje WooCommerce</a> koje omogućuje tim webhookovima da nastave koristiti Legacy REST API bez prekida. Te webhookove možete urediti i tako da biste umjesto toga koristili trenutnu verziju REST API-ja za generiranje korisnog tereta. <b><a target=\"_blank\" href=\"%3$s\">Saznajte više o toj promjeni.</a></b>"
 
 #: includes/admin/class-wc-admin-notices.php:195
 msgid "WooCommerce webhooks that use the Legacy REST API are unsupported"
@@ -12642,7 +12642,7 @@ msgstr "Taksonomija"
 #: assets/client/admin/product-editor/blocks/product-fields/tag/block.json
 msgctxt "block title"
 msgid "Product Tag"
-msgstr "Oznake proizvoda"
+msgstr "Oznaka proizvoda"
 
 #: includes/admin/settings/class-wc-settings-emails.php:220
 msgid "Logo"
@@ -12937,7 +12937,7 @@ msgstr "Opis obavijesti"
 #: assets/client/admin/product-editor/blocks/product-fields/product-single-variation-notice/block.json
 msgctxt "block title"
 msgid "Notice"
-msgstr "Napomena"
+msgstr "Obavijest"
 
 #: assets/client/admin/product-editor/blocks/product-fields/catalog-visibility/block.json
 #: assets/client/admin/product-editor/blocks/product-fields/product-catalog-visibility-field/block.json
@@ -13258,7 +13258,7 @@ msgstr "Korisnika #%d obrisao je WooCommercea u skladu s postavkama zadržavanja
 #: assets/client/blocks/product-top-rated/block.json
 msgctxt "block description"
 msgid "Display a grid of your top rated products."
-msgstr "Prikažite rešetku svojih najbolje ocijenjenih proizvoda."
+msgstr "Prikažite mrežu svojih najbolje ocijenjenih proizvoda."
 
 #: assets/client/blocks/product-top-rated/block.json
 msgctxt "block title"
@@ -13447,7 +13447,7 @@ msgstr "Zamjenska slike koja se koristi za predstavljanje proizvoda koji se prik
 
 #: patterns/banner.php:55
 msgid "Placeholder image used to represent products being showcased in a banner."
-msgstr "Zamjenska slike koja se koristi za predstavljanje proizvoda koji se prikazuju u baneru."
+msgstr "Zamjenska slike koja se koristi za predstavljanje proizvoda koji se prikazuju u banneru."
 
 #. translators: 1: provided value 2: provided type.
 #: packages/action-scheduler/functions.php:137
@@ -13910,7 +13910,7 @@ msgstr "Kontura"
 #: assets/client/blocks/product-button/block.json
 msgctxt "block style label"
 msgid "Fill"
-msgstr "Popuna"
+msgstr "Ispuna"
 
 #: assets/client/blocks/inner-blocks/mini-cart-cart-button-block/block.json
 msgctxt "block description"
@@ -14165,7 +14165,7 @@ msgstr "Polja za dimenzije isporuke proizvoda"
 #: assets/client/admin/product-editor/blocks/product-fields/schedule-sale/block.json
 msgctxt "block keyword"
 msgid "sale"
-msgstr "sniženje"
+msgstr "akcija"
 
 #: assets/client/admin/product-editor/blocks/product-fields/product-schedule-sale-fields/block.json
 #: assets/client/admin/product-editor/blocks/product-fields/schedule-sale/block.json
@@ -14787,7 +14787,7 @@ msgstr "Prikazuje lokalne opcije dostave."
 #: assets/client/blocks/inner-blocks/checkout-pickup-options-block/block.json
 msgctxt "block title"
 msgid "Pickup Method"
-msgstr "Metoda preuzimanja"
+msgstr "Način preuzimanja"
 
 #: src/Blocks/Shipping/PickupLocation.php:149
 #: assets/client/blocks/wc-shipping-method-pickup-location.js:233
@@ -15020,7 +15020,7 @@ msgstr "Ako je trošak definiran, ovo kontrolira je li porez dodan u taj trošak
 
 #: src/Blocks/Shipping/ShippingController.php:241
 msgid "If enabled, this method will appear on the block based checkout."
-msgstr "Ako je omogućeno, ova metoda biti će prikazan na stranici naplate koje je bazirana na blokovima."
+msgstr "Ako je omogućeno, ovaj način bit će prikazan na stranici naplate koje je bazirana na blokovima."
 
 #: src/Blocks/Shipping/PickupLocation.php:147
 msgid "Pickup address"
@@ -15378,7 +15378,7 @@ msgstr "Filtriranje s kontrolama ocjena"
 #: assets/client/blocks/rating-filter.js:9
 #: assets/client/blocks/stock-filter.js:8
 msgid "Product Filters"
-msgstr "Filteri proizvoda"
+msgstr "Filtri proizvoda"
 
 #: src/Internal/Features/ProductBlockEditor/ProductTemplates/SimpleProductTemplate.php:978
 msgid "Restrictions"
@@ -15602,7 +15602,7 @@ msgstr "Gledate aktivne dodatke koji nisu kompatibilni s trenutno omogućenim Wo
 
 #: src/Internal/Features/FeaturesController.php:1623
 msgid "WooCommerce has detected that some of your active plugins are incompatible with currently enabled WooCommerce features. Please <a>review the details</a>."
-msgstr "WooCommerce je otkrio da neki od vaših aktivnih dodataka nisu kompatibilni s trenutno omogućenim WooCommerce značajkama . Molimo <a>pregledajte detalje</a>."
+msgstr "WooCommerce je otkrio da neki od vaših aktivnih dodataka nisu kompatibilni s trenutno omogućenim WooCommerce značajkama. Molimo <a>pregledajte detalje</a>."
 
 #: src/Internal/Features/FeaturesController.php:1393
 msgid "WooCommerce Admin has been disabled"
@@ -16217,7 +16217,7 @@ msgstr "Prikažite mrežu proizvoda s odabranim oznakama."
 #: assets/client/blocks/product-tag/block.json
 msgctxt "block title"
 msgid "Products by Tag"
-msgstr "Proizvodi prema Oznaci"
+msgstr "Proizvodi po oznaci"
 
 #: assets/client/blocks/handpicked-products/block.json
 msgctxt "block description"
@@ -16433,7 +16433,7 @@ msgstr "Smeće"
 
 #: src/Internal/Admin/ProductReviews/ReviewsListTable.php:521
 msgid "Delete Permanently"
-msgstr "Trajno obrisati"
+msgstr "Trajno obriši"
 
 #: src/Internal/Admin/ProductReviews/ReviewsListTable.php:501
 msgctxt "review"
@@ -18350,7 +18350,7 @@ msgstr "Prikaži dostupne načine plaćanja."
 #: assets/client/blocks/inner-blocks/cart-accepted-payment-methods-block/block.json
 msgctxt "block title"
 msgid "Accepted Payment Methods"
-msgstr "Dostupni načini plaćanja"
+msgstr "Prihvaćeni načini plaćanja"
 
 #: src/Blocks/BlockTypes/MiniCartCheckoutButtonBlock.php:26
 #: assets/client/blocks/mini-cart-contents-block/checkout-button-frontend.js:1
@@ -18538,7 +18538,7 @@ msgstr "Prikupite kontakt podatke od vaših kupaca."
 #: assets/client/blocks/inner-blocks/checkout-contact-information-block/block.json
 msgctxt "block title"
 msgid "Contact Information"
-msgstr "Kontaktne informacije"
+msgstr "Podaci za kontakt"
 
 #: assets/client/blocks/inner-blocks/checkout-billing-address-block/block.json
 msgctxt "block description"
@@ -18599,7 +18599,7 @@ msgstr "Stupac koji sadrži ukupne iznose košarice."
 #: assets/client/blocks/inner-blocks/cart-totals-block/block.json
 msgctxt "block title"
 msgid "Cart Totals"
-msgstr "Sveukupni iznos košarice"
+msgstr "Ukupni iznos košarice"
 
 #: assets/client/blocks/inner-blocks/cart-order-summary-block/block.json
 #: assets/client/blocks/inner-blocks/checkout-order-summary-block/block.json
@@ -19069,7 +19069,7 @@ msgstr "Navedena je neispravna putanja."
 
 #: src/Internal/Admin/CustomerEffortScoreTracks.php:517
 msgid "How easy was it to add a product tag?"
-msgstr "Кoliko је bilo lаko dodati oznaku proizvoda?"
+msgstr "Koliko je bilo lako dodati oznaku proizvoda?"
 
 #: includes/class-wc-post-types.php:380
 msgid "A link to a product."
@@ -19281,7 +19281,7 @@ msgstr "Pripremite se za početak prodaje"
 
 #: src/Blocks/BlockTypes/AbstractBlock.php:134
 msgid "Block name is required."
-msgstr "Ime bloka je obavezno."
+msgstr "Ime bloka je obvezno."
 
 #. translators: 1: The first n-1 items of a list 2: the last item in the list.
 #: src/StoreApi/Utilities/ArrayUtils.php:29
@@ -19461,7 +19461,7 @@ msgstr "%1$s (ID: %2$s)"
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:310
 #: src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.php:3341
 msgid "Effortless payments by Mollie: Offer global and local payment methods, get onboarded in minutes, and supported in your language."
-msgstr "Laka plaćanja s Mollie: Pružite globalne i lokalne metode plaćanja, registrirajte se za par minuta i primite podršku na vašem jeziku."
+msgstr "Laka plaćanja s Mollie: Pružite globalne i lokalne načine plaćanja, registrirajte se za par minuta i primite podršku na svom jeziku."
 
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:415
 #: src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.php:3439
@@ -19920,11 +19920,11 @@ msgstr "Da li je proizvod vidljiv u katalogu"
 #: src/StoreApi/Schemas/V1/CartSchema.php:253
 #: src/StoreApi/Schemas/V1/OrderSchema.php:204
 msgid "Total tax on shipping. If shipping has not been calculated, a null response will be sent."
-msgstr "Ukupan porez na dostavu. Ako poštarina nije izračunata, biti će poslan odgovor nula."
+msgstr "Ukupan porez na dostavu. Ako poštarina nije izračunata, bit će poslan odgovor nula."
 
 #: src/StoreApi/Schemas/V1/CartSchema.php:247
 msgid "Total price of shipping. If shipping has not been calculated, a null response will be sent."
-msgstr "Ukupan porez na dostavu. Ako poštarina nije izračunata, biti će poslan odgovor nula."
+msgstr "Ukupan porez na dostavu. Ako poštarina nije izračunata, bit će poslan odgovor nula."
 
 #: src/StoreApi/Schemas/V1/CartSchema.php:187
 msgid "True if the cart meets the criteria for showing shipping costs, and rates have been calculated and included in the totals."
@@ -19942,7 +19942,7 @@ msgstr "Vrsta popusta za kupon (npr. postotak ili fiksni iznos)"
 
 #: src/StoreApi/Schemas/V1/CartCouponSchema.php:32
 msgid "The coupon's unique code."
-msgstr "Jedinstveni kod kupona."
+msgstr "Jedinstveni kôd kupona."
 
 #: src/StoreApi/Routes/V1/Checkout.php:697
 msgid "Unable to create order"
@@ -19990,7 +19990,7 @@ msgstr "Dosegnuto je ograničenje korištenja za kupon \"%1$s\". Ako ste upravo 
 #: assets/client/admin/components/index.js:2
 #: assets/client/admin/settings-editor/index.js:2
 msgid "Back"
-msgstr "Nazad"
+msgstr "Natrag"
 
 #: i18n/states.php:1005
 msgid "Saint Catherine"
@@ -21770,7 +21770,7 @@ msgstr "Opcije varijacije"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:788
 msgid "Phone (optional)"
-msgstr "Telefon (neobavezno)"
+msgstr "Telefon (neobvezno)"
 
 #: templates/emails/email-order-details.php:56
 #: assets/client/blocks/checkout-frontend.js:5
@@ -21781,7 +21781,7 @@ msgstr "Sažetak narudžbe"
 #: src/Internal/EmailEditor/PersonalizationTags/OrderTagsProvider.php:173
 #: assets/client/blocks/wc-blocks-google-analytics.js:1
 msgid "Payment Method"
-msgstr "Načini plaćanja"
+msgstr "Način plaćanja"
 
 #: src/Blocks/BlockTypes/MiniCartProductsTableBlock.php:154
 #: assets/client/blocks/all-products.js:8 assets/client/blocks/cart.js:8
@@ -21818,11 +21818,11 @@ msgstr "Država/županija (opcionalno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:752
 msgid "City (optional)"
-msgstr "Grad (nije obavezno)"
+msgstr "Grad (neobvezno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:681
 msgid "Country/Region (optional)"
-msgstr "Država/Regija (nije obavezno)"
+msgstr "Država/Regija (neobvezno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:680
 msgid "Country/Region"
@@ -21834,11 +21834,11 @@ msgstr "Stan, apartman, itd. (opcionalno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:728
 msgid "Address (optional)"
-msgstr "Adresa (nije obavezno)"
+msgstr "Adresa (neobvezno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:716
 msgid "Company (optional)"
-msgstr "Tvrtka (nije obavezno)"
+msgstr "Tvrtka (neobvezno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:704
 msgid "Last name (optional)"
@@ -21846,7 +21846,7 @@ msgstr "Prezime (opcionalno)"
 
 #: src/Blocks/Domain/Services/CheckoutFields.php:692
 msgid "First name (optional)"
-msgstr "Ime (nije obavezno)"
+msgstr "Ime (neobvezno)"
 
 #: src/Admin/Features/OnboardingTasks/Tasks/StoreDetails.php:31
 msgid "Add store details"
@@ -21903,7 +21903,7 @@ msgstr "Skica"
 #: src/Blocks/BlockTypes/AbstractBlock.php:439
 msgctxt "Word count type. Do not translate!"
 msgid "words"
-msgstr "riječi"
+msgstr "words"
 
 #: src/StoreApi/Schemas/V1/ItemSchema.php:307
 msgid "Line total tax."
@@ -22013,7 +22013,7 @@ msgstr "ID paketa kojem pripadaju cijene dostave."
 #: src/StoreApi/Schemas/V1/CartSchema.php:303
 #: src/StoreApi/Schemas/V1/OrderSchema.php:278
 msgid "List of cart item errors, for example, items in the cart which are out of stock."
-msgstr "Lista grešaka u košarici, na primjer, artikli u košarici kojih nema na zalihama."
+msgstr "Popis grešaka u košarici, na primjer, artikli u košarici kojih nema na zalihama."
 
 #: src/StoreApi/Schemas/V1/CartSchema.php:285
 #: src/StoreApi/Schemas/V1/OrderSchema.php:224
@@ -22182,7 +22182,7 @@ msgstr "Ukupni iznosi osigurani korištenjem najmanje jedinice valute."
 
 #: src/StoreApi/Schemas/V1/OrderCouponSchema.php:30
 msgid "The coupons unique code."
-msgstr "Jedinstveni kod kupona."
+msgstr "Jedinstveni kôd kupona."
 
 #: src/StoreApi/Schemas/V1/CheckoutSchema.php:187
 msgid "A URL to redirect the customer after checkout. This could be, for example, a link to the payment processors website."
@@ -22277,12 +22277,12 @@ msgstr "\"%s\" je već primijenjen i ne može se koristiti zajedno s ostalim kup
 #. translators: %s coupon code
 #: src/StoreApi/Utilities/CartController.php:966
 msgid "Coupon code \"%s\" has already been applied."
-msgstr "Kod kupona \"%s\" je već primijenjen."
+msgstr "Kôd kupona \"%s\" je već primijenjen."
 
 #. translators: %s coupon code
 #: src/StoreApi/Utilities/CartController.php:954
 msgid "\"%s\" is an invalid coupon code."
-msgstr "\"%s\" je nevažeći kod kupona."
+msgstr "\"%s\" nije valjan kôd kupona."
 
 #: src/StoreApi/Utilities/CartController.php:248
 msgid "Cart item is invalid."
@@ -22374,7 +22374,7 @@ msgstr "Kupon se ne može ukloniti jer nije već primijenjen u košarici."
 
 #: src/StoreApi/Routes/V1/CartRemoveCoupon.php:76
 msgid "Invalid coupon code."
-msgstr "Nevažeći kod kupona."
+msgstr "Nevaljani kôd kupona."
 
 #: src/StoreApi/Routes/V1/CartApplyCoupon.php:67
 #: src/StoreApi/Routes/V1/CartCoupons.php:106
@@ -22435,7 +22435,7 @@ msgstr "Kreiranje WooCommerce tablice %1$s nije uspjelo. Ima li korisnik %2$s KR
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-system-status-tools-v2-controller.php:617
 msgid "Verifying database... One or more tables are still missing: "
-msgstr "Provjera baze podataka ... Još uvijek nedostaju jedna ili više tablica: "
+msgstr "Provjera baze podataka... Još uvijek nedostaju jedna ili više tablica: "
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-system-status-tools-v2-controller.php:615
 msgid "Database verified successfully."
@@ -23101,7 +23101,7 @@ msgstr "Izgleda da su nedostajale jedna ili više tablica baze podataka. Pokuša
 #. translators: %s: Link to settings page.
 #: includes/admin/views/html-notice-redirect-only-download.php:18
 msgid "Your store is configured to serve digital products using \"Redirect only\" method. This method is deprecated, <a href=\"%s\">please switch to a different method instead.</a><br><em>If you use a remote server for downloadable files (such as Google Drive, Dropbox, Amazon S3), you may optionally wish to \"allow using redirects as a last resort\". Enabling that and/or selecting any of the other options will make this notice go away.</em>"
-msgstr "Vaša je trgovina konfigurirana za posluživanje digitalnih proizvoda pomoću metode \"Samo preusmjeravanje\". Ova metoda je zastarjela, <a href=\"%s\"> umjesto toga prebacite se na drugu metodu.</a> <br><em>Ako koristite udaljeni poslužitelj za datoteke za preuzimanje (kao što su Google Drive, Dropbox, Amazon S3), možete opcionalno \"dozvoliti korištenje preusmjeravanja kao zadnju opciju\". Odabirom te opcije i/ili bilo koju druge opcije ova obavijest biti će uklonjena. </em>"
+msgstr "Vaša je trgovina konfigurirana za posluživanje digitalnih proizvoda pomoću metode \"Samo preusmjeravanje\". Ova metoda je zastarjela, <a href=\"%s\"> umjesto toga prebacite se na drugu metodu.</a> <br><em>Ako koristite udaljeni poslužitelj za datoteke za preuzimanje (kao što su Google Drive, Dropbox, Amazon S3), možete opcionalno \"dozvoliti korištenje preusmjeravanja kao zadnju opciju\". Odabirom te opcije i/ili bilo koju druge opcije ova obavijest bit će uklonjena. </em>"
 
 #: src/Admin/Features/OnboardingTasks/Tasks/Appearance.php:70
 msgid "Choose theme"
@@ -23141,7 +23141,7 @@ msgstr "Odaberite plaćanje koje želite, platite sada, platite kasnije ili na r
 #: src/Admin/Features/PaymentGatewaySuggestions/DefaultPaymentGateways.php:653
 #: src/Internal/Admin/Suggestions/PaymentsExtensionSuggestions.php:3706
 msgid "Accept debit and credit cards in 135+ currencies, methods such as Alipay, and one-touch checkout with Apple Pay."
-msgstr "Prihvatite debitne i kreditne kartice u 135+ valuta, metode kao što su Alipay i naplata jednim dodirom pomoću Apple Paya."
+msgstr "Prihvatite debitne i kreditne kartice u 135+ valuta, načinom kao što su Alipay i naplata jednim dodirom pomoću Apple Paya."
 
 #: includes/cli/class-wc-cli-com-command.php:184
 msgid "Store connected successfully."
@@ -23880,7 +23880,7 @@ msgstr "Ograničite odgovor na objekte koji imaju navedeni korisnički ID."
 #: src/Admin/API/Reports/Variations/Controller.php:259
 #: src/Admin/API/Reports/Variations/Stats/Controller.php:204
 msgid "Indicates whether all the conditions should be true for the resulting set, or if any one of them is sufficient. Match affects the following parameters: status_is, status_is_not, product_includes, product_excludes, coupon_includes, coupon_excludes, customer, categories"
-msgstr "Pokazuje trebaju li svi uvjeti biti istiniti za dobijeni skup ili je bilo koji od njih dovoljan. Podudaranje utječe na sljedeće parametre: status_je, status_nije, proizvod_uključuje, product_isključuje, kupon_uključuje, kupon_isključuje, kupac, kategorije"
+msgstr "Pokazuje trebaju li svi uvjeti biti istiniti za dobiveni skup ili je bilo koji od njih dovoljan. Podudaranje utječe na sljedeće parametre: status_is, status_is_not, product_includes, product_excludes, coupon_includes, coupon_excludes, customer, categories"
 
 #: src/Admin/API/Reports/Downloads/Stats/Controller.php:107
 msgid "Number of downloads."
@@ -23949,7 +23949,7 @@ msgstr "Ograniči grupu rezultata na stavke kojima su dodijeljeni određeni proi
 
 #: src/Admin/API/Reports/Downloads/Controller.php:229
 msgid "Indicates whether all the conditions should be true for the resulting set, or if any one of them is sufficient. Match affects the following parameters: products, orders, username, ip_address."
-msgstr "Pokazuje trebaju li svi uvjeti biti točni za dobijeni skup ili je bilo koji od njih dovoljan. Podudaranje utiče na sljedeće parametre: proizvodi, narudžbe, korisničko ime, ip_adresa."
+msgstr "Pokazuje trebaju li svi uvjeti biti točni za dobiveni skup ili je bilo koji od njih dovoljan. Podudaranje utječe na sljedeće parametre: proizvodi, narudžbe, korisničko ime, ip_adresa."
 
 #: src/Admin/API/Reports/Downloads/Controller.php:207
 msgid "IP address for the downloader."
@@ -24493,7 +24493,7 @@ msgstr "Statistika o prihodu."
 
 #: src/Admin/API/Reports/Controller.php:36
 msgid "Batch endpoint for getting specific performance indicators from `stats` endpoints."
-msgstr "Krajnja točka serije za dobijanje određenih pokazatelja performansi iz krajnjih `stats` točaka."
+msgstr "Krajnja točka serije za dobivanje određenih pokazatelja performansi iz krajnjih `stats` točaka."
 
 #: src/Admin/API/NoteActions.php:64 src/Admin/API/NoteActions.php:77
 #: src/Admin/API/Notes.php:156 src/Admin/API/Notes.php:307
@@ -24944,7 +24944,7 @@ msgstr[2] "Prekinuta je ludost na %d sekundi"
 #. translators: %d: seconds
 #: packages/action-scheduler/classes/ActionScheduler_ListTable.php:401
 msgid "The next queue will begin processing in approximately %d seconds."
-msgstr "Slijedeći red na čekanju biti će procesiran za otprilike %d sekundi."
+msgstr "Slijedeći red na čekanju bit će procesiran za otprilike %d sekundi."
 
 #. translators: %s: process URL
 #: packages/action-scheduler/classes/ActionScheduler_ListTable.php:398
@@ -24966,7 +24966,7 @@ msgstr "Greška baze podataka."
 #. translators: %s is the error message
 #: packages/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:1085
 msgid "%s Support for strings longer than this will be removed in a future version."
-msgstr "%s Podrška za stringove dulje od ovog biti će uklonjena u nekoj budućoj verziji."
+msgstr "%s Podrška za stringove dulje od ovog bit će uklonjena u nekoj budućoj verziji."
 
 #. translators: %d is a number (maximum length of action arguments).
 #: packages/action-scheduler/classes/abstracts/ActionScheduler_Store.php:377
@@ -25028,7 +25028,7 @@ msgstr "Učestalost rasporeda akcije."
 
 #: packages/action-scheduler/classes/ActionScheduler_AdminView.php:303
 msgid "Optional action group."
-msgstr "Neobavezna akcijska grupa."
+msgstr "Neobvezna akcijska grupa."
 
 #: packages/action-scheduler/classes/ActionScheduler_AdminView.php:302
 msgid "Optional data array passed to the action hook."
@@ -25115,7 +25115,7 @@ msgstr "Action Scheduler premjestio je podatke u prilagođene tablice; međutim,
 #. translators: %s: date interval
 #: packages/action-scheduler/classes/ActionScheduler_WPCommentCleaner.php:121
 msgid "This data will be deleted in %s."
-msgstr "Ovi podaci biti će obrisani u %s."
+msgstr "Ovi podaci bit će obrisani u %s."
 
 #: includes/wc-template-functions.php:3267
 msgid "Update country / region"
@@ -25968,7 +25968,7 @@ msgstr "Stupci"
 #: assets/client/blocks/product-top-rated.js:1
 #: assets/client/blocks/products-by-attribute.js:1
 msgid "Product title"
-msgstr "Naslov proizvoda"
+msgstr "Naziv proizvoda"
 
 #. translators: 1: is a link to a support document. 2: closing link
 #: src/Autoloader.php:64 src/Packages.php:355
@@ -26588,7 +26588,7 @@ msgstr "Data: %1$.2fMB + Index: %2$.2fMB + Engine %3$s"
 
 #: includes/admin/class-wc-admin-assets.php:562
 msgid "Generate coupon code"
-msgstr "Generiraj kod kupona"
+msgstr "Stvori kôd kupona"
 
 #: includes/admin/meta-boxes/views/html-product-attribute.php:9
 msgid "Drag and drop to set admin attribute order"
@@ -26664,7 +26664,7 @@ msgstr "Porezni razred zahtijeva važeće ime"
 #. Repository release page
 #: includes/class-woocommerce.php:1329
 msgid "Or you can download a pre-built version of the plugin from the <a href=\"%1$s\">WordPress.org repository</a> or by visiting <a href=\"%2$s\">the releases page in the GitHub repository</a>."
-msgstr "Ili možete preuzeti unaprijed izgrađenu verziju dodatka iz <a href=\"%1$s\">WordPress.org repozorija</a> ili posjetite <a href=\"%2$s\">stranicu izdanja u GitHub repozitoriju</a>."
+msgstr "Ili možete preuzeti unaprijed izgrađenu verziju dodatka iz <a href=\"%1$s\">WordPress.org repozitorija</a> ili posjetite <a href=\"%2$s\">stranicu izdanja u GitHub repozitoriju</a>."
 
 #: includes/class-wc-ajax.php:1592
 msgid "Order not editable"
@@ -27185,7 +27185,7 @@ msgstr "Zadana kategorija proizvoda ne može biti obrisana."
 
 #: includes/import/abstract-wc-product-importer.php:484
 msgid "Variation cannot be imported: Parent product cannot be a product variation"
-msgstr "Varijacija ne može biti uvežena: Matični proizvod ne može biti proizvod varijacija"
+msgstr "Varijacija se ne može uvesti: Matični proizvod ne može biti varijacija proizvoda"
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-system-status-tools-v2-controller.php:588
 msgid "Database upgrade routine has been scheduled to run in the background."
@@ -27626,7 +27626,7 @@ msgstr "U tijeku"
 
 #: packages/action-scheduler/classes/abstracts/ActionScheduler_Store.php:456
 msgid "Pending"
-msgstr "U pripremi"
+msgstr "Na čekanju"
 
 #: packages/action-scheduler/classes/data-stores/ActionScheduler_wpPostStore.php:318
 msgid "Invalid schedule. Cannot save action."
@@ -27766,7 +27766,7 @@ msgstr[2] "%s dana"
 #: packages/action-scheduler/classes/ActionScheduler_ListTable.php:154
 msgid "%s week"
 msgid_plural "%s weeks"
-msgstr[0] "%s tjedn"
+msgstr[0] "%s tjedan"
 msgstr[1] "%s tjedna"
 msgstr[2] "%s tjedana"
 
@@ -28181,15 +28181,15 @@ msgstr "ID oznaka resursa podataka."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-controller.php:101
 msgid "List of supported currencies."
-msgstr "Lista podržanih valuta."
+msgstr "Popis podržanih valuta."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-controller.php:97
 msgid "List of supported states in a given country."
-msgstr "Lista podržanih država u datoj zemlji."
+msgstr "Popis podržanih država u datoj zemlji."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-controller.php:93
 msgid "List of supported continents, countries, and states."
-msgstr "Lista podržanih kontinenata, zemalja i država."
+msgstr "Popis podržanih kontinenata, zemalja i država."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php:361
 msgid "The unit weights are defined in for this country."
@@ -28207,7 +28207,7 @@ msgstr "Puni naziv države."
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php:330
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-countries-controller.php:229
 msgid "List of states in this country."
-msgstr "Lista država u ovoj zemlji."
+msgstr "Popis država u ovoj zemlji."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php:324
 msgid "Number of decimal points shown in displayed prices for this country."
@@ -28242,7 +28242,7 @@ msgstr "ISO3166 alpha-2 oznaka zemlje."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php:278
 msgid "List of countries on this continent."
-msgstr "Lista zemalja na ovom kontinentu."
+msgstr "Popis zemalja na ovom kontinentu."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php:272
 msgid "Full name of continent."
@@ -28281,7 +28281,7 @@ msgstr "Izvezi sve kategorije"
 
 #: includes/admin/views/html-admin-page-product-export.php:110
 msgid "Which product category should be exported?"
-msgstr "Koja kategorija proizvoda treba biti izvežena?"
+msgstr "Koju kategoriju proizvoda treba izvoziti?"
 
 #: includes/admin/settings/class-wc-settings-products.php:106
 msgid "This is the attachment ID, or image URL, used for placeholder images in the product catalog. Products with no image will use this."
@@ -28558,7 +28558,7 @@ msgstr "%1$s (#%2$s)"
 #: includes/gateways/cod/class-wc-gateway-cod.php:264
 #: src/Internal/RestApi/Routes/V4/Settings/PaymentGateways/Schema/CodGatewaySettingsSchema.php:129
 msgid "Any &quot;%1$s&quot; method"
-msgstr "Bilo koja &quot;%1$s&quot; metoda"
+msgstr "Bilo koji &quot;%1$s&quot; način"
 
 #: includes/gateways/cheque/class-wc-gateway-cheque.php:49
 msgid "Take payments in person via checks. This offline gateway can also be useful to test purchases."
@@ -28592,7 +28592,7 @@ msgstr "Nije postavljena stranica"
 
 #: includes/customizer/class-wc-shop-customizer.php:813
 msgid "Highlight required fields with an asterisk"
-msgstr "Označi obavezna polja zvjezdicom"
+msgstr "Zvjezdicom označi obvezna polja"
 
 #. translators: %s terms and conditions page name and link
 #: includes/customizer/class-wc-shop-customizer.php:789
@@ -28611,7 +28611,7 @@ msgstr "Pročitao/la sam i slažem se s %s web-stranice"
 #: templates/myaccount/form-reset-password.php:32
 #: assets/client/blocks/checkout.js:2
 msgid "Required"
-msgstr "Obavezno"
+msgstr "Obvezno"
 
 #. Translators: %s field name.
 #: includes/customizer/class-wc-shop-customizer.php:760
@@ -28640,7 +28640,7 @@ msgstr "Dijelimo informacije s trećim stranama koje nam pomažu pružati narud�
 
 #: includes/class-wc-privacy.php:121
 msgid "In this section you should list who you’re sharing data with, and for what purpose. This could include, but may not be limited to, analytics, marketing, payment gateways, shipping providers, and third party embeds."
-msgstr "U ovom odjeljku navedite s kim dijelite podatke i za koju svrhu. To može uključivati, ali ne mora biti ograničeno na, analitiku, marketing, sustav plaćanja, davatelje usluga isporuke i ugrađene usluge trećih strana."
+msgstr "U ovom odjeljku navedite s kim dijelite podatke i za koju svrhu. To može uključivati, ali ne mora biti ograničeno na, analitiku, marketing, sustav plaćanja, pružatelje usluga isporuke i ugrađene usluge trećih strana."
 
 #: includes/class-wc-privacy.php:119
 msgid "What we share with others"
@@ -28768,7 +28768,7 @@ msgstr "Korisnička e-pošta"
 
 #: includes/class-wc-privacy-exporters.php:256
 msgid "Browser User Agent"
-msgstr "User Agent preglednika"
+msgstr "Korisnički agent preglednika"
 
 #: includes/class-wc-privacy-exporters.php:254
 msgid "Items Purchased"
@@ -28926,7 +28926,7 @@ msgstr "Kupac"
 #: includes/class-wc-frontend-scripts.php:716
 #: includes/wc-template-functions.php:3203
 msgid "optional"
-msgstr "neobavezno"
+msgstr "neobvezno"
 
 #: includes/class-wc-form-handler.php:289
 #: templates/myaccount/form-edit-account.php:44
@@ -29159,7 +29159,7 @@ msgstr "Zadržavanje osobnih podataka"
 #: includes/customizer/class-wc-shop-customizer.php:801
 #: includes/wc-template-functions.php:899
 msgid "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our %s."
-msgstr "Vaši osobni podaci biti će korišteni za obradu vaše narudžbe, podršku vašemu iskustvu na ovoj web stranici te za druge svrhe opisane u našoj %s."
+msgstr "Vaši osobni podaci bit će korišteni za obradu vaše narudžbe, podršku vašem iskustvu na ovoj web-stranici te za druge svrhe opisane u našoj %s."
 
 #: includes/admin/settings/class-wc-settings-accounts.php:200
 #: includes/customizer/class-wc-shop-customizer.php:873
@@ -30062,7 +30062,7 @@ msgstr "Minimalna dopuštena postavka je %d"
 
 #: includes/class-wc-regenerate-images-request.php:261
 msgid "Completed product image regeneration job."
-msgstr "Završen proces regeneracije slike proizvoda."
+msgstr "Dovršen proces ponovnog stvaranja slike proizvoda."
 
 #. translators: %s: ID of the attachment.
 #: includes/class-wc-regenerate-images-request.php:113
@@ -30360,7 +30360,7 @@ msgstr "Potpuno iskustvo plaćanja s opcijama plati sada, plati kasnije i smanji
 #. translators: %s: URL
 #: includes/admin/class-wc-admin-setup-wizard.php:1411
 msgid "Accept debit and credit cards in 135+ currencies, methods such as Alipay, and one-touch checkout with Apple Pay. <a href=\"%s\" target=\"_blank\">Learn more</a>."
-msgstr "Prihvatite debitne i kreditne kartice u više od 135 valuta, metode poput Alipay i jednokratnu naplatu s Apple Payom. <a href=\"%s\" target=\"_blank\"> Saznajte više </a>."
+msgstr "Prihvatite debitne i kreditne kartice u više od 135 valuta, načinima poput Alipay i jednokratnu naplatu s Apple Payom. <a href=\"%s\" target=\"_blank\"> Saznajte više </a>."
 
 #: includes/admin/class-wc-admin-setup-wizard.php:602
 msgid "I will also be selling products or services in person."
@@ -30592,7 +30592,7 @@ msgstr "Anenii Noi"
 
 #: templates/myaccount/form-add-payment-method.php:60
 msgid "New payment methods can only be added during checkout. Please contact us if you require assistance."
-msgstr "Nove metode plaćanja mogu se dodati samo kod procesa naplate. Kontaktirajte nas ako vam je potrebna pomoć."
+msgstr "Novi načini plaćanja mogu se dodati samo kod procesa naplate. Kontaktirajte nas ako vam je potrebna pomoć."
 
 #: i18n/currencies.php:37
 msgid "Belarusian ruble (old)"
@@ -30625,7 +30625,7 @@ msgstr "Nema dostupnih metoda dostave. Pobrinite se da je vaša adresa ispravno 
 
 #: includes/widgets/class-wc-widget-top-rated-products.php:22
 msgid "A list of your store's top-rated products."
-msgstr "Lista najbolje ocijenjenih proizvoda trgovine."
+msgstr "Popis najbolje ocijenjenih proizvoda trgovine."
 
 #: includes/widgets/class-wc-widget-recently-viewed.php:23
 msgid "Display a list of a customer's recently viewed products."
@@ -30645,11 +30645,11 @@ msgstr "Filtriraj proizvode po Ocjeni"
 
 #: includes/widgets/class-wc-widget-rating-filter.php:21
 msgid "Display a list of star ratings to filter products in your store."
-msgstr "Prikaži listu ocjena s zvijezdicama za filtriranje proizvoda u trgovini."
+msgstr "Prikaži listu ocjena sa zvjezdicama za filtriranje proizvoda u trgovini."
 
 #: includes/widgets/class-wc-widget-products.php:23
 msgid "A list of your store's products."
-msgstr "Lista proizvoda u trgovini."
+msgstr "Popis proizvoda u trgovini."
 
 #: includes/widgets/class-wc-widget-product-tag-cloud.php:25
 msgid "Product Tag Cloud"
@@ -30691,11 +30691,11 @@ msgstr "Prikaži listu atributa za filtriranje proizvoda u trgovini."
 
 #: includes/widgets/class-wc-widget-layered-nav-filters.php:23
 msgid "Active Product Filters"
-msgstr "Filteri aktivnih proizvoda"
+msgstr "Filtri aktivnih proizvoda"
 
 #: includes/widgets/class-wc-widget-layered-nav-filters.php:21
 msgid "Display a list of active product filters."
-msgstr "Prikaži listu filtera aktivnih proizvoda."
+msgstr "Prikaži listu filtara aktivnih proizvoda."
 
 #: includes/widgets/class-wc-widget-cart.php:23
 msgid "Display the customer shopping cart."
@@ -30750,11 +30750,11 @@ msgstr "Pruženi rukovatelj (handler) %1$s ne implementira %2$s."
 
 #: includes/class-wc-form-handler.php:573
 msgid "Unable to add payment method to your account."
-msgstr "Nije moguće dodati metodu plaćanja na vaš račun."
+msgstr "Nije moguće dodati način plaćanja na vaš račun."
 
 #: includes/class-wc-form-handler.php:569
 msgid "Payment method successfully added."
-msgstr "Uspješno dodana metoda plaćanja."
+msgstr "Uspješno dodan način plaćanja."
 
 #: includes/class-wc-form-handler.php:556
 msgid "Invalid payment gateway."
@@ -30858,7 +30858,7 @@ msgstr "Grad u kojem je lokacija poduzeća."
 
 #: includes/admin/settings/class-wc-settings-general.php:125
 msgid "An additional, optional address line for your business location."
-msgstr "Dodatna, neobavezna adresa lokacije vašeg poduzeća."
+msgstr "Dodatna, neobvezna adresa lokacije vašeg poduzeća."
 
 #: includes/admin/settings/class-wc-settings-general.php:116
 msgid "The street address for your business location."
@@ -30966,7 +30966,7 @@ msgstr "Sortiraj po:"
 #. has subscriptions for.
 #: includes/admin/helper/views/html-main.php:25
 msgid "Below is a list of extensions available on your WooCommerce.com account. To receive extension updates please make sure the extension is installed, and its subscription activated and connected to your WooCommerce.com account. Extensions can be activated from the <a href=\"%s\">Plugins</a> screen."
-msgstr "Ispod se nalazi lista ekstenzija dostupnih na vašem WooCommerce.com računu. Kako bi primali ažuriranja proširenja pobrinite se da je proširenje instalirano i da je pretplata za nju aktivirana i povezana s vašim WooCommerce.com računom. Ekstenzije se mogu aktivirati iz zaslona <a href=\"%s\">Dodaci</a>."
+msgstr "Ispod se nalazi popis proširenja dostupnih na vašem WooCommerce.com računu. Kako biste primali ažuriranja proširenja pobrinite se da je proširenje instalirano i da je pretplata za njega aktivirana i povezana s vašim WooCommerce.com računom. Proširenja se mogu aktivirati sa zaslona <a href=\"%s\">Dodaci</a>."
 
 #: includes/admin/helper/class-wc-helper.php:483
 #: assets/client/admin/chunks/marketplace.js:1
@@ -30995,7 +30995,7 @@ msgstr "Premjestite postojeće proizvode u vašu novu trgovinu — jednostavno u
 #: includes/admin/class-wc-admin-setup-wizard.php:2342
 #: assets/client/admin/chunks/5875.js:1
 msgid "Import products"
-msgstr "Uvezite demo proizvode"
+msgstr "Uvezi proizvode"
 
 #: includes/admin/class-wc-admin-setup-wizard.php:2335
 msgid "Have an existing store?"
@@ -31118,7 +31118,7 @@ msgstr "Naplatite od izvanmrežnih kupaca."
 #. translators: %s: Link
 #: includes/admin/class-wc-admin-setup-wizard.php:1801
 msgid "WooCommerce can accept both online and offline payments. <a href=\"%s\" target=\"_blank\">Additional payment methods</a> can be installed later."
-msgstr "WooCommerce može primati i online i izvanmrežna plaćanja. <a href=\"%s\" target=\"_blank\">Dodatne metode plaćanja</a> mogu kasnije biti instalirane."
+msgstr "WooCommerce može primati i online i izvanmrežna plaćanja. <a href=\"%s\" target=\"_blank\">Dodatni načini plaćanja</a> mogu kasnije biti instalirani."
 
 #: includes/admin/class-wc-admin-setup-wizard.php:1493
 msgid "PayPal email address:"
@@ -31135,7 +31135,7 @@ msgstr "Stripe adresa e-pošte:"
 #: includes/admin/class-wc-admin-setup-wizard.php:1091
 #: assets/client/blocks/wc-blocks-google-analytics.js:1
 msgid "Shipping Method"
-msgstr "Metoda Dostave"
+msgstr "Način dostave"
 
 #: includes/admin/class-wc-admin-setup-wizard.php:1088
 msgid "Shipping Zone"
@@ -31155,7 +31155,7 @@ msgstr "Postavite fiksnu cijenu za pokrivanje troškova dostave."
 
 #: includes/admin/class-wc-admin-setup-wizard.php:883
 msgid "Flat Rate"
-msgstr "Flat Rate"
+msgstr "Fiksna cijena"
 
 #: includes/admin/class-wc-admin-setup-wizard.php:806
 #: includes/admin/class-wc-admin-setup-wizard.php:847
@@ -31253,7 +31253,7 @@ msgstr "Neispravni kupon"
 #. translators: %s: $key Key to check
 #: includes/abstracts/abstract-wc-data.php:401
 msgid "Generic add/update/get meta methods should not be used for internal meta data, including \"%s\". Use getters and setters."
-msgstr "Generičke add/update/get meta metode ne bi se trebale koristiti za za unutarnje meta podatke, uključujući \"%s\". Upotrijebite getters i setters."
+msgstr "Generičke add/update/get meta metode ne bi se trebale koristiti za unutarnje meta podatke, uključujući \"%s\". Upotrijebite getters i setters."
 
 #: i18n/states.php:286
 msgid "Zug"
@@ -31572,7 +31572,7 @@ msgstr "API ključ uspješno generiran. Pobrinite se da kopirate nove ključeve 
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-products-v1-controller.php:2075
 msgid "List of upsell products IDs."
-msgstr "ID lista sugestivnih proizvoda."
+msgstr "Popis ID-a sugestivnih proizvoda."
 
 #. Translators: %s: page name.
 #: includes/admin/views/html-admin-page-status-report.php:873
@@ -31647,11 +31647,11 @@ msgstr "Lokacije koje nisu pokrivene drugim zonama"
 
 #: includes/admin/settings/class-wc-settings-products.php:207
 msgid "Star ratings should be required, not optional"
-msgstr "Ocjenjivanje zvjezdicama trebalo bi biti obavezno, ne opcionalno"
+msgstr "Ocjenjivanje zvjezdicama trebalo bi biti obvezno, ne opcionalno"
 
 #: includes/admin/settings/class-wc-settings-products.php:198
 msgid "Enable star rating on reviews"
-msgstr "Omogući ocjene s zvijezdicama na recenzijama"
+msgstr "Omogući ocjene zvjezdicama na recenzijama"
 
 #: includes/admin/settings/class-wc-settings-products.php:187
 #: includes/class-wc-comments.php:675
@@ -31682,7 +31682,7 @@ msgstr "Sakrij napredne opcije"
 
 #: includes/admin/importers/views/html-product-csv-import-form.php:74
 msgid "CSV Delimiter"
-msgstr "CSV razdvojink"
+msgstr "CSV razdvojnik"
 
 #: includes/admin/importers/views/html-product-csv-import-form.php:65
 msgid "Alternatively, enter the path to a CSV file on your server:"
@@ -31793,7 +31793,7 @@ msgstr "Matični SKU"
 #: includes/admin/importers/mappings/generic.php:22
 #: assets/client/blocks/product-reviews-title.js:6
 msgid "Product Title"
-msgstr "Naslov proizvoda"
+msgstr "Naziv proizvoda"
 
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:862
 msgid "Default attribute"
@@ -32103,7 +32103,7 @@ msgstr[2] "Napomena: Trenutno imate <a href=\"%1$s\">%2$d plaćenih proširenja<
 
 #: includes/admin/helper/class-wc-helper.php:730
 msgid "Authentication and subscription caches refreshed successfully."
-msgstr "Autentikacija i predmemorija pretplate su uspješno osvježeni."
+msgstr "Autentifikacija i predmemorije pretplate uspješno su osvježeni."
 
 #: includes/admin/helper/class-wc-helper.php:723
 #: includes/cli/class-wc-cli-com-command.php:124
@@ -32515,12 +32515,12 @@ msgstr "ID."
 #: includes/admin/class-wc-admin-assets.php:551
 #: includes/admin/meta-boxes/views/html-order-item-meta.php:63
 msgid "Value (required)"
-msgstr "Vrijednost (obavezno)"
+msgstr "Vrijednost (obvezno)"
 
 #: includes/admin/class-wc-admin-assets.php:550
 #: includes/admin/meta-boxes/views/html-order-item-meta.php:62
 msgid "Name (required)"
-msgstr "Ime (obavezno)"
+msgstr "Ime (obvezno)"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:331
 msgid "Recalculate"
@@ -32540,7 +32540,7 @@ msgstr "Pojmovi u taksonomiji vidljivosti proizvoda."
 
 #: includes/admin/views/html-admin-page-status-report.php:757
 msgid "A list of taxonomy terms used for product visibility."
-msgstr "Lista pojmova taksonomije korištenih za vidljivost proizvoda."
+msgstr "Popis pojmova taksonomije korištenih za vidljivost proizvoda."
 
 #: includes/admin/views/html-admin-page-status-report.php:756
 msgid "Taxonomies: Product visibility"
@@ -32881,7 +32881,7 @@ msgstr "Banka"
 #. translators: 1: Path to template file 2: Path to theme folder
 #: includes/emails/class-wc-email.php:1575
 msgid "To override and edit this email template copy %1$s to your theme folder: %2$s."
-msgstr "Kako bi zamjenili i uredili ovaj predložak e-pošte kopirajte %1$s u mapu svoje teme: %2$s."
+msgstr "Da biste zamijenili i uredili ovaj predložak e-pošte kopirajte %1$s u mapu svoje teme: %2$s."
 
 #: includes/data-stores/class-wc-payment-token-data-store.php:174
 msgid "Invalid payment token."
@@ -33168,7 +33168,7 @@ msgstr "Eircode"
 
 #: includes/class-wc-countries.php:764
 msgid "Apartment, suite, unit, etc. (optional)"
-msgstr "Stan, apartman, kat, itd. (nije obavezno)"
+msgstr "Stan, apartman, kat, itd. (neobvezno)"
 
 #: includes/class-wc-countries.php:800
 msgid "Street address"
@@ -33539,31 +33539,31 @@ msgstr "Naziv zone dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:489
 msgid "Shipping method settings."
-msgstr "Postavke metoda dostave."
+msgstr "Postavke načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:466
 msgid "Shipping method enabled status."
-msgstr "Omogućen status metode dostave."
+msgstr "Omogućen status načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:461
 #: src/Internal/RestApi/Routes/V4/ShippingZoneMethod/ShippingMethodSchema.php:55
 msgid "Shipping method sort order."
-msgstr "Način sortiranja metoda dostave."
+msgstr "Način sortiranja načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:455
 msgid "Shipping method customer facing title."
-msgstr "Naziv metode dostave vidljiv kupcu."
+msgstr "Naziv načina dostave vidljiv kupcu."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:443
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:449
 #: src/Internal/RestApi/Routes/V4/ShippingZoneMethod/ShippingMethodSchema.php:37
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:88
 msgid "Shipping method instance ID."
-msgstr "ID instance metode dostave."
+msgstr "ID instance načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:234
 msgid "Shipping methods do not support trashing."
-msgstr "Metode dostave nije moguće premjestiti u smeće."
+msgstr "Način dostave nije moguće premjestiti u smeće."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:181
 msgid "Resource cannot be created."
@@ -33597,18 +33597,18 @@ msgstr "Jedinstveni ID za resurs."
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-methods-v2-controller.php:215
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:483
 msgid "Shipping method description."
-msgstr "Opis metode dostave."
+msgstr "Opis načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-methods-v2-controller.php:209
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-zone-methods-v2-controller.php:477
 #: src/Internal/RestApi/Routes/V4/ShippingZoneMethod/ShippingMethodSchema.php:73
 #: src/Internal/RestApi/Routes/V4/ShippingZones/ShippingZoneSchema.php:92
 msgid "Shipping method title."
-msgstr "Naslov metode dostave."
+msgstr "Naslov načina dostave."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-shipping-methods-v2-controller.php:203
 msgid "Method ID."
-msgstr "ID metode."
+msgstr "ID načina."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-settings-v2-controller.php:222
 #: includes/rest-api/Controllers/Version3/class-wc-rest-settings-controller.php:103
@@ -33934,7 +33934,7 @@ msgstr "Ograniči rezultate na kupce ili interne napomene."
 #: includes/rest-api/Controllers/Version2/class-wc-rest-order-notes-v2-controller.php:152
 #: includes/rest-api/Controllers/Version3/class-wc-rest-order-notes-controller.php:151
 msgid "If true, the note will be shown to customers and they will be notified. If false, the note will be for admin reference only."
-msgstr "Ako je true, napomena će biti prikazana kupcima i biti će obaviješteni. Ako je false, napomena će biti vidljiva samo adminima."
+msgstr "Ako je true, napomena će biti prikazana kupcima i bit će obaviješteni. Ako je false, napomena će biti vidljiva samo adminima."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-order-notes-v2-controller.php:141
 #: includes/rest-api/Controllers/Version3/class-wc-rest-order-notes-controller.php:140
@@ -34018,7 +34018,7 @@ msgstr "Meta podaci."
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:552
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:511
 msgid "List of user IDs (or guest email addresses) that have used the coupon."
-msgstr "Lista ID-a korisnika (ili adrese e-pošte gostiju) koji su iskoristili kupon."
+msgstr "Popis ID-a korisnika (ili adrese e-pošte gostiju) koji su iskoristili kupon."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:528
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:487
@@ -34038,7 +34038,7 @@ msgstr "Koliko puta kupon može biti korišten."
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:469
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:428
 msgid "If true, the coupon can only be used individually. Other applied coupons will be removed from the cart."
-msgstr "Ako je true, kupon se može iskoristiti samo individualno. Drugi primijenjeni kuponi biti će uklonjeni iz košare."
+msgstr "Ako je true, kupon se može iskoristiti samo individualno. Drugi primijenjeni kuponi bit će uklonjeni iz košare."
 
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:417
 msgid "The date the coupon expires, as GMT."
@@ -34268,11 +34268,11 @@ msgstr "Kontrola izgleda količine zaliha u trgovini."
 
 #: includes/admin/settings/class-wc-settings-products.php:315
 msgid "When product stock reaches this amount the stock status will change to \"out of stock\" and you will be notified via email. This setting does not affect existing \"in stock\" products."
-msgstr "Kada zaliha proizvoda dostigne ovu vrijednost, status zalihe će se promjeniti u \"nema na zalihi\", a vi ćete biti obaviješteni putem e-pošte. Ova postavka ne utječe na postojeće proizvode kojih ima na zalihi."
+msgstr "Kada zaliha proizvoda dostigne ovu vrijednost, status zalihe će se promijeniti u \"nema na zalihi\", a vi ćete biti obaviješteni putem e-pošte. Ova postavka ne utječe na postojeće proizvode kojih ima \"na zalihi\"."
 
 #: includes/admin/settings/class-wc-settings-products.php:299
 msgid "When product stock reaches this amount you will be notified via email."
-msgstr "Kada zaliha proizvoda dostigne ovu vrijednost biti ćete obaviješteni putem e-pošte."
+msgstr "Kada zaliha proizvoda dostigne ovu vrijednost bit ćete obaviješteni putem e-pošte."
 
 #. Translators: %s Page contents.
 #: includes/admin/settings/class-wc-settings-advanced.php:128
@@ -34515,7 +34515,7 @@ msgstr "Svi izvori"
 
 #: includes/admin/class-wc-admin-log-table-list.php:289
 msgid "Filter by source"
-msgstr "Filtiraj po izvoru"
+msgstr "Filtriraj po izvoru"
 
 #: includes/admin/class-wc-admin-log-table-list.php:137
 #: packages/action-scheduler/classes/ActionScheduler_AdminView.php:277
@@ -35030,7 +35030,7 @@ msgstr "ID narudžbe."
 #: includes/rest-api/Controllers/Version3/class-wc-rest-product-reviews-controller.php:980
 #: src/Internal/RestApi/Routes/V4/Customers/CollectionQuery.php:65
 msgid "Limit result set to specific IDs."
-msgstr "Ograniči rezultate na određene ID-e."
+msgstr "Ograniči grupu rezultata na određene ID-e."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-customers-v1-controller.php:119
 msgid "ID to reassign posts to."
@@ -35141,12 +35141,12 @@ msgstr "Omogućite način otklanjanja grešaka u dostavi kako biste prikazali od
 #: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:189
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:133
 msgid "Choose the shipping method you wish to add. Only shipping methods which support zones are listed."
-msgstr "Izaberite metodu dostave koju želite dodati . Samo načini dostave koji podržavaju zone su na popisu."
+msgstr "Izaberite način dostave koju želite dodati. Samo načini dostave koji podržavaju zone su na popisu."
 
 #: includes/admin/settings/class-wc-settings-shipping.php:397
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:71
 msgid "No shipping methods offered to this zone."
-msgstr "Nema metode dostave za ovu zonu."
+msgstr "Nema načina dostave za ovu zonu."
 
 #: includes/admin/settings/class-wc-settings-advanced.php:255
 msgid "Endpoints are appended to your page URLs to handle specific actions on the accounts pages. They should be unique and can be left blank to disable the endpoint."
@@ -35175,7 +35175,7 @@ msgstr "Narudžba #%1$s je naručena u %2$s i trenutno je %3$s."
 
 #: templates/myaccount/payment-methods.php:70
 msgid "No saved methods found."
-msgstr "Nisu pronađene spremljene metode."
+msgstr "Nisu pronađeni spremljeni načini."
 
 #: templates/myaccount/orders.php:121
 msgid "No order has been made yet."
@@ -35798,7 +35798,7 @@ msgstr "Besplatna dostava (naslijeđeno)"
 #: includes/shipping/legacy-local-delivery/class-wc-shipping-legacy-local-delivery.php:134
 #: includes/shipping/legacy-local-pickup/class-wc-shipping-legacy-local-pickup.php:105
 msgid "Once disabled, this legacy method will no longer be available."
-msgstr "Kada ju onemogućite, ova naslijeđena metoda više neće biti dostupna."
+msgstr "Kada ju onemogućite, ovaj naslijeđeni način više neće biti dostupan."
 
 #. translators: %s: Admin shipping settings URL
 #: includes/shipping/legacy-flat-rate/class-wc-shipping-legacy-flat-rate.php:59
@@ -35807,7 +35807,7 @@ msgstr "Kada ju onemogućite, ova naslijeđena metoda više neće biti dostupna.
 #: includes/shipping/legacy-local-delivery/class-wc-shipping-legacy-local-delivery.php:46
 #: includes/shipping/legacy-local-pickup/class-wc-shipping-legacy-local-pickup.php:37
 msgid "This method is deprecated in 2.6.0 and will be removed in future versions - we recommend disabling it and instead setting up a new rate within your <a href=\"%s\">Shipping zones</a>."
-msgstr "Ova metoda je zastarjela u inačici 2.6.0 i biti će uklonjena u budućim inačicama - preporučamo da ju isključite i umjesto toga uspostavite novu ratu unutar vaših <a href=\"%s\">Zona dostave</a>."
+msgstr "Ovaj način je zastarjeo u inačici 2.6.0 i bit će uklonjena u budućim inačicama - preporučamo da ga isključite i umjesto toga uspostavite novu ratu unutar vaših <a href=\"%s\">Zona dostave</a>."
 
 #: includes/shipping/legacy-flat-rate/class-wc-shipping-legacy-flat-rate.php:57
 msgid "Flat rate (legacy)"
@@ -35820,7 +35820,7 @@ msgstr "Minimalni iznos narudžbe"
 
 #: includes/shipping/free-shipping/class-wc-shipping-free-shipping.php:57
 msgid "Free shipping is a special method which can be triggered with coupons and minimum spends."
-msgstr "Besplatna dostava je specijalna metoda koja se može aktivirati s kuponima i minimalnom potrošnjom."
+msgstr "Besplatna dostava je specijalni način koji se može aktivirati s kuponima i minimalnom potrošnjom."
 
 #: includes/shipping/flat-rate/class-wc-shipping-flat-rate.php:46
 msgid "Lets you charge a fixed rate for shipping."
@@ -35868,7 +35868,7 @@ msgstr "Narudžbe (stranica %d)"
 
 #: includes/class-wc-post-types.php:571
 msgid "Coupons list"
-msgstr "Lista kupona"
+msgstr "Popis kupona"
 
 #: includes/class-wc-post-types.php:570
 msgid "Coupons navigation"
@@ -35893,7 +35893,7 @@ msgstr "Filtriraj narudžbe"
 #: includes/class-wc-post-types.php:378
 #: includes/widgets/class-wc-widget-products.php:25
 msgid "Products list"
-msgstr "Lista proizvoda"
+msgstr "Popis proizvoda"
 
 #: includes/class-wc-post-types.php:377
 msgid "Products navigation"
@@ -35937,11 +35937,11 @@ msgstr "Poništi?"
 
 #: includes/class-wc-form-handler.php:624
 msgid "This payment method was successfully set as your default."
-msgstr "Ova metoda plaćanja je uspješno postavljena kao zadana."
+msgstr "Ovaj način plaćanja uspješno je postavljen kao zadani."
 
 #: includes/class-wc-form-handler.php:600
 msgid "Payment method deleted."
-msgstr "Metoda plaćanja obrisana."
+msgstr "Način plaćanja obrisan."
 
 #: includes/class-wc-download-handler.php:703
 msgid "Go to shop"
@@ -35949,7 +35949,7 @@ msgstr "Idi u trgovinu"
 
 #: includes/class-wc-checkout.php:968
 msgid "No shipping method has been selected. Please double check your address, or contact us if you need any help."
-msgstr "Nije izabrana metoda dostave. Molimo, provjerite svoju adresu ili nas kontaktirajte ako trebate pomoć."
+msgstr "Nije izabran način dostave. Molimo, provjerite svoju adresu ili nas kontaktirajte ako trebate pomoć."
 
 #: includes/class-wc-checkout.php:957
 msgid "Please enter an address to continue."
@@ -36025,7 +36025,7 @@ msgstr "URL za isporuku webhooka mora biti valjani URL koji počinje s http:// i
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhooks-v1-controller.php:338
 msgid "Webhook topic is required and must be valid."
-msgstr "Tema webhooka je obavezna i mora biti valjana."
+msgstr "Tema webhooka je obvezna i mora biti valjana."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhook-deliveries-v1-controller.php:293
 #: includes/rest-api/Controllers/Version2/class-wc-rest-webhook-deliveries-v2-controller.php:137
@@ -36070,7 +36070,7 @@ msgstr "URL na kojem je predana webhook."
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhook-deliveries-v1-controller.php:238
 #: includes/rest-api/Controllers/Version2/class-wc-rest-webhook-deliveries-v2-controller.php:82
 msgid "A friendly summary of the response including the HTTP response code, message, and body."
-msgstr "Sažetak odgovora uključujući HTTP kod odgovora , poruku i body."
+msgstr "Jasan sažetak odgovora, uključujući HTTP kôd odgovora, poruku i tijelo."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhook-deliveries-v1-controller.php:232
 #: includes/rest-api/Controllers/Version2/class-wc-rest-webhook-deliveries-v2-controller.php:76
@@ -36088,7 +36088,7 @@ msgstr "Sortiraj prema klasi poreza."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-taxes-v1-controller.php:705
 msgid "Indicates the order that will appear in queries."
-msgstr "Pokazuje redoslijed koji će se pojaviti u upitima ."
+msgstr "Pokazuje redoslijed koji će se pojaviti u upitima."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-taxes-v1-controller.php:699
 msgid "Whether or not this tax rate also gets applied to shipping."
@@ -36210,7 +36210,7 @@ msgstr "Ukupan iznos obavljenih narudžbi."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-report-sales-v1-controller.php:302
 msgid "Average net daily sales."
-msgstr "Prosječna neto dnevna prodaja ."
+msgstr "Prosječna neto dnevna prodaja."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-report-sales-v1-controller.php:296
 msgid "Net sales in the period."
@@ -36723,7 +36723,7 @@ msgstr "Količina zaliha."
 #: includes/rest-api/Controllers/Version3/class-wc-rest-products-controller.php:1409
 #: src/Internal/RestApi/Routes/V4/Products/Controller.php:1476
 msgid "Stock management at product level."
-msgstr "Upravljanje zalihama na razini proizvoda ."
+msgstr "Upravljanje zalihama na razini proizvoda."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-products-v1-controller.php:1940
 #: includes/rest-api/Controllers/Version1/class-wc-rest-products-v1-controller.php:2399
@@ -37251,14 +37251,14 @@ msgstr "Podaci o naknadama."
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderShippingSchema.php:51
 #: src/Internal/RestApi/Routes/V4/ShippingZoneMethod/ShippingMethodSchema.php:61
 msgid "Shipping method ID."
-msgstr "ID metode dostave."
+msgstr "ID načina dostave."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:1469
 #: includes/rest-api/Controllers/Version2/class-wc-rest-order-refunds-v2-controller.php:680
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1735
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderShippingSchema.php:46
 msgid "Shipping method name."
-msgstr "Naziv metode dostave."
+msgstr "Naziv načina dostave."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:1456
 #: includes/rest-api/Controllers/Version2/class-wc-rest-order-refunds-v2-controller.php:667
@@ -37343,7 +37343,7 @@ msgstr "Prikazuje gdje je kreirana narudžba."
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1276
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderSchema.php:255
 msgid "User agent of the customer."
-msgstr "User agent kupca."
+msgstr "Korisnički agent kupca."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:1229
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1270
@@ -37366,13 +37366,13 @@ msgstr "Definirajte je li narudžba plaćena. To će postaviti status \"U obradi
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1407
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderSchema.php:391
 msgid "Payment method title."
-msgstr "Naziv metode plaćanja."
+msgstr "Naziv načina plaćanja."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:1205
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1402
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderSchema.php:386
 msgid "Payment method ID."
-msgstr "ID metode plaćanja."
+msgstr "ID načina plaćanja."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:1153
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:1350
@@ -37500,7 +37500,7 @@ msgstr "Upisani ID stavke narudžbe nije povezan s narudžbom."
 #: includes/rest-api/Controllers/Version3/class-wc-rest-orders-controller.php:69
 #: src/Internal/RestApi/Routes/V4/Orders/UpdateUtils.php:448
 msgid "Coupon code is required."
-msgstr "Kod kupona je obavezan."
+msgstr "Kôd kupona je obvezan."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:729
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:985
@@ -37512,7 +37512,7 @@ msgstr "Naziv naknade je obavezan."
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:961
 #: src/Internal/RestApi/Routes/V4/Orders/UpdateUtils.php:402
 msgid "Shipping method ID is required."
-msgstr "ID metode dostave je obavezan."
+msgstr "ID načina dostave je obavezan."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:634
 #: includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php:869
@@ -37857,7 +37857,7 @@ msgstr "Webhook nije moguće premjestiti u smeće."
 #: includes/rest-api/Controllers/Version1/class-wc-rest-order-notes-v1-controller.php:234
 #: includes/rest-api/Controllers/Version3/class-wc-rest-order-notes-controller.php:86
 msgid "Cannot create order note, please try again."
-msgstr "Ne mogu stvoriti napomenu narudžbe, pokušajte ponovo ."
+msgstr "Ne mogu stvoriti napomenu narudžbe, pokušajte ponovo."
 
 #: includes/data-stores/abstract-wc-order-item-type-data-store.php:170
 msgid "Invalid order item."
@@ -38398,7 +38398,7 @@ msgstr "Datum kreiranja kupona, sukladno vremenskoj zoni web-stranice."
 #: src/Admin/API/Reports/Coupons/Controller.php:139
 #: src/Internal/RestApi/Routes/V4/Orders/Schema/OrderCouponSchema.php:47
 msgid "Coupon code."
-msgstr "Kod kupona."
+msgstr "Kôd kupona."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:418
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:355
@@ -38408,7 +38408,7 @@ msgstr "Jedinstveni identifikator objekta."
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:256
 #: includes/rest-api/Controllers/Version2/class-wc-rest-coupons-v2-controller.php:286
 msgid "The coupon code cannot be empty."
-msgstr "Kod kupona ne može biti prazan."
+msgstr "Kôd kupona ne može biti prazan."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-coupons-v1-controller.php:110
 #: includes/rest-api/Controllers/Version1/class-wc-rest-orders-v1-controller.php:107
@@ -38463,15 +38463,15 @@ msgstr "WooCommerce nadogradnja podataka"
 
 #: includes/admin/views/html-notice-no-shipping-methods.php:26
 msgid "Customers will not be able to purchase physical goods from your store until a shipping method is available."
-msgstr "Kupci neće moći kupiti (fizičku) robu iz vaše trgovine dok nije dostupna neka metoda dostave."
+msgstr "Kupci neće moći kupiti fizičku robu iz vaše trgovine dok nije dostupna neki način dostave."
 
 #: includes/admin/views/html-notice-no-shipping-methods.php:23
 msgid "Shipping is currently enabled, but you have not added any shipping methods to your shipping zones."
-msgstr "Dostava je uključena ali niste dodali niti jednu metodu dostave svojim zonama dostave."
+msgstr "Dostava je uključena ali niste dodali niti jedan način dostave svojim zonama dostave."
 
 #: includes/admin/views/html-notice-no-shipping-methods.php:19
 msgid "Add shipping methods &amp; zones"
-msgstr "Dodaj metode i zone dostave"
+msgstr "Dodaj načine i zone dostave"
 
 #: includes/admin/views/html-notice-legacy-shipping.php:31
 #: includes/admin/views/html-notice-no-shipping-methods.php:34
@@ -38485,11 +38485,11 @@ msgstr "Postavi zone dostave"
 
 #: includes/admin/views/html-notice-legacy-shipping.php:21
 msgid "Legacy shipping methods (flat rate, international flat rate, local pickup and delivery, and free shipping) are deprecated but will continue to work as normal for now. <b><em>They will be removed in future versions of WooCommerce</em></b>. We recommend disabling these and setting up new rates within shipping zones as soon as possible."
-msgstr "Dosadašnje metode dostave (Fiksna cijena, Međunarodna fiksna cijena, Lokalno preuzimanje i Besplatna dostava) su zastarjele, ali će, za sada, nastaviti normalno raditi. <b><em> Ove će metode biti uklonjene u budućim verzijama WooCommercea</em></b>. Preporučujemo onemogućavanje istih i postavljanje novih metoda koristeći što prije nove zone dostave."
+msgstr "Dosadašnji načini dostave (Fiksna cijena, Međunarodna fiksna cijena, Lokalno preuzimanje i Besplatna dostava) su zastarjele, ali će, za sada, nastaviti normalno raditi. <b><em> Ovi će načini biti uklonjeni u budućim verzijama WooCommercea</em></b>. Preporučujemo onemogućavanje istih i postavljanje novih načina unutar zona dostave što prije."
 
 #: includes/admin/views/html-notice-legacy-shipping.php:18
 msgid "a group of regions that can be assigned different shipping methods and rates."
-msgstr "grupa regija koje se mogu dodijeliti različitim metodama i stopama dostave."
+msgstr "grupa regija koje se mogu dodijeliti različitim načinima i stopama dostave."
 
 #: includes/admin/views/html-notice-legacy-shipping.php:18
 msgid "New:"
@@ -38582,7 +38582,7 @@ msgstr "Ograniči na određene poštanske brojeve"
 
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:93
 msgid "Add as many zones as you need &ndash; customers will only see the methods available for their address."
-msgstr "Možete dodati neograničen broj zona &ndash; kupci će vidjeti samo metode dostupne za njihovu adresu."
+msgstr "Možete dodati neograničen broj zona &ndash; kupci će vidjeti samo načine dostupne za njihovu adresu."
 
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:91
 msgid "Europe zone = Any country in Europe = Flat rate shipping"
@@ -38621,7 +38621,7 @@ msgstr "Povucite i ispustite prilagođene zone kako biste ih preuredili. To je p
 
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:87
 msgid "A shipping zone is a geographic region where a certain set of shipping methods and rates apply."
-msgstr "Zona dostave je zemljopisno područje gdje vrijedi određeni skup metoda i cijena dostave."
+msgstr "Zona dostave je zemljopisno područje gdje vrijedi određeni skup načina i cijena dostave."
 
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:51
 #: includes/admin/settings/views/html-admin-page-shipping-providers.php:50
@@ -38634,13 +38634,13 @@ msgstr "Zatvori modal"
 
 #: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:110
 msgid "You can add multiple shipping methods within this zone. Only customers within the zone will see them."
-msgstr "Možete dodati razne metode dostave ovoj zoni. Vidjet će je isključivo kupci koji se nalaze unutar te zone."
+msgstr "Možete dodati razne načine dostave ovoj zoni. Vidjet će je isključivo kupci koji se nalaze unutar te zone."
 
 #: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:92
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:125
 #: includes/admin/settings/views/html-admin-page-shipping-zones.php:151
 msgid "Add shipping method"
-msgstr "Dodaj metodu dostave"
+msgstr "Dodaj način dostave"
 
 #: includes/admin/settings/views/html-admin-page-shipping-classes.php:37
 msgid "No shipping classes have been created."
@@ -38661,11 +38661,11 @@ msgstr "Uređivanje neuspješno. Pokušajte ponovo."
 
 #: includes/admin/settings/class-wc-settings-shipping.php:422
 msgid "This shipping method does not have any settings to configure."
-msgstr "Ova metoda dostave nema postavki za postavljanje."
+msgstr "Ovaj način dostave nema postavki za postavljanje."
 
 #: includes/admin/settings/class-wc-settings-shipping.php:351
 msgid "Shipping method could not be added. Please retry."
-msgstr "Metoda dostave nije dodana. Pokušajte ponovo."
+msgstr "Način dostave nije dodan. Pokušajte ponovo."
 
 #: includes/admin/settings/class-wc-settings-shipping.php:350
 #: includes/admin/settings/class-wc-settings-shipping.php:396
@@ -38701,7 +38701,7 @@ msgstr "Kalkulacije"
 
 #: includes/customizer/class-wc-shop-customizer.php:472
 msgid "Show subcategories &amp; products"
-msgstr "Prikaži podkategorije &amp; proizvoda"
+msgstr "Prikaži potkategorije &amp; proizvoda"
 
 #: includes/customizer/class-wc-shop-customizer.php:446
 msgid "Show categories &amp; products"
@@ -38747,28 +38747,28 @@ msgstr "Prodaja u svim zemljama, osim u &hellip;"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:240
 msgid "Endpoint for the setting a default payment method page."
-msgstr "Krajnja točka za stranicu postavljanja zadane metode plaćanja."
+msgstr "Krajnja točka za stranicu postavljanja zadanog načina plaćanja."
 
 #: includes/admin/settings/class-wc-settings-advanced.php:239
 msgid "Set default payment method"
-msgstr "Postavi zadanu metodu plaćanja"
+msgstr "Postavi zadani način plaćanja"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:231
 msgid "Endpoint for the delete payment method page."
-msgstr "Krajnja točka stranice za brisanje metoda plaćanja."
+msgstr "Krajnja točka stranice za brisanje načina plaćanja."
 
 #: includes/admin/settings/class-wc-settings-advanced.php:230
 msgid "Delete payment method"
-msgstr "Obriši metodu plaćanja"
+msgstr "Obriši način plaćanja"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:306
 msgid "Endpoint for the \"My account &rarr; Payment methods\" page."
-msgstr "Krajnja točka za stranicu \"Moj račun &rarr; Metode plaćanja\"."
+msgstr "Krajnja točka za stranicu \"Moj račun &rarr; Načini plaćanja\"."
 
 #: includes/admin/settings/class-wc-settings-advanced.php:305
 #: includes/class-wc-query.php:150 includes/wc-account-functions.php:111
 msgid "Payment methods"
-msgstr "Metode plaćanja"
+msgstr "Načini plaćanja"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:296
 #: includes/class-wc-query.php:147
@@ -38986,7 +38986,7 @@ msgstr "Mora biti istinito, jer resurs ne podržava brisanje."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-posts-controller.php:707
 msgid "Use WP Query arguments to modify the response; private query vars require appropriate authorization."
-msgstr "Koristite WP Query argumente za izmjenu odgovora ; Privatni query vars zahtijevaju odgovarajuću autorizaciju ."
+msgstr "Koristite WP Query argumente za izmjenu odgovora; Privatni query vars zahtijevaju odgovarajuću autorizaciju."
 
 #: includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php:683
 #: includes/rest-api/Controllers/Version3/class-wc-rest-posts-controller.php:694
@@ -39053,7 +39053,7 @@ msgstr "Odmak seta rezultata za specifičan broj stavki."
 #: src/StoreApi/Routes/V1/AbstractTermsRoute.php:63
 #: src/StoreApi/Routes/V1/Products.php:183
 msgid "Limit result set to specific ids."
-msgstr "Ograniči grupu rezultata na specifične ID-e."
+msgstr "Ograniči grupu rezultata na određene ID-e."
 
 #: includes/rest-api/Controllers/Version1/class-wc-rest-webhooks-v1-controller.php:720
 #: includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php:603
@@ -39339,11 +39339,11 @@ msgstr "Molimo upišite jaču lozinku."
 #. translators: %s: order link.
 #: includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php:303
 msgid "Payment for order %s refunded"
-msgstr "Uplata za narudžbu %s je refundirana"
+msgstr "Uplata za narudžbu %s je vraćena"
 
 #: includes/emails/class-wc-email-cancelled-order.php:53
 msgid "Cancelled order emails are sent to chosen recipient(s) when orders have been marked cancelled (if they were previously processing or on-hold)."
-msgstr "E-pošta za otkazane narudžbe biti će poslane odabranim korisnicima ako narudžbe budu označene kao Otkazane (ako je prethodni status narudžbe bio Na čekanju)"
+msgstr "E-pošta za otkazane narudžbe bit će poslane odabranim korisnicima ako narudžbe budu označene kao Otkazane (ako je prethodni status narudžbe bio Na čekanju)."
 
 #. translators: %s is product title
 #: src/Blocks/BlockTypes/Reviews/ProductReviewForm.php:69
@@ -39369,7 +39369,7 @@ msgstr "Plaćanje za narudžbu #%1$s od %2$s nije uspjelo. Narudžba je sadržav
 
 #: templates/checkout/thankyou.php:33
 msgid "Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again."
-msgstr "Na žalost, vaša narudžba ne može biti obrađena jer je banka/prodavatelj odbila vašu transakciju. Molimo, pokušajte ponoviti kupnju."
+msgstr "Nažalost, vaša narudžba ne može biti obrađena jer je banka/prodavatelj odbila vašu transakciju. Molimo, pokušajte ponoviti kupnju."
 
 #: includes/widgets/class-wc-widget-product-categories.php:78
 msgid "Hide empty categories"
@@ -40114,7 +40114,7 @@ msgstr "Budući da vaš web preglednik ne podržava JavaScript, ili je onemoguć
 
 #: templates/checkout/payment.php:34
 msgid "Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements."
-msgstr "Na žalost, izgleda da nema dostupnih načina plaćanja. Molimo kontaktirajte nas ako vam je potrebna pomoć ili želite dogovoriti nešto drugo."
+msgstr "Nažalost, izgleda da nema dostupnih načina plaćanja. Molimo kontaktirajte nas ako vam je potrebna pomoć ili želite dogovoriti nešto drugo."
 
 #: templates/checkout/payment.php:34
 msgid "Please fill in your details above to see available payment methods."
@@ -40202,7 +40202,7 @@ msgstr "Kreni na plaćanje"
 #: assets/client/blocks/checkout-frontend.js:5
 #: assets/client/blocks/wc-cart-checkout-base-frontend.js:35
 msgid "Checkout"
-msgstr "Plaćanje"
+msgstr "Blagajna"
 
 #: templates/cart/mini-cart.php:100
 msgid "No products in the cart."
@@ -40378,7 +40378,7 @@ msgstr "Ne postoje kategorije proizvoda."
 
 #: includes/widgets/class-wc-widget-product-categories.php:73
 msgid "Only show children of the current category"
-msgstr "Prikazuj samo podkategorije trenutne kategorije"
+msgstr "Prikazuj samo potkategorije trenutne kategorije"
 
 #: includes/widgets/class-wc-widget-product-categories.php:68
 #: assets/client/blocks/product-categories.js:1
@@ -40399,7 +40399,7 @@ msgstr "Kategorija narudžbe"
 
 #: includes/widgets/class-wc-widget-product-categories.php:37
 msgid "A list or dropdown of product categories."
-msgstr "Lista ili padajući izbornik kategorija proizvoda."
+msgstr "Popis ili padajući izbornik kategorija proizvoda."
 
 #: templates/content-widget-price-filter.php:34
 msgid "Price:"
@@ -40484,7 +40484,7 @@ msgstr "Padajući izbornik"
 #: assets/client/blocks/rating-filter.js:9
 #: assets/client/blocks/stock-filter.js:8
 msgid "List"
-msgstr "Lista"
+msgstr "Popis"
 
 #: includes/widgets/class-wc-widget-layered-nav.php:82
 #: src/Blocks/BlockTypes/ProductFilterAttribute.php:358
@@ -40870,7 +40870,7 @@ msgstr "Odaberi"
 
 #: includes/wc-update-functions.php:960
 msgid "Order fully refunded"
-msgstr "Narudžba u cijelosti refundirana"
+msgstr "Novac je u potpunosti vraćen za narudžbu"
 
 #: includes/shortcodes/class-wc-shortcode-order-tracking.php:48
 msgid "Please enter a valid order ID"
@@ -40878,7 +40878,7 @@ msgstr "Molimo unesite ispravni identifikacijski broj narudžbe"
 
 #: includes/abstracts/abstract-wc-payment-gateway.php:647
 msgid "Use a new payment method"
-msgstr "Koristi novu metodu plaćanja"
+msgstr "Koristi novi način plaćanja"
 
 #: includes/shortcodes/class-wc-shortcode-my-account.php:325
 msgid "Password reset is not allowed for this user"
@@ -41032,7 +41032,7 @@ msgstr "Besplatna dostava zahtijeva..."
 #: includes/shipping/legacy-local-delivery/class-wc-shipping-legacy-local-delivery.php:174
 #: includes/shipping/legacy-local-pickup/class-wc-shipping-legacy-local-pickup.php:124
 msgid "Method availability"
-msgstr "Dostupnost metode"
+msgstr "Dostupnost načina"
 
 #: includes/shipping/legacy-flat-rate/includes/settings-flat-rate.php:131
 msgid "Option name | Additional cost [+- Percents%] | Per cost type (order, class, or item)"
@@ -41109,11 +41109,11 @@ msgstr "Dostupnost"
 #: includes/shipping/legacy-flat-rate/includes/settings-flat-rate.php:27
 #: includes/shipping/legacy-free-shipping/class-wc-shipping-legacy-free-shipping.php:105
 msgid "Method title"
-msgstr "Naslov metode"
+msgstr "Naslov načina"
 
 #: includes/shipping/legacy-flat-rate/includes/settings-flat-rate.php:14
 msgid "Supports the following placeholders: <code>[qty]</code> = number of items, <code>[cost]</code> = cost of items, <code>[fee percent=\"10\" min_fee=\"20\"]</code> = Percentage based fee."
-msgstr "Podržava slijedeći zamjenski tekst: <code>[qty]</code> = broj stavki, <code>[cost]</code> = cijena stavki, <code>[fee percent=\"10\" min_fee=\"20\"]</code> = Naknada na temelju postotka."
+msgstr "Podržava sljedeći zamjenski tekst: <code>[qty]</code> = broj stavki, <code>[cost]</code> = cijena stavki, <code>[fee percent=\"10\" min_fee=\"20\"]</code> = Naknada na temelju postotka."
 
 #: includes/shipping/flat-rate/includes/settings-flat-rate.php:12
 #: includes/shipping/legacy-flat-rate/includes/settings-flat-rate.php:14
@@ -41189,7 +41189,7 @@ msgstr "Prefiks računa"
 
 #: includes/gateways/paypal/includes/settings-paypal.php:141
 msgid "Optionally enable \"Payment Data Transfer\" (Profile > Profile and Settings > My Selling Tools > Website Preferences) and then copy your identity token here. This will allow payments to be verified without the need for PayPal IPN."
-msgstr "Po želji, uključite \"Plaćanje Prijenos Podataka\" (Profile > Profile and Settings > My Selling Tools > Website Preferences) a zatim ovdje kopirajte token idetiteta. Ovo će omogućiti verifikaciju plaćanja bez potrebe za PayPal IPN."
+msgstr "Po želji omogućite \"Prijenos podataka o plaćanju\" (Profile > Profile and Settings > My Selling Tools > Website Preferences), a zatim ovdje kopirajte svoj identifikacijski token. To će omogućiti provjeru plaćanja bez potrebe za PayPal IPN-om."
 
 #: includes/gateways/paypal/includes/settings-paypal.php:139
 msgid "PayPal identity token"
@@ -41282,7 +41282,7 @@ msgstr "Uplata za narudžbu %s poništena"
 #. translators: %1$s: order ID, %2$s: reason code.
 #: includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php:305
 msgid "Order #%1$s has been marked as refunded - PayPal reason code: %2$s"
-msgstr "Narudžba #%1$s je označena kao refundirana - PayPal reason code: %2$s"
+msgstr "Narudžba #%1$s je označena da je za nju vraćen novac - PayPal reason code: %2$s"
 
 #. translators: %s: payment status.
 #: includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php:240
@@ -41320,7 +41320,7 @@ msgstr "Greška validacije: Paypal valute se ne podudaraju (code %s)."
 #. translators: 1: Refund amount, 2: Refund ID
 #: includes/gateways/paypal/class-wc-gateway-paypal.php:717
 msgid "Refunded %1$s - Refund ID: %2$s"
-msgstr "Refundirano %1$s - Identifikacijski broj refundacije: %2$s"
+msgstr "Vraćen novac %1$s - Identifikacijski broj povrata novca: %2$s"
 
 #: includes/gateways/paypal/class-wc-gateway-paypal.php:567
 msgid "PayPal Standard does not support your store currency."
@@ -41361,16 +41361,16 @@ msgstr "Prihvati virtualne narudžbe"
 
 #: includes/gateways/cod/class-wc-gateway-cod.php:137
 msgid "Select shipping methods"
-msgstr "Odaberi metodu dostave"
+msgstr "Odaberi način dostave"
 
 #: includes/gateways/cod/class-wc-gateway-cod.php:133
 msgid "If COD is only available for certain methods, set it up here. Leave blank to enable for all methods."
-msgstr "Ako je PPD dostupan samo za neke metode, postavite ga ovdje. Ostavite prazno za omogućavanje kod svih metoda."
+msgstr "Ako je PPD dostupan samo za neke načine, postavite ga ovdje. Ostavite prazno za omogućavanje kod svih načina."
 
 #: includes/gateways/cod/class-wc-gateway-cod.php:128
 #: assets/client/admin/chunks/settings-payments-cod.js:1
 msgid "Enable for shipping methods"
-msgstr "Omogućite za metode dostave"
+msgstr "Omogućite za načine dostave"
 
 #: includes/gateways/cod/class-wc-gateway-cod.php:123
 msgid "Instructions that will be added to the thank you page."
@@ -41383,7 +41383,7 @@ msgstr "Plaćanje gotovinom pri dostavi."
 
 #: includes/gateways/cod/class-wc-gateway-cod.php:116
 msgid "Payment method description that the customer will see on your website."
-msgstr "Opis metode plaćanja koju kupac vidi na vašoj web-stranici."
+msgstr "Opis načina plaćanja koji kupac vidi na vašoj web-stranici."
 
 #: includes/gateways/cheque/class-wc-gateway-cheque.php:91
 msgid "Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode."
@@ -41467,7 +41467,7 @@ msgstr "IBAN"
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:169
 #: assets/client/admin/chunks/5875.js:1
 msgid "Bank name"
-msgstr "Ime banke"
+msgstr "Naziv banke"
 
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:168
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:352
@@ -41513,13 +41513,13 @@ msgstr "Upute"
 
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:122
 msgid "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account."
-msgstr "Uplatite direktno na naš bankovni račun. Koristite identifikacijski broj narudžbe kao poziv na broj. Vaša narudžba biti će isporučena kad sredstva budu vidljiva na našem računu."
+msgstr "Uplatite izravno na naš bankovni račun. Koristite identifikacijski broj narudžbe kao poziv na broj. Vaša narudžba bit će isporučena kad sredstva budu vidljiva na našem računu."
 
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:121
 #: includes/gateways/cheque/class-wc-gateway-cheque.php:90
 #: includes/gateways/cod/class-wc-gateway-cod.php:109
 msgid "Payment method description that the customer will see on your checkout."
-msgstr "Opis metode plaćanja vidljive kupcu na blagajni."
+msgstr "Opis načina plaćanja vidljivog kupcu na blagajni."
 
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:63
 #: includes/gateways/bacs/class-wc-gateway-bacs.php:115
@@ -41663,16 +41663,16 @@ msgstr "Zaglavlje e-pošte za puni povrat novca"
 #: includes/emails/class-wc-email-customer-pos-refunded-order.php:332
 #: includes/emails/class-wc-email-customer-refunded-order.php:314
 msgid "Partial refund subject"
-msgstr "Naslov za djelomični povrat novca"
+msgstr "Predmet djelomičnog povrata novca"
 
 #: includes/emails/class-wc-email-customer-pos-refunded-order.php:324
 #: includes/emails/class-wc-email-customer-refunded-order.php:306
 msgid "Full refund subject"
-msgstr "Naslov potpunog povrata novca"
+msgstr "Predmet potpunog povrata novca"
 
 #: includes/emails/class-wc-email-customer-refunded-order.php:67
 msgid "Order refunded emails are sent to customers when their orders are refunded."
-msgstr "Narudžba refundirana, poruke e-pošte poslane kupcima kada su njihove narudžbe označene kao refundirane."
+msgstr "E-poruke o povratu novca za narudžbe šalju se kupcima kada je novac za njihove narudžbe vraćen."
 
 #: includes/emails/class-wc-email-customer-refunded-order.php:48
 msgid "Refunded order"
@@ -41684,11 +41684,11 @@ msgstr "Djelomično vraćen novac"
 
 #: includes/emails/class-wc-email-customer-refunded-order.php:86
 msgid "Your {site_title} order #{order_number} has been refunded"
-msgstr "Vaša {site_title} narudžba #{order_number} je refundirana"
+msgstr "Vraćen je novac za vašu {site_title} narudžbu #{order_number}"
 
 #: includes/emails/class-wc-email-customer-refunded-order.php:84
 msgid "Your {site_title} order #{order_number} has been partially refunded"
-msgstr "Vaša {site_title} narudžba #{order_number} je djelomično refundirana"
+msgstr "Djelomično je vraćen novac za vašu {site_title} narudžbu #{order_number}"
 
 #: includes/emails/class-wc-email-customer-on-hold-order.php:83
 #: includes/emails/class-wc-email-customer-processing-order.php:79
@@ -41744,7 +41744,7 @@ msgstr "Dovršene narudžbe, poruke e-pošte šalju se kupcima kada su njihove n
 
 #: includes/emails/class-wc-email-customer-completed-order.php:32
 msgid "Completed order"
-msgstr "Završena narudžba"
+msgstr "Dovršena narudžba"
 
 #: includes/emails/class-wc-email-admin-payment-gateway-enabled.php:377
 #: includes/emails/class-wc-email-cancelled-order.php:228
@@ -41918,7 +41918,7 @@ msgstr[2] "Dovršeno <span class=\"count\">(%s)</span>"
 #: includes/class-wc-post-types.php:691 includes/wc-order-functions.php:109
 msgctxt "Order status"
 msgid "Completed"
-msgstr "Završeno"
+msgstr "Dovršeno"
 
 #. translators: %s: number of orders
 #: includes/class-wc-post-types.php:688
@@ -42304,7 +42304,7 @@ msgstr "Nažalost, nema proizvoda koji zadovoljavaju vašu selekciju. Molimo pro
 
 #: includes/class-wc-frontend-scripts.php:715 templates/checkout/terms.php:31
 msgid "required"
-msgstr "obavezno"
+msgstr "obvezno"
 
 #: includes/class-wc-frontend-scripts.php:628
 #: src/Blocks/BlockTypes/Reviews/ProductReviewForm.php:124
@@ -42321,7 +42321,7 @@ msgstr "Molimo unesite svoju lozinku."
 
 #: includes/class-wc-form-handler.php:1063
 msgid "Username is required."
-msgstr "Korisničko ime je obavezno."
+msgstr "Korisničko ime je obvezno."
 
 #: includes/class-wc-log-levels.php:152
 #: src/Internal/Orders/OrderNoteGroup.php:70
@@ -42337,9 +42337,9 @@ msgstr "Molimo odaberite opciju proizvoda&hellip;"
 #: src/StoreApi/Utilities/CartController.php:1336
 msgid "%s is a required field"
 msgid_plural "%s are required fields"
-msgstr[0] "%s je obavezno polje"
-msgstr[1] "%s je obavezno polje"
-msgstr[2] "%s su obavezna polja"
+msgstr[0] "%s je obvezno polje"
+msgstr[1] "%s su obvezna polja"
+msgstr[2] "%s je obveznih polja"
 
 #: includes/class-wc-form-handler.php:969
 msgid "Please choose a product to add to your cart&hellip;"
@@ -42499,7 +42499,7 @@ msgstr "Nevažeća poveznica za preuzimanje."
 
 #: includes/class-wc-coupon.php:1284
 msgid "Please enter a coupon code."
-msgstr "Molimo unesite kod kupona."
+msgstr "Molimo unesite kôd kupona."
 
 #: includes/class-wc-coupon.php:1281
 msgid "Coupon does not exist."
@@ -42537,7 +42537,7 @@ msgstr "Kupon nije ispravan."
 
 #: includes/class-wc-coupon.php:1075
 msgid "Coupon code removed successfully."
-msgstr "Kod kupona je uspješno uklonjen."
+msgstr "Kôd kupona uspješno je uklonjen."
 
 #: includes/class-wc-coupon.php:1072
 msgid "Coupon code applied successfully."
@@ -42663,11 +42663,11 @@ msgstr "Molimo ocijenite ovaj proizvod."
 #: includes/class-wc-form-handler.php:597
 #: includes/class-wc-form-handler.php:621
 msgid "Invalid payment method."
-msgstr "Pogrešna metoda plaćanja."
+msgstr "Pogrešan način plaćanja."
 
 #: includes/admin/settings/class-wc-settings-shipping.php:416
 msgid "Invalid shipping method!"
-msgstr "Pogrešna metoda dostave!"
+msgstr "Pogrešan način dostave!"
 
 #. translators: %s: shipping location (prefix e.g. 'to' + ISO 3166-1 alpha-2
 #. country code)
@@ -42702,7 +42702,7 @@ msgstr "Molimo vas unesite ispravan poštanski broj."
 #: includes/class-wc-checkout.php:931 includes/class-wc-form-handler.php:136
 #: includes/class-wc-form-handler.php:297
 msgid "%s is a required field."
-msgstr "%s je obavezno polje."
+msgstr "%s je obvezno polje."
 
 #. translators: %s: shop cart url
 #: includes/class-wc-checkout.php:1278
@@ -42911,7 +42911,7 @@ msgstr "Opis nedostaje."
 
 #: includes/gateways/paypal/class-wc-gateway-paypal.php:698
 msgid "Refund failed."
-msgstr "Refundacija neuspjela."
+msgstr "Neuspjelo vraćanje novaca."
 
 #: includes/class-wc-ajax.php:2353
 msgid "Invalid refund amount"
@@ -42966,7 +42966,7 @@ msgstr "Nedostaju parametri %s"
 
 #: includes/abstracts/abstract-wc-order.php:1304
 msgid "Invalid coupon code"
-msgstr "Neispravni kod kupona"
+msgstr "Nevaljani kôd kupona"
 
 #: includes/class-wc-rest-authentication.php:666
 msgid "WooCommerce API. Use a consumer key in the username field and a consumer secret in the password field."
@@ -43542,7 +43542,7 @@ msgstr "Prikaz Porez ukupno"
 
 #: includes/admin/settings/views/settings-tax.php:109
 msgid "Define text to show after your product prices. This could be, for example, \"inc. Vat\" to explain your pricing. You can also have prices substituted here using one of the following: {price_including_tax}, {price_excluding_tax}."
-msgstr "Definirajte tekst koji će se prikazati nakon cijene vašeg proizvoda. To može biti, na primjer, \"uključ. PDV\" da bolje objasnite svoju cijenu. Također možete promijeniti cijene koristeći jedan od slijedećih načina: {price_including_tax}, {price_excluding_tax}."
+msgstr "Definirajte tekst koji će se prikazati nakon cijene vašeg proizvoda. To može biti, na primjer, \"uključ. PDV\" da bolje objasnite svoju cijenu. Također možete promijeniti cijene koristeći jedan od sljedećih načina: {price_including_tax}, {price_excluding_tax}."
 
 #: includes/admin/settings/views/settings-tax.php:104
 msgid "Price display suffix"
@@ -43584,7 +43584,7 @@ msgstr "Klasa poreza za dostavu bazira se na stavkama košarice"
 
 #: includes/admin/settings/views/settings-tax.php:47
 msgid "Optionally control which tax class shipping gets, or leave it so shipping tax is based on the cart items themselves."
-msgstr "Nije obavezno, postavite koja klasa poreza se primjenjuje na dostavu ili ostavite kako bi se porez dostave bazirao na stavkama košarice."
+msgstr "Neobvezno, postavite koja klasa poreza se primjenjuje na dostavu ili ostavite kako bi se porez dostave bazirao na stavkama košarice."
 
 #: includes/admin/settings/views/settings-tax.php:46
 msgid "Shipping tax class"
@@ -44275,14 +44275,14 @@ msgstr "E-pošta"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:222
 msgid "Endpoint for the \"Checkout &rarr; Add payment method\" page."
-msgstr "Završne točke za stranicu \"Blagajna &rarr; Dodaj metodu plaćanja\" stranicu."
+msgstr "Završna točka za stranicu \"Blagajna &rarr; Dodaj način plaćanja\"."
 
 #: includes/admin/settings/class-wc-settings-advanced.php:221
 #: includes/class-wc-query.php:153 src/Admin/PluginsHelper.php:1285
 #: templates/myaccount/form-add-payment-method.php:54
 #: templates/myaccount/payment-methods.php:77
 msgid "Add payment method"
-msgstr "Dodaj metodu plaćanja"
+msgstr "Dodaj način plaćanja"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:213
 msgid "Endpoint for the \"Checkout &rarr; Order received\" page."
@@ -44965,7 +44965,7 @@ msgstr "Godina"
 #. translators: %s: coupons amount
 #: includes/admin/reports/class-wc-report-coupon-usage.php:119
 msgid "%s coupons used in total"
-msgstr "%d kupona korišteno ukupno"
+msgstr "%s kupona korišteno ukupno"
 
 #. translators: %s: discount amount
 #: includes/admin/reports/class-wc-report-coupon-usage.php:112
@@ -45043,7 +45043,7 @@ msgstr "Akcijska cijena"
 
 #: includes/admin/meta-boxes/views/html-variation-admin.php:153
 msgid "Variation price (required)"
-msgstr "Varijacija cijene (obavezno)"
+msgstr "Varijacija cijene (obvezno)"
 
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:641
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:803
@@ -45066,7 +45066,7 @@ msgstr "Omogućite ovu opciju ukoliko se proizvod ne dostavlja ili nema troškov
 
 #: includes/admin/meta-boxes/views/html-variation-admin.php:116
 msgid "Enable this option if access is given to a downloadable file upon purchase of a product"
-msgstr "Omogući ovu opciju ako želite dozvoliti pristup poveznici za prezimanje datoteke nakon kupnje proizvoda"
+msgstr "Omogućite ovu opciju ako je pri kupnji proizvoda omogućen pristup datoteci za preuzimanje"
 
 #: includes/admin/meta-boxes/views/html-variation-admin.php:113
 #: includes/admin/settings/class-wc-settings-emails.php:548
@@ -45116,7 +45116,7 @@ msgstr "Dodaj novo"
 #: includes/admin/settings/views/html-admin-page-shipping-zone-methods.php:68
 #: assets/client/admin/chunks/shipping-recommendations.js:1
 msgid "Shipping methods"
-msgstr "Metode dostave"
+msgstr "Načini dostave"
 
 #: includes/admin/meta-boxes/views/html-order-shipping.php:26
 msgid "Shipping name"
@@ -45133,7 +45133,7 @@ msgstr "Naziv dostave"
 #: includes/gateways/paypal/includes/settings-paypal.php:205
 #: assets/client/blocks/checkout.js:2
 msgid "Optional"
-msgstr "Nije obavezno"
+msgstr "Neobvezno"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:501
 msgid "Or, enter tax rate ID:"
@@ -45190,20 +45190,20 @@ msgstr "Platni sustav"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:390
 msgid "Reason for refund (optional):"
-msgstr "Razlog za refundiranje (nije obavezno)"
+msgstr "Razlog za povrat novca (neobvezno)"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:370
 #: includes/admin/reports/class-wc-report-sales-by-date.php:783
 msgid "Refund amount"
-msgstr "Iznos za refundirati"
+msgstr "Iznos povrata novca"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:363
 msgid "Total available to refund"
-msgstr "Ukupno dostupno za refundiranje"
+msgstr "Ukupno dostupno za povrat novca"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:359
 msgid "Amount already refunded"
-msgstr "Iznos je već refundiran"
+msgstr "Iznos je već vraćen"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:354
 msgid "Restock refunded items"
@@ -45238,7 +45238,7 @@ msgstr "Dodaj proizvod(e)"
 #: assets/client/admin/chunks/analytics-report-orders.js:1
 #: assets/client/admin/chunks/dashboard-charts.js:1
 msgid "Refund"
-msgstr "Refundiraj"
+msgstr "Povrat novca"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:321
 msgid "To edit this order change the status back to \"Pending payment\""
@@ -45246,7 +45246,7 @@ msgstr "Za uređivanje ove narudžbe promijenite status natrag na \"U tijeku\""
 
 #: includes/admin/meta-boxes/views/html-order-items.php:273
 msgid "Refunded"
-msgstr "Refundirano"
+msgstr "Vraćen novac"
 
 #: includes/admin/meta-boxes/views/html-order-items.php:228
 #: includes/class-wc-privacy-exporters.php:253
@@ -45558,7 +45558,7 @@ msgstr "Zadana vrijednost obrasca"
 #: assets/client/blocks/price-filter.js:5
 #: assets/client/blocks/wc-shipping-method-pickup-location.js:233
 msgid "Learn more"
-msgstr "Saznaj više"
+msgstr "Saznajte više"
 
 #: includes/admin/class-wc-admin-assets.php:469
 #: includes/admin/meta-boxes/views/html-product-data-advanced.php:56
@@ -45568,7 +45568,7 @@ msgstr "Omogući recenzije"
 
 #: includes/admin/meta-boxes/views/html-product-data-advanced.php:39
 msgid "Custom ordering position."
-msgstr "Prilagođena pozicija redosljeda."
+msgstr "Prilagođena pozicija redoslijeda."
 
 #: includes/admin/importers/mappings/generic.php:26
 #: includes/admin/meta-boxes/views/html-product-data-advanced.php:37
@@ -45646,7 +45646,7 @@ msgstr "Proširi"
 
 #: includes/admin/meta-boxes/views/html-product-data-shipping.php:72
 msgid "Shipping classes are used by certain shipping methods to group similar products."
-msgstr "Klase dostave koriste specifične metode dostave za grupiranje sličnih proizvoda."
+msgstr "Klase dostave koriste specifične načine dostave za grupiranje sličnih proizvoda."
 
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:644
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:832
@@ -45766,7 +45766,7 @@ msgstr "Dopusti narudžbu po isteku zaliha?"
 
 #: includes/admin/meta-boxes/views/html-product-data-inventory.php:84
 msgid "Stock quantity. If this is a variable product this value will be used to control stock for all variations, unless you define stock at variation level."
-msgstr "Količlina zalihe. Ako je ovo varijabilni proizvod ova vrijednost će biti korištena za kontrolu zalihe svih varijacija osim ako ne definirate zalihu za svaku varijaciju posebno."
+msgstr "Količina zaliha. Ako je ovo varijabilni proizvod, ova će se vrijednost koristiti za kontrolu zaliha za sve varijacije, osim ako ne definirate zalihe na razini varijacije."
 
 #: includes/admin/views/html-bulk-edit-product.php:323
 #: includes/admin/views/html-bulk-edit-product.php:341
@@ -45849,7 +45849,7 @@ msgstr "Unesi broj dana prije nego poveznica za preuzimanje istekne ili ostavite
 #: assets/client/admin/chunks/customizable-dashboard.js:1
 #: assets/client/blocks/mini-cart.js:1
 msgid "Never"
-msgstr "Nikada"
+msgstr "Nikad"
 
 #: includes/admin/meta-boxes/views/html-product-data-general.php:191
 #: includes/admin/meta-boxes/views/html-variation-admin.php:522
@@ -46283,7 +46283,7 @@ msgstr "Generiraj odobrenja za preuzimanje"
 
 #: includes/admin/meta-boxes/class-wc-meta-box-coupon-data.php:363
 msgid "Coupon code already exists - customers will use the latest coupon with this code."
-msgstr "Kod kupona već postoji - kupci će koristiti posljednji kupon sa ovim kodom."
+msgstr "Kôd kupona već postoji - kupci će koristiti posljednji kupon sa ovim kodom."
 
 #: includes/admin/meta-boxes/class-wc-meta-box-coupon-data.php:330
 msgid "How many times this coupon can be used by an individual user. Uses billing email for guests, and user ID for logged in users."
@@ -46756,7 +46756,7 @@ msgstr "Saznajte više"
 
 #: includes/admin/class-wc-admin-setup-wizard.php:2321
 msgid "Next step"
-msgstr "Slijedeći korak"
+msgstr "Sljedeći korak"
 
 #: includes/wc-product-functions.php:1346
 msgid "Allow"
@@ -46972,7 +46972,7 @@ msgstr "Postavke veličine ove slike su onemogućene jer su njene vrijednosti pr
 
 #: includes/admin/class-wc-admin-settings.php:184
 msgid "The changes you made will be lost if you navigate away from this page."
-msgstr "Promjene koje ste napravili biti će izgubljene ako odete s ove stranice."
+msgstr "Promjene koje ste napravili bit će izgubljene ako odete s ove stranice."
 
 #: includes/admin/class-wc-admin-settings.php:122
 msgid "Your settings have been saved."
@@ -47244,7 +47244,7 @@ msgstr "Katalog"
 
 #: includes/admin/class-wc-admin-post-types.php:720
 msgid "Description (optional)"
-msgstr "Opis (nije obavezno)"
+msgstr "Opis (neobvezno)"
 
 #: includes/admin/class-wc-admin-post-types.php:705
 #: src/Admin/API/Leaderboards.php:148
@@ -47254,7 +47254,7 @@ msgstr "Opis (nije obavezno)"
 #: assets/client/admin/chunks/analytics-report-orders.js:1
 #: assets/client/admin/chunks/dashboard-charts.js:1
 msgid "Coupon code"
-msgstr "Kod kupona"
+msgstr "Kôd kupona"
 
 #: includes/admin/class-wc-admin-post-types.php:702
 #: assets/client/admin/wp-admin-scripts/product-tour.js:2
@@ -47817,7 +47817,7 @@ msgstr "Skica kupona ažurirana."
 
 #: includes/admin/class-wc-admin-post-types.php:166
 msgid "Coupon submitted."
-msgstr "Kupon podnešen."
+msgstr "Kupon podnesen."
 
 #: includes/admin/class-wc-admin-post-types.php:165
 msgid "Coupon saved."
@@ -47835,7 +47835,7 @@ msgstr "Skica narudžbe ažurirana."
 
 #: includes/admin/class-wc-admin-post-types.php:205
 msgid "Order submitted."
-msgstr "Narudžba podnešena."
+msgstr "Narudžba podnesena."
 
 #: includes/admin/class-wc-admin-post-types.php:204
 msgid "Order saved."
@@ -48102,7 +48102,7 @@ msgstr "Dodaj u izbornik"
 
 #: includes/admin/class-wc-admin-menus.php:433
 msgid "WooCommerce endpoints"
-msgstr "WooCommerce krajnja točka"
+msgstr "WooCommerce krajnje točke"
 
 #: includes/admin/class-wc-admin-menus.php:285
 #: includes/class-wc-post-types.php:505
@@ -48400,7 +48400,7 @@ msgstr "Pojmovi"
 #: assets/client/blocks/reviews-by-product.js:12
 #: assets/client/blocks/reviews-frontend.js:1
 msgid "Order by"
-msgstr "Poredaj prema"
+msgstr "Poredaj po"
 
 #: includes/admin/class-wc-admin-menus.php:101
 #: includes/admin/importers/class-wc-product-csv-importer-controller.php:856

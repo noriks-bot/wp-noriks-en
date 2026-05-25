@@ -67,6 +67,10 @@ function noriks_term_group( $group ) {
 
 
 
+add_filter('woocommerce_ajax_variation_threshold', function() { return 100; });
+
+
+
 /*  include language specific files */
 
 /**
