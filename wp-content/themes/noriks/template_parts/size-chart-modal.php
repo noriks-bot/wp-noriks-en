@@ -479,31 +479,31 @@
               <tr>
                 <th class="noriks-sc-empty" style="width:42px;"></th>
                 <th class="noriks-sc-empty" style="width:80px;">Size</th>
-                <th>130-150 lbs</th>
-                <th>152-170 lbs</th>
-                <th>172-185 lbs</th>
-                <th>185-209 lbs</th>
-                <th>211-225 lbs</th>
-                <th>227-249 lbs</th>
-                <th>251-284 lbs</th>
-                <th>286-300 lbs</th>
-                <th>302-331 lbs</th>
+                <th>59-68 kg</th>
+                <th>69-77 kg</th>
+                <th>78-84 kg</th>
+                <th>84-95 kg</th>
+                <th>96-102 kg</th>
+                <th>103-113 kg</th>
+                <th>114-129 kg</th>
+                <th>130-136 kg</th>
+                <th>137-150 kg</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th class="noriks-sc-vis-label" rowspan="11">Height (ft/in)</th>
-                <th>5'6"</th>
+                <th class="noriks-sc-vis-label" rowspan="11">Height (cm)</th>
+                <th>168 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td>
               </tr>
               <tr>
-                <th>5'7"</th>
+                <th>170 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td>
               </tr>
               <tr>
-                <th>5'8"</th>
+                <th>173 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -515,7 +515,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>5'9"</th>
+                <th>175 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -527,7 +527,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>5'10"</th>
+                <th>178 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -539,7 +539,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>5'11"</th>
+                <th>180 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -551,7 +551,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>6'0"</th>
+                <th>183 cm</th>
                 <td class="noriks-sc-size">S</td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -563,7 +563,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>6'1"</th>
+                <th>185 cm</th>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -575,7 +575,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>6'2"</th>
+                <th>188 cm</th>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-size">M</td>
                 <td class="noriks-sc-size">M</td>
@@ -587,7 +587,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>6'3"</th>
+                <th>191 cm</th>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-size">M</td>
@@ -599,7 +599,7 @@
                 <td class="noriks-sc-size">3XL</td>
               </tr>
               <tr>
-                <th>6'4"</th>
+                <th>193 cm</th>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-empty"></td>
                 <td class="noriks-sc-size">M</td>
