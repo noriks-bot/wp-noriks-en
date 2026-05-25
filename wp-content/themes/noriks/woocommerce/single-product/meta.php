@@ -481,13 +481,13 @@ $is_mixed_bundle = has_term( array( 'black-friday', 'sets', 'orto-starter', 'ort
                   
     <?php elseif(  $is_mixed_bundle ): ?>
     
-     <img src="https://noriks.com/wp-content/uploads/2026/05/tablica_en.jpg">
+     <img src="<?php echo get_template_directory_uri(); ?>/img/tabela-velikosti-majice.jpg">
 <img src="https://noriks.com/wp-content/uploads/2026/05/bokserice_en.jpg">
         
           <?php else: ?>
       
       
-       <img src="https://noriks.com/wp-content/uploads/2026/05/tablica_en.jpg">
+       <img src="<?php echo get_template_directory_uri(); ?>/img/tabela-velikosti-majice.jpg">
         
             
         <?php endif; ?>
