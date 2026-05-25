@@ -14,22 +14,86 @@
 .body-type-option.selected { border: 2px solid #f39c13; background-color: #fff3d6; }
 .slike-mobile-only { display: flex; }
 
+/* --- Modal backdrop (dark overlay behind modal) --- */
+#custom-size-chart-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 9999998;
+}
+#custom-size-chart-backdrop.show { display: block; }
+
 /* --- Modal base --- */
-/* Height is AUTO on ALL screens now (desktop same as mobile). */
 #custom-size-chart-modal {
   display: none;              /* hidden by default; shown via .show */
   position: fixed;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 800px;
-  height: auto;               /* << auto height */
+  width: 95%;
+  max-width: 1100px;
+  max-height: min(720px, 78vh);
   background: #fff;
   border-radius: 3px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
   z-index: 9999999;
-  overflow: visible;          /* no forced scrollbars */
-  font-family: sans-serif;
+  overflow: hidden;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+#custom-size-chart-modal.show { display: flex; }
+
+/* Title bar */
+.size-chart-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid #eee;
+  flex: 0 0 auto;
+}
+.size-chart-titlebar h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Inner scroll container so modal stays bounded by max-height */
+.size-chart-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+}
+
+/* MOBILE: VERY visible Y scrollbar on modal body — forced always-on, fat + orange */
+@media (max-width: 768px) {
+  .size-chart-body {
+    overflow-y: scroll !important;
+    scrollbar-width: auto;
+    scrollbar-color: #f39c13 rgba(0,0,0,0.10);
+    scrollbar-gutter: stable;
+  }
+  .size-chart-body::-webkit-scrollbar {
+    width: 12px !important;
+    -webkit-appearance: none;
+    background: rgba(0,0,0,0.10);
+  }
+  .size-chart-body::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.10);
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  .size-chart-body::-webkit-scrollbar-thumb {
+    background: #f39c13;
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.10);
+    min-height: 40px;
+  }
+  .size-chart-body::-webkit-scrollbar-thumb:active,
+  .size-chart-body::-webkit-scrollbar-thumb:hover {
+    background: #d97f00;
+  }
 }
 
 /* Single-column content wrapper (only image) */
@@ -50,10 +114,7 @@
   margin: 0;                  /* ensure no offsets */
 }
 
-/* When opened */
-#custom-size-chart-modal.show { display: block; }
-
-/* --- Mobile tweaks (kept minimal) --- */
+/* --- Mobile tweaks --- */
 @media (max-width: 768px) {
   .info-box-desktop { display: none !important; }
   .second-one, .third-one { display: inline-block; width: 49%; }
@@ -62,7 +123,38 @@
   .size-chart-field { margin-top: 10px; text-align: left; }
   .size-chart-field label { text-align: left; }
 
-  /* Modal stays auto-height on mobile too; nothing else needed */
+  #custom-size-chart-modal {
+    width: 92%;
+    max-width: 92%;
+    max-height: 80vh;          /* breathing room top+bottom */
+    border-radius: 6px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .size-chart-titlebar { padding: 12px 14px; }
+  .size-chart-titlebar h2 { font-size: 15px; }
+  .size-chart-body { padding-top: 0; padding-bottom: 10px; }
+
+  /* Image-based charts (boxers/socks/etc) — keep horizontal scroll */
+  .size-chart-left {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    scrollbar-width: thin;
+    padding-bottom: 6px;
+  }
+  .size-chart-left img {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 720px;
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    object-fit: initial;
+  }
+  .size-chart-left::-webkit-scrollbar { height: 6px; }
+  .size-chart-left::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); border-radius: 3px; }
 }
 
 /* Desktop cleanups */
@@ -74,15 +166,15 @@
 </style>
 
 
-<?php if ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>  
+<?php if ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>
 
 <style>
 
 @media (min-width: 769px) {
-  .size-chart-left  img { 
-      max-width: 50% !important; 
+  .size-chart-left  img {
+      max-width: 50% !important;
       margin: 0 auto !important;
-      
+
   }
 
 }
@@ -92,95 +184,498 @@
 <?php endif; ?>
 
 <!-- Modal HTML -->
-<div id="custom-size-chart-modal" aria-modal="true" role="dialog">
-  <span id="close-size-chart-x" style="position: absolute;
-    top: 5px; right: 5px; font-size: 24px; font-weight: bold; cursor: pointer;
-    background: black; border-radius: 1px; width: 40px; height: 40px; text-align: center; color: white;">&times;</span>
+<div id="custom-size-chart-backdrop"></div>
+<div id="custom-size-chart-modal" aria-modal="true" role="dialog" aria-labelledby="custom-size-chart-title">
+  <div class="size-chart-titlebar">
+    <h2 id="custom-size-chart-title">Size Chart</h2>
+    <span id="close-size-chart-x" style="font-size: 26px; font-weight: bold; cursor: pointer;
+      background: #000; border-radius: 2px; width: 34px; height: 34px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: white; line-height: 1;">&times;</span>
+  </div>
 
+  <div class="size-chart-body">
   <div  style="<?php if ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>  display: block; <?php endif; ?>"
         class="size-chart-left">
-      
-      <?php if ( has_term( array( 'bokserice', 'orto-bokserice' , 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() )   && 
+
+      <?php if ( has_term( array( 'bokserice', 'orto-bokserice' , 'bokserice-sastavi-paket' ), 'product_cat', get_the_ID() )   &&
        !has_term( 'black-friday', 'product_cat', get_the_ID() )   ): ?>
-      
+
     <img
-    
+
     style="margin-top: 70px;margin-bottom: 70px;"
-    
+
       src="https://noriks.com/wp-content/uploads/2026/05/bokserice_en.jpg"
       alt="Size Guide">
-      
-      
-       
+
+
+
       <?php elseif ( has_term( array( 'carape', 'zimske-carape	' ), 'product_cat', get_the_ID() ) ): ?>
-      
-      
+
+
        <img
-    
+
     style="margin-top: 70px;margin-bottom: 70px;"
-    
+
       src="https://noriks.com/wp-content/uploads/2026/05/nogavice_en.jpg"
       alt="Size Guide">
-      
-      
+
+
       <?php elseif ( has_term( array( 'orto-starter', 'orto-majica-bokserica' ), 'product_cat', get_the_ID() ) ): ?>
-      
-      
-      
+
+
+
      <img
-    
+
     style="margin-top: 35px;margin-bottom: 0px;"
-    
+
       src="https://noriks.com/wp-content/uploads/2026/05/tablica_en.jpg"
       alt="Size Guide">
-      
-      
+
+
        <img
-    
+
     style="margin-top: 0px;margin-bottom: 0px;"
-    
+
       src="https://noriks.com/wp-content/uploads/2026/05/bokserice_en.jpg"
       alt="Size Guide">
-     
-      
-      
+
+
+
       <?php else: ?>
-      
-      
-       <img
-    
-    style="margin-top: 70px;margin-bottom: 70px;"
-    
-      src="https://noriks.com/wp-content/uploads/2026/05/tablica_en.jpg"
-      alt="Size Guide">
-      
+
+      <!-- T-SHIRTS: HTML size chart (height x weight matrix) -->
+      <div class="noriks-size-chart-wrap">
+        <style>
+          .noriks-size-chart-wrap {
+            width: 100%;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #111;
+          }
+          .noriks-sc-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+          /* MOBILE: force horizontal scrollbar to be ALWAYS visible, fat + orange */
+          @media (max-width: 768px) {
+            .noriks-sc-table-wrap {
+              overflow-x: scroll !important;
+              padding-bottom: 10px;
+              scrollbar-width: auto;
+              scrollbar-color: #f39c13 rgba(0,0,0,0.10);
+              background:
+                linear-gradient(90deg, #fff 30%, rgba(255,255,255,0)) left center / 24px 100% no-repeat,
+                linear-gradient(90deg, rgba(255,255,255,0), #fff 70%) right center / 24px 100% no-repeat,
+                linear-gradient(90deg, rgba(0,0,0,0.12), rgba(0,0,0,0)) left center / 18px 100% no-repeat,
+                linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,0.12)) right center / 18px 100% no-repeat;
+              background-attachment: local, local, scroll, scroll;
+            }
+            .noriks-sc-table-wrap::-webkit-scrollbar {
+              height: 12px !important;
+              -webkit-appearance: none;
+              background: rgba(0,0,0,0.10);
+            }
+            .noriks-sc-table-wrap::-webkit-scrollbar-track {
+              background: rgba(0,0,0,0.10);
+              border-radius: 6px;
+              border: 1px solid rgba(0,0,0,0.15);
+            }
+            .noriks-sc-table-wrap::-webkit-scrollbar-thumb {
+              background: #f39c13;
+              border-radius: 6px;
+              border: 2px solid rgba(0,0,0,0.10);
+              min-width: 50px;
+            }
+            .noriks-sc-table-wrap::-webkit-scrollbar-thumb:active,
+            .noriks-sc-table-wrap::-webkit-scrollbar-thumb:hover {
+              background: #d97f00;
+            }
+          }
+          table.noriks-sc {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            font-size: 14px;
+            table-layout: fixed;
+          }
+          /* Mobile: keep horizontal scroll with readable min-width */
+          @media (max-width: 768px) {
+            table.noriks-sc { min-width: 780px; font-size: 10.4px; }
+          }
+          /* Desktop: fit fully within modal, no horizontal scroll */
+          @media (min-width: 769px) {
+            table.noriks-sc { min-width: 0; font-size: 14px; }
+          }
+          table.noriks-sc th, table.noriks-sc td {
+            border: 2px solid #fff;
+            text-align: center;
+            padding: 9px 2px;
+            background: #ececec;
+            font-weight: 600;
+            color: #111;
+            white-space: nowrap;
+            word-break: keep-all;
+          }
+          @media (min-width: 769px) {
+            table.noriks-sc th, table.noriks-sc td { padding: 10px 3px; }
+          }
+          table.noriks-sc thead th {
+            background: #b8b8b8;
+            color: #000;
+            font-weight: 700;
+          }
+          table.noriks-sc thead th.noriks-sc-empty { background: #b8b8b8; }
+          table.noriks-sc tbody th {
+            background: #b8b8b8;
+            font-weight: 700;
+          }
+          table.noriks-sc tbody th.noriks-sc-vis-label {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            background: #b8b8b8;
+            color: #000;
+            width: 32px;
+            letter-spacing: 1px;
+          }
+          /* Sticky col 1 (Height label) + col 2 (Size / height column) on horizontal scroll */
+          table.noriks-sc thead th:first-child,
+          table.noriks-sc tbody th.noriks-sc-vis-label {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background: #b8b8b8;
+          }
+          table.noriks-sc thead th:nth-child(2),
+          table.noriks-sc tbody tr > th:nth-of-type(2),
+          table.noriks-sc tbody tr:not(:first-child) > th:first-of-type {
+            position: sticky;
+            left: 42px;
+            z-index: 4;
+            background: #b8b8b8;
+            box-shadow: 3px 0 5px -2px rgba(0,0,0,0.18);
+          }
+          /* Make weight header row sticky vertically too */
+          table.noriks-sc thead th {
+            position: sticky;
+            top: 0;
+            z-index: 6;
+            background: #b8b8b8;
+          }
+          /* Top-left sticky corners need higher z so they win */
+          table.noriks-sc thead th:first-child { z-index: 9; }
+          table.noriks-sc thead th:nth-child(2) { z-index: 8; }
+          table.noriks-sc td.noriks-sc-empty { background: #ececec; color: transparent; }
+          table.noriks-sc td.noriks-sc-size {
+            background: #d9d9d9;
+            color: #000;
+            font-weight: 700;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+          }
+          /* Desktop hover: highlight ONLY the hovered cell */
+          @media (hover: hover) and (min-width: 769px) {
+            table.noriks-sc td.noriks-sc-size:hover {
+              background: #f39c13 !important;
+              color: #fff !important;
+              transform: scale(1.06);
+              box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+              position: relative;
+              z-index: 2;
+            }
+          }
+          .noriks-sc-steps {
+            margin-top: 22px;
+          }
+          .noriks-sc-steps h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #111;
+          }
+          .noriks-sc-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+          }
+          .noriks-sc-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #222;
+          }
+          .noriks-sc-step .noriks-sc-num {
+            flex: 0 0 22px;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+          }
+          .noriks-sc-pro {
+            margin-top: 16px;
+            border: 1.5px solid #f39c13;
+            border-radius: 4px;
+            padding: 10px 12px;
+            background: #fff8ec;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+          }
+          .noriks-sc-pro-tag {
+            background: #f39c13;
+            color: #fff;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 5px 9px;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
+            flex: 0 0 auto;
+            white-space: nowrap;
+          }
+          .noriks-sc-guarantee {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #222;
+          }
+          .noriks-sc-check {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: #2ecc40;
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            display: flex; align-items: center; justify-content: center;
+            flex: 0 0 auto;
+          }
+          @media (max-width: 600px) {
+            .noriks-sc-steps-grid { grid-template-columns: 1fr; }
+            table.noriks-sc { font-size: 9.6px; min-width: 760px; margin: 0; }
+            .noriks-sc-steps { margin-top: 5px; padding: 0 5px; }
+            .noriks-size-chart-wrap { padding: 0; }
+            .noriks-sc-steps h3 { font-size: 13px; }
+            .noriks-sc-step { font-size: 10.4px; }
+            .noriks-sc-step .noriks-sc-num { flex: 0 0 18px; width: 18px; height: 18px; font-size: 10px; }
+            .noriks-sc-pro { font-size: 10.4px; padding: 8px 10px; margin-left: 5px; margin-right: 5px; }
+            .noriks-sc-pro-tag { font-size: 9px; padding: 4px 7px; }
+            .noriks-sc-guarantee { font-size: 10.4px; padding: 0 5px; }
+            .noriks-sc-check { width: 16px; height: 16px; font-size: 10.4px; }
+          }
+        </style>
+
+        <div class="noriks-sc-table-wrap">
+          <table class="noriks-sc">
+            <thead>
+              <tr>
+                <th class="noriks-sc-empty" style="width:42px;"></th>
+                <th class="noriks-sc-empty" style="width:80px;">Size</th>
+                <th>130-150 lbs</th>
+                <th>152-170 lbs</th>
+                <th>172-185 lbs</th>
+                <th>185-209 lbs</th>
+                <th>211-225 lbs</th>
+                <th>227-249 lbs</th>
+                <th>251-284 lbs</th>
+                <th>286-300 lbs</th>
+                <th>302-331 lbs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="noriks-sc-vis-label" rowspan="11">Height (ft/in)</th>
+                <th>5'6"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td>
+              </tr>
+              <tr>
+                <th>5'7"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td><td class="noriks-sc-empty"></td>
+              </tr>
+              <tr>
+                <th>5'8"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>5'9"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>5'10"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>5'11"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>6'0"</th>
+                <td class="noriks-sc-size">S</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>6'1"</th>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>6'2"</th>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>6'3"</th>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+              <tr>
+                <th>6'4"</th>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-empty"></td>
+                <td class="noriks-sc-size">M</td>
+                <td class="noriks-sc-size">L</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">XL</td>
+                <td class="noriks-sc-size">2XL</td>
+                <td class="noriks-sc-size">3XL</td>
+                <td class="noriks-sc-size">3XL</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="noriks-sc-steps">
+          <h3>How to find your size</h3>
+          <div class="noriks-sc-steps-grid">
+            <div class="noriks-sc-step">
+              <span class="noriks-sc-num">1</span>
+              <span>Find your <strong>height</strong> in the left column.</span>
+            </div>
+            <div class="noriks-sc-step">
+              <span class="noriks-sc-num">2</span>
+              <span>Find your <strong>weight</strong> in the top row.</span>
+            </div>
+            <div class="noriks-sc-step">
+              <span class="noriks-sc-num">3</span>
+              <span>The cell where they meet &mdash; that's your size.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="noriks-sc-pro">
+          <span class="noriks-sc-pro-tag">PRO TIP</span>
+          <span>If you're between two sizes and want a <strong>more relaxed fit</strong>, go up. For a <strong>more fitted look</strong>, go down.</span>
+        </div>
+
+        <div class="noriks-sc-guarantee">
+          <span class="noriks-sc-check">&#10003;</span>
+          <span>Not sure? Free size exchange within 90 days.</span>
+        </div>
+      </div>
+
       <?php endif; ?>
-      
-      
-      
+
+
+
   </div>
+  </div><!-- /.size-chart-body -->
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("custom-size-chart-modal");
+  const backdrop = document.getElementById("custom-size-chart-backdrop");
   const openBtn = document.getElementById("open-size-chart");
   const closeX = document.getElementById("close-size-chart-x");
 
-  // Open using a class so CSS controls display across breakpoints
-  openBtn?.addEventListener("click", function (e) {
-    e.preventDefault();
+  function openModal(e) {
+    if (e) e.preventDefault();
     modal.classList.add("show");
-  });
-
-  // Close
-  closeX?.addEventListener("click", function () {
+    if (backdrop) backdrop.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
     modal.classList.remove("show");
-  });
+    if (backdrop) backdrop.classList.remove("show");
+    document.body.style.overflow = "";
+  }
 
-  // Optional: close on ESC
+  openBtn?.addEventListener("click", openModal);
+  closeX?.addEventListener("click", closeModal);
+  backdrop?.addEventListener("click", closeModal);
+
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") modal.classList.remove("show");
+    if (e.key === "Escape") closeModal();
   });
 });
 </script>
