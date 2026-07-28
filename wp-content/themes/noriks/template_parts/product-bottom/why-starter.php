@@ -29,11 +29,11 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;"  ><strong>“Uzeo sam jer nisam bio siguran hoće li mi odgovarati.” 
+    line-height: 1.2;"  ><strong>“I got it because I wasn't sure it would fit me.” 
 
 
 
-</strong><span style="font-weight:normal;">Marko - Zagreb</span></p>
+</strong><span style="font-weight:normal;">Mark - London</span></p>
         <p class="description">Many customers start with the starter pack because they want to first see how NORIKS fits and feels. One t-shirt and one pair of boxers is enough to make the decision without a big investment.
 
 
@@ -43,11 +43,11 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;" ><strong>“Nakon prvog nošenja sam odmah naručio još.” 
+    line-height: 1.2;" ><strong>“After wearing it once I ordered more straight away.” 
 
 
 
-</strong><span style="font-weight:normal;">Pavle - Split</span></p>
+</strong><span style="font-weight:normal;">Paul - Manchester</span></p>
         <p class="description">More than 95% of customers reorder after the starter pack. Not because they planned to, but because on the very first day they feel the difference in fit, comfort, and quality.
 
 
@@ -56,11 +56,11 @@ WHY PEOPLE CHOOSE THE STARTER PACK?
 
       <div style="margin-left: 20px;" class="why-point">
         <p  style="    font-style: italic;
-    line-height: 1.2;"  ><strong>“Materijal i fit su me uvjerili.” 
+    line-height: 1.2;"  ><strong>“The fabric and the fit won me over.” 
 
 
 
-</strong><span style="font-weight:normal;">Ante - Pula</span></p>
+</strong><span style="font-weight:normal;">Andrew - Bristol</span></p>
         <p class="description">The t-shirt and boxers are soft, lightweight, and comfortable on the skin. The starter pack is the most common reason why NORIKS quickly becomes part of everyday wardrobe.
 
 

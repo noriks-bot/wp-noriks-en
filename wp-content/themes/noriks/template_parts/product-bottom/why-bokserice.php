@@ -144,7 +144,7 @@ endif;
       <div style="margin-left: 20px;" class="why-point">
         <p><strong>Guys, let your crotch breathe!
 </strong></p>
-        <p class="description">NORIKS donje rublje pruža podršku tijekom cijelog dana, a da pritom ne gubi oblik. Nebeski mekan Modal materijal rasteže se i savršeno pristaje na pravim mjestima. Prostor za vaše “gadžete” je prostraniji i fleksibilniji, pa se ne osjećate skučenima.</p>
+        <p class="description">NORIKS underwear gives you support all day long without losing its shape. The heavenly soft Modal fabric stretches and fits perfectly in all the right places. There is more room and more flex where it matters, so nothing ever feels cramped.</p>
       </div>
 
    

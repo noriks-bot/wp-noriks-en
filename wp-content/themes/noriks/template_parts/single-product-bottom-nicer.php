@@ -84,5 +84,10 @@ if ( noriks_is_type( 'fisiorest' ) ) {
     include $noriks_pb_dir . 'why-fisiorest.php';
 }
 
+// ERGOSIT ORTHOPEDIC CUSHION (orto-ortopedski-jastuk)
+if ( noriks_is_type( 'ortopedski-jastuk' ) ) {
+    include $noriks_pb_dir . 'why-ortopedski-jastuk.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
