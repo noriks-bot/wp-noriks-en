@@ -1,0 +1,98 @@
+/* ============================================================
+   NORIKS typography — Huel-style
+   Grotesk (Inter) for everything, serif italic (Fraunces) for accents.
+   Loaded site-wide, after main.css, so it overrides inline fonts.
+   Suisse Int'l / Tiempos are proprietary — Inter + Fraunces are the
+   closest free matches. Swap the @font-face src if licensed files exist.
+   ============================================================ */
+
+:root {
+  --font-grotesk: 'Inter', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-em: 'Fraunces', Georgia, 'Times New Roman', serif;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-grotesk);
+}
+
+/* Headings + section titles + menu → grotesk, Huel weight */
+h1, h2, h3, h4, h5, h6,
+.hero__title,
+.collections__title,
+.collection-card__name,
+.product-name,
+.main-navigation a,
+.primary-navigation a,
+#site-navigation a,
+.menu a,
+nav ul li a,
+.navbar,
+.navbar-center,
+.navbar-center a,
+.nav-link,
+.dropdown-menu a,
+.mobile-only-menu-item {
+  font-family: var(--font-grotesk);
+}
+
+h1, h2, h3,
+.hero__title,
+.collections__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Override inline font-family declarations across the theme */
+[style*="Barlow"],
+[style*="barlow"],
+[style*="Roboto"],
+[style*="roboto"] {
+  font-family: var(--font-grotesk) !important;
+}
+
+/* Brand font EVERYWHERE. Icon fonts are excluded so glyphs don't break:
+   <i> tags (Tabler/FontAwesome), dashicons, WooCommerce star-rating,
+   svg/path, and anything with an icon-ish class. */
+body,
+body *:not(svg):not(path):not(i):not(.hl-em):not([class*="dashicons"]):not([class*="star-rating"]):not([class*="ti-"]):not([class*="fa-"]):not([class^="fa"]):not([class*="icon"]) {
+  font-family: var(--font-grotesk) !important;
+}
+
+/* Serif italic accent — wrap a word: <em class="hl-em">word</em> */
+.hl-em {
+  font-family: var(--font-em) !important;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* No cursive/serif-italic accents anywhere on the homepage */
+.home .hl-em {
+  font-family: var(--font-grotesk) !important;
+  font-style: normal !important;
+}
+
+/* Consistent, tighter side gutter on smaller screens.
+   Applied at ONE level (section / footer wrap) so all content lines up.
+   (Full-bleed hero excluded; .col-full not padded to avoid double gutter.) */
+@media (max-width: 768px) {
+  /* .most-popular is excluded — it pads via its own inner .container,
+     adding the gutter here would double it. */
+  section:not(.hero):not(.most-popular):not(.basic-reviews-section):not(.one-banner-shop):not(.category-menu-section),
+  .nf-wrap,
+  .basic-reviews-section-container,
+  .info-items-container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    box-sizing: border-box;
+  }
+  /* align .most-popular's inner container gutter with the rest */
+  .most-popular > .container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
