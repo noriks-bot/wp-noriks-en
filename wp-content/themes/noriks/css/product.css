@@ -1158,176 +1158,89 @@ body.single-product {
 
 
 
-/* Move arrows to bottom-right corner of gallery */
+/* Discount badge overlay on the product gallery — hidden globally */
+.woocommerce-product-gallery { position: relative; }
+.badge-on-img,
+.woocommerce-product-gallery .badge-on-img {
+  display: none !important;
+}
+
+/* Hide prev/next slider arrows completely */
 .woocommerce-product-gallery .flex-direction-nav {
-  position: absolute;
-  bottom: 114px;
-  right: 9px;
-  width: auto;
-  display: flex;
-  gap: 6px;
-  z-index: 15;
+  display: none !important;
+}
+
+/* Kill the big bottom gap under the main hero image so thumbnails sit close */
+.single-product div.product .woocommerce-product-gallery .flex-viewport,
+.single-product div.product .woocommerce-product-gallery .woocommerce-product-gallery__wrapper,
+.single-product div.product .woocommerce-product-gallery figure,
+.single-product div.product .woocommerce-product-gallery .woocommerce-product-gallery__wrapper > a,
+.single-product div.product .woocommerce-product-gallery .woocommerce-product-gallery__image {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 0 !important;
+}
+
+/* ===== Thumbnails: override Storefront's tiny-width + huge-margin layout =====
+   Storefront sets e.g. columns-5 -> width:8.57% + margin-right:14.28% with a
+   very specific selector, so we must match/beat that specificity + !important
+   and switch from float to flexbox for even, tight spacing. */
+.single-product div.product .woocommerce-product-gallery .flex-control-nav.flex-control-thumbs,
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs {
+  width: 100% !important;
+  margin: 8px 0 18px !important;   /* no side margins: flush with hero */
+  padding: 0 !important;
+  text-indent: 0 !important;
+  line-height: normal !important;
+  display: flex !important;
+  flex-wrap: wrap !important;      /* 5 per row, overflow wraps to next line */
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  list-style: none;
+  box-sizing: border-box !important;
+}
+/* Each thumbnail is exactly 20% wide with an internal padding gutter,
+   box-sizing:border-box so 5 x 20% = 100% per row; extra images wrap below. */
+.single-product div.product .woocommerce-product-gallery.woocommerce-product-gallery--columns-2 .flex-control-thumbs li,
+.single-product div.product .woocommerce-product-gallery.woocommerce-product-gallery--columns-3 .flex-control-thumbs li,
+.single-product div.product .woocommerce-product-gallery.woocommerce-product-gallery--columns-4 .flex-control-thumbs li,
+.single-product div.product .woocommerce-product-gallery.woocommerce-product-gallery--columns-5 .flex-control-thumbs li,
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs li {
+  width: 20% !important;
+  flex: 0 0 20% !important;
+  float: none !important;
   margin: 0 !important;
-  list-style:none;
+  padding: 3px !important;
+  box-sizing: border-box !important;
+  list-style: none;
 }
-
-/* Style the arrow buttons */
-.woocommerce-product-gallery .flex-direction-nav a {
-  background: #fff;
-  border: 1px solid #ccc;
-  color: #000;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  opacity: 0.9;
+/* Flush the row with the hero edges: first column no left pad, last column
+   (every 5th) no right pad — works per row when wrapping. */
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs li:nth-child(5n+1) {
+  padding-left: 0 !important;
 }
-
-.woocommerce-product-gallery .flex-direction-nav a:hover {
-  background: #000;
-  color: #fff;
-  border-color: #000;
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs li:nth-child(5n) {
+  padding-right: 0 !important;
+}
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: .6;
+  cursor: pointer;
+  transition: opacity .2s ease;
+}
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs img.flex-active,
+.single-product div.product .woocommerce-product-gallery .flex-control-thumbs img:hover {
   opacity: 1;
 }
 
-
-/* Base anchor */
-.woocommerce-product-gallery .flex-viewport { position: relative; }
-
-/* Bottom-right group */
-.woocommerce-product-gallery .flex-viewport .flex-direction-nav{
- 
- 
-
-  
-}
-
-
-
-.flex-direction-nav .flex-nav-prev a{
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 0px;
-  background: #fff;
-  color: #111;
-  font-size: 0;               /* hide "Previous/Next" text */
-  text-decoration: none;
-  opacity: .95;
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
-}
-
-.flex-direction-nav .flex-nav-next a{
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 0px;
-  background: #fff;
-  color: #111;
-  font-size: 0;               /* hide "Previous/Next" text */
-  text-decoration: none;
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
-}
-
-
-/* Square buttons */
-.woocommerce-product-gallery .flex-viewport .flex-direction-nav a{
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 0px;
-  background: #fff;
-  color: #111;
-  font-size: 0;               /* hide "Previous/Next" text */
-  text-decoration: none;
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
-}
-
-/* Chevron icons via CSS */
-.flex-direction-nav a:before{
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid currentColor;
-  border-right: 2px solid currentColor;
-}
-.flex-direction-nav .flex-prev:before{ transform: rotate(-135deg); }
-.flex-direction-nav .flex-next:before{ transform: rotate(45deg); }
-
-/* Hover/disabled states */
-.flex-direction-nav a:hover{
-  background: #000;
-  color: #fff;
-  border-color: #000;
-  transform: scale(1.0);
-}
-.flex-direction-nav a.flex-disabled{
-  opacity: .7;
-  pointer-events: none;
-}
-
-/* (Optional) slightly smaller on phones */
-@media (max-width: 480px){
-  .woocommerce-product-gallery .flex-viewport .flex-direction-nav a{
-    width: 32px; height: 32px;
-  }
-}
-
-
-
-
-
-
-.flex-control-thumbs {
-  height: 80px;
-}
-
-
-
-
-
-
+/* Mobile: same 5-per-row wrapping layout (inherits desktop rules) */
 @media (max-width: 768px) {
-    .flex-control-thumbs {
-  height: 60px;
-}
-
-.woocommerce-product-gallery .flex-direction-nav {
-
-  bottom: 94px;
- 
-}
-
-    
-}
-
-
-
-
-@media (min-width: 1135px) {
-
-
-
-.woocommerce-product-gallery .flex-direction-nav {
-
-  bottom: 135px;
- 
-}
-
-    
+  .single-product div.product .woocommerce-product-gallery .flex-control-thumbs {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+  }
 }
 
 

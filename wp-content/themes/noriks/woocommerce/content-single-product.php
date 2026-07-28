@@ -35,7 +35,7 @@ if ( post_password_required() ) {
  <?php
                   
                   // make here boxerice if else
-$is_boxers = has_term( array( 'bokserice', 'bokserice-sastavi-paket' ), 'product_cat', $current_product_id );
+$is_boxers = noriks_is_type( 'bokserice', $current_product_id );
 
                   
                   ?>
