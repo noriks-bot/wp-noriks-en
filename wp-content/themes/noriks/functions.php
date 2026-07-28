@@ -5,6 +5,8 @@
  * @package storefront
  */
 
+include(get_template_directory() . '/functions/product-type.php'); // central product-type resolver (load first)
+include(get_template_directory() . '/functions/performance.php');  // safe front-end performance tweaks
 include(get_template_directory() . '/functions/checkout_mods.php');
 include(get_template_directory() . '/functions/thankyou_upsell.php');
 include(get_template_directory() . '/functions/sidecart-upsell-modal.php');
@@ -12,6 +14,7 @@ include(get_template_directory() . '/functions/cpts.php');
 include(get_template_directory() . '/functions/options.php');
 include(get_template_directory() . '/functions/single_product_mods.php');
 include(get_template_directory() . '/functions/discounts.php');
+include(get_template_directory() . '/functions/fb_attribution.php');
 
 $webshop_language = get_field("webshop_language", "options");
 
