@@ -58,5 +58,11 @@ if ( noriks_is_type( 'leakboxers' ) ) {
     include $noriks_pb_dir . 'why-leakboxers.php';
 }
 
+// COMPRESSION SOCKS — not the back belt / bunion corrector / FisioRest
+// (those may still carry the socks category from being duplicated)
+if ( noriks_is_type( 'kompresijske-nogavice' ) && ! noriks_is_type( 'ortopas' ) && ! noriks_is_type( 'bunion' ) && ! noriks_is_type( 'fisiorest' ) ) {
+    include $noriks_pb_dir . 'why-kompresijske.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
