@@ -74,5 +74,10 @@ if ( noriks_is_type( 'ortopas' ) ) {
     include $noriks_pb_dir . 'why-ortopas.php';
 }
 
+// BUNION CORRECTOR (orto-bunion)
+if ( noriks_is_type( 'bunion' ) ) {
+    include $noriks_pb_dir . 'why-bunion.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
