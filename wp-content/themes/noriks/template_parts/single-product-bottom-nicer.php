@@ -64,5 +64,10 @@ if ( noriks_is_type( 'kompresijske-nogavice' ) && ! noriks_is_type( 'ortopas' ) 
     include $noriks_pb_dir . 'why-kompresijske.php';
 }
 
+// NORIKS HERS (orto-norikshers) — silicone collagen patches
+if ( noriks_is_type( 'norikshers' ) ) {
+    include $noriks_pb_dir . 'why-norikshers.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
