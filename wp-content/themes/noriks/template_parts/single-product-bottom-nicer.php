@@ -79,5 +79,10 @@ if ( noriks_is_type( 'bunion' ) ) {
     include $noriks_pb_dir . 'why-bunion.php';
 }
 
+// FISIOREST (orto-fisiorest) — neck therapy device
+if ( noriks_is_type( 'fisiorest' ) ) {
+    include $noriks_pb_dir . 'why-fisiorest.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
