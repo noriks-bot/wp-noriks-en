@@ -69,5 +69,10 @@ if ( noriks_is_type( 'norikshers' ) ) {
     include $noriks_pb_dir . 'why-norikshers.php';
 }
 
+// ORTHOPEDIC BACK BELT (orto-ortopas)
+if ( noriks_is_type( 'ortopas' ) ) {
+    include $noriks_pb_dir . 'why-ortopas.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
