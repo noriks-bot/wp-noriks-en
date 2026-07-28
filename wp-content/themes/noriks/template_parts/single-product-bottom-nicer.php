@@ -48,5 +48,15 @@ if ( noriks_is_type( 'majica-darila' ) && ! noriks_is_type( 'majice' ) ) {
     include $noriks_pb_dir . 'why-majice.php';
 }
 
+// COMPRESSION T-SHIRTS (orto-kompresijske-majice) — NORIKS FIT
+if ( noriks_is_type( 'kompresijske-majice' ) ) {
+    include $noriks_pb_dir . 'why-kompresijske-majice.php';
+}
+
+// LEAK BOXERS (orto-leak-boxers) — men's incontinence underwear
+if ( noriks_is_type( 'leakboxers' ) ) {
+    include $noriks_pb_dir . 'why-leakboxers.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
