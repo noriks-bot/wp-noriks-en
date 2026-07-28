@@ -33,5 +33,20 @@ if ( noriks_is_type( 'bokserice' ) && ! noriks_is_black_friday() ) {
     include $noriks_pb_dir . 'why-bokserice.php';
 }
 
+// SLING CARRIER (orto-nosilka) — NORIKS BabyGo
+if ( noriks_is_type( 'nosilka' ) ) {
+    include $noriks_pb_dir . 'why-nosilka.php';
+}
+
+// KIDSNEST (orto-kidsnest) — kids pillow for healthy breathing
+if ( noriks_is_type( 'kidsnest' ) ) {
+    include $noriks_pb_dir . 'why-kidsnest.php';
+}
+
+// T-SHIRT GIFT BUNDLE (orto-majica-darila) — uses the same why-section as t-shirts
+if ( noriks_is_type( 'majica-darila' ) && ! noriks_is_type( 'majice' ) ) {
+    include $noriks_pb_dir . 'why-majice.php';
+}
+
 // SHARED reviews / social proof (all products)
 include $noriks_pb_dir . 'reviews.php';
