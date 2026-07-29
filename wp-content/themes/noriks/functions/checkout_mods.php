@@ -703,34 +703,3 @@ add_action('woocommerce_checkout_process', function(){
         wc_add_notice( 'Please enter your house number.', 'error' );
     }
 });
-
-/**
- * Kupon za brezplacno dostavo mora dejansko iznicti strosek dostave.
- * Klasicni checkout si izbrano metodo zapomni v seji: ce je kupec (ali privzetek)
- * ze izbral placljivo metodo, ta ostane izbrana tudi potem, ko kupon doda
- * brezplacno moznost — in dostava se naprej zaracuna. Ko je aktiven kupon
- * z brezplacno dostavo, zato ponudimo samo brezplacne metode.
- */
-add_filter( 'woocommerce_package_rates', 'noriks_free_shipping_coupon_wins', 100, 2 );
-function noriks_free_shipping_coupon_wins( $rates, $package ) {
-    if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
-        return $rates;
-    }
-    $has_free_coupon = false;
-    foreach ( WC()->cart->get_coupons() as $coupon ) {
-        if ( $coupon->get_free_shipping() ) {
-            $has_free_coupon = true;
-            break;
-        }
-    }
-    if ( ! $has_free_coupon ) {
-        return $rates;
-    }
-    $free = array();
-    foreach ( $rates as $id => $rate ) {
-        if ( 'free_shipping' === $rate->get_method_id() ) {
-            $free[ $id ] = $rate;
-        }
-    }
-    return ! empty( $free ) ? $free : $rates;
-}
