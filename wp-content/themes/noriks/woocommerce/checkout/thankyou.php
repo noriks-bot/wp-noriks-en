@@ -26,11 +26,11 @@ foreach ( $order->get_items() as $item ) {
     $cats = wp_get_post_terms( $item->get_product_id(), 'product_cat', array('fields' => 'slugs') );
     $cat_str = is_array($cats) ? strtolower(implode(' ', $cats)) : '';
     // Majica: category has "majic" OR name has "majic"
-    $is_majica = ( strpos($cat_str, 'shirt') !== false || strpos($name, 'shirt') !== false );
+    $is_majica = ( strpos($cat_str, 'majic') !== false || strpos($name, 'majic') !== false );
     // Bokserice: category has "boxer/bokser/orto" OR SKU has "box" OR name has "bokser/airflow"
-    $is_boks = ( strpos($cat_str, 'boxer') !== false || strpos($cat_str, 'boxer') !== false || strpos($cat_str, 'orto') !== false || strpos($sku, 'box') !== false || strpos($name, 'boxer') !== false || strpos($name, 'airflow') !== false );
+    $is_boks = ( strpos($cat_str, 'boxer') !== false || strpos($cat_str, 'bokser') !== false || strpos($cat_str, 'orto') !== false || strpos($sku, 'box') !== false || strpos($name, 'bokser') !== false || strpos($name, 'airflow') !== false );
     // Komplet
-    $is_komplet = ( strpos($name, 'set') !== false || strpos($cat_str, 'set') !== false );
+    $is_komplet = ( strpos($name, 'komplet') !== false || strpos($cat_str, 'komplet') !== false );
     if ( $is_boks ) $has_bokserice = true;
     if ( $is_majica || $is_komplet ) $has_only_bokserice = false;
 }
@@ -41,29 +41,29 @@ $upsell_is_majice = $has_only_bokserice;
 
 if ( $upsell_is_majice ) {
     $upsell_product_id = 250; // Crna majica (variable)
-    $upsell_name       = 'Black T-Shirts';
+    $upsell_name       = 'Crne Majice';
     $upsell_qty_prices = array( 1 => 12.99, 3 => 29.99, 6 => 39.99 );
-    $upsell_qty_names  = array( 1 => '1x Black T-Shirt', 3 => '3x Black T-Shirts', 6 => '6x Black T-Shirts' );
+    $upsell_qty_names  = array( 1 => '1x Crna Majica', 3 => '3x Crne Majice', 6 => '6x Crnih Majica' );
     $upsell_qty_images = array(
         1 => 'https://noriks.com/hr/wp-content/uploads/2025/09/black-1.jpg',
         3 => 'https://noriks.com/hr/wp-content/uploads/2025/09/black-3x.jpg',
         6 => 'https://noriks.com/hr/wp-content/uploads/2026/01/15xcrnamajica.png',
     );
-    $upsell_title_text = 'Add t-shirts now – 50% off';
+    $upsell_title_text = 'Dodaj majice sada – 50% popusta';
 } else {
-    $upsell_product_id = 2781; // Crne Bokserice
-    $upsell_name       = 'Black Boxers';
-    $upsell_qty_prices = array( 1 => 7.99, 3 => 19.99, 5 => 29.99 );
-    $upsell_qty_names  = array( 1 => '1x Black Boxers', 3 => '3x Black Boxers', 5 => '5x Black Boxers' );
+    $upsell_product_id = 2829; // Sive Bokserice (siva verzija, ista struktura kot crna)
+    $upsell_name       = 'Sive Bokserice';
+    $upsell_qty_prices = array( 1 => 4.99, 3 => 14.97, 5 => 24.95 );
+    $upsell_qty_names  = array( 1 => '1x Sive Bokserice', 3 => '3x Sive Bokserice', 5 => '5x Sivih Bokserica' );
     $upsell_qty_images = array(
-        1 => 'https://noriks.com/hr/wp-content/uploads/2025/11/crne-boksarice-produktna.jpg',
-        3 => 'https://noriks.com/hr/wp-content/uploads/2025/11/boksarice_3x_crne.png',
-        5 => 'https://noriks.com/hr/wp-content/uploads/2026/01/boksarice_5x_crne.png',
+        1 => get_template_directory_uri() . '/img/upsell/siva-1x-v2.webp',
+        3 => get_template_directory_uri() . '/img/upsell/siva-3x-v2.png',
+        5 => get_template_directory_uri() . '/img/upsell/siva-5x-v2.png',
     );
-    $upsell_title_text = 'Add boxers now – 50% off';
+    $upsell_title_text = 'Dodaj bokserice sada – 50% popusta';
 }
 $upsell_product    = wc_get_product( $upsell_product_id );
-$upsell_image      = $upsell_qty_images[3];
+$upsell_image      = $upsell_qty_images[1];
 // Get unit price from first variation (variable products have empty parent price)
 $upsell_unit_price = 15.99;
 if ( $upsell_product && $upsell_product->is_type('variable') ) {
@@ -72,36 +72,162 @@ if ( $upsell_product && $upsell_product->is_type('variable') ) {
 } elseif ( $upsell_product ) {
     $upsell_unit_price = (float) $upsell_product->get_regular_price() ?: (float) $upsell_product->get_price();
 }
-$upsell_sale_price = $upsell_qty_prices[3];
+$upsell_sale_price = $upsell_qty_prices[1];
 // Regular prices per qty (unit price * qty)
 $upsell_qty_regular = array();
 foreach ($upsell_qty_prices as $q => $p) {
     $upsell_qty_regular[$q] = $upsell_unit_price * $q;
 }
 
+// Helper: extract a size value (S/M/L/XL/...) from any associative array.
+// Works for both variation attribute arrays and line item meta arrays.
+// Pass 1: attribute KEY hints (velicina / size / marime / vel / meret).
+// Pass 2: scan VALUES — direct match against size patterns, OR token
+//         match (so bundle / orto values like "Crna - M" or
+//         "Μαύρο - 3XL" still yield the size).
+if ( ! function_exists( 'noriks_extract_size_value' ) ) {
+    function noriks_extract_size_value( $attrs ) {
+        if ( ! is_array( $attrs ) || empty( $attrs ) ) return '';
+
+        $size_key_hints = array( 'velicina', 'size', 'marime', 'vel', 'meret' );
+        $size_patterns  = array( 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl', '2xl', '3xl', '4xl', '5xl' );
+
+        // Pass 1: KEY hints — when an attribute key clearly names size,
+        // accept its value (token-extracted if the value is composite)
+        foreach ( $attrs as $k => $v ) {
+            $kl = strtolower( (string) $k );
+            $key_is_size = false;
+            foreach ( $size_key_hints as $hint ) {
+                if ( strpos( $kl, $hint ) !== false ) { $key_is_size = true; break; }
+            }
+            if ( ! $key_is_size ) continue;
+            $vs = trim( (string) $v );
+            if ( $vs === '' ) continue;
+            if ( in_array( strtolower( $vs ), $size_patterns, true ) ) return $vs;
+            // Token scan inside the value
+            $tokens = preg_split( '/[\s\-,;\/|·_]+/u', $vs );
+            if ( is_array( $tokens ) ) {
+                foreach ( $tokens as $tok ) {
+                    $tok = trim( $tok );
+                    if ( $tok !== '' && in_array( strtolower( $tok ), $size_patterns, true ) ) {
+                        return $tok;
+                    }
+                }
+            }
+            // Size-keyed attribute, no recognised token in value — return
+            // the raw value so it still drives the dropdown selection.
+            return $vs;
+        }
+
+        // Pass 2: scan all VALUES — direct or tokenised match
+        foreach ( $attrs as $v ) {
+            $vs = trim( (string) $v );
+            if ( $vs === '' ) continue;
+            if ( in_array( strtolower( $vs ), $size_patterns, true ) ) return $vs;
+            $tokens = preg_split( '/[\s\-,;\/|·_]+/u', $vs );
+            if ( is_array( $tokens ) ) {
+                foreach ( $tokens as $tok ) {
+                    $tok = trim( $tok );
+                    if ( $tok !== '' && in_array( strtolower( $tok ), $size_patterns, true ) ) {
+                        return $tok;
+                    }
+                }
+            }
+        }
+
+        return '';
+    }
+}
+
 // Variations for primary product
 $upsell_variations = array();
 if ( $upsell_product && $upsell_product->is_type('variable') ) {
     foreach ( $upsell_product->get_available_variations() as $v ) {
-        $size = '';
-        foreach ( $v['attributes'] as $k => $val ) { $size = $val; }
+        $size = noriks_extract_size_value( isset( $v['attributes'] ) ? $v['attributes'] : array() );
         $upsell_variations[] = array( 'id' => $v['variation_id'], 'size' => $size );
     }
 }
 
-// Detect customer size from order
+// Detect customer size from order — first ordered product that yields a
+// recognised size wins. We try FIVE sources per item, in order:
+//   (A) variation attributes (variable products: bokserice, tricou)
+//   (B) raw line item meta (bundle / orto: "Crna - M", "Μαύρο - 3XL")
+//   (C) formatted meta display values (covers private/underscored keys)
+//   (D) product name (e.g. "Tricou Negru M")
+//   (E) SKU (e.g. "BOX-3XL", "NORIKS-SHIRTS-M")
+// If a sized clothing item is in the cart, one of these will hit.
 $customer_size = '';
 if ( $order ) {
     foreach ( $order->get_items() as $item ) {
-        if ( is_a( $item, 'WC_Order_Item_Product' ) && $item->get_variation_id() ) {
+        if ( ! is_a( $item, 'WC_Order_Item_Product' ) ) continue;
+
+        $detected = '';
+
+        // (A) Variation attributes
+        if ( $item->get_variation_id() ) {
             $var = wc_get_product( $item->get_variation_id() );
             if ( $var ) {
-                foreach ( $var->get_attributes() as $k => $v ) {
-                    if ( stripos( $k, 'velicina' ) !== false || stripos( $k, 'size' ) !== false ) {
-                        $customer_size = $v; break 2;
-                    }
+                $detected = noriks_extract_size_value( (array) $var->get_attributes() );
+            }
+        }
+
+        // (B) Raw line item meta (handles bundle / orto)
+        if ( $detected === '' ) {
+            $meta_values = array();
+            foreach ( $item->get_meta_data() as $meta ) {
+                $key = is_object( $meta ) && isset( $meta->key ) ? (string) $meta->key : '';
+                $val = ( is_object( $meta ) && isset( $meta->value ) && is_scalar( $meta->value ) ) ? (string) $meta->value : '';
+                if ( $key !== '' ) {
+                    $meta_values[ $key ] = $val;
                 }
             }
+            if ( ! empty( $meta_values ) ) {
+                $detected = noriks_extract_size_value( $meta_values );
+            }
+        }
+
+        // (C) Formatted meta display values
+        if ( $detected === '' ) {
+            $fmt = array();
+            $list = $item->get_formatted_meta_data( '', true );
+            if ( is_array( $list ) ) {
+                $i = 0;
+                foreach ( $list as $m ) {
+                    if ( ! is_object( $m ) ) continue;
+                    $key = isset( $m->key ) ? (string) $m->key : '';
+                    $val = isset( $m->display_value ) ? wp_strip_all_tags( (string) $m->display_value ) : '';
+                    if ( $val === '' ) continue;
+                    $fmt[ $key !== '' ? $key : 'fmt_' . $i ] = $val;
+                    $i++;
+                }
+            }
+            if ( ! empty( $fmt ) ) {
+                $detected = noriks_extract_size_value( $fmt );
+            }
+        }
+
+        // (D) Product name
+        if ( $detected === '' ) {
+            $name = (string) $item->get_name();
+            if ( $name !== '' ) {
+                $detected = noriks_extract_size_value( array( 'name' => $name ) );
+            }
+        }
+
+        // (E) SKU
+        if ( $detected === '' ) {
+            $product = $item->get_product();
+            if ( $product ) {
+                $sku = (string) $product->get_sku();
+                if ( $sku !== '' ) {
+                    $detected = noriks_extract_size_value( array( 'sku' => $sku ) );
+                }
+            }
+        }
+
+        if ( $detected !== '' ) {
+            $customer_size = $detected;
+            break;
         }
     }
 }
@@ -478,7 +604,7 @@ body.woocommerce-order-received .woocommerce {
         </div>
 
         <!-- ═══ STEP 1: VIGOSHOP UPSELL (COD only) ═══ -->
-        <?php if ( $order->get_payment_method() === 'cod' && (float)$order->get_total() <= 120 ) : ?>
+        <?php if ( $order->get_payment_method() === 'cod' ) : ?>
         <div class="ty_upsell_one_wrapper show" id="ty-upsell"
              style="position:static !important;display:block !important;width:100% !important;max-width:520px !important;height:auto !important;top:auto !important;left:auto !important;transform:none !important;opacity:1 !important;visibility:visible !important;z-index:auto !important;backdrop-filter:none !important;margin:0 !important;padding:0 !important;"
              data-order-id="<?php echo $order->get_id(); ?>"
@@ -508,26 +634,26 @@ body.woocommerce-order-received .woocommerce {
                     <!-- Qty picker FIRST — above product image -->
                     <div class="ty-qty-picker" style="display:flex;gap:8px;padding:0 0 10px;justify-content:center;">
                         <?php $qty_keys = array_keys($upsell_qty_prices); foreach ($qty_keys as $i => $q) :
-                            $is_mid = ($i === 1);
-                            $border = $is_mid ? '#f39c12' : '#ddd';
-                            $bg = $is_mid ? '#f39c1217' : '#fff';
-                            $cls = $is_mid ? ' active' : '';
-                            $chk = $is_mid ? ' checked' : '';
+                            $is_first = ($i === 0);
+                            $border = $is_first ? '#f39c12' : '#ddd';
+                            $bg = $is_first ? '#f39c1217' : '#fff';
+                            $cls = $is_first ? ' active' : '';
+                            $chk = $is_first ? ' checked' : '';
                         ?>
                         <label class="ty-qty-btn<?php echo $cls; ?>" style="flex:1;text-align:center;padding:10px 0;border:2px solid <?php echo $border; ?>;border-radius:4px;font-weight:700;font-size:14px;cursor:pointer;background:<?php echo $bg; ?>;color:#000;">
-                            <input type="radio" name="ty_qty" value="<?php echo $q; ?>"<?php echo $chk; ?> style="display:none;"> <?php echo $q; ?>x kom
+                            <input type="radio" name="ty_qty" value="<?php echo $q; ?>"<?php echo $chk; ?> style="display:none;"> <?php echo $q; ?>x pcs
                         </label>
                         <?php endforeach; ?>
                     </div>
 
                     <div class="product_data">
                         <div class="img">
-                            <img id="ty-upsell-img" alt="<?php echo esc_attr($upsell_name); ?>" src="<?php echo esc_url($upsell_qty_images[3]); ?>">
+                            <img id="ty-upsell-img" alt="<?php echo esc_attr($upsell_name); ?>" src="<?php echo esc_url($upsell_qty_images[1]); ?>">
                         </div>
                         <div class="right_section_wrapper">
-                            <div class="product_name" id="ty-upsell-name"><?php echo esc_html($upsell_qty_names[3]); ?></div>
-                            <div class="product_regular_price" id="ty-upsell-regular"><?php echo number_format($upsell_qty_regular[3], 2, ',', '.'); ?>€</div>
-                            <div class="product_new_sale_price" id="ty-upsell-price"><?php echo number_format($upsell_qty_prices[3], 2, ',', '.'); ?>€</div>
+                            <div class="product_name" id="ty-upsell-name"><?php echo esc_html($upsell_qty_names[1]); ?></div>
+                            <div class="product_regular_price" id="ty-upsell-regular"><?php echo number_format($upsell_qty_regular[1], 2, ',', '.'); ?>€</div>
+                            <div class="product_new_sale_price" id="ty-upsell-price"><?php echo number_format($upsell_qty_prices[1], 2, ',', '.'); ?>€</div>
                         </div>
                     </div>
 
@@ -624,7 +750,7 @@ body.woocommerce-order-received .woocommerce {
                     ?>
                     <div class="ty-grid-item">
                         <img src="<?php echo esc_url( $gp_img_url ); ?>" alt="<?php echo esc_attr( $gp->get_name() ); ?>">
-                        <div class="g-category">BOXERS</div>
+                        <div class="g-category">BOKSERICE</div>
                         <div class="g-name"><?php echo esc_html( $gp->get_name() ); ?></div>
                         <div class="g-price-old"><?php echo number_format( $gp_price, 2, ',', '.' ); ?>€</div>
                         <div class="g-price-new"><?php echo number_format( $gp_sale, 2, ',', '.' ); ?>€</div>
@@ -703,11 +829,11 @@ body.woocommerce-order-received .woocommerce {
             </div>
             <div class="ty-section-body open">
                 <div class="ty-section-body-inner">
-                    <div class="ty-row"><span class="ty-row-label">Name</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ); ?></span></div>
-                    <div class="ty-row"><span class="ty-row-label">Address</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_address_1() . ' ' . $order->get_billing_address_2() ); ?></span></div>
-                    <div class="ty-row"><span class="ty-row-label">City</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_postcode() . ' ' . $order->get_billing_city() ); ?></span></div>
+                    <div class="ty-row"><span class="ty-row-label">Ime</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ); ?></span></div>
+                    <div class="ty-row"><span class="ty-row-label">Adresa</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_address_1() . ' ' . $order->get_billing_address_2() ); ?></span></div>
+                    <div class="ty-row"><span class="ty-row-label">Grad</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_postcode() . ' ' . $order->get_billing_city() ); ?></span></div>
                     <?php if ( $order->get_billing_phone() ) : ?>
-                    <div class="ty-row"><span class="ty-row-label">Phone</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_phone() ); ?></span></div>
+                    <div class="ty-row"><span class="ty-row-label">Telefon</span><span class="ty-row-value"><?php echo esc_html( $order->get_billing_phone() ); ?></span></div>
                     <?php endif; ?>
 
                 </div>
@@ -723,7 +849,7 @@ body.woocommerce-order-received .woocommerce {
 
 <?php else : ?>
     <div class="ty-container">
-        <div class="ty-success"><h1>Narudžba</h1>
+        <div class="ty-success"><h1>Order</h1>
         <?php wc_get_template( 'checkout/order-received.php', array( 'order' => false ) ); ?>
         </div>
     </div>
@@ -762,7 +888,7 @@ body.woocommerce-order-received .woocommerce {
             localStorage.removeItem('ty_added_' + orderId);
             localStorage.removeItem(stepKey);
             localStorage.removeItem(key);
-            // Auto-open "Order Items" and "Shipping Address" sections
+            // Auto-open "Stavke narudžbe" and "Shipping Address" sections
             document.querySelectorAll('.ty-section .ty-section-header').forEach(function(h) {
                 if (!h.classList.contains('open')) {
                     h.classList.add('open');
@@ -832,7 +958,7 @@ body.woocommerce-order-received .woocommerce {
                     // Update item count in header by ID
                     var headerSpan = document.getElementById('ty-order-items-header');
                     if (headerSpan) {
-                        headerSpan.textContent = 'Order Items (' + d.data.item_count + ')';
+                        headerSpan.textContent = 'Order items (' + d.data.item_count + ')';
                     }
                     // Make sure section stays open
                     var section = document.getElementById('ty-order-items-section');
@@ -890,7 +1016,7 @@ body.woocommerce-order-received .woocommerce {
             fd.append('variation_id', select ? select.value : '');
             fd.append('sale_price', '<?php echo $upsell_sale_price; ?>');
             fd.append('quantity', qty);
-            fd.append('upsell_type', '<?php echo $upsell_is_majice ? "post_purchase_step1_tshirt" : "post_purchase_step1_boxer"; ?>');
+            fd.append('upsell_type', '<?php echo $upsell_is_majice ? "post_purchase_step1_majica" : "post_purchase_step1_bokserica"; ?>');
             fd.append('nonce', nonce);
 
             fetch(ajaxUrl, { method: 'POST', body: fd })
@@ -933,7 +1059,7 @@ body.woocommerce-order-received .woocommerce {
                     el.style.background = '#000';
                 } else {
                     el.classList.add('selected');
-                    el.innerHTML = '✔ SELECTED <span style="font-size:10px;opacity:0.7;margin-left:4px;">remove</span>';
+                    el.innerHTML = '✔ IZBRANO <span style="font-size:10px;opacity:0.7;margin-left:4px;">odstrani</span>';
                     el.style.background = '#2E7D32';
                 }
             });
@@ -1049,7 +1175,7 @@ function removeUpsellItem(btn) {
                             if (itemsBody) itemsBody.innerHTML = d2.data.items_html;
                             var headerSpan = document.getElementById('ty-order-items-header');
                             if (headerSpan) {
-                                headerSpan.textContent = 'Order Items (' + d2.data.item_count + ')';
+                                headerSpan.textContent = 'Order items (' + d2.data.item_count + ')';
                             }
                         }
                     });
