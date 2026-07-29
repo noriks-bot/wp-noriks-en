@@ -387,6 +387,7 @@ function noriks_pp_upsell_from_session( $cart_item, $values ) {
 		$cart_item['_noriks_pp_upsell_qty']   = $values['_noriks_pp_upsell_qty'] ?? 1;
 		$cart_item['_noriks_pp_upsell_title'] = $values['_noriks_pp_upsell_title'] ?? '';
 		$cart_item['_noriks_pp_upsell_lines'] = $values['_noriks_pp_upsell_lines'] ?? array();
+		$cart_item['_noriks_pp_upsell_sku']   = $values['_noriks_pp_upsell_sku'] ?? '';
 	}
 	return $cart_item;
 }
@@ -403,6 +404,10 @@ function noriks_pp_upsell_apply_price( $cart ) {
 	foreach ( $cart->get_cart() as $item ) {
 		if ( ! empty( $item['_noriks_pp_upsell'] ) && isset( $item['_noriks_pp_upsell_unit'] ) && $item['data'] instanceof WC_Product ) {
 			$item['data']->set_price( (float) $item['_noriks_pp_upsell_unit'] );
+			// Upsell paket ima svojo sifro; sifra variacije izdelka je zavajajoca.
+			if ( ! empty( $item['_noriks_pp_upsell_sku'] ) ) {
+				$item['data']->set_sku( (string) $item['_noriks_pp_upsell_sku'] );
+			}
 		}
 	}
 }
