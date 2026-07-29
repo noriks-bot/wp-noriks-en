@@ -842,3 +842,239 @@ add_action('woocommerce_product_query', function ($q) {
 /* =========================
    END: SHOP PAGE
    ========================= */
+
+/* ============================================================
+ * Preneseno iz HR teme, da je EN funkcijsko izenacena:
+ * kupon iz URL-ja, REST za zapuscene kosarice, slika kolekcije v seznamu,
+ * enkraten izpis tabele velikosti, prag AJAX variacij, vsi izdelki na shop strani.
+ * ============================================================ */
+add_filter( 'woocommerce_gallery_image_size', function() {
+    return 'large';
+});
+
+add_action('woocommerce_before_checkout_form', 'auto_apply_coupon_from_url', 10);
+function auto_apply_coupon_from_url() {
+    if (isset($_GET['coupon']) && !empty($_GET['coupon'])) {
+        $coupon_code = sanitize_text_field($_GET['coupon']);
+        if (!WC()->cart->has_discount($coupon_code)) {
+            WC()->cart->apply_coupon($coupon_code);
+        }
+    }
+}
+
+add_action('rest_api_init', function() {
+    register_rest_route('noriks/v1', '/abandoned-carts', array(
+        'methods' => 'GET',
+        'callback' => 'noriks_get_abandoned_carts',
+        'permission_callback' => function() {
+            return isset($_GET['key']) && $_GET['key'] === 'n0r1k5-c4rt-4cc355';
+        }
+    ));
+});
+
+function noriks_get_abandoned_carts($request) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'cartflows_ca_cart_abandonment';
+    
+    $results = $wpdb->get_results("
+        SELECT id, email, cart_contents, cart_total, 
+               other_fields, order_status, time
+        FROM $table 
+        WHERE order_status = 'abandoned'
+        ORDER BY time DESC LIMIT 500
+    ", ARRAY_A);
+    
+    foreach($results as &$row) {
+        $row['cart_contents'] = maybe_unserialize($row['cart_contents']);
+        $row['other_fields'] = maybe_unserialize($row['other_fields']);
+        // Normaliziran fb_campaign struct (campaign_id, ad_id, adset_id, fbclid, ...)
+        if (function_exists('noriks_build_fb_campaign')) {
+            $row['fb_campaign'] = noriks_build_fb_campaign($row['other_fields']);
+        }
+    }
+    return new WP_REST_Response($results, 200);
+}
+
+add_action('rest_api_init', function() {
+    register_rest_route('noriks/v1', '/abandoned-carts/cleanup', array(
+        'methods' => 'POST',
+        'callback' => function($req) {
+            global $wpdb;
+            $table = $wpdb->prefix . 'cartflows_ca_cart_abandonment';
+            $body = json_decode($req->get_body(), true);
+            $ids = array_map('intval', $body['ids'] ?? []);
+            if (empty($ids)) return new WP_REST_Response(['error' => 'No IDs'], 400);
+            $cleaned = 0;
+            foreach ($ids as $id) {
+                if ($wpdb->update($table, ['order_status' => 'completed'], ['id' => $id, 'order_status' => 'abandoned'])) $cleaned++;
+            }
+            return new WP_REST_Response(['cleaned' => $cleaned, 'total' => count($ids)], 200);
+        },
+        'permission_callback' => function() {
+            return isset($_GET['key']) && $_GET['key'] === 'n0r1k5-c4rt-4cc355';
+        }
+    ));
+});
+
+add_action('init', function () {
+	// Server-side redirect for NON-AJAX adds (highest priority wins)
+	add_filter('woocommerce_add_to_cart_redirect', function ($url) {
+		return home_url('/hr/cart/'); // or wc_get_cart_url()
+	}, 9999);
+});
+
+	add_filter('woocommerce_add_to_cart_redirect', function ($url) {
+		return home_url('/hr/cart/'); // or wc_get_cart_url()
+	}, 9999);
+
+function noriks_should_use_collection_gallery_image_for_loop($product_id) {
+    return noriks_get_collection_gallery_image_for_loop($product_id) > 0;
+}
+
+function noriks_get_collection_gallery_image_for_loop($product_id) {
+    if ( ! is_tax( 'collections' ) ) {
+        return 0;
+    }
+
+    $term = get_queried_object();
+    if ( ! ( $term instanceof WP_Term ) ) {
+        return 0;
+    }
+
+    $raw = get_term_meta( $term->term_id, 'noriks_collection_gallery_image_map', true );
+    if ( empty( $raw ) || ! function_exists( 'noriks_collection_order_ids_from_string' ) ) {
+        return 0;
+    }
+
+    if ( ! function_exists( 'noriks_collection_gallery_image_map_from_string' ) ) {
+        return 0;
+    }
+
+    $map = noriks_collection_gallery_image_map_from_string( $raw );
+    return isset( $map[ $product_id ] ) ? (int) $map[ $product_id ] : 0;
+}
+
+function noriks_render_size_chart_once() {
+    static $done = false;
+    if ( $done ) {
+        return;
+    }
+    $done = true;
+    get_template_part( 'template_parts/size-chart-modal' );
+}
+
+add_action( 'woocommerce_single_product_summary', function() {
+    if ( ! function_exists( 'is_product' ) || ! is_product() ) {
+        return;
+    }
+    // No top size-chart link on socks, back belt, bunion, fisiorest, gifts set, incontinence boxers or
+    // kompresijske majice. Leak boxers + kompresijske majice show it right above the add-to-cart button instead.
+    if ( function_exists( 'noriks_is_type' ) && ( noriks_is_type( 'kompresijske-nogavice' ) || noriks_is_type( 'ortopas' ) || noriks_is_type( 'bunion' ) || noriks_is_type( 'fisiorest' ) || noriks_is_type( 'majica-darila' ) || noriks_is_type( 'leakboxers' ) || noriks_is_type( 'kompresijske-majice' ) ) ) {
+        return;
+    }
+    echo '<a href="#" class="js-open-size-chart noriks-global-sizechart" style="display:inline-flex;align-items:center;gap:8px;margin:8px 0;color:#222;font-weight:700;font-size:15px;text-decoration:underline;cursor:pointer;">'
+        . '<svg width="20" height="20" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.4124 2.58464L2.08525 11.9118C1.86558 12.1315 1.86558 12.4876 2.08525 12.7073L5.78977 16.4118C6.00944 16.6315 6.3656 16.6315 6.58527 16.4118L15.9124 7.08466C16.1321 6.86499 16.1321 6.50883 15.9124 6.28916L12.2079 2.58464C11.9883 2.36497 11.6321 2.36497 11.4124 2.58464Z" stroke="#111213" stroke-width="0.9"/></svg>'
+        . 'Tablica veličina</a>';
+    // Plugin (orto) na bundle proizvodima renderira svoj size-link iznad ponuda — tada sakrij globalnog (duplikat).
+    echo '<script>document.addEventListener("DOMContentLoaded",function(){if(document.querySelector(".gck-size-link")){document.querySelectorAll(".noriks-global-sizechart").forEach(function(a){a.style.display="none";});}});</script>';
+}, 11 );
+
+   add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    ob_start(); ?>
+    <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+    <?php
+    $fragments['.cart-count'] = ob_get_clean();
+    return $fragments;
+});
+
+add_action( 'after_setup_theme', function() {
+    // Remove default thumbnail output in product loops
+    remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+    // Add our custom thumbnail
+    add_action( 'woocommerce_before_shop_loop_item_title', 'my_alt_loop_product_thumbnail', 10 );
+}, 20 );
+
+function my_alt_loop_product_thumbnail() {
+    global $product;
+
+    if ( ! $product ) {
+        return;
+    }
+
+    // IMPORTANT: don't affect images on single product page (incl. related/upsells)
+    if ( is_product() ) {
+        woocommerce_template_loop_product_thumbnail();
+        return;
+    }
+
+    $product_id = $product->get_id();
+
+    if ( noriks_should_use_collection_gallery_image_for_loop( $product_id ) ) {
+        $selected_gallery_image_id = noriks_get_collection_gallery_image_for_loop( $product_id );
+        if ( $selected_gallery_image_id ) {
+            echo wp_get_attachment_image(
+                $selected_gallery_image_id,
+                'woocommerce_thumbnail',
+                false,
+                array(
+                    'class'   => 'attachment-woocommerce_thumbnail size-woocommerce_thumbnail',
+                    'loading' => 'lazy',
+                    'alt'     => esc_attr( $product->get_name() ),
+                )
+            );
+            return;
+        }
+    }
+
+    // Get your ACF image field (adjust field name if needed)
+    // If the field returns an image ID:
+    $alt_image_id = get_field( '_singlepp_alternative_primary_image', $product_id );
+
+    // If your field is stored as plain meta instead, use this instead of get_field():
+    // $alt_image_id = get_post_meta( $product_id, '_singlepp_alternative_primary_image', true );
+
+    if ( $alt_image_id ) {
+        // Output alternative image in archive/category loop
+        echo wp_get_attachment_image(
+            $alt_image_id,
+            'woocommerce_thumbnail',
+            false,
+            array(
+                'class'   => 'attachment-woocommerce_thumbnail size-woocommerce_thumbnail',
+                'loading' => 'lazy',
+                'alt'     => esc_attr( $product->get_name() ),
+            )
+        );
+    } else {
+        // Fallback to normal product thumbnail
+        woocommerce_template_loop_product_thumbnail();
+    }
+}
+
+   add_filter( 'woocommerce_ajax_variation_threshold', 'wc_ninja_ajax_threshold' );
+function wc_ninja_ajax_threshold() {
+    return 50;
+}
+
+   add_action( 'pre_get_posts', 'show_all_products_on_shop_page' );
+function show_all_products_on_shop_page( $query ) {
+
+    if (
+        ! is_admin() &&
+        $query->is_main_query() &&
+        is_shop()
+    ) {
+        $query->set( 'posts_per_page', -1 );
+    }
+}
+
+add_filter('loop_shop_per_page', function($per_page) {
+    if (is_product_category()) {
+        return -1; // show ALL products in category
+    }
+    return $per_page;
+}, 20);
+
+add_filter('tiny_mce_plugins', function ($plugins) {
+    return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
+});

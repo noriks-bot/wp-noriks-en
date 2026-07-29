@@ -49,6 +49,14 @@ function noriks_pp_upsell_register_fields() {
 				'instructions' => 'Second upsell box: a bundle of 2 t-shirts (1 black + 1 gray), the customer picks one size for both. Independent of the first toggle — both can be on at once.',
 				'ui'           => 1,
 			),
+			array(
+				'key'          => 'field_noriks_pp_upsell3',
+				'label'        => 'Show upsell #3 below the button (NORIKS FIT compression t-shirt)',
+				'name'         => 'noriks_pp_upsell3',
+				'type'         => 'true_false',
+				'instructions' => 'Third upsell box: NORIKS FIT compression t-shirt, the customer picks a size. Independent of the first two toggles.',
+				'ui'           => 1,
+			),
 		),
 		'location'   => array(
 			array(
@@ -807,4 +815,225 @@ function noriks_pp_upsell_styles() {
 	}
 	</style>
 	<?php
+}
+/* ============================================================
+ * UPSELL #3 — NORIKS FIT kompresijska majica (KOMPSFIT).
+ * Neovisan o prva dva: vlastiti ACF prekidač (noriks_pp_upsell3),
+ * vlastita konfiguracija i logika košarice. Dijeli samo CSS.
+ *
+ * KOMPSFIT je JEDNOSTAVAN proizvod (bez varijacija) — veličine dolaze iz
+ * atributa proizvoda, pa se odabrana veličina sprema kao meta stavke.
+ * ============================================================ */
+
+function noriks_pp_upsell3_config() {
+	return apply_filters( 'noriks_pp_upsell3_config', array(
+		'product_id' => 0,   // KOMPSFIT na EN se ne obstaja — vpisi ID, ko bo izdelek dodan   // NORIKS FIT kompresijska majica (jednostavan proizvod)
+		'total'      => 17.99,  // cijena za 1 komad
+		'title'      => 'NORIKS FIT compression t-shirt',
+		'desc'       => 'Shapes your silhouette and supports posture — add it to your order at %s%% off.',
+		'size_attr'  => 'Size',
+		'sizes'      => array( 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL' ), // upsell nudi S–4XL
+		'sku'        => 'NORIKS-KOMPSFIT-1-UPSELL',
+		'image'      => '', // prazno => koristi se glavna slika proizvoda
+		'label'      => 'Buy together and save:',
+		'add_text'   => 'Add to purchase',
+		'aria'       => 'T-shirt size',
+	) );
+}
+
+/** Je li upsell #3 uključen za dani proizvod. */
+function noriks_pp_upsell3_enabled( $product_id = 0 ) {
+	$product_id = $product_id ? (int) $product_id : (int) get_the_ID();
+	if ( ! $product_id || ! function_exists( 'get_field' ) ) {
+		return false;
+	}
+	$cfg = noriks_pp_upsell3_config();
+	if ( $product_id === (int) $cfg['product_id'] ) {
+		return false; // nikad na samom upsell proizvodu
+	}
+	return (bool) get_field( 'noriks_pp_upsell3', $product_id );
+}
+
+/** Veličine iz atributa proizvoda (jednostavan proizvod nema varijacije). */
+function noriks_pp_upsell3_sizes() {
+	$cfg = noriks_pp_upsell3_config();
+	// Ponuda je izricito S–4XL (5XL se ne nudi u upsellu).
+	if ( ! empty( $cfg['sizes'] ) && is_array( $cfg['sizes'] ) ) {
+		return array_values( $cfg['sizes'] );
+	}
+	$prod = wc_get_product( (int) $cfg['product_id'] );
+	if ( ! $prod ) {
+		return array();
+	}
+	$raw = $prod->get_attribute( $cfg['size_attr'] );
+	if ( $raw === '' ) {
+		return array();
+	}
+	$sizes = array_filter( array_map( 'trim', explode( ',', $raw ) ) );
+	return array_values( $sizes );
+}
+
+add_action( 'woocommerce_after_add_to_cart_button', 'noriks_pp_upsell3_render', 17 );
+function noriks_pp_upsell3_render() {
+	if ( ! noriks_pp_upsell3_enabled() ) {
+		return;
+	}
+	$cfg   = noriks_pp_upsell3_config();
+	$sizes = noriks_pp_upsell3_sizes();
+	$prod  = wc_get_product( (int) $cfg['product_id'] );
+	if ( empty( $sizes ) || ! $prod ) {
+		return;
+	}
+
+	$regular  = (float) $prod->get_regular_price();
+	$discount = ( $regular > 0 ) ? (int) round( ( 1 - ( (float) $cfg['total'] / $regular ) ) * 100 ) : 0;
+	$desc     = ( strpos( $cfg['desc'], '%s' ) !== false ) ? sprintf( $cfg['desc'], $discount ) : $cfg['desc'];
+	$image    = ! empty( $cfg['image'] ) ? $cfg['image'] : wp_get_attachment_image_url( $prod->get_image_id(), 'medium' );
+	if ( ! $image ) {
+		$image = wc_placeholder_img_src( 'medium' );
+	}
+	noriks_pp_upsell_styles();
+	?>
+	<div class="npu-wrap">
+		<span class="npu-label"><?php echo esc_html( $cfg['label'] ); ?></span>
+
+		<div class="npu-box" id="npu3-box">
+			<div class="npu-grid">
+				<span class="npu-img-wrap">
+					<img class="npu-img" src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $cfg['title'] ); ?>" loading="lazy">
+				</span>
+
+				<div class="npu-info">
+					<p class="npu-title"><?php echo esc_html( $cfg['title'] ); ?></p>
+					<div class="npu-desc"><?php echo esc_html( $desc ); ?></div>
+					<div class="npu-prices">
+						<span class="npu-price"><?php echo wc_price( (float) $cfg['total'] ); ?></span>
+						<?php if ( $regular > 0 ) : ?>
+							<span class="npu-price-old"><?php echo wc_price( $regular ); ?></span>
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<div class="npu-actions">
+					<label class="npu-check">
+						<input type="checkbox" id="npu3-toggle" name="noriks_pp_upsell3" value="1">
+						<span class="npu-box-mark" aria-hidden="true"></span>
+						<span class="npu-check-text"><?php echo esc_html( $cfg['add_text'] ); ?></span>
+					</label>
+
+					<select class="npu-size" name="noriks_pp_upsell3_size" aria-label="<?php echo esc_attr( $cfg['aria'] ); ?>">
+						<?php foreach ( $sizes as $size ) : ?>
+							<option value="<?php echo esc_attr( $size ); ?>"><?php echo esc_html( $size ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	(function () {
+		var box = document.getElementById('npu3-box');
+		var cb  = document.getElementById('npu3-toggle');
+		if (!box || !cb) { return; }
+		function paint() { box.classList.toggle('npu-checked', cb.checked); }
+		cb.addEventListener('change', paint);
+		paint();
+		box.addEventListener('click', function (e) {
+			if (e.target.closest('.npu-size') || e.target.closest('.npu-check')) { return; }
+			cb.checked = !cb.checked;
+			cb.dispatchEvent(new Event('change', { bubbles: true }));
+		});
+		/* velicina se uskladi s prvim izbornikom u paketu, dok je kupac sam ne promijeni */
+		var sel = box.querySelector('.npu-size'), touched = false;
+		if (sel) {
+			sel.addEventListener('change', function () { touched = true; });
+			var sync = function () {
+				if (touched) { return; }
+				var all = document.querySelectorAll('.gck-size-select'), src = null;
+				for (var i = 0; i < all.length; i++) { if (all[i].offsetParent !== null && all[i].value) { src = all[i]; break; } }
+				if (!src) { return; }
+				var v = String(src.value).trim().toLowerCase();
+				for (var j = 0; j < sel.options.length; j++) {
+					if (String(sel.options[j].value).trim().toLowerCase() === v) { sel.value = sel.options[j].value; return; }
+				}
+			};
+			document.addEventListener('change', function (e) {
+				var t = e.target; if (!t) { return; }
+				if (t.classList && t.classList.contains('gck-size-select')) { sync(); }
+				if (t.name === 'bundle_option') { setTimeout(sync, 60); }
+			});
+			setTimeout(sync, 250); setTimeout(sync, 900);
+		}
+	})();
+	</script>
+	<?php
+}
+
+/* ---- Dodavanje u košaricu ---- */
+add_action( 'woocommerce_add_to_cart', 'noriks_pp_upsell3_maybe_add', 22, 6 );
+function noriks_pp_upsell3_maybe_add( $cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data ) {
+	static $busy3 = false;
+	if ( $busy3 || ! empty( $cart_item_data['_noriks_pp_upsell'] ) ) {
+		return;
+	}
+	if ( empty( $_POST['noriks_pp_upsell3'] ) || ! noriks_pp_upsell3_enabled( $product_id ) ) {
+		return;
+	}
+	$cfg   = noriks_pp_upsell3_config();
+	$sizes = noriks_pp_upsell3_sizes();
+	if ( empty( $sizes ) ) {
+		return;
+	}
+	$size = isset( $_POST['noriks_pp_upsell3_size'] ) ? sanitize_text_field( wp_unslash( $_POST['noriks_pp_upsell3_size'] ) ) : '';
+	if ( $size === '' || ! in_array( $size, $sizes, true ) ) {
+		$size = (string) $sizes[0];
+	}
+	$prod = wc_get_product( (int) $cfg['product_id'] );
+	if ( ! $prod ) {
+		return;
+	}
+
+	$busy3 = true;
+	WC()->cart->add_to_cart(
+		(int) $cfg['product_id'],
+		1,
+		0,
+		array(),
+		array(
+			'_noriks_pp_upsell3'      => 1,
+			'_noriks_pp_upsell'       => 1,   // dijeli prikaz/cijenu s prvim upsellom
+			'_noriks_pp_upsell_unit'  => (float) $cfg['total'],
+			'_noriks_pp_upsell_qty'   => 1,
+			'_noriks_pp_upsell_title' => (string) $cfg['title'],
+			'_noriks_pp_upsell_lines' => array( $prod->get_name() . ' - ' . $size ),
+			'_noriks_pp_upsell_size'  => $size,
+			'_noriks_pp_upsell_sku'   => (string) $cfg['sku'],
+			'_noriks_pp_upsell_key'   => md5( 'npu3' . $size . microtime( true ) ),
+		)
+	);
+	$busy3 = false;
+}
+
+/* Prenos podataka iz sesije + oznaka u narudžbi. */
+add_filter( 'woocommerce_get_cart_item_from_session', 'noriks_pp_upsell3_from_session', 22, 2 );
+function noriks_pp_upsell3_from_session( $cart_item, $values ) {
+	if ( ! empty( $values['_noriks_pp_upsell3'] ) ) {
+		$cart_item['_noriks_pp_upsell3']     = 1;
+		$cart_item['_noriks_pp_upsell_size'] = $values['_noriks_pp_upsell_size'] ?? '';
+		$cart_item['_noriks_pp_upsell_sku']  = $values['_noriks_pp_upsell_sku'] ?? '';
+	}
+	return $cart_item;
+}
+
+add_action( 'woocommerce_checkout_create_order_line_item', 'noriks_pp_upsell3_order_item_meta', 22, 4 );
+function noriks_pp_upsell3_order_item_meta( $item, $cart_item_key, $values, $order ) {
+	if ( ! empty( $values['_noriks_pp_upsell3'] ) ) {
+		$item->update_meta_data( '_noriks_upsell', 'product_page_upsell_3' );
+		$cfg = noriks_pp_upsell3_config();
+		$item->update_meta_data( '_noriks_upsell_sku', sanitize_text_field( $cfg['sku'] ) );
+		if ( ! empty( $values['_noriks_pp_upsell_size'] ) ) {
+			$item->update_meta_data( 'Size', sanitize_text_field( $values['_noriks_pp_upsell_size'] ) );
+		}
+	}
 }

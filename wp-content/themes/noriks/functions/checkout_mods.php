@@ -327,6 +327,31 @@ add_action( 'wp_footer', function() {
         billing_address_2: '\u2715 If you have no house number, enter NN',
       };
       var submitted = false; /* only validate after first submit attempt */
+      /* Validate ALL required fields at once — returns false if any invalid */
+      function validateAllFields() {
+        var allValid = true;
+        var firstInvalid = null;
+        $('.woocommerce-checkout .form-row.validate-required:visible').each(function(){
+          var input = $(this).find('input, select').first();
+          if (input.length && !validateField(input[0], true)) {
+            allValid = false;
+            if (!firstInvalid) firstInvalid = input[0];
+          }
+        });
+        $('.woocommerce-checkout .form-row.validate-email:visible, .woocommerce-checkout .form-row.validate-phone:visible').each(function(){
+          var input = $(this).find('input, select').first();
+          if (input.length && !validateField(input[0], true)) {
+            allValid = false;
+            if (!firstInvalid) firstInvalid = input[0];
+          }
+        });
+        if (firstInvalid) {
+          firstInvalid.focus();
+          firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+        return allValid;
+      }
+
       /* Set submitted=true when WC native button is clicked */
       $('form.checkout').on('checkout_place_order', function(){ submitted = true; });
       $(document).on('click', '#place_order', function(e){
