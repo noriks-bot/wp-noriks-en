@@ -46,7 +46,7 @@ function noriks_pp_upsell_register_fields() {
 				'label'        => 'Show upsell #2 below the button (2 t-shirts: black + gray)',
 				'name'         => 'noriks_pp_upsell2',
 				'type'         => 'true_false',
-				'instructions' => 'Drugi upsell okvir: paket od 2 majice (1 crna + 1 siva), kupac bira jednu veličinu za obje. Neovisan o prvom prekidaču — mogu biti uključena oba.',
+				'instructions' => 'Second upsell box: a bundle of 2 t-shirts (1 black + 1 gray), the customer picks one size for both. Independent of the first toggle — both can be on at once.',
 				'ui'           => 1,
 			),
 		),
