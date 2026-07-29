@@ -1,0 +1,31 @@
+<?php
+// Review pool for the zip compression socks (kompresijske nogavice).
+// Real reviews translated to English.
+$auto_reviews_en = array(
+    array("name" => "Ian K.", "text" => "I'm delighted with how comfortable the socks are and how well they wear."),
+    array("name" => "Mark P.", "text" => "This is the perfect sock! I'm very satisfied and I recommend it. 5 stars!"),
+    array("name" => "Thomas R.", "text" => "They fit brilliantly. An absolute pleasure."),
+    array("name" => "Joseph D.", "text" => "These are the best compression socks I have had so far."),
+    array("name" => "Luke M.", "text" => "All top, happy to order again."),
+    array("name" => "Peter G.", "text" => "great"),
+    array("name" => "Andrew B.", "text" => "A good, clever thing. The time needed to put the socks on is considerably shorter."),
+    array("name" => "Nicholas R.", "text" => "Very good quality and workmanship, unfortunately I had to return them because they were too short for me. The return and the refund were no problem at all — once I sent them back everything went very quickly."),
+    array("name" => "Matthew S.", "text" => "So far I don't feel an improvement yet, but I'm not giving up. Putting the socks on is effortless thanks to the zip. Best regards"),
+    array("name" => "Duncan K.", "text" => "The zip is practical for me. However, since I have stronger calves, I have quite a bit of trouble closing it. Maybe I should try size L, but then the foot might be too big? With shoe size 38."),
+    array("name" => "Simon P.", "text" => "All great, they fit brilliantly. Comfortable to wear."),
+    array("name" => "Brian N.", "text" => "In principle I like them, only with the black socks the zip keeps jamming on one tooth and won't go further. I wear the light socks every day and they do their job well, though not quite like the prescription ones."),
+    array("name" => "Ryan T.", "text" => "For me it's a real relief to put them on. It doesn't even take me five minutes."),
+    array("name" => "Adrian M.", "text" => "I imagined it differently and more comfortable."),
+    array("name" => "Dean K.", "text" => "Easy to put on. I received the delivery after some waiting time. The accuracy of the fit is very good, unlike earlier measurements in specialist shops. The zip system is stable. I moved the zips inwards, so the effort required is easier to manage. Unfortunately the inner zip guard jams very quickly. But a weekend of practice should be enough. Wearing them is very comfortable, no sweaty feet, no pinching at the edges. Taking them off is simply brilliantly easy — it requires neither excessive effort nor anyone else's help."),
+    array("name" => "Christopher V.", "text" => "The sock goes on well. The only thing I can fault is the zip, which opens by itself while wearing. It would be nice if the zip had a small catch to prevent it opening on its own. Otherwise comfortable to wear."),
+    array("name" => "Gordon L.", "text" => "The zip doesn't close quite as easily as in your adverts. But with a little practice it goes perfectly well. The value for money is right. The calf circumference is a bit tight for shoe size 36."),
+    array("name" => "Stephen C.", "text" => "Completely satisfied."),
+    array("name" => "Adrian M.", "text" => "The first time putting them on was a little hard, but otherwise really great."),
+    array("name" => "Robert S.", "text" => "The socks are considerably too tight for me. The smaller size was meant for my father; even the bigger ones are so tight that he cannot close the zip himself. You have to squeeze the sock at the top, above the zip — that is the only way it goes."),
+    array("name" => "David H.", "text" => "Totally delighted 🤩"),
+    array("name" => "Michael J.", "text" => "So far 👍"),
+    array("name" => "Philip B.", "text" => "I'm genuinely amazed at how easily the socks go on and how comfortable they are to wear."),
+    array("name" => "Darren N.", "text" => "Dear team, for years I have struggled with class 3 compression stockings and donning aids. Putting them on without help still works quite well thanks to my mobility and strength. Then I came across you. Despite the fear that the compression might not be enough, I measured myself and ordered. I am completely enchanted by the wearing comfort — getting through the day without pain is simply indescribable, and the even easier putting on and taking off is a real bonus, thanks to the zip. I rate the smooth ordering process and the customer support just as positively. I will keep ordering from you."),
+    array("name" => "Zack M.", "text" => "A very good solution. You hardly notice wearing them. I like it."),
+    array("name" => "Boris T.", "text" => "Comfortable when taking them off."),
+);

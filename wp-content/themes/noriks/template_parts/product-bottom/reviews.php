@@ -544,13 +544,43 @@ a:hover {
 
   // Detect if current product belongs to bokserice group
   $current_product_id = (function_exists('is_product') && is_product()) ? get_queried_object_id() : get_the_id();
-  $is_bokserice_page  = noriks_is_type( 'bokserice', $current_product_id );
+  $is_bokserice_page   = noriks_is_type( 'bokserice', $current_product_id );
+  $is_kidsnest_page    = noriks_is_type( 'kidsnest', $current_product_id );
+  $is_nosilka_page     = noriks_is_type( 'nosilka', $current_product_id );
+  $is_jastuk_page      = noriks_is_type( 'ortopedski-jastuk', $current_product_id );
+  $is_leakboxers_page  = noriks_is_type( 'leakboxers', $current_product_id );
+  $is_kompmajice_page  = noriks_is_type( 'kompresijske-majice', $current_product_id );
+  $is_norikshers_page  = noriks_is_type( 'norikshers', $current_product_id );
+  $is_fisiorest_page   = noriks_is_type( 'fisiorest', $current_product_id );
+  $is_bunion_page      = noriks_is_type( 'bunion', $current_product_id );
+  $is_ortopas_page     = noriks_is_type( 'ortopas', $current_product_id );
+  $is_nogavice_page    = noriks_is_type( 'kompresijske-nogavice', $current_product_id );
 
-  // Include review pools
-  if ( ! $is_bokserice_page )  {
-    include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'.php';
-  } else {
+  // Include review pools (own pool per product group) — same order as HR
+  if ( $is_kidsnest_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_kidsnest.php';
+  } elseif ( $is_nosilka_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_nosilka.php';
+  } elseif ( $is_jastuk_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_ortopedski_jastuk.php';
+  } elseif ( $is_leakboxers_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_leakboxers.php';
+  } elseif ( $is_kompmajice_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_kompresijske-majice.php';
+  } elseif ( $is_norikshers_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_norikshers.php';
+  } elseif ( $is_fisiorest_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_fisiorest.php';
+  } elseif ( $is_bunion_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_bunion.php';
+  } elseif ( $is_ortopas_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_ortopas.php';
+  } elseif ( $is_nogavice_page ) {
+    include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_nogavice.php';
+  } elseif ( $is_bokserice_page ) {
     include get_stylesheet_directory() . '/auto_reviews/' . $reviews_language . '_bokserice.php';
+  } else {
+    include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'.php';
   }
 
   include get_stylesheet_directory() . '/auto_reviews/'.$reviews_language.'-2.php';
