@@ -1782,6 +1782,7 @@ function gck_add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
     $unit_price = $total;
 
     $cart_item_data['_orto_offer_id']          = $offer_id;
+    $cart_item_data['_orto_offer_title']       = (string) ( $offer['title'] ?? '' );
     $cart_item_data['_orto_bundle_pairs']      = $pairs_selected;
     $cart_item_data['_orto_bundle_total']      = $total;
     $cart_item_data['_orto_bundle_unit_price'] = $unit_price;
@@ -1816,6 +1817,7 @@ function gck_session_cart_item_apply_price( $cart_item, $values ) {
     if ( isset( $values['_orto_bundle_unit_price'] ) ) $cart_item['_orto_bundle_unit_price'] = $values['_orto_bundle_unit_price'];
     if ( isset( $values['_orto_lines'] ) ) $cart_item['_orto_lines'] = $values['_orto_lines'];
     if ( isset( $values['_orto_offer_id'] ) ) $cart_item['_orto_offer_id'] = $values['_orto_offer_id'];
+    if ( isset( $values['_orto_offer_title'] ) ) $cart_item['_orto_offer_title'] = $values['_orto_offer_title'];
     if ( isset( $values['_orto_p1'] ) ) $cart_item['_orto_p1'] = $values['_orto_p1'];
     if ( isset( $values['_orto_p2'] ) ) $cart_item['_orto_p2'] = $values['_orto_p2'];
     return gck_apply_price_to_cart_item( $cart_item );
@@ -1855,15 +1857,26 @@ function gck_display_item_data( $item_data, $cart_item ) {
 add_action( 'woocommerce_checkout_create_order_line_item', 'gck_order_item_meta', 10, 4 );
 function gck_order_item_meta( $item, $cart_item_key, $values, $order ) {
 
-    if ( empty( $values['_orto_lines'] ) || ! is_array( $values['_orto_lines'] ) ) {
-        return;
+    // Proizvodi S atributima: jedan redak meta po komadu (velicina/boja).
+    if ( ! empty( $values['_orto_lines'] ) && is_array( $values['_orto_lines'] ) ) {
+        $lines = array_values( $values['_orto_lines'] );
+        foreach ( $lines as $i => $line ) {
+            $item->add_meta_data( (string) ( $i + 1 ), sanitize_text_field( $line ), true );
+        }
+    } elseif ( ! empty( $values['_orto_bundle_pairs'] ) ) {
+        // Proizvodi BEZ atributa (bunion, fisiorest, ControlPro ...): nema redaka po
+        // komadu, pa se odabrana ponuda ne bi nigdje vidjela. Zapisi vidljivu meta
+        // liniju s brojem komada da se u narudzbi zna je li kupljen 1x, 2x, 2+2 ...
+        $qty_pairs   = (int) $values['_orto_bundle_pairs'];
+        $offer_title = isset( $values['_orto_offer_title'] ) ? trim( (string) $values['_orto_offer_title'] ) : '';
+        $meta_value  = $qty_pairs . ' x';
+        if ( $offer_title !== '' ) {
+            $meta_value = $offer_title . ' (' . $qty_pairs . ' x)';
+        }
+        $item->add_meta_data( 'Selected package', sanitize_text_field( $meta_value ), true );
     }
 
-    $lines = array_values( $values['_orto_lines'] );
-    foreach ( $lines as $i => $line ) {
-        $item->add_meta_data( (string) ( $i + 1 ), sanitize_text_field( $line ), true );
-    }
-
+    // Skrivena meta (izvjestaji) — uvijek, neovisno o atributima.
     if ( ! empty( $values['_orto_bundle_pairs'] ) ) {
         $item->add_meta_data( '_bundle_pairs', (int) $values['_orto_bundle_pairs'], true );
     }
