@@ -1864,18 +1864,22 @@ function gck_order_item_meta( $item, $cart_item_key, $values, $order ) {
             $item->add_meta_data( (string) ( $i + 1 ), sanitize_text_field( $line ), true );
         }
     } elseif ( ! empty( $values['_orto_bundle_pairs'] ) ) {
-        // Proizvodi BEZ atributa (bunion, fisiorest, ControlPro ...): nema redaka po
-        // komadu, pa se odabrana ponuda ne bi nigdje vidjela. Zapisi vidljivu meta
-        // liniju s brojem komada da se u narudzbi zna je li kupljen 1x, 2x, 2+2 ...
-        $qty_pairs   = (int) $values['_orto_bundle_pairs'];
-        $offer_title = isset( $values['_orto_offer_title'] ) ? trim( (string) $values['_orto_offer_title'] ) : '';
-        $meta_value  = $qty_pairs . ' x';
-        if ( $offer_title !== '' ) {
-            $meta_value = $offer_title . ' (' . $qty_pairs . ' x)';
+        // Proizvodi BEZ atributa (bunion, fisiorest, ControlPro ...): nema izbora
+        // velicine/boje, pa se broj komada nigdje ne bi vidio (kolicina retka ostaje 1
+        // jer je cijena paketna). Zapisi ISTI oblik mete kao kod proizvoda s atributima
+        // — jedan numerirani redak po komadu.
+        $qty_pairs = (int) $values['_orto_bundle_pairs'];
+        $item_name = '';
+        if ( isset( $values['data'] ) && $values['data'] instanceof WC_Product ) {
+            $item_name = $values['data']->get_name();
         }
-        $item->add_meta_data( 'Selected package', sanitize_text_field( $meta_value ), true );
+        if ( $item_name === '' ) {
+            $item_name = $item->get_name();
+        }
+        for ( $i = 1; $i <= $qty_pairs; $i++ ) {
+            $item->add_meta_data( (string) $i, sanitize_text_field( $item_name ), true );
+        }
     }
-
     // Skrivena meta (izvjestaji) — uvijek, neovisno o atributima.
     if ( ! empty( $values['_orto_bundle_pairs'] ) ) {
         $item->add_meta_data( '_bundle_pairs', (int) $values['_orto_bundle_pairs'], true );
