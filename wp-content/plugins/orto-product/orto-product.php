@@ -311,6 +311,14 @@ function gck_register_orto_countdown_fields() {
                 'ui'           => 1,
             ),
             array(
+                'key'          => 'field_orto_alt_dropdowns',
+                'label'        => 'Alternative selectors (Size + Colour as dropdowns)',
+                'name'         => 'orto_alt_dropdowns',
+                'type'         => 'true_false',
+                'instructions' => 'Replaces the colour swatch strip with two custom dropdowns: first SIZE, then COLOUR (with a colour chip next to each name). Applies only to this product.',
+                'ui'           => 1,
+            ),
+            array(
                 'key'          => 'field_orto_show_price_highlights',
                 'label'        => 'Show price highlight (price per piece + discount)',
                 'name'         => 'orto_show_price_highlights',
@@ -424,6 +432,10 @@ function gck_render_bundle_selector() {
     $precheck_second       = (bool) get_field( 'orto_precheck_second', $product_id );
     $show_gratis           = (bool) get_field( 'orto_show_gratis_labels', $product_id );
     $show_price_highlights = (bool) get_field( 'orto_show_price_highlights', $product_id );
+    // Alternativni izbornici (Velicina + Boja kao dropdown) — ukljucuje se po proizvodu.
+    $gck_alt_dropdowns     = function_exists( 'get_field' )
+        ? (bool) get_field( 'orto_alt_dropdowns', $product_id )
+        : (bool) get_post_meta( $product_id, 'orto_alt_dropdowns', true );
 
     // Garment type for gratis labels: "bokserica" (boxers), "carapa"
     // (compression socks) vs default "majica" (t-shirt). Detect via product
@@ -1099,6 +1111,186 @@ function gck_render_bundle_selector() {
             Tablica veličina
         </a>
     </div>
+    <?php endif; ?>
+    <?php // Alternativni izbornici: umjesto trake swatcheva -> DVA prilagodena dropdowna
+          // (prvo Velicina, zatim Boja s uzorkom boje), isti stil kao na HairMagic+.
+          // Ukljucuje se PO PROIZVODU preko ACF prekidaca "Alternativni izbornici"
+          // (Orto Bundle – countdown), pa svi ostali proizvodi ostaju nepromijenjeni.
+    if ( $gck_alt_dropdowns ) : ?>
+    <style>
+      #bundle-selector .gck-dd-list::-webkit-scrollbar { width: 8px; }
+      #bundle-selector .gck-dd-list::-webkit-scrollbar-thumb { background: #d8d8d8; border-radius: 8px; }
+    </style>
+    <script>
+    (function(){
+      var ORANGE = '#ff6d2e';
+      var BORDER = '#111111';   /* okvir izbornika: crn */
+      function css(el, o){ if(!el) return; for(var k in o){ el.style.setProperty(k, o[k], 'important'); } }
+
+      /* Jedan prilagodeni dropdown. items = [{value, label, color|null, pick()}] */
+      function makeDD(opts){
+        var wrap = document.createElement('span');
+        wrap.className = 'gck-dd';
+        /* fiksne sirine — izbornik boje se NE rasteze preko cijele kartice.
+           Na uskim zaslonima red se prelomi (flex-wrap), pa nista ne ispada. */
+        css(wrap, {'position':'relative','display':'inline-block','flex':'0 0 auto',
+                   'width':opts.width,'max-width':'100%','vertical-align':'middle'});
+
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'gck-dd-btn';
+        btn.setAttribute('aria-haspopup','listbox'); btn.setAttribute('aria-expanded','false');
+        /* isti stil kao stari <select>, samo s CRNIM okvirom: 1px, radius 4px, 18px/600 */
+        css(btn, {'display':'flex','align-items':'center','gap':'8px','width':'100%','box-sizing':'border-box',
+                  'border':'1px solid ' + BORDER,'border-radius':'4px','background':'#fff','cursor':'pointer',
+                  'padding':'4px 26px 4px 10px','font-size':'18px','font-weight':'600','color':'#333',
+                  'text-align':'left','min-height':'38px','line-height':'1.3'});
+        var sw = document.createElement('span');
+        css(sw, {'flex':'0 0 20px','width':'20px','height':'20px','border-radius':'4px',
+                 'border':'1px solid rgba(0,0,0,.2)','display':opts.hasColor ? 'block' : 'none'});
+        var lab = document.createElement('span');
+        css(lab, {'flex':'1 1 auto','overflow':'hidden','text-overflow':'ellipsis','white-space':'nowrap','line-height':'1.2'});
+        btn.appendChild(sw); btn.appendChild(lab);
+
+        var car = document.createElement('span');
+        css(car, {'position':'absolute','right':'10px','top':'50%','transform':'translateY(-50%)','pointer-events':'none',
+                  'width':'0','height':'0','border-left':'5px solid transparent','border-right':'5px solid transparent',
+                  'border-top':'6px solid #444'});
+
+        var list = document.createElement('div');
+        list.className = 'gck-dd-list'; list.setAttribute('role','listbox');
+        css(list, {'display':'none','position':'absolute','left':'0','top':'calc(100% + 4px)','z-index':'60',
+                   'width':'max-content','min-width':'100%','max-height':'268px','overflow-y':'auto','background':'#fff',
+                   'border':'1px solid #e0e0e0','border-radius':'8px','box-shadow':'0 10px 26px rgba(0,0,0,.16)','padding':'4px'});
+
+        wrap.appendChild(btn); wrap.appendChild(car); wrap.appendChild(list);
+
+        function close(){ css(list, {'display':'none'}); btn.setAttribute('aria-expanded','false'); css(btn, {'border-color':BORDER}); }
+        function open(){
+          document.querySelectorAll('#bundle-selector .gck-dd-list').forEach(function(o){ o.style.setProperty('display','none','important'); });
+          css(list, {'display':'block'}); btn.setAttribute('aria-expanded','true'); css(btn, {'border-color':BORDER});
+        }
+        btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); (list.style.display === 'block') ? close() : open(); });
+        document.addEventListener('click', function(e){ if(!wrap.contains(e.target)) close(); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+
+        var items = [];
+        opts.items.forEach(function(o){
+          var it = document.createElement('div');
+          it.setAttribute('role','option'); it.dataset.val = o.value;
+          css(it, {'display':'flex','align-items':'center','gap':'10px','padding':'8px 12px 8px 10px','border-radius':'4px',
+                   'cursor':'pointer','font-size':'16px','font-weight':'600','color':'#333','line-height':'1.25','white-space':'nowrap'});
+          if(o.color){
+            var c = document.createElement('span');
+            css(c, {'flex':'0 0 20px','width':'20px','height':'20px','border-radius':'4px','border':'1px solid rgba(0,0,0,.15)'});
+            c.style.setProperty('background', o.color, 'important');
+            it.appendChild(c);
+          }
+          var tx = document.createElement('span'); tx.textContent = o.label; it.appendChild(tx);
+          it.addEventListener('mouseenter', function(){ if(it.dataset.val !== wrap.dataset.val) css(it, {'background':'#f6f6f6'}); });
+          it.addEventListener('mouseleave', function(){ if(it.dataset.val !== wrap.dataset.val) css(it, {'background':'transparent'}); });
+          it.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); o.pick(); setCurrent(o); close(); });
+          list.appendChild(it); items.push({ o: o, el: it });
+        });
+
+        function setCurrent(o){
+          wrap.dataset.val = o.value;
+          lab.textContent = o.label;
+          if(o.color) sw.style.setProperty('background', o.color, 'important');
+          items.forEach(function(x){
+            var on = x.o.value === o.value;
+            x.el.setAttribute('aria-selected', on ? 'true' : 'false');
+            css(x.el, {'background': on ? '#fff1e9' : 'transparent', 'font-weight': on ? '700' : '500'});
+          });
+        }
+        wrap.setCurrent = setCurrent;
+        return wrap;
+      }
+
+      /* registar svih izbornika velicine — osnovni skript sinkronizira velicine
+         tako da drugim <select>-ima postavi .value BEZ 'change' dogadaja, pa
+         gumbe moramo osvjeziti sami. */
+      var sizeRegs = [];
+      function syncAllSizes(){
+        sizeRegs.forEach(function(r){
+          var cur = r.items.filter(function(i){ return i.value === r.sel.value; })[0];
+          if(cur) r.dd.setCurrent(cur);
+        });
+      }
+
+      function build(){
+        var box = document.getElementById('bundle-selector');
+        if(!box || box.dataset.gckDdDone) return;
+        box.dataset.gckDdDone = '1';
+
+        box.querySelectorAll('.bundle-attr-row').forEach(function(row){
+          if(row.querySelector('.gck-dd') || row.querySelector('.hgm-selwrap')) return;
+          var sel   = row.querySelector('.gck-size-select');
+          var swGrp = row.querySelector('.color-swatches');
+          if(!sel && !swGrp) return;
+
+          css(row, {'display':'flex','align-items':'center','gap':'8px','flex-wrap':'wrap','width':'100%'});
+
+          /* 1) VELICINA */
+          if(sel){
+            var sizeItems = Array.prototype.map.call(sel.options, function(o){
+              return { value: o.value, label: o.text.trim(), color: null,
+                       pick: function(){ sel.value = o.value; sel.dispatchEvent(new Event('change', { bubbles: true })); } };
+            });
+            var sizeDD = makeDD({ items: sizeItems, width: '96px', hasColor: false, grow: false });
+            row.insertBefore(sizeDD, row.firstChild);
+            css(sel, {'display':'none'});
+            var cur = sizeItems.filter(function(i){ return i.value === sel.value; })[0] || sizeItems[0];
+            if(cur) sizeDD.setCurrent(cur);
+            sizeRegs.push({ sel: sel, dd: sizeDD, items: sizeItems });
+            sel.addEventListener('change', function(){
+              var c = sizeItems.filter(function(i){ return i.value === sel.value; })[0];
+              if(c) sizeDD.setCurrent(c);
+            });
+          }
+
+          /* 2) BOJA — uzorci se citaju iz postojecih .swatch-circle elemenata */
+          if(swGrp){
+            var swatches = Array.prototype.slice.call(swGrp.querySelectorAll('.swatch'));
+            if(swatches.length){
+              var colorItems = swatches.map(function(sw){
+                var circle = sw.querySelector('.swatch-circle');
+                var bg = circle ? getComputedStyle(circle).backgroundColor : '';
+                if(!bg || bg === 'rgba(0, 0, 0, 0)') bg = '#cccccc';
+                return { value: sw.dataset.value || '', label: sw.dataset.value || sw.title || '', color: bg,
+                         /* NE sw.click(): klik bi doplovio do <label class="bundle-option">
+                            i prebacio odabranu ponudu. Ne-bubbling klik pokrece samo
+                            slusac na swatchu (postavi hidden input + .active). */
+                         pick: function(){ sw.dispatchEvent(new MouseEvent('click', { bubbles: false })); } };
+              });
+              var colorDD = makeDD({ items: colorItems, width: '176px', hasColor: true, grow: false });
+              /* boja ide ODMAH IZA velicine */
+              var sizeEl = row.querySelector('.gck-dd');
+              if(sizeEl && sizeEl.nextSibling) row.insertBefore(colorDD, sizeEl.nextSibling);
+              else if(sizeEl) row.appendChild(colorDD);
+              else row.insertBefore(colorDD, row.firstChild);
+              css(swGrp, {'display':'none'});
+              var active = swGrp.querySelector('.swatch.active') || swatches[0];
+              var cc = colorItems.filter(function(i){ return i.value === (active.dataset.value || ''); })[0] || colorItems[0];
+              if(cc){ cc.pick(); colorDD.setCurrent(cc); }
+            }
+          }
+        });
+
+        /* promjena velicine u 1. redu -> osnovni skript prepise ostale selectove:
+           nakon toga osvjezimo sve gumbe (u sljedecem tick-u). */
+        box.addEventListener('change', function(e){
+          var t = e.target;
+          if(t && t.classList && t.classList.contains('gck-size-select')) setTimeout(syncAllSizes, 0);
+        }, true);
+        box.querySelectorAll('input[name="bundle_option"]').forEach(function(r){
+          r.addEventListener('change', function(){ setTimeout(syncAllSizes, 60); });
+        });
+      }
+      /* radi tek kad je osnovni skript vec postavio pocetne swatcheve */
+      if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', function(){ setTimeout(build, 0); }); }
+      else { setTimeout(build, 0); }
+    })();
+    </script>
     <?php endif; ?>
     <div id="bundle-selector" class="bundle-box<?php echo $gck_single_size ? ' is-single-size' : ''; ?><?php echo $gck_no_attrs ? ' is-no-attrs' : ''; ?>" data-split-garments="<?php echo $gck_split_garments ? '1' : '0'; ?>">
         <?php
