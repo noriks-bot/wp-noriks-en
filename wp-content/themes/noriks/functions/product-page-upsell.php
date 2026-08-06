@@ -228,10 +228,20 @@ function noriks_pp_upsell_render() {
 		var touched = false;
 		sel.addEventListener('change', function () { touched = true; });
 
+		/* Izvor velicine: <select> odabrane ponude. NE koristimo offsetParent jer
+		   je kod alternativnih izbornika (ACF orto_alt_dropdowns) pravi <select>
+		   skriven, pa bi provjera vidljivosti uvijek pala. */
+		function npuSizeUsable(s) {
+			if (!s || !s.value) { return false; }
+			var w = s.closest ? s.closest('.bundle-pairs') : null;
+			if (w && w.classList.contains('hidden')) { return false; }
+			if (s.offsetParent !== null) { return true; }
+			return !!(s.closest && s.closest('#bundle-selector'));
+		}
 		function firstBundleSize() {
 			var all = document.querySelectorAll('.gck-size-select');
 			for (var i = 0; i < all.length; i++) {
-				if (all[i].offsetParent !== null && all[i].value) { return all[i]; }
+				if (npuSizeUsable(all[i])) { return all[i]; }
 			}
 			return null;
 		}
@@ -583,7 +593,7 @@ function noriks_pp_upsell2_render() {
 			var sync = function () {
 				if (touched) { return; }
 				var all = document.querySelectorAll('.gck-size-select'), src = null;
-				for (var i = 0; i < all.length; i++) { if (all[i].offsetParent !== null && all[i].value) { src = all[i]; break; } }
+				for (var i = 0; i < all.length; i++) { if ((function (s) { if (!s || !s.value) { return false; } var w = s.closest ? s.closest('.bundle-pairs') : null; if (w && w.classList.contains('hidden')) { return false; } if (s.offsetParent !== null) { return true; } return !!(s.closest && s.closest('#bundle-selector')); })(all[i])) { src = all[i]; break; } }
 				if (!src) { return; }
 				var v = String(src.value).trim().toLowerCase();
 				for (var j = 0; j < sel.options.length; j++) {
@@ -956,7 +966,7 @@ function noriks_pp_upsell3_render() {
 			var sync = function () {
 				if (touched) { return; }
 				var all = document.querySelectorAll('.gck-size-select'), src = null;
-				for (var i = 0; i < all.length; i++) { if (all[i].offsetParent !== null && all[i].value) { src = all[i]; break; } }
+				for (var i = 0; i < all.length; i++) { if ((function (s) { if (!s || !s.value) { return false; } var w = s.closest ? s.closest('.bundle-pairs') : null; if (w && w.classList.contains('hidden')) { return false; } if (s.offsetParent !== null) { return true; } return !!(s.closest && s.closest('#bundle-selector')); })(all[i])) { src = all[i]; break; } }
 				if (!src) { return; }
 				var v = String(src.value).trim().toLowerCase();
 				for (var j = 0; j < sel.options.length; j++) {
