@@ -635,6 +635,11 @@ function gck_render_bundle_selector() {
       .color-smeda { background: #9f6f4e; }
       .color-zelena { background: #65633c; }
       .color-tamnoplava { background: #2a3262; }
+      /* engleske vrijednosti boja (EN trziste) */
+      .color-beige { background: #e4e0cf; }
+      .color-brown { background: #9f6f4e; }
+      .color-navy  { background: #2a3262; }
+      .color-grey  { background: #706d78; }
 
       .bundle-option input[type="radio"] {
           -webkit-appearance: none;
