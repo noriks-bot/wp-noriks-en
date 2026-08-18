@@ -390,29 +390,17 @@ function gck_register_orto_countdown_fields() {
  * @param string $type Garment type: 'majica' (default) or 'bokserica'.
  */
 function gck_hr_majice_phrase( int $n, bool $free = false, string $type = 'majica' ) : string {
-    $m100 = $n % 100;
-    $m10  = $n % 10;
-
-    $is1   = ( $m10 === 1 && $m100 !== 11 );
-    $is234 = ( in_array( $m10, array( 2, 3, 4 ), true ) && ! in_array( $m100, array( 12, 13, 14 ), true ) );
-
+    // EN trziste: engleski nazivi (ime funkcije ostaje zbog svih postojecih poziva).
     if ( $type === 'bokserica' ) {
-        $stem = 'bokseric';
+        $noun = ( $n === 1 ) ? 'boxer' : 'boxers';
     } elseif ( $type === 'carapa' ) {
-        $stem = 'čarap'; // čarapu / čarape / čarapa
+        $noun = ( $n === 1 ) ? 'pair of socks' : 'pairs of socks';
+    } elseif ( $type === 'steznica' ) {
+        $noun = ( $n === 1 ) ? 'brace' : 'braces';
     } else {
-        $stem = 'majic';
+        $noun = ( $n === 1 ) ? 'T-shirt' : 'T-shirts';
     }
-
-    if ( $is1 ) {
-        $adj = 'besplatnu'; $noun = $stem . 'u';
-    } elseif ( $is234 ) {
-        $adj = 'besplatne'; $noun = $stem . 'e';
-    } else {
-        $adj = 'besplatnih'; $noun = $stem . 'a';
-    }
-
-    return $free ? ( $adj . ' ' . $noun ) : $noun;
+    return $free ? ( 'free ' . $noun ) : $noun;
 }
 
 add_action( 'woocommerce_before_add_to_cart_button', 'gck_render_bundle_selector', 5 );
@@ -944,7 +932,7 @@ function gck_render_bundle_selector() {
         <div class="dev-banner" data-total="1000" data-sold="354">
             <div class="dev-banner__text">
                 <span class="dev-banner__icon">📦</span>
-                <span>Limited stock <b class="sold">0</b> / <b class="total">0</b> (Only <b class="remain">0</b> komada)</span>
+                <span>Limited stock <b class="sold">0</b> / <b class="total">0</b> (Only <b class="remain">0</b> left)</span>
             </div>
             <div class="dev-banner__bar" aria-label="Sales progress">
                 <div class="dev-banner__fill"></div>
@@ -1011,12 +999,12 @@ function gck_render_bundle_selector() {
              data-key="gck_cd_<?php echo esc_attr( $product_id ); ?>">
             <div class="gck-countdown__head">
                 <span class="gck-countdown__icon">🔥</span>
-                Ograničena zaliha
+                Limited stock
             </div>
             <div class="gck-countdown__body">
-                Akcija vrijedi samo danas — još <span class="gck-countdown__timer" aria-live="polite">--:--</span>.<?php
+                Offer valid today only — <span class="gck-countdown__timer" aria-live="polite">--:--</span> left.<?php
                 if ( $countdown_stock > 0 ) :
-                    ?> Ostalo samo <strong><?php echo esc_html( $countdown_stock ); ?> kom</strong>.<?php
+                    ?> Only <strong><?php echo esc_html( $countdown_stock ); ?> pcs</strong> left.<?php
                 endif; ?> <strong>Hurry before it runs out!</strong>
             </div>
         </div>
@@ -1384,13 +1372,13 @@ function gck_render_bundle_selector() {
                         <?php if ( $per_regular > $gck_per_new ) : ?>
                             <span class="gck-per-old"><?php echo number_format( $per_regular, 2 ); ?>€</span>
                         <?php endif; ?>
-                        <span class="gck-per-new"><?php echo number_format( $gck_per_new, 2 ); ?>€ / kom</span>
+                        <span class="gck-per-new"><?php echo number_format( $gck_per_new, 2 ); ?>€ / pc</span>
                     </span>
                     <?php if ( $discount_pct > 0 ) : ?>
                         <span class="gck-discount-badge">−<?php echo (int) $discount_pct; ?>%</span>
                     <?php endif; ?>
                 <?php else : ?>
-                    — <span class="bundle-option-title"><?php echo number_format( $gck_per_new, 2 ); ?>€ / kom</span>
+                    — <span class="bundle-option-title"><?php echo number_format( $gck_per_new, 2 ); ?>€ / pc</span>
                 <?php endif; ?>
 
                 
@@ -1401,14 +1389,14 @@ function gck_render_bundle_selector() {
 
                 <!--
                 <div class="bundle-total-line">
-                    <span style="font-weight:normal;">Ukupno:</span>
+                    <span style="font-weight:normal;">Total:</span>
                     <span class="line-total"><?php echo number_format( (float) $data['total'], 2 ); ?>€</span>
                 </div>
 
 -->
 
 <div class="bundle-total-line">
-    <span style="font-weight:normal;">Ukupno:</span>
+    <span style="font-weight:normal;">Total:</span>
 
     <?php if ( ! empty($data['regular']) && (float)$data['regular'] > (float)$data['total'] ) : ?>
         <span class="gck-regular-price">
@@ -1450,14 +1438,14 @@ function gck_render_bundle_selector() {
                     // Each item gets its own pair index so all 6 selections reach the cart.
                     $gck_sections = array(
                         array(
-                            'label'   => 'Izaberi 4 ' . gck_hr_majice_phrase( 4, false, 'majica' ),
+                            'label'   => 'Choose 4 ' . gck_hr_majice_phrase( 4, false, 'majica' ),
                             'gratis'  => false, 'count' => 4, 'gg' => 0, 'garment' => 'majica',
                             'ckey'    => 'majica_color', 'skey' => 'majica_size',
                             'colors'  => array( 'Crna', 'Bijela', 'Siva', 'Bez', 'Tamnoplava', 'Smeđa', 'Zelena' ),
                             'sizes'   => array( 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL' ),
                         ),
                         array(
-                            'label'   => 'Izaberi 1 ' . gck_hr_majice_phrase( 1, false, 'bokserica' ) . ' gratis',
+                            'label'   => 'Choose 1 free ' . gck_hr_majice_phrase( 1, false, 'bokserica' ),
                             'gratis'  => true, 'count' => 1, 'gg' => 1, 'garment' => 'bokserica',
                             'ckey'    => 'bokserica_color', 'skey' => 'bokserica_size',
                             'colors'  => array( 'Crna', 'Plava', 'Siva', 'Zelena', 'Crvena' ),
@@ -1537,7 +1525,7 @@ function gck_render_bundle_selector() {
                     // SHBOX split (SKU NORIKS-ORTO-SHBOX): two sections — paid majice, then gratis bokserice.
                     if ( $gck_split_garments ) {
                         $gck_passes = array(
-                            array( 'group' => 0, 'label' => 'Izaberi ' . (int) $pairs . ' ' . gck_hr_majice_phrase( $pairs, false, 'majica' ), 'gratis' => false ),
+                            array( 'group' => 0, 'label' => 'Choose ' . (int) $pairs . ' ' . gck_hr_majice_phrase( $pairs, false, 'majica' ), 'gratis' => false ),
                             array( 'group' => 1, 'label' => 'Choose another ' . (int) $pairs . ' ' . gck_hr_majice_phrase( $pairs, true, 'bokserica' ), 'gratis' => true ),
                         );
                     } else {
@@ -1550,7 +1538,7 @@ function gck_render_bundle_selector() {
                         <?php endif; ?>
                     <?php for ( $i = 1; $i <= $pairs; $i++ ) : ?>
                         <?php if ( $gck_pass['group'] === null && $gck_show_sections && $gck_paid > 0 && $i === 1 ) : ?>
-                            <div class="gck-pair-label">Izaberi <?php echo (int) $gck_paid; ?> <?php echo esc_html( gck_hr_majice_phrase( $gck_paid, false, $gck_garment ) ); ?></div>
+                            <div class="gck-pair-label">Choose <?php echo (int) $gck_paid; ?> <?php echo esc_html( gck_hr_majice_phrase( $gck_paid, false, $gck_garment ) ); ?></div>
                         <?php endif; ?>
                         <?php if ( $gck_pass['group'] === null && $gck_show_sections && $gck_free > 0 && $i === ( $gck_paid + 1 ) ) : ?>
                             <div class="gck-pair-label is-gratis">Choose another <?php echo (int) $gck_free; ?> <?php echo esc_html( gck_hr_majice_phrase( $gck_free, true, $gck_garment ) ); ?></div>
@@ -2191,11 +2179,11 @@ function gck_shgifts_free_gifts_notice() {
       }
     </style>
     <div class="gck-fg">
-        <div class="gck-fg__head">6 BESPLATNIH komada uz svaku kupnju</div>
+        <div class="gck-fg__head">6 FREE items with every purchase</div>
         <div class="gck-fg__grid">
             <?php foreach ( $gifts as $g ) : ?>
                 <div class="gck-fg__card">
-                    <span class="gck-fg__badge">Gratis</span>
+                    <span class="gck-fg__badge">Free</span>
                     <img class="gck-fg__img" src="<?php echo esc_url( $g['img'] ); ?>" alt="<?php echo esc_attr( $g['label'] ); ?>" loading="lazy">
                     <div class="gck-fg__label"><?php echo esc_html( $g['label'] ); ?></div>
                     <div class="gck-fg__price"><s><?php echo esc_html( $g['price'] ); ?></s></div>
