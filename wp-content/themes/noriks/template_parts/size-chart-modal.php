@@ -671,6 +671,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   openBtn?.addEventListener("click", openModal);
+
+  /* Klik na sliku/tablicu velicina u akordeonu otvara isti modal. */
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".js-open-size-chart")) { openModal(e); }
+  });
   closeX?.addEventListener("click", closeModal);
   backdrop?.addEventListener("click", closeModal);
 
