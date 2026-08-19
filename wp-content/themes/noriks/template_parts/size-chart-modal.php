@@ -215,11 +215,14 @@
           table.noriks-bx-t tbody tr:nth-child(even) td { background: #fafafa; }
           .noriks-bx-note { margin: 14px 0 0; font-size: 13.5px; line-height: 1.6; color: #444; }
           .noriks-bx-note strong { color: #111; }
-          .noriks-bx-fig { display: block; width: 100%; max-width: 360px; height: auto; margin: 16px auto 0; }
+          .noriks-bx-fig { display: block !important; width: 100% !important; max-width: 340px !important;
+                           height: auto !important; margin: 16px auto 0 !important; }
           @media (max-width: 600px) {
             table.noriks-bx-t { font-size: 12px; min-width: 420px; }
             table.noriks-bx-t th, table.noriks-bx-t td { padding: 7px 4px; }
             .noriks-bx-note { font-size: 12.5px; }
+            /* na mobitelu je crtez bio prevelik — smanjen na trecinu */
+            .noriks-bx-fig { max-width: 120px !important; margin-top: 12px !important; }
           }
         </style>
         <div class="noriks-bx-wrap">
