@@ -1080,3 +1080,5 @@ add_filter('loop_shop_per_page', function($per_page) {
 add_filter('tiny_mce_plugins', function ($plugins) {
     return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
 });
+
+require_once get_template_directory() . '/functions/manuals-page.php';
