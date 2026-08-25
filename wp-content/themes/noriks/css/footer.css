@@ -403,7 +403,10 @@ margin: 0;
 .nf-main-grid { display:grid; grid-template-columns:1.1fr 2fr; gap:48px; }
 .nf-badge { display:inline-block; font-family:'Roboto',sans-serif; font-weight:700; letter-spacing:1.5px; color:#fff; font-size:20px; text-decoration:none; border:2px solid #fff; padding:10px 14px; border-radius:6px; }
 .nf-brand-tagline { color:#fff; font-family:'Barlow',sans-serif; font-size:24px; font-weight:700; line-height:1.15; margin:22px 0 12px; max-width:420px; }
-.nf-brand-desc { color:#a9a9a9; font-size:13px; line-height:1.6; margin:0 0 20px; max-width:420px; }
+.nf-brand-desc { color:#a9a9a9; font-size:14px; line-height:1.65; margin:0 0 24px; max-width:420px; }
+/* brez naslova nad opisom: prva vrstica se opticno poravna z naslovi stolpcev desno */
+.nf-brand-col { padding-top:0; }
+@media (max-width:900px) { .nf-brand-col { padding-top:0; } .nf-brand-desc { margin-bottom:18px; } }
 .nf-links { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
 .nf-link-h { color:#fff; font-size:15px; font-weight:600; margin:0 0 14px; }
 .nf-link-col a { display:block; color:#adadad; font-size:14px; text-decoration:none; margin:0 0 10px; }
