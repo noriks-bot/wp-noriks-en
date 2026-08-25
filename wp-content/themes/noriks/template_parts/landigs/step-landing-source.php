@@ -7887,7 +7887,7 @@ setDeliveryDate();
 <!-- Payment and delivery features (styles in auto shared resourse "Cart CSS") -->
 <div class="paydel-features">
 	<div class="paydel-features__item">
-		<strong class="paydel-features__text" style="margin-inline: auto;">90-dnevna mo&#x17E;nost vra&#x10D;ila kupnine</strong>
+		<strong class="paydel-features__text" style="margin-inline: auto;">30-dnevna mo&#x17E;nost vra&#x10D;ila kupnine</strong>
 	</div>
 	<hr style="display: block; margin: 0.5rem 0; background-color: #dbdbdb; border: none; height: 0.0625rem;">
 
@@ -7996,7 +7996,7 @@ setDeliveryDate();
 							<li class="seller-benefits__item">
 								<img class="seller-benefits__item-icon" src="https://images.hs-plus.com/assets/STEPPER%20test-0/dc81f19ecd50b_sentiment_very_satisfied_36dp_000_FILL0_wght400_GRAD0_opsz40.svg" alt>
 								<!-- <span class="seller-benefits__item-icon material-symbols-outlined">sentiment_very_satisfied</span> -->
-								<span class="seller-benefits__item-text">Preizkusi 90 dni, brez tveganja</span>
+								<span class="seller-benefits__item-text">Preizkusi 30 dni, brez tveganja</span>
 							</li>
 							<li class="seller-benefits__item">
 								<img class="seller-benefits__item-icon" src="https://images.hs-plus.com/assets/STEPPER%20test-0/3f62b46e6d7db_support_agent_36dp_000_FILL0_wght400_GRAD0_opsz40.svg" alt>

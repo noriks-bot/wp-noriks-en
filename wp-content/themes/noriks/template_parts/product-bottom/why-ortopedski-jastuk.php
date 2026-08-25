@@ -178,14 +178,14 @@ $oj_img = function( $file, $alt ) use ( $oj ) {
   </div>
 </section>
 
-<!-- ============ 11) Try it for 60 days — DARK, badge LEFT, text RIGHT ============ -->
+<!-- ============ 11) Try it for 30 days — DARK, badge LEFT, text RIGHT ============ -->
 <section class="oj-sec oj-guar-sec">
   <div class="oj-wrap">
   <div class="oj-guarantee oj-row2">
     <div class="oj-guar-badge"><?php echo $oj_img('15_znacka_30_dana.png','30-day money-back guarantee'); ?></div>
     <div class="oj-guar-copy">
-      <h2 class="oj-h2 oj-h2-light">Try it for <em class="oj-pink-i">60 days</em>, worry-free</h2>
-      <p>Finding the right cushion is not easy — many flatten out or simply don't bring real relief. That is why every NORIKS <strong>ErgoSit</strong> comes with our <strong>60-day comfort guarantee</strong>.</p>
+      <h2 class="oj-h2 oj-h2-light">Try it for <em class="oj-pink-i">30 days</em>, worry-free</h2>
+      <p>Finding the right cushion is not easy — many flatten out or simply don't bring real relief. That is why every NORIKS <strong>ErgoSit</strong> comes with our <strong>30-day comfort guarantee</strong>.</p>
       <p>Take it to the office, into the car or for long hours at home. If you don't feel less pain and more comfort in your everyday sitting, our team will make it right.</p>
       <p>Because when it comes to your health and comfort, we believe you should <strong>feel</strong> the difference, not just hope for it.</p>
     </div>

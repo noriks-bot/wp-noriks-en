@@ -529,7 +529,7 @@ $is_mixed_bundle = noriks_is_mixed_bundle( $current_product_id );
       </div>
       <div class="accordion-content">
        <p></p>
-       We're so confident you'll love NORIKS that you have <b>30 days</b> for a return or free exchange.
+       We're so confident you'll love NORIKS that you have <b>30 days</b> for a return or exchange.
 No paperwork, no stress – we'll sort it out in a few clicks. </p>
 
 <p>

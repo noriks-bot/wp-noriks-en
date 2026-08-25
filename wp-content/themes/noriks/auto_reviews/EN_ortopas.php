@@ -4,7 +4,7 @@
 $auto_reviews_en = array(
     array("name" => "Marius H.", "text" => "I was sceptical – I thought physiotherapy was enough. After a week with Noriks I feel a marked improvement when sitting and walking. Combined with light exercise it is now my first choice. Delivery arrived within 7 days, top quality."),
     array("name" => "Damian K.", "text" => "As a tradesman I move around a lot – the belt stays stable and holds its position. Good adjustment options. Delivery time exactly as stated."),
-    array("name" => "George P.", "text" => "I wasn't sure about my hip measurement, so I took the smaller size as recommended – it fits perfectly. A free exchange would be great, should I ever need one."),
+    array("name" => "George P.", "text" => "I wasn't sure about my hip measurement, so I took the smaller size as recommended – it fits perfectly. An easy exchange would be great, should I ever need one."),
     array("name" => "Ian M.", "text" => "The price is fair for the quality and the function. The 30-day money-back guarantee gave me confidence."),
     array("name" => "Steve B.", "text" => "I had my doubts, now I'm convinced: it sits firmly, barely moves, and the pain is less. Good value for money."),
     array("name" => "Boris L.", "text" => "Noticeably better after the first hour already. After 2 weeks of daily wear, considerably less pain. If it doesn't suit you, returning it is no problem."),
@@ -15,7 +15,7 @@ $auto_reviews_en = array(
     array("name" => "Sean D.", "text" => "Running didn't help in the long run – the belt gave me stability immediately. I use it while walking and at work. Fast delivery, tidy packaging."),
     array("name" => "David N.", "text" => "With more complex problems not everything works instantly, but I notice a clear improvement when sitting and walking. Customer support helped with usage advice."),
     array("name" => "Wayne S.", "text" => "Not all the complaints disappeared, but the pain is considerably eased and mobility is better. The guarantee and support gave me confidence."),
-    array("name" => "Harvey M.", "text" => "I felt relief the moment I put it on – after 3 days, everyday life without pain attacks. It's great that there is a 90-day guarantee."),
+    array("name" => "Harvey M.", "text" => "I felt relief the moment I put it on – after 3 days, everyday life without pain attacks. It's great that there is a 30-day guarantee."),
     array("name" => "Neil K.", "text" => "Comfortable under clothes and it doesn't slip. I used to have belts that shifted constantly – this one stays where it should."),
     array("name" => "Barry J.", "text" => "I tried several products – this belt works for me immediately and lastingly. The instructions are clear, the fit adjustable, a brilliant result."),
     array("name" => "Miles P.", "text" => "I wear larger sizes and I was worried it would shift – in size L-XL it sits very well and stays put. Exchanging the size was straightforward."),
