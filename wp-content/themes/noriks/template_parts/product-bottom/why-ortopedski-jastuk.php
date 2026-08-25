@@ -182,7 +182,7 @@ $oj_img = function( $file, $alt ) use ( $oj ) {
 <section class="oj-sec oj-guar-sec">
   <div class="oj-wrap">
   <div class="oj-guarantee oj-row2">
-    <div class="oj-guar-badge"><?php echo $oj_img('15_znacka_60_dana_HR.png','60-day money-back guarantee'); ?></div>
+    <div class="oj-guar-badge"><?php echo $oj_img('15_znacka_30_dana.png','30-day money-back guarantee'); ?></div>
     <div class="oj-guar-copy">
       <h2 class="oj-h2 oj-h2-light">Try it for <em class="oj-pink-i">60 days</em>, worry-free</h2>
       <p>Finding the right cushion is not easy — many flatten out or simply don't bring real relief. That is why every NORIKS <strong>ErgoSit</strong> comes with our <strong>60-day comfort guarantee</strong>.</p>

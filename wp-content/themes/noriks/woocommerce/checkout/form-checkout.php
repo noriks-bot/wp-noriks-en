@@ -88,7 +88,7 @@ if ( WC()->cart->is_empty() ) return;
     <img decoding="async" src="https://images.vigo-shop.com/general/guarantee_money_back/satisfaction_icon_hr.png">
   </div>
   <div class="flex__item--autosize f--m checkout-warranty__text">
-    <strong>Shop with confidence </strong><br>Money back guarantee within 90 days
+    <strong>Shop with confidence </strong><br>Money back guarantee within 30 days
   </div>
 </div>
 

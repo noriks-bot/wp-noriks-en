@@ -691,7 +691,7 @@
 
         <div class="noriks-sc-guarantee">
           <span class="noriks-sc-check">&#10003;</span>
-          <span>Not sure? Free size exchange within 90 days.</span>
+          <span>Not sure? Free size exchange within 30 days.</span>
         </div>
       </div>
 

@@ -7913,7 +7913,7 @@ setDeliveryDate();
 
 	<!-- <div class="paydel-features__item">
 		<img class="paydel-features__icon" src="https://images.vigo-shop.com/general/checkout/back.svg" alt="">
-		<span class="paydel-features__text">14-dnevna možnost vračila kupnine</span>
+		<span class="paydel-features__text">30-dnevna možnost vračila kupnine</span>
 	</div>
 
 	<div class="paydel-features__item">
@@ -8097,7 +8097,7 @@ setDeliveryDate();
 								</div>
 							</summary>
 							<div class="acrd__body">
-								<p>Prepri&#x10D;ani smo, da vam bo udobje vlo&#x17E;kov STEPEASE v&#x161;e&#x10D;. Zato ponujamo 90&#x2011;dnevno garancijo vra&#x10D;ila denarja brez tveganja. &#x10C;e ne boste popolnoma zadovoljni, nam preprosto pi&#x161;ite in uredili bomo vra&#x10D;ilo.</p>
+								<p>Prepri&#x10D;ani smo, da vam bo udobje vlo&#x17E;kov STEPEASE v&#x161;e&#x10D;. Zato ponujamo 30&#x2011;dnevno garancijo vra&#x10D;ila denarja brez tveganja. &#x10C;e ne boste popolnoma zadovoljni, nam preprosto pi&#x161;ite in uredili bomo vra&#x10D;ilo.</p>
 								<p>Za vra&#x10D;ila nam pi&#x161;ite na <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="761f18101936051f580502130613170513581303">[email&#160;protected]</a></p>
 							</div>
 						</details>
@@ -8226,34 +8226,34 @@ setDeliveryDate();
 			<div class="horizontal-ticker__container">
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 				<p class="horizontal-ticker__item">&#x1F30D; Sledenje po&#x161;iljki z zavarovano dostavo</p>
 				<p class="horizontal-ticker__item">&#x1F60A; Ve&#x10D; kot 200&#xA0;000 zadovoljnih strank</p>
-				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 90-dnevno jamstvo za vra&#x10D;ilo denarja</p>
+				<p class="horizontal-ticker__item">&#x1F6E1;&#xFE0F; 30-dnevno jamstvo za vra&#x10D;ilo denarja</p>
 			</div>
 		</div>
 

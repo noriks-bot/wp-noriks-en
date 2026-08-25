@@ -5,7 +5,7 @@ $auto_reviews_en = array(
     array("name" => "Marius H.", "text" => "I was sceptical – I thought physiotherapy was enough. After a week with Noriks I feel a marked improvement when sitting and walking. Combined with light exercise it is now my first choice. Delivery arrived within 7 days, top quality."),
     array("name" => "Damian K.", "text" => "As a tradesman I move around a lot – the belt stays stable and holds its position. Good adjustment options. Delivery time exactly as stated."),
     array("name" => "George P.", "text" => "I wasn't sure about my hip measurement, so I took the smaller size as recommended – it fits perfectly. A free exchange would be great, should I ever need one."),
-    array("name" => "Ian M.", "text" => "The price is fair for the quality and the function. The 90-day money-back guarantee gave me confidence."),
+    array("name" => "Ian M.", "text" => "The price is fair for the quality and the function. The 30-day money-back guarantee gave me confidence."),
     array("name" => "Steve B.", "text" => "I had my doubts, now I'm convinced: it sits firmly, barely moves, and the pain is less. Good value for money."),
     array("name" => "Boris L.", "text" => "Noticeably better after the first hour already. After 2 weeks of daily wear, considerably less pain. If it doesn't suit you, returning it is no problem."),
     array("name" => "Darren T.", "text" => "A good investment: it saves time and therapy costs. Short delivery time, professional packaging."),

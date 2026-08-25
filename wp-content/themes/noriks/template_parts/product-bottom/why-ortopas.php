@@ -49,7 +49,7 @@ $opz_cmp_rows = array(
     array( 'Affordable',                     true,  false ),
     array( 'Instant relaxation',             true,  false ),
     array( 'No waiting',                     true,  false ),
-    array( '60-day money-back guarantee',    true,  false ),
+    array( '30-day money-back guarantee',    true,  false ),
     array( 'Long-term costs',                false, true  ),
 );
 /* Reviews with photo — section 8 */

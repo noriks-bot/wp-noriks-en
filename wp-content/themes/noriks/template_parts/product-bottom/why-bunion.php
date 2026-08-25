@@ -25,7 +25,7 @@ $bun_results = array(
 
 // Why choose us — comparison (same style as knc-table on the zip socks)
 $bun_cmp = array(
-    '90-day money-back guarantee',
+    '30-day money-back guarantee',
     'Eases the discomfort',
     'Prevents the bunion from growing',
     'Improves the bunion over time',
@@ -116,7 +116,7 @@ $bun_steps = array(
         <li><strong>Adjustable</strong> stretch intensity</li>
         <li>Designed and recommended by <strong>medical professionals</strong></li>
         <li><strong>Easy to use</strong> and portable</li>
-        <li><strong>90-day money-back guarantee</strong> ("results or a full refund") because we are that confident in our product and know it will help you</li>
+        <li><strong>30-day money-back guarantee</strong> ("results or a full refund") because we are that confident in our product and know it will help you</li>
       </ul>
     </div>
     <div class="bun-col bun-media">
