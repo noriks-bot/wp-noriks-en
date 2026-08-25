@@ -103,9 +103,8 @@
 			<div class="nf-wrap nf-main-grid">
 
 				<div class="nf-brand-col">
-					<p class="nf-brand-tagline">Clothing for a stronger build, cut to actually fit.</p>
 					<p class="nf-brand-desc"><?php echo esc_html( $nf_brand ); ?></p>
-					<a class="nf-btn nf-btn-outline" href="/shop">See the collection</a>
+					<a class="nf-btn nf-btn-outline" href="/shop">Shop now</a>
 				</div>
 
 				<nav class="nf-links">
