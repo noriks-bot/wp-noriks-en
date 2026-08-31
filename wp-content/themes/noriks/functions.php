@@ -1081,3 +1081,40 @@ add_filter('loop_shop_per_page', function($per_page) {
 add_filter('tiny_mce_plugins', function ($plugins) {
     return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
 });
+
+
+/**
+ * [2026-08-30] Odstrani PODVOJENO osvezevanje kosarice.
+ *
+ * Izmerjeno v dostopnem dnevniku noriks.com (30. 8. 2026, 155.768 zahtev):
+ *   ?wc-ajax=get_refreshed_fragments     15.444 zahtev/dan  (WooCommerce)
+ *   ?wc-ajax=xoo_wsc_refresh_fragments   15.087 zahtev/dan  (stranska kosarica)
+ *
+ * Preverjeno na zivi strani: oba klica vraceta ISTI seznam desetih fragmentov
+ * (widget_shopping_cart_content, wc_stripe_data, xoo-wsc-*, a.cart-contents,
+ * a.footer-cart-contents, .cart-count). Oba gresta skozi isti filter
+ * woocommerce_add_to_cart_fragments, zato je eden odvec.
+ *
+ * Odjavimo WooCommercovega (tema ga naloži v inc/class-storefront.php, vrstica 349).
+ * Stranska kosarica ga nadomesti — njen klic vrne iste fragmente.
+ *
+ * NA KOSARICI IN BLAGAJNI ga PUSTIMO, ker predloga woocommerce/cart/cart.php
+ * (vrstica 74) poslusa dogodka wc_fragments_refreshed / wc_fragments_loaded.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+
+	// Na kosarici in blagajni ne diramo nicesar.
+	if ( function_exists( 'is_cart' ) && ( is_cart() || is_checkout() ) ) {
+		return;
+	}
+
+	// Odjavi samo, ce stranska kosarica res tece — sicer bi ostali brez osvezevanja.
+	// Konstanta in razred preverjena v woocommerce-side-cart-premium/xoo-wsc-main.php
+	// oz. includes/class-xoo-wsc-frontend.php.
+	if ( ! defined( 'XOO_WSC_PLUGIN_FILE' ) && ! class_exists( 'Xoo_Wsc_Frontend' ) ) {
+		return;
+	}
+
+	wp_dequeue_script( 'wc-cart-fragments' );
+
+}, 99 );
