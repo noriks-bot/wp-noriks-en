@@ -10,6 +10,7 @@ include(get_template_directory() . '/functions/pack-switcher.php'); // pack size
 include(get_template_directory() . '/functions/flash-deals-banner.php'); // traka sezonske rasprodaje
 include(get_template_directory() . '/functions/performance.php');  // safe front-end performance tweaks
 include(get_template_directory() . '/functions/checkout_mods.php');
+include(get_template_directory() . '/functions/out-of-stock-notice.php'); // obvestilo ni na zalogi
 include(get_template_directory() . '/functions/phone-validate.php');
 include(get_template_directory() . '/functions/shop-filter-links.php'); // filtri kategorij brez YITH vticnika // nezno preverjanje telefonske stevilke
 include(get_template_directory() . '/functions/thankyou_upsell.php');
