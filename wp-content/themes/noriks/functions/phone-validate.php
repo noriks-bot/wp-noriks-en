@@ -76,11 +76,20 @@ function noriks_tel_intl( $raw ) {
     return '+' . NORIKS_TEL_CC . $d;
 }
 
+/* Primer stevilke — enak, kot ga ze izrisemo pod poljem
+   (css/checkout.css, #billing_phone_field::after). */
+define( 'NORIKS_TEL_EXAMPLE', '0912345678' );
+
+/** Sporocilo ob napacni stevilki — eno samo mesto za ves trg. */
+function noriks_tel_message() {
+    return 'Please check the phone number — it looks incomplete. e.g. ' . NORIKS_TEL_EXAMPLE;
+}
+
 /* --- strezniska obramba: naročila z ocitno napacno stevilko ne spustimo --- */
 add_action( 'woocommerce_checkout_process', function () {
     $p = isset( $_POST['billing_phone'] ) ? wp_unslash( $_POST['billing_phone'] ) : '';
     if ( $p !== '' && ! noriks_tel_ok( $p ) ) {
-        wc_add_notice( 'Please check the phone number — it looks incomplete.', 'error' );
+        wc_add_notice( noriks_tel_message(), 'error' );
     }
 }, 5 );
 
@@ -89,19 +98,23 @@ add_filter( 'woocommerce_process_checkout_field_billing_phone', function ( $v ) 
     return noriks_tel_ok( $v ) ? noriks_tel_intl( $v ) : $v;
 }, 20 );
 
-/* --- sprotno opozorilo pod poljem --- */
+/* --- pravilo ponudimo obstojecemu preverjevalniku teme (checkout_mods.php) ---
+   Prej je ta datoteka izrisovala SVOJE sporocilo pod poljem, zato sta bili na
+   blagajni dve opozorili hkrati. Zdaj samo objavi funkcijo window.NORIKS_TEL.ok(),
+   sporocilo pa izpise obstojeci preverjevalnik — ena sama validacija. */
 add_action( 'wp_footer', function () {
     if ( ! function_exists( 'is_checkout' ) || ! is_checkout() ) { return; }
+    $cfg = array(
+        'cc'    => NORIKS_TEL_CC,
+        'trunk' => NORIKS_TEL_TRUNK,
+        'min'   => NORIKS_TEL_MIN,
+        'max'   => NORIKS_TEL_MAX,
+        'msg'   => noriks_tel_message(),
+    );
     ?>
-    <style>
-    #billing_phone_field .noriks-tel-msg { display:none; margin-top:6px; color:#c62828; font-size:13px; line-height:1.35; }
-    #billing_phone_field.noriks-tel-bad .noriks-tel-msg { display:block; }
-    #billing_phone_field.noriks-tel-bad input { border-color:#c62828 !important; }
-    </style>
-    <script id="noriks-tel-check">
-    jQuery(function($){
-      var CC = '', TRUNK = '', MIN = 8, MAX = 15;
-      var MSG = <?php echo wp_json_encode( 'Please check the phone number — it looks incomplete.' . ' ' . 'e.g. +44 7700 900123' ); ?>;
+    <script id="noriks-tel-config">
+    (function(){
+      var C = <?php echo wp_json_encode( $cfg ); ?>;
       function national(raw){
         var s = (raw||'').trim();
         if (!s) return null;
@@ -112,43 +125,26 @@ add_action( 'wp_footer', function () {
         var explicit = s.indexOf('+')===0 || s.indexOf('00')===0;
         if (s.indexOf('00')===0) d = d.slice(2);
         if (explicit){
-          if (!CC || d.indexOf(CC)!==0) return (d.length>=9 && d.length<=15) ? '' : false;
-          d = d.slice(CC.length);
-        } else if (CC && d.indexOf(CC)===0 && (d.length-CC.length)>=MIN){
-          d = d.slice(CC.length);
+          if (!C.cc || d.indexOf(C.cc)!==0) return (d.length>=9 && d.length<=15) ? '' : false;
+          d = d.slice(C.cc.length);
+        } else if (C.cc && d.indexOf(C.cc)===0 && (d.length-C.cc.length)>=C.min){
+          d = d.slice(C.cc.length);
         }
-        if (TRUNK && d.indexOf(TRUNK)===0) d = d.slice(TRUNK.length);
+        if (C.trunk && d.indexOf(C.trunk)===0) d = d.slice(C.trunk.length);
         else d = d.replace(/^0+/,'');
         return d;
       }
-      function ok(raw){
-        var d = national(raw);
-        if (d===null) return true;       // prazno pusti WooCommercu
-        if (d===false) return false;
-        if (d==='') return true;         // tuja, ze preverjena
-        return d.length>=MIN && d.length<=MAX;
-      }
-      function paint(){
-        var $f = $('#billing_phone_field'), $i = $('#billing_phone');
-        if (!$i.length) return;
-        if (!$f.find('.noriks-tel-msg').length) $f.append($('<div class="noriks-tel-msg"></div>').text(MSG));
-        var v = $i.val();
-        $f.toggleClass('noriks-tel-bad', v !== '' && !ok(v));
-      }
-      $(document).on('blur change keyup', '#billing_phone', paint);
-      $(document.body).on('updated_checkout', paint);
-      $('form.checkout').on('submit', function(e){
-        var v = $('#billing_phone').val();
-        if (v !== '' && !ok(v)){
-          paint();
-          $('html,body').animate({scrollTop: $('#billing_phone_field').offset().top - 120}, 250);
-          $('#billing_phone').focus();
-          e.preventDefault(); e.stopImmediatePropagation();
-          return false;
+      window.NORIKS_TEL = {
+        msg: C.msg,
+        ok: function(raw){
+          var d = national(raw);
+          if (d===null)  return true;   // prazno pusti WooCommercu
+          if (d===false) return false;
+          if (d==='')    return true;   // tuja stevilka, ze preverjena
+          return d.length>=C.min && d.length<=C.max;
         }
-      });
-      paint();
-    });
+      };
+    })();
     </script>
     <?php
-}, 98 );
+}, 5 );

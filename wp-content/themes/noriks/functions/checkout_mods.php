@@ -429,10 +429,18 @@ add_action( 'wp_footer', function() {
           return false;
         }
 
-        /* Phone format (at least 6 digits) */
-        if (isPhone && val && val.replace(/\D/g,'').length < 6) {
-          showError($row, '\u2715 Please enter a valid phone number');
-          return false;
+        /* Telefon — pravilo dolocimo v functions/phone-validate.php in ga
+           tam objavimo kot window.NORIKS_TEL (klicna, vodilna nicla, dolzina).
+           Ce ga kdaj ni, pade nazaj na staro pravilo (vsaj 6 cifer). */
+        if (isPhone && val) {
+          var TEL = window.NORIKS_TEL;
+          var telOk = (TEL && typeof TEL.ok === 'function')
+            ? TEL.ok(val)
+            : val.replace(/\D/g,'').length >= 6;
+          if (!telOk) {
+            showError($row, '\u2715 ' + ((TEL && TEL.msg) || 'Please enter a valid phone number'));
+            return false;
+          }
         }
 
         /* Valid */
@@ -445,8 +453,28 @@ add_action( 'wp_footer', function() {
       /* Field descriptions handled by CSS ::after — immune to WC re-renders */
 
       /* Re-validate on input/change — clears error when value becomes valid */
+      var telIdle = null;
       $(document).on('input', '.woocommerce-checkout .form-row input', function(){
+        var $r = $(this).closest('.form-row');
+
+        /* Telefon: med tipkanjem NE opozarjamo (stevilka je vmes vedno nepopolna).
+           Preverimo sele, ko kupec neha tipkati (kratek premor) ali gre iz polja. */
+        if ($r.hasClass('validate-phone')) {
+          var el = this;
+          clearState($r);
+          clearTimeout(telIdle);
+          telIdle = setTimeout(function(){
+            if (($(el).val() || '').trim()) validateField(el, true);
+          }, 900);
+          return;
+        }
+
         if (submitted) validateField(this);
+      });
+      /* Odhod iz polja = konec tipkanja -> takoj preveri. */
+      $(document).on('blur', '.woocommerce-checkout .form-row.validate-phone input', function(){
+        clearTimeout(telIdle);
+        if (($(this).val() || '').trim()) validateField(this, true);
       });
       $(document).on('change', '.woocommerce-checkout .form-row select', function(){
         if (submitted) validateField(this);
