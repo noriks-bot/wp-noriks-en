@@ -164,7 +164,7 @@ if ($show_bottom_products === '1' && !empty($bottom_product_ids)) {
   margin: 0 auto;
   position: relative;
   background: #111;
-  background-image: url("https://devhr.noriks.com/wp-content/uploads/2025/07/blue5.png");
+  background-image: url("<?php echo esc_url( home_url( '/wp-content/uploads/2025/07/blue5.png' ) ); ?>");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
