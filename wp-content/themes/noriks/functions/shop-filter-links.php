@@ -122,39 +122,47 @@ function noriks_shop_filter_links_css() {
 	if ( ! is_shop() && ! is_product_category() ) return;
 	?>
 <style id="noriks-filter-links-css">
+/* Barvne spremenljivke — prepisane iz vgrajenega sloga vticnika. */
 :root{
+	--yith-wcan-filters_colors_accent: rgb(222,222,222);
 	--yith-wcan-labels_style_background: #FFFFFF;
 	--yith-wcan-labels_style_background_hover: rgb(222,222,222);
 	--yith-wcan-labels_style_background_active: rgb(222,222,222);
 	--yith-wcan-labels_style_text: rgb(0,0,0);
 	--yith-wcan-labels_style_text_hover: rgb(0,0,0);
 	--yith-wcan-labels_style_text_active: rgb(0,0,0);
+	--yith-wcan-anchors_style_text: #434343;
 }
-.yith-wcan-filters .yith-wcan-filter .filter-items { float: none; list-style: none; padding-left: 0; margin: 0; }
+/* Dobesedno prepisano iz vticnikovega shortcodes.css — samo pravila, ki zadevajo
+   nase oznake. POSTAVITVE (mreza stolpcev) se NE dotikamo, ker jo doloca tema. */
+.yith-wcan-filters .yith-wcan-filter .filter-items { float: none; list-style: none; padding-left: 0; }
+.yith-wcan-filters .yith-wcan-filter .filter-items.level-0 { margin: 0; padding: 0; }
 .yith-wcan-filters .yith-wcan-filter .filter-items.filter-label { font-size: 0; margin: 0 -5px; }
 .yith-wcan-filters .yith-wcan-filter.label-design .filter-items { font-size: 0; }
-.yith-wcan-filters .yith-wcan-filter .filter-item.label { display: inline-block; margin: 0 5px 10px; vertical-align: top; }
-.yith-wcan-filters .yith-wcan-filter .filter-item.label > a {
-	background: var(--yith-wcan-labels_style_background, #fff);
-	color: var(--yith-wcan-labels_style_text, #000);
-	border: 1px solid #D7D7D7;
-	border-radius: 0;
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item > a { color: var(--yith-wcan-anchors_style_text, #434343); text-decoration: none; }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label {
+	background-color: var(--yith-wcan-labels_style_background, #fff);
+	box-shadow: 0 0 0 1px #D7D7D7;
+	border-radius: 4px;
 	display: inline-block;
-	font-size: 14px;
-	line-height: 1.4;
-	padding: 3px 10px;
-	text-decoration: none;
-	cursor: pointer;
+	margin: 0 5px 10px;
+	padding: 7px;
+	text-align: center;
 }
-.yith-wcan-filters .yith-wcan-filter .filter-item.label > a:hover {
-	background: var(--yith-wcan-labels_style_background_hover, rgb(222,222,222));
-	color: var(--yith-wcan-labels_style_text_hover, #000);
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label > a { color: var(--yith-wcan-labels_style_text, #434343); display: block; height: 100%; }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label .term-label { display: block; font-size: 0.8rem; }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label:not(.disabled):hover {
+	background-color: var(--yith-wcan-labels_style_background_hover, #4e8ba2);
+	box-shadow: 0 0 0 2px var(--yith-wcan-labels_style_background_hover, #4e8ba2);
+	color: var(--yith-wcan-labels_style_text_hover, #fff);
 }
-.yith-wcan-filters .yith-wcan-filter .filter-item.label.active > a {
-	background: var(--yith-wcan-labels_style_background_active, rgb(222,222,222));
-	color: var(--yith-wcan-labels_style_text_active, #000);
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label:not(.disabled):hover .term-label { color: var(--yith-wcan-labels_style_text_hover, #fff); }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label.active {
+	background-color: var(--yith-wcan-labels_style_background_active, #4e8ba2);
+	box-shadow: 0 0 0 2px var(--yith-wcan-labels_style_background_active, #4e8ba2);
+	color: var(--yith-wcan-labels_style_text_active, #fff);
 }
-.yith-wcan-filters .yith-wcan-filter .filter-title { display: none; }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label.active .term-label { color: var(--yith-wcan-labels_style_text_active, #fff); }
 </style>
 	<?php
 }
