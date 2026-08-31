@@ -501,7 +501,7 @@ if ( is_shop() ) {
 @media (max-width: 992px) {
     
     .shop-filter-buttons {
-         padding: 15px 15px 43px 15px !important;
+         padding: 15px 15px 15px 15px !important;
     }
     
     .filters-container .filter-tax {
