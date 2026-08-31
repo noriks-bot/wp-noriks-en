@@ -10,6 +10,7 @@ include(get_template_directory() . '/functions/pack-switcher.php'); // pack size
 include(get_template_directory() . '/functions/flash-deals-banner.php'); // traka sezonske rasprodaje
 include(get_template_directory() . '/functions/performance.php');  // safe front-end performance tweaks
 include(get_template_directory() . '/functions/checkout_mods.php');
+include(get_template_directory() . '/functions/phone-validate.php'); // nezno preverjanje telefonske stevilke
 include(get_template_directory() . '/functions/thankyou_upsell.php');
 include(get_template_directory() . '/functions/product-page-upsell.php'); // upsell box below the add-to-cart button (ACF toggles)
 include(get_template_directory() . '/functions/sidecart-upsell-modal.php');
