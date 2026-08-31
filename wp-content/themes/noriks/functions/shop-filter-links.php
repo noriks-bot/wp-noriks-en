@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function noriks_shop_filter_map() {
 	return apply_filters( 'noriks_shop_filter_map', array(
-		// brez posnetka — samodejni izris podkategorij
+		// brez posnetka
 	) );
 }
 
@@ -139,6 +139,7 @@ function noriks_shop_filter_links_css() {
 .yith-wcan-filters .yith-wcan-filter .filter-items.level-0 { margin: 0; padding: 0; }
 .yith-wcan-filters .yith-wcan-filter .filter-items.filter-label { font-size: 0; margin: 0 -5px; }
 .yith-wcan-filters .yith-wcan-filter.label-design .filter-items { font-size: 0; }
+.yith-wcan-filters .yith-wcan-filter .filter-items .filter-item { line-height: 2; margin: 0; }
 .yith-wcan-filters .yith-wcan-filter .filter-items .filter-item > a { color: var(--yith-wcan-anchors_style_text, #434343); text-decoration: none; }
 .yith-wcan-filters .yith-wcan-filter .filter-items .filter-item.label {
 	background-color: var(--yith-wcan-labels_style_background, #fff);
