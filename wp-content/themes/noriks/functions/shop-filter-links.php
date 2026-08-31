@@ -24,7 +24,40 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function noriks_shop_filter_map() {
 	return apply_filters( 'noriks_shop_filter_map', array(
-		// brez posnetka
+		'__shop__' => array(
+			'bestsellers' => 'Best Sellers',
+			'large-bundles' => 'Large Bundles',
+			'starter-pack' => 'Starter Pack',
+		),
+		'boxers' => array(
+			'1-pcs-boxers' => '1 pcs',
+			'pack-3-pcs-boxers' => '3-pack',
+			'pack-5-pcs-boxers' => '5-pack',
+			'pack-7-pcs-boxers' => '7-pack',
+			'pack-10-pcs-boxers' => '10-pack',
+			'pack-15-pcs-boxers' => '15-pack',
+			'black-boxers' => 'Black',
+			'colorful-boxers' => 'Colorful',
+		),
+		'bundles' => array(
+			'bestsellers' => 'Best Sellers',
+			'large-bundles' => 'Large Bundles',
+			'starter-pack' => 'Starter Pack',
+		),
+		'socks' => array(
+			'black-socks' => 'Black',
+			'white-socks' => 'White',
+		),
+		't-shirts' => array(
+			'1-pcs' => '1 pcs',
+			'pack-3-pcs' => '3-pack',
+			'pack-6-pcs' => '6-pack',
+			'pack-9-pcs' => '9-pack',
+			'pack-12-pcs' => '12-pack',
+			'pack-15-pcs' => '15-pack',
+			'black' => 'Black',
+			'colorful' => 'Colorful',
+		),
 	) );
 }
 
@@ -46,6 +79,13 @@ function noriks_shop_filter_items() {
 
 	// Kategorija je na seznamu -> uporabi posnete napise in vrstni red.
 	if ( isset( $map[ $term->slug ] ) ) return $map[ $term->slug ];
+
+	// Kategorija je SAMA postavka nekega seznama (npr. Bestsellers, Starter paketi,
+	// Veliki paketi) — te so vrhnje, brez starsa, zato jih zgornji pogoj ne ujame.
+	// Pokazemo isti seznam kot na trgovini, s klikom oznacenim trenutnim.
+	foreach ( $map as $group => $items ) {
+		if ( isset( $items[ $term->slug ] ) ) return $items;
+	}
 
 	// Podkategorija (npr. /majice/3-paket-majic) -> pokazi seznam starsa,
 	// tako kot je delal vticnik.
