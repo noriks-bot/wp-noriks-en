@@ -430,7 +430,7 @@ wp_reset_postdata();
   
  <?php
  
-				 get_template_part( 'template_parts/size-chart-modal' );	
+				 noriks_size_chart_once();	
 				//	var_dump($attribute_name);
 						
 						

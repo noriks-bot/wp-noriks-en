@@ -74,8 +74,8 @@ add_action( 'wp_footer', function () {
 
 
 add_action( 'woocommerce_before_variations_form', function() {
-    get_template_part( 'template_parts/size-chart-modal' );
-    get_template_part( 'template_parts/size-chart-secondary' );
+    noriks_size_chart_once();
+    noriks_size_chart_secondary_once();
 });
 
 
