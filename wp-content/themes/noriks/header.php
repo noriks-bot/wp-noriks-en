@@ -55,17 +55,14 @@
     <div class="marquee-content">
       <span><a href="/shop"><?php echo $mq_ico_truck; ?>Free shipping on orders over €70</a></span>
       <span><a href="/shop"><?php echo $mq_ico_shield; ?>30-day risk-free trial – try without worry</a></span>
-      <!--<span><a href="/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
 
       <!-- DUPLICATED for seamless infinite loop -->
       <span><a href="/shop"><?php echo $mq_ico_truck; ?>Free shipping on orders over €70</a></span>
       <span><a href="/shop"><?php echo $mq_ico_shield; ?>30-day risk-free trial – try without worry</a></span>
-     <!-- <span><a href="/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
       
        <!-- DUPLICATED for seamless infinite loop -->
       <span><a href="/shop"><?php echo $mq_ico_truck; ?>Free shipping on orders over €70</a></span>
       <span><a href="/shop"><?php echo $mq_ico_shield; ?>30-day risk-free trial – try without worry</a></span>
-     <!-- <span><a href="/shop">Zimska ponuda: Do 70% popusta!</a></span>-->
     </div>
   </div>
 </div>
