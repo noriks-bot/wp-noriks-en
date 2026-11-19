@@ -27,7 +27,7 @@ $oj_img = function( $file, $alt ) use ( $oj ) {
 <!-- ============ 1) Marquee (dark bar, scrolling) ============ -->
 <div class="oj-marquee" aria-hidden="true">
   <div class="oj-marquee-track">
-    <?php $oj_ticker = array('BREATHABLE AND WASHABLE','PERFECT ALIGNMENT','STABILITYCORE™ FOAM','OEKO-TEX® CERTIFIED','HYPOALLERGENIC','SILKFLEX™ COVER');
+    <?php $oj_ticker = array('BREATHABLE AND WASHABLE','PERFECT ALIGNMENT','STABILITYCORE™ FOAM','HYPOALLERGENIC','SILKFLEX™ COVER');
     for ( $r = 0; $r < 2; $r++ ) { foreach ( $oj_ticker as $t ) { echo '<span class="oj-tick">'.esc_html($t).'</span><span class="oj-dot">•</span>'; } } ?>
   </div>
 </div>
@@ -88,7 +88,7 @@ $oj_img = function( $file, $alt ) use ( $oj ) {
 <section class="oj-sec oj-stills-sec">
   <div class="oj-trustbar" aria-hidden="true">
     <div class="oj-trustbar-track">
-      <?php $oj_trust = array('120,000+ CUSTOMERS','RATED 4.8/5','OEKO-TEX®','DOCTOR RECOMMENDED','60-DAY GUARANTEE','ORTHOPEDIC DESIGN');
+      <?php $oj_trust = array('120,000+ CUSTOMERS','RATED 4.8/5','DOCTOR RECOMMENDED','60-DAY GUARANTEE','ORTHOPEDIC DESIGN');
       for ( $r = 0; $r < 2; $r++ ) { foreach ( $oj_trust as $t ) { echo '<span class="oj-trust-item">'.esc_html($t).'</span><span class="oj-trust-dot">•</span>'; } } ?>
     </div>
   </div>
